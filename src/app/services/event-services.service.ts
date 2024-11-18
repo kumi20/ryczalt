@@ -170,7 +170,7 @@ export class EventService {
       delete ajaxOptions.data.filter;
     }
     ajaxOptions.headers = {
-      authorization:
+      Authorization:
         'Bearer ' + localStorage.getItem('app-ryczalt-token'),
     };
     if (ajaxOptions.data.key) {

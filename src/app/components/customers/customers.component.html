@@ -1,1 +1,64 @@
-<p>customers works!</p>
+<ng-container>
+  <div *ngIf="!dropDownBoxMode(); else dropDownMode">
+    <div class="top-menu-panel">
+      <ng-container *ngTemplateOutlet="topButtons"></ng-container>
+    </div>
+
+    <div class="center-panel-scroll-verticall">
+      <div>
+        <ng-container *ngTemplateOutlet="grid"></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #topButtons></ng-template>
+<ng-template #grid>
+  <div class="d-flex flex-column">
+
+    <div>
+    <dx-data-grid
+        [dataSource]="dataSource"
+        [wordWrapEnabled]="false"
+        [showBorders]="true"
+        [height]="heightGrid"
+        [(selectedRowKeys)]="selectedRows"
+        class=""
+        [columnResizingMode]="'widget'"
+        [remoteOperations]="true"
+        [columnAutoWidth]="false"
+        [allowColumnResizing]="true"
+        [autoNavigateToFocusedRow]="true"
+        [(focusedRowIndex)]="focusedRowIndex"
+        [allowColumnReordering]="true"
+        [focusedRowEnabled]="true"
+      >
+        <dxo-load-panel [enabled]="false"></dxo-load-panel>
+        <dxo-scrolling
+          mode="infinite"
+          columnRenderingMode="virtual"
+          [preloadEnabled]="true"
+        >
+        </dxo-scrolling>
+        <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
+        <dxo-selection
+          [mode]="'single'"
+          showCheckBoxesMode="always"
+          selectAllMode="page"
+        >
+        </dxo-selection>
+        <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+        <!-- <dxi-column
+          cellTemplate="markerConfigTemplate"
+          [width]="0"
+          [fixed]="true"
+        ></dxi-column> -->
+      </dx-data-grid>
+      </div>
+  </div>
+</ng-template>
+
+
+<ng-template #dropDownMode></ng-template>
