@@ -1,0 +1,26 @@
+/* WEB */
+@media (min-width: 768){
+    .big-shadows{
+        box-shadow: 0px 10px 30px rgba(67, 63, 75, 0.13);
+    }
+
+    .small-shadows{
+        box-shadow: 0px 5px 15px rgba(67, 63, 75, 0.1);
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 767){
+    .top-bar-shadows{
+        box-shadow: 0px 5px 15px rgba(67, 63, 75, 0.08);
+    }
+
+    .bottom-bar-shadows{
+        box-shadow: 0px -5px 15px rgba(67, 63, 75, 0.08);
+    }
+
+    .small-shadows{
+        box-shadow: 0px 2.5px 4px rgba(67, 63, 75, 0.1);
+    }
+}

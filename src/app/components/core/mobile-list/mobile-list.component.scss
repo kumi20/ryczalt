@@ -1,0 +1,99 @@
+@import "../../../../assets/scss/colors";
+
+.item-list-mobile {
+  display: flex;
+  align-items: baseline;
+  box-sizing: border-box;
+  padding: 10px 6px 10px 12px;
+  border-radius: 4px;
+}
+
+.header-list {
+  position: relative !important;
+  left: -12px;
+  top: -16px;
+  padding: 16px 12px;
+  width: calc(100% + 24px);
+}
+
+.marginBottom {
+  margin-bottom: 10px;
+}
+
+.btn-header-submenu {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  padding: 6px;
+  padding-top: 7px;
+  &:active {
+    background-color: var(--neutral-90, $neutral-90);
+  }
+}
+
+.item-list-mobile-touched {
+  box-sizing: border-box;
+  height: 40px;
+  border-radius: 4px;
+  padding: 10px 6px 10px 12px;
+  background: var(--neutral-90, $neutral-90);
+}
+
+.p-header-settings {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--neutral-30, $neutral-30);
+  display: inline-block;
+  margin-bottom: 0px;
+  &.has-icon {
+    display: flex;
+    gap: 12px;
+    line-height: 21px;
+  }
+  .icon {
+    font-size: 18px;
+  }
+}
+
+.absui-icon--check-mobile:before {
+  content: "\e5ca";
+  font-size: 20px;
+  color: var(--brand-10, $brand-10);
+}
+
+.absui-backe:before {
+  content: "\eaab";
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+  color: var(--neutral-30, $neutral-30);
+}
+
+.icon-item-list {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.p-item-list-name {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-30, $neutral-30);
+  display: inline-block;
+  margin-bottom: 0px;
+  position: relative;
+  top: -3px;
+  flex: 1 0 auto;
+}
+
+::ng-deep {
+  .absui-icon--arrow-drop-right-user-panel:before {
+    top: auto;
+    left: auto;
+  }
+}

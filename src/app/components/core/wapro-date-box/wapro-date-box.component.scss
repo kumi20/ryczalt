@@ -1,0 +1,202 @@
+@import "../../../../assets/scss/colors";
+
+.btn-box {
+  width: 49px;
+  height: 28px;
+  border-radius: 6px;
+  padding-top: 1.5px;
+  padding-bottom: 1.5px;
+  box-sizing: border-box;
+  border: 1px solid $neutral-50;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  display: inline-block;
+}
+
+.dx-calendar-cell.dx-calendar-contoured-date span {
+  box-shadow: 0 0 0 2px $brand-10;
+}
+
+.dx-calendar-cell.dx-state-hover span {
+  background-color: $neutral-85;
+  color: $neutral-10;
+}
+
+.dx-calendar-cell.dx-calendar-selected-date span {
+  color: $neutral-100;
+  background-color: $brand-10;
+}
+
+.dx-calendar-cell.dx-calendar-today span {
+  border: 2px solid $brand-10;
+}
+
+.dx-calendar-cell.dx-calendar-selected-date,
+.dx-calendar-cell.dx-calendar-selected-date.dx-calendar-today {
+  color: $neutral-100;
+  box-shadow: inset 0 0 0 1000px transparent !important;
+  font-weight: 400;
+}
+
+.dx-calendar-cell.dx-calendar-contoured-date:not(.dx-calendar-empty-cell) {
+  //box-shadow: inset 0 0 0 1px $text-brand;
+}
+
+.date-hover {
+  border: 1px solid $neutral-30 !important;
+}
+
+.btn-box-hover {
+  width: 49px;
+  height: 28px;
+  border-radius: 6px;
+  padding-top: 1.5px;
+  padding-bottom: 1.5px;
+  box-sizing: border-box;
+  border: 1px solid $neutral-30;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  display: inline-block;
+}
+
+.on-focus {
+  box-shadow: 0px 0px 8px rgba(88, 99, 106, 0.3);
+  border-radius: 4px;
+}
+
+.seperator {
+  width: 1px;
+  height: 20px;
+  background: $neutral-80;
+  position: absolute;
+  margin-top: 1.5px;
+}
+.dx-popup-content .title-pop-up .seperator {
+  margin-top: 4px !important;
+}
+.plus-btn {
+  box-sizing: border-box;
+  padding: 3px;
+  height: 21px;
+  position: relative;
+  width: 22px;
+  top: 1px;
+  cursor: pointer;
+  float: left;
+  margin-left: 2px;
+  &:hover {
+    background: $neutral-85;
+    border-radius: 4px;
+  }
+}
+
+.minus-btn {
+  box-sizing: border-box;
+  padding: 3px;
+  height: 21px;
+  position: relative;
+  width: 22px;
+  top: 1px;
+  cursor: pointer;
+  float: left;
+  &:hover {
+    background: $neutral-85;
+    border-radius: 4px;
+  }
+}
+
+.absui-icon--calendar-month-unselect::before {
+  content: "\eb0d";
+  font-size: 16px;
+  line-height: 16px;
+  color: $neutral-30;
+  position: absolute;
+  top: 5px;
+  left: 4px;
+}
+
+.absui-icon--add::before {
+  content: "\e145";
+  font-size: 16px;
+  line-height: 16px;
+  color: $neutral-30;
+  position: absolute;
+  top: 5px;
+  //left: 251px;
+  right: 5px;
+}
+
+.absui-icon--remove::before {
+  content: "\e15b";
+  font-size: 16px;
+  line-height: 16px;
+  color: $neutral-30;
+  position: absolute;
+  top: 5px;
+  // left: 227.5px;
+  right: 26px;
+}
+
+.wapro-date-box {
+  display: inline-block;
+  position: relative;
+  padding-left: 2px;
+  //top: -9px;
+  // border-right: none !important;
+  // border-top-right-radius: 0 !important;
+  // border-bottom-right-radius: 0 !important;
+}
+
+.wapro-date-box.dx-widget input,
+.dx-widget textarea {
+  font-family: "Roboto";
+  padding-top: 9px;
+  padding-left: 2px;
+  font-size: 0.75rem;
+  line-height: 16px;
+  color: $neutral-30;
+}
+
+.wapro-date-box
+  .dx-texteditor-buttons-container
+  > .dx-button.dx-button-has-icon:not(.dx-button-has-text)
+  > .dx-button-content {
+  padding: 6px;
+  height: 20px;
+  width: 18px;
+}
+
+.dx-button-mode-text.dx-state-hover {
+  background-color: $neutral-85;
+  border-radius: 4px;
+  //height: 23px;
+}
+
+.dx-button-mode-text.dx-state-focused {
+  background-color: $neutral-85;
+  border-radius: 4px;
+  // height: 23px;
+}
+
+.dx-button-content {
+  margin-left: 1px;
+}
+
+.no-max-width {
+  max-width: none !important;
+}
+
+.disabledBtn {
+  display: none !important;
+}
+
+:host ::ng-deep {
+  .dx-texteditor-buttons-container > .dx-button {
+    margin: 1px;
+    border-radius: 6px;
+    height: 21px;
+    margin-right: 3.5px;
+  }
+}

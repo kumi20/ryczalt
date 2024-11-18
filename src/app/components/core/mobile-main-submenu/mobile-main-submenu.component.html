@@ -1,0 +1,53 @@
+<div class="header-submenu-main-menu-mobile">
+  <div class="d-flex flex-row">
+    <div>
+      <div class="btn-header-submenu">
+        <i
+          class="icon absui-icon--arrow-back-mobile-menu"
+          (click)="backToParent()"
+        ></i>
+      </div>
+    </div>
+    <div style="padding-top: 7px; width: calc(100vw - 80px)">
+      <p class="title-menu-parent">{{ items.name | translate }}</p>
+    </div>
+    <div>
+      <div class="btn-header-submenu">
+        <i class="icon absui-icon--close" (click)="onCloseSubmenu()"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-main-submenu-mobile">
+  @for (item of items.items; track item) {
+  <div>
+    <div
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="onItemClickMobile(item)"
+      class="mobile-main-submenu"
+      [ngClass]="{
+        'tap-submenu': isTap == item.id,
+        submenuActive: router.isActive(item.url, false) && item.url != null
+      }"
+      (touchstart)="touchStart(item)"
+      (touchend)="touchEnd()"
+    >
+      <p class="title-submenu">{{ item.name | translate }}</p>
+      @if (item.items && item.items.length >= 1) {
+      <i
+        class="icon absui-icon--arrow-drop-right-user-panel"
+        style="
+          position: relative;
+          left: 0px;
+          top: -38px;
+          margin-right: 10px;
+          float: right;
+        "
+      ></i>
+      }
+    </div>
+  </div>
+  }
+</div>

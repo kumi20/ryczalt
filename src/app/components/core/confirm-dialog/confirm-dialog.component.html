@@ -1,0 +1,150 @@
+<dx-popup
+  [width]="width"
+  height="auto"
+  position="center"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  [showTitle]="false"
+  [title]="title | translate"
+  [(visible)]="isVisible"
+  (visibleChange)="ngModelChange()"
+  (onShown)="event.setFocus(nobtn)"
+  [wrapperAttr]="{ id: unicalGuid, class: 'confirm-dialog-wapro' }"
+  (onInitialized)="onInit($event)"
+  [minWidth]="420"
+>
+  <div *dxTemplate="let content of 'content'">
+    <div class="dialog-body">
+      @if (!groupMsg && confirmText) {
+      <div
+        class="dialog-icon"
+        [ngClass]="{
+          'confirme-warning': kindDialog == 'warning',
+          'confirme-information': kindDialog == 'information',
+          'confirme-question': kindDialog == 'question',
+          'confirme-delete': kindDialog == 'error' || showIcon,
+          'no-width': !showIcon && !kindDialog
+        }"
+      ></div>
+      }
+      <div
+        class="dialog-main-text"
+        [ngClass]="{ 'width-all': !showIcon && !kindDialog }"
+      >
+        @if (confirmHeader) {
+        <p class="confirmHeader" [innerHTML]="confirmHeader | translate"></p>
+        }
+        <p
+          class="confirmMsg"
+          [innerHTML]="confirmText | translate : paramsMsg"
+        ></p>
+      </div>
+    </div>
+
+    <div class="dialog-footer">
+      @if (!btnConfig) {
+      <dx-button
+        type="success"
+        stylingMode="contained"
+        [text]="'yes' | translate"
+        (onClick)="onRemove()"
+        [id]="'confirm' + unicalGuid"
+        #yesbtn
+        (keydown.arrowright)="event.setFocus(nobtn)"
+      >
+      </dx-button>
+      <dx-button
+        type="danger"
+        stylingMode="contained"
+        [text]="'no' | translate"
+        (onClick)="onClose()"
+        #nobtn
+        (keydown.arrowleft)="event.setFocus(yesbtn)"
+      ></dx-button>
+      } @if (btnConfig == 'close') {
+      <dx-button
+        type="danger"
+        stylingMode="contained"
+        [text]="'buttons.close' | translate"
+        (onClick)="onClose()"
+        #nobtn
+      >
+      </dx-button>
+      } @if (btnConfig == 'saveCancel') {
+      <dx-button
+        type="success"
+        stylingMode="contained"
+        [text]="'buttons.save' | translate"
+        (onClick)="onRemove()"
+        [id]="'save' + unicalGuid"
+        (keydown.arrowright)="event.setFocus(nobtn)"
+        #yesbtn
+      >
+      </dx-button>
+      <dx-button
+        type="danger"
+        stylingMode="contained"
+        [text]="'buttons.cancel' | translate"
+        (onClick)="onClose()"
+        #nobtn
+        (keydown.arrowleft)="event.setFocus(yesbtn)"
+      ></dx-button>
+      } @if (btnConfig == 'yesnocancel') {
+      <dx-button
+        type="success"
+        stylingMode="contained"
+        [text]="'yes' | translate"
+        (onClick)="onRemove()"
+        [id]="'confirm' + unicalGuid"
+        #yesbtn
+        (keydown.arrowright)="event.setFocus(nobtn)"
+      >
+      </dx-button>
+      <dx-button
+        [text]="'no' | translate"
+        type="danger"
+        stylingMode="contained"
+        (onClick)="onClose()"
+        #nobtn
+        (keydown.arrowleft)="event.setFocus(yesbtn)"
+        (keydown.arrowright)="event.setFocus(cancelbtn)"
+      >
+      </dx-button>
+      <dx-button
+        type="danger"
+        stylingMode="contained"
+        [text]="'buttons.cancel' | translate"
+        (onClick)="onCancel()"
+        #cancelbtn
+        (keydown.arrowleft)="event.setFocus(nobtn)"
+      >
+      </dx-button>
+      } @if (btnConfig == 'continuegiveup') {
+      <dx-button
+        type="success"
+        stylingMode="contained"
+        [text]="'buttons.continue' | translate"
+        (onClick)="onRemove()"
+        [id]="'confirm' + unicalGuid"
+        #yesbtn
+        (keydown.arrowright)="event.setFocus(nobtn)"
+      >
+      </dx-button>
+      <dx-button
+        type="danger"
+        stylingMode="contained"
+        [text]="'buttons.giveup' | translate"
+        (onClick)="onClose()"
+        #nobtn
+        (keydown.arrowleft)="event.setFocus(yesbtn)"
+      >
+      </dx-button>
+      }
+    </div>
+  </div>
+</dx-popup>
+
+<ng-keyboard-shortcuts [shortcuts]="shortcuts" [disabled]="!isVisible">
+</ng-keyboard-shortcuts>

@@ -1,0 +1,133 @@
+@import "../../../../assets/scss/colors";
+
+.no-width {
+  width: 0px !important;
+}
+
+.width-all {
+  width: 100% !important;
+}
+
+.footerConfirm {
+  height: 54px;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  padding: 14px 14px;
+}
+
+.number-1::before {
+  content: "\eb7d";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-2::before {
+  content: "\eb7e";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-3::before {
+  content: "\eb7f";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-4::before {
+  content: "\eb80";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-5::before {
+  content: "\eb81";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-6::before {
+  content: "\eb82";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-7::before {
+  content: "\eb83";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-8::before {
+  content: "\eb84";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.number-9::before {
+  content: "\eb85";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  color: $neutral-50;
+}
+
+.readMore {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 14px;
+  color: $neutral-30;
+  cursor: pointer;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+.readMoreClose {
+  padding-bottom: 10px;
+  border-bottom: 1px solid $neutral-80;
+  margin-bottom: 10px;
+  transition-duration: 250ms;
+}
+
+.confirmMsg {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: $text-light-gray;
+  margin: 0;
+}
+
+.confirmHeader {
+  font-size: 14px;
+  line-height: 20px;
+  color: $text-gray;
+  font-weight: 600;
+}

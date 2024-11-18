@@ -1,0 +1,160 @@
+@import "./colors";
+
+.title-accordion {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 19px;
+  color: $neutral-30;
+}
+
+.no-padding {
+  &.mobile-accordion .dx-accordion-item-body {
+    padding: 10px 0;
+    .flex-box-column {
+      width: 100% !important;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  .dx-accordion-item-body {
+    overflow: hidden;
+    padding: 8px 0px 22px;
+    font-size: 14px;
+  }
+}
+
+dx-accordion.internalAccordion {
+  .dx-accordion-item-title.dx-accordion-item-title {
+    padding-left: 10px !important;
+  }
+}
+
+dx-accordion.normal-text .dx-accordion-item-title {
+  color: $text-dark-gray !important;
+  border-bottom: 1px solid $neutral-80 !important;
+  &::before {
+    color: $text-dark-gray !important;
+  }
+}
+
+dx-accordion.internalAccordion {
+  .dx-accordion-item.dx-state-hover > .dx-accordion-item-title {
+    background-color: transparent;
+    color: $brand-10 !important;
+    border-bottom: 1px solid $brand-10 !important;
+    &::before {
+      color: $brand-10 !important;
+    }
+  }
+  .dx-accordion-item-title {
+    font-family: Roboto-Medium;
+    font-size: 0.75rem !important;
+    font-weight: normal;
+    color: $neutral-30 !important;
+    padding-left: 0 !important;
+    border-bottom: 1px solid $neutral-50 !important;
+  }
+  .dx-accordion-item-title::before {
+    font-weight: 400;
+    color: $neutral-10 !important;
+    content: "\e313";
+    font-family: Lumen;
+    font-size: 16px;
+    margin-left: 9px;
+    margin-right: 0;
+    line-height: 16px;
+  }
+  .dx-accordion-item.dx-state-active > .dx-accordion-item-title {
+    background-color: transparent !important;
+  }
+  .dx-accordion-item.dx-accordion-item-opened .dx-accordion-item-title {
+    border-bottom: 1px solid $brand-10 !important;
+    color: $brand-10 !important;
+    font-size: 0.75rem;
+    // line-height: 15px;
+  }
+}
+
+.dx-accordion-item {
+  border: none;
+  border-bottom: 1px solid $neutral-50;
+}
+
+.dx-accordion-item.dx-state-active:not(.dx-accordion-item-opened) > .dx-accordion-item-title {
+  color: #333;
+  background-color: transparent;
+}
+
+.dx-accordion-item.dx-state-hover > .dx-accordion-item-title {
+  background-color: transparent;
+  color: $brand-10 !important;
+  border-bottom: 1px solid $brand-10 !important;
+  &::before {
+    color: $brand-10 !important;
+  }
+}
+
+.dx-accordion-item-title {
+  font-family: Roboto-Medium;
+  font-style: normal;
+  //font-weight: bold;
+  //font-size: 1rem;
+  //line-height: 19px;
+  font-size: 0.75rem;
+  line-height: 15px;
+  color: $neutral-20;
+  box-sizing: border-box;
+  background-color: transparent;
+  //padding: 30px 15px 11px 15px;
+  /* padding: 9px 12px; */
+}
+
+.dx-accordion-item-title::before {
+  font-weight: 400;
+  color: $neutral-10;
+  content: "\e313";
+  font-family: Lumen;
+  font-size: 16px;
+  margin-left: 9px;
+  margin-right: 0;
+  line-height: 16px;
+}
+
+.dx-state-focused.dx-accordion-item {
+  border-color: $neutral-30;
+}
+
+dx-accordion {
+  background-color: transparent !important;
+  .dx-accordion-item {
+    border: none !important;
+    .dx-accordion-item-title {
+      padding-top: 13px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      border-bottom: 1px solid $neutral-80;
+    }
+    &.dx-accordion-item-opened > {
+      .dx-accordion-item-title {
+        border-bottom: 1px solid $brand-10;
+        color: $brand-10;
+        font-size: 0.75rem;
+        line-height: 15px;
+        &::before {
+          content: "\e316";
+          color: $brand-10 !important;
+        }
+      }
+    }
+  }
+  .c-frame-row h5 {
+    font-size: 0.8125rem;
+    line-height: 15px;
+  }
+}
+
+.dx-accordion-item-body {
+  padding-top: 24px;
+}

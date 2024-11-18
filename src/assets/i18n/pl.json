@@ -1,0 +1,443 @@
+{
+  "actions": "Akcje",
+  "theVariantHasBeenChanged": "Wariant został zmieniony. Zmiana będzie widoczna po przelogowaniu.",
+  "payForSelectedLicenses": "Zapłać za wybrane licencje",
+  "endTrialPeriod": "Zakończ okres testowy",
+  "paymentLinkGenerated": "Wygenerowano link do płatności",
+  "youAreCurrentlyUsingTheTrialPeriod": "Aktualnie korzystasz z okresu próbnego usługi, czy chcesz zakończyć okres testowy i przejść do trybu produkcyjnego?<br><br>Operacja wiąże się z wyznaczeniem nowej daty ważności usługi oraz dokonaniem zakupu abonamentu (operacja jest nieodwracalna). <br><br>Po zakończeniu procesu zostaniesz przekierowany do strony płatności a także otrzymasz fakturę pro forma w wiadomości email. Po dokonaniu płatności należy ponownie zalogować się do usługi aby pobrać nowy stan abonamentu.<br><br>Czy chcesz kontynuować?",
+  "changeVariant": "Zmień wariant",
+  "changingVariant": "Zmiana wariantu",
+  "expireDate": "Data wygaśnięcia",
+  "numberOfCompanies": "Liczba firm",
+  "listOfCompanies": "Lista firm",
+  "assignedUsers": "Przypisani użytkownicy",
+  "yourServices": "Twoje usługi",
+  "totalLicenses": "Licencje łącznie",
+  "license": "Licencja",
+  "pleaseWait": "Proszę czekać",
+  "dataIsLoading": "Trwa ładowanie danych...",
+  "application": "Aplikacja",
+  "applications": "Aplikacje",
+  "adding": "Dodawanie",
+  "editing": "Edycja",
+  "backToTheLoginPage": "Powrót do ekranu logowania",
+  "yourControlCenter": "Twoje Centrum sterowania",
+  "availableApps": "Dostępne aplikacje",
+  "accountStatistics": "Statystyki konta",
+  "next": "Dalej",
+  "notifications": "Powiadomienia",
+  "messages": "Wiadomości",
+  "noDataText": "Brak danych",
+  "back": "Wstecz",
+  "no-data": "Brak danych",
+  "searchIn": "Szukaj w",
+  "select": "Wybierz",
+  "accountCreation": "Zakładanie konta",
+  "registration": "Rejestracja",
+  "downloadFromGus": "Pobierz z GUS",
+  "activation": "Aktywacja",
+  "creatingAnAccount": "Zakładanie konta",
+  "text-step-one": "Abyśmy mogli utworzyć dla Ciebie konto, potrzebny będzie Twój e-mail.",
+  "weNeedSomeMoreInformationAboutYou": "Potrzebujemy jeszcze kilku informacji o Tobie.",
+  "specificInformation": "Dane szczegółowe",
+  "insertNIP": "Podaj NIP",
+  "companyName": "Nazwa firmy",
+  "block": "Blokuj dostęp do aplikacji",
+  "unblock": "Odblokuj dostęp do aplikacji",
+  "blockAccessToRDP": "Aktywuj dostęp do RDP",
+  "unblockAccessToRDP": "Dezaktywuj dostęp do RDP",
+  "description": "Opis",
+  "cantSaveToClipboard": "Błąd przy kopiowaniu tekstu do schowka",
+  "savedToClipboard": "Zapisano do schowka",
+  "createdAccount": "Założyłeś właśnie konto w naszym serwisie. Sprawdź swojego e-maila.<br>Wysłaliśmy na niego link aktywacyjny.",
+  "integrationTokens": "Tokeny integracyjne",
+  "addNewToken": "Dodaj nowy token",
+  "validTo": "Ważny do",
+  "createdAt": "Utworzony",
+  "active": "Aktywny",
+  "inactive": "Nieaktywny",
+  "menu":{
+    "start": "Start",
+    "groups": "Grupy",
+    "users": "Użytkownicy",
+    "licenses": "Licencje",
+    "companies": "Firmy",
+    "log-out": "Wyloguj",
+    "administrator": "Admin",
+    "agreements": "Regulaminy",
+    "clients": "Klienci",
+    "navigationPanelUser":{
+      "personalize": "Personalizuj",
+      "languageApplications": "Język aplikacji",
+      "polishLanguage": "Polski",
+      "englishLanguage": "Angielski",
+      "passwordChange": "Zmiana hasła",
+      "versionInformation": "Informacje o wersji",
+      "help": "Pomoc"
+    },
+    "userList": "Lista użytkowników",
+    "listOfUsersByCompanies": "Lista użytkowników wg firm",
+    "databases": "Bazy danych",
+    "historyOfMail": "Historia maili"
+  },
+  "start":{
+    "userInfo":{
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "email": "Email",
+      "names": "Imiona",
+      "companyVAT": "NIP firmy",
+      "phoneNumber": "Numer telefonu"
+    }
+  },
+  "agreement":{
+    "agreementCode": "Kod zgody",
+    "agreementUrl": "Adres URL",
+    "content": "Treść",
+    "validFrom": "Ważne od",
+    "agreementType": "Typ zgody"
+  },
+  "logOn":{
+    "title": "Zaloguj się do systemu",
+    "login": "Login",
+    "password": "Hasło",
+    "register": "Zarejestruj się",
+    "btn-log": "Zaloguj się",
+    "repeatPsw": "Powtórz hasło",
+    "login-required": "Login jest wymagany",
+    "password-required": "Hasło jest wymagane",
+    "header": "portal zarządzający",
+    "dont-remember-psw": "Nie pamiętam hasła",
+    "error-log-on": "Błędne hasło lub login"
+  },
+  "session":{
+    "end": "Do końca sesji zostało ",
+    "extensionOfTheSession": "Przedłuż sesję"
+  },
+  "companies":{
+    "partnerVat": "NIP partnera",
+    "pleaseEnterAvalidVatNumber": "Wprowadź poprawny NIP",
+    "addNewCompany": "Dodaj nową firmę",
+    "getFromGUS": "Pobierz dane z GUS",
+    "title": "Firmy",
+    "chooseCompany": "Wybierz firmę",
+    "grid": {
+      "columns": {
+        "name": "Nazwa",
+        "vat": "NIP",
+        "dbHost": "Host Bazy Danych",
+        "dbDatabase": "Baza danych",
+        "numberOfUsers": "Liczba użytkowników"
+      }
+    },
+    "form": {
+      "title": "Dodaj firmę",
+      "city": "Miejscowość",
+      "street": "Ulica",
+      "postalCode": "Kod pocztowy",
+      "phone": "Telefon",
+      "succes-response": "Dodano nową firmę",
+      "isActive": "Aktywna"
+    }
+  },
+  "users":{
+    "activeUsers": "Aktywni użytkownicy",
+    "movedToArchive": "Przeniesiono do archiwum",
+    "doYouWantRestoreUser": "Czy chcesz przywrócić użytkownika?",
+    "moveToArchive": "Przenieś do archiwum",
+    "restoreFromArchive": "Przywróć z archiwum",
+    "dateAddToArchive": "Data dodania do archiwum",
+    "archive": "Archiwum",
+    "selectAplication": "Wybierz aplikację",
+    "doYpuWantMoveUserToArchive": "Opcja przeniesienia do archiwum powoduje brak możliwości używania przez wskazanego użytkownika aplikacji. Przywrócenie użytkownika z archiwum możliwe jest najwcześniej po 30 dniach.<br><br>Czy chcesz przenieść użytkownika <b>{{firstName}} {{lastName}}</b> do <b>archiwum</b>?",
+    "changeDatabaseUserandPsw": "Zmień użytkownika i hasło bazy danych",
+    "doYouWantAddUserToGroup": "Czy chcesz dodać użytkownika do grupy?",
+    "theUserAdditionProcessHasBeenCompleted": "Zakończono proces dodawania użytkownika. Na wskazany adres email został wysłany link do potwierdzenia poprawności email.<br>Użytkownik powinien skorzystać z linku aby potwierdzić email oraz ustawić hasło jeśli jest to nowe konto.",
+    "inviteNewUsersToUseTheApp": "Zaproś nowych użytkowników do korzystania z aplikacji wapro anywhere.",
+    "youDontNeedToCreateAnewAccountToManageMoreCompanies": "Nie musisz zakładać nowego konta aby zarządzać większą ilością firm.",
+    "addNewUser": "Dodaj nowego użytkownika",
+    "nameFilter": "Filtr",
+    "impersonate": "Impersonacja",
+    "cancelImpersonate": "Zakończ impersonacje",
+    "groupByCompanyName": "Grupuj po nazwie firmy",
+    "company": "Firma",
+    "user": "Użytkownik",
+    "title": "Użytkownicy",
+    "import": "Importuj",
+    "group": "Grupa",
+    "addUserToGroup": "Dodaj użytkownika do grupy",
+    "removeUserFromGroup": "Usuń użytkownika z grupy",
+    "grid": {
+      "columns" : {
+        "firstName": "Imię",
+        "lastName": "Nazwisko",
+        "email": "Email",
+        "phone": "Telefon",
+        "companies": "Firmy",
+        "groups": "Grupy",
+        "numberOfUsers": "Liczba użytkowników"
+      }
+    },
+    "isActive": "Aktywny",
+    "form": {
+      "title":"Dodaj użytkownika"
+    }
+  },
+  "groups":{
+    "userGroupManagement": "Zarządzanie grupami użytkowników",
+    "assignToGroup": "Przydziel do grupy",
+    "manageUserGroups": "Zarządzaj grupami użytkowników",
+    "youCanAssignUsersToGroupsAndGiveThemPermissions": "Możesz przydzielić użytkowników do grup i nadawać im uprawnienia.",
+    "title": "Grupy",
+    "form":{
+      "title": "Dodaj Grupę"
+    },
+    "grid": {
+      "columns": {
+        "name": "Nazwa",
+        "permissions": "Uprawnienia"
+      }
+    }
+  },
+  "permissions":{
+    "title": "Uprawnienia",
+    "grid": {
+      "columns" : {
+        "permissionCode": "Kod Uprawnienia",
+        "module": "Moduł",
+        "rule": "Reguła",
+        "read": "Odczyt",
+        "write": "Zapis",
+        "update": "Aktualizacja"
+      }
+    },
+    "form":{
+      "title": "Edytuj uprawnienia grupy"
+    }
+  },
+  "buttons":{
+    "add": "Dodaj",
+    "delete": "Usuń",
+    "edit": "Popraw",
+    "goto": "Przejdź",
+    "choose": "Wybierz",
+    "close": "Zamknij",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "columns": "Kolumny",
+    "setDefault": "Ustaw jako domyślny",
+    "setDefaultSettings": "Przywróć ustawienia domyślne"
+  },
+  "user-groups":{
+    "add-title": "Dodaj grupy do użytkownika"
+  },
+  "user-companies":{
+    "add-title": "Dodaj użytkownika do firmy"
+  },
+
+  "yes": "Tak",
+  "no": "Nie",
+  "confirm": "Zatwierdź",
+  "information": "Informacja",
+  "confirmDelete": "Czy jesteś pewien, że chcesz usunąć ten rekord?",
+  "deleted-record": "Rekord został usunięty",
+  "updated-record": "Dane zostały zaktualizowane",
+  "error-adding-record": "Błąd dodawania rekordu",
+  "succes-response": "Dane zsotały zapisane",
+  "empty-value": "(Puste)",
+  "form": {
+    "required": "Pole jest wymagane",
+    "email": "Podaj poprawny adres email"
+  },
+  "form-financial-document":{
+    "title": "Dodawanie dokumentu finansowego",
+    "type": "Typ",
+    "number": "Numer",
+    "date": "Data",
+    "bill": "Rachunek",
+    "the-titel": "Tytułem",
+    "exchange": "walutowy",
+    "payer-type":{
+      "payer-type": "Typ płatnika",
+      "contractor": "Kontrahent",
+      "worker": "Pracownik",
+      "office": "Urząd"
+    },
+    "payer": "Płatnik",
+    "operation-code": "Kod operacji",
+    "statement-number": "Numer wyciągu",
+    "tabs":{
+      "items": "Pozycje",
+      "other": "Inne",
+      "payment": "Wpłata",
+      "split-payment": "Podzielona płatność"
+    },
+    "grid":{
+      "item-description": "Opis pozycji",
+      "amount": "Kwota",
+      "currency-amount": "Kwota wal",
+      "payer-name": "Nazwa płatnika",
+      "impact": "Wpływ",
+      "outflow": "Wypływ"
+    },
+    "operations": "Operacje",
+    "show-reckoning": "Pokaż rozrachunek",
+    "count": "Razem"
+  },
+  "columnChooser": {
+    "title": "Dostępne kolumny",
+    "popupTitle": "Ustawienia tabeli"
+  },
+  "messagesPanel":{
+    "text": "Treść wiadomości",
+    "dataFrom": "Data od",
+    "dataTo": "Data do",
+    "textNotification": "Treść powiadomienia",
+    "priority": "Priorytet"
+  },
+  "userGuide": {
+    "runGuideAgain": "Podpowiedzi samouczka możesz uruchomić klikając w ikonkę",
+    "users":{
+      "1": {
+        "title": "Użytkownicy",
+        "text": "Na liście użytkowników widać wszystkie konta, które utworzyłeś.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "2": {
+        "title": "Użytkownicy",
+        "text": "Korzystając z opcji Dodaj lub Popraw możesz dodać lub zmienić dane użytkownika.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "3": {
+        "title": "Użytkownicy",
+        "text": "Opcje Dodaj lub Usuń użytkownika z grupy umożliwiają Ci przypisanie użytkownika do grupy uprawnień.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "4": {
+        "title": "Użytkownicy",
+        "text": "Za pomocą opcji Blokuj dostęp do aplikacji i Odblokuj dostęp do aplikacji możesz odebrać czasowo dostęp użytkownikowi do aplikacji, dzięki czemu umożliwisz włączenie innego użytkownika.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "5": {
+        "title": "Użytkownicy",
+        "text": "Opcja Importuj dedykowana jest dla użytkowników, którzy mają konta w aplikacji i chcą je zaimportować do Wapro Anywhere Online, zmieniając ich loginy na adresy email.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      }
+    },
+    "dashboard": {
+      "1": {
+        "title": "Start",
+        "text": "Zakładka Start zawiera podsumowanie Twojego konta. Możesz w tym miejscu szybko sprawdzić jakich masz użytkowników, firmy, a także aplikacje.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "2": {
+        "title": "Grupy",
+        "text": "Zakładka Grupy umożliwia tworzenie i zarządzanie uprawnieniami do grup użytkowników.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "3": {
+        "title": "Użytkownicy",
+        "text": "Zakładka Użytkownicy umożliwia podgląd listy użytkowników, ich dodawanie, a także przydzielanie dostępu do aplikacji. Możesz także zaimportować z aplikacji już istniejące konta.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "4": {
+        "title": "Firmy",
+        "text": "Zakładka Firmy umożliwia podgląd firm, które masz dostępne w ramach swojego konta.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "5": {
+        "title": "Szybkie akcje",
+        "text": "Korzystając z szybkich akcji możesz dodać lub zaimportować użytkownika, a także przydzielić go do grupy.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "6": {
+        "title": "Statystyki",
+        "text": "Sekcja statystyk w liczbach pokazuje ile na twoim koncie jest firm, użytkowników oraz grup użytkowników.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "7": {
+        "title": "Sekcja Firmy",
+        "text": "Sekcja Firmy to szybki podgląd utworzonych firm.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "8": {
+        "title": "Dostępne aplikacje",
+        "text": "W sekcji Dostępne aplikacje znajdziesz informacje o wykupionych aplikacjach oraz liczbie dodanych użytkowników.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "9": {
+        "title": "Sekcja Użytkownicy",
+        "text": "Sekcja Użytkownicy pozwala Ci od razu zapoznać się z listą loginów, które utworzyłeś w ramach swojego konta oraz podejrzeć do jakiej grupy mają dostęp.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      }
+    }
+  },
+  "licenses":{
+    "addInterconector": "Dodaj Interkonektor",
+    "download": "Pobierz",
+    "downloadAndInstal": "Pobierz i zainstaluj Wapro Interkonektor przez Instalator Wapro ERP u siebie na komputerze.",
+    "licenseNumber": "Numer licencji",
+    "variantName": "Wariant",
+    "versionNumber": "Numer wersji",
+    "numberOfUsers":"Liczba użytkowników",
+    "promotionCode": "Kod promocyjny",
+    "addLicense": "Dodawanie licencji",
+    "updateVariant": "Aktualizuj wariant",
+    "orderSummary": "Podsumowanie zamówienia",
+    "currentVariant": "Aktualny wariant",
+    "newVariant": "Nowy wariant",
+    "monthlyToPay": "Miesięcznie do zapłaty",
+    "updatedVariant": "Zaktualizowany wariant!",
+    "yourNewVariant": "Twój nowy wariant jest już aktywny. Zaloguj się ponownie do aplikacji aby korzystać ze wszystkich funkcji nowego wariantu.",
+    "seeetailedDifferencesBetweenVariants": "Jeśli chcesz zobaczyć na żywo różnice między wariantami zapoznaj się z wersją demo",
+    "continueInStore": "Kontynuuj w sklepie",
+    "toPay": "Do zapłaty za wybrane licencje: <br><br><b>{{net}}</b> PLN netto<br><b>{{gross}}</b> PLN brutto<br><br>Czy chcesz kontynuować?"
+  },
+  "clients":{
+    "activeFrom": "Aktywny od",
+    "activeTo": "Aktywny do",
+    "addNewClient": "Dodaj nowego klienta",
+    "editClient": "Edytuj klienta",
+    "goToArchive": "Wyłącza możliwość pracy z aplikacją oraz nie uwzględnia go w abonamencie.",
+    "restoreFromArchive": "Przywrócenie z archiwum powoduje włączenie użytkownika i uwzględnienie go w abonamencie. Przywrócić można po 30 dniach od dodania.",
+    "restoreConfirm": "Przywrócenie użytkownika z archiwum umożliwi mu pracę z aplikacją i uwzględni go w liczbie użytkowników do abonamentu.<br><br>Czy chcesz przywrócić użytkownika z archiwum?"
+  },
+  "emailHistory":{
+    "recipient": "Odbiorca",
+    "subject": "Temat",
+    "sendDate": "Data wysłania",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "companyName":"Nazwa firmy",
+    "email": "Email",
+    "emailSent": "Email wysłany"
+  }
+}

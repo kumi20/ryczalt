@@ -1,0 +1,355 @@
+@import "./fonts";
+@import "./colors";
+
+$font-size: 0.75rem;
+$line-height: 14px;
+
+.dx-list .dx-empty-message, .dx-list-item {
+    border-top: none !important;
+    color: $neutral-30!important;
+    border-radius: 6px;
+}
+
+.dx-list .dx-scrollable-container{
+    width: 100%;
+}
+
+.dx-list.error-list .dx-empty-message, .error-list .dx-list-item-content{
+    padding: 0 !important;
+}
+.error-list .dx-item.dx-list-item{
+    background-color: $neutral-95;
+    margin-bottom: 6px;
+    &:hover{
+        background-color: $neutral-90;
+    }
+}
+
+.dx-list-group-header {
+  font-weight: 700;
+  padding: 0px 0px 0px;
+  border-top: none;
+  border-bottom: 2px solid $neutral-70;
+}
+
+.dx-list-group-header {
+  font-weight: 700;
+  padding: 0px 10px 0px;
+  border-top: 1px solid $neutral-70;
+  border-bottom: none;
+}
+
+.dx-list .dx-empty-message, .dx-list-item-content {
+    padding: 4px;
+    padding-left: 15px;
+}
+
+.dx-list {
+  margin: 0;
+  min-height: 2em;
+}
+
+.dx-menu-base .dx-menu-item .dx-menu-item-content .dx-icon {
+  display: inline-block;
+  vertical-align: middle;
+  border: 0;
+  position: relative;
+  top: -1px;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused.dx-list-item-selected{
+    // background-color: rgba(0,0,0,.04) !important;
+    // color: $text-dark-gray !important;
+    background-color: rgba(0,0,0,.04);
+    // color: $brand-10;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected.dx-state-hover:not(.dx-state-focused){
+    background-color: rgba(0,0,0,.04);
+    // color: $brand-10;
+}
+
+.dx-list {
+    .dx-state-active,.dx-item-content.dx-state-active{
+        //background-color: rgba(0,0,0,.04) !important;
+        background-color: $neutral-100 !important;
+        // color: $text-dark-gray !important;
+        color: $brand-10 !important;
+        font-weight: 500;
+    }
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected {
+    // background-color: rgba(0,0,0,.04);
+    background-color: $neutral-100;
+    color: $brand-10 !important;
+    font-weight: 500!important;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused.dx-list-item-selected {
+    background-color: $neutral-90;
+    // color: $brand-10;
+}
+
+.dx-selectbox-popup-wrapper .dx-item-content.dx-list-item-content{
+    font-family: Roboto;
+    font-size: 0.75rem;
+    line-height: 14px;
+}
+
+.dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content {
+  padding: 8px 15px;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected {
+  background-color: transparent;
+  color: $neutral-30;
+  font-weight: normal;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused {
+    background-color: $neutral-90;
+}
+
+.menu-search-list.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused {
+    background-color: transparent;
+}
+
+.dx-header-filter-menu{
+    .dx-list-select-all-label{
+        padding-left: 16px;
+        font-size: $font-size;
+        line-height: $line-height;
+    }
+    .dx-list-item{
+        font-size: $font-size;
+        line-height: $line-height;
+    }
+    .dx-item.dx-toolbar-item.dx-toolbar-button{
+        .dx-button-text{
+            font-size: $font-size;
+            line-height: $line-height;
+        }
+    }
+    .dx-toolbar-after{
+        .dx-toolbar-item:first-child{ /* save */
+            .dx-button{
+                background-color: $brand-10;
+                border-color: transparent;
+                border-radius: 6px;
+                color: $neutral-100;
+                font-family: $Roboto;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 0.8125rem;
+                line-height: 15px;
+                width: 80px;
+                &:hover {
+                    background-color: $neutral-85;
+                    border-color: $neutral-85;
+                    color: $neutral-30;
+                    i{
+                        color: $neutral-30;
+                    }
+                }
+                &:focus {
+                    background-color: $brand-10;
+                    border: 0px;
+                    color: $neutral-100;
+                    i{
+                        color: $neutral-100;
+                    }
+                }
+            }
+        }
+        .dx-toolbar-item:nth-child(2){ /* cancel */
+            .dx-button{
+                background-color: $neutral-80;
+                border-color: $neutral-80;
+                border-radius: 6px;
+                color: $brand-neutral-10;;
+                font-family: $Roboto;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 0.8125rem;
+                line-height: 15px;
+                width: 80px;
+                &:hover {
+                    background-color: $brand-neutral-10;
+                    border-color: $brand-neutral-10;
+                    color: $neutral-100;
+                }
+                &:focus {
+                    background-color: $neutral-80;
+                    border: 0px;
+                    color: $brand-neutral-10;
+                }
+            }
+        }
+    }
+}
+
+.dx-dropdownbutton-action:not(.dx-buttongroup-last-item).dx-button{
+    border-right-width: 1px;
+}
+.dx-buttongroup-item.dx-button-mode-contained.dx-button, .dx-buttongroup-item.dx-button-mode-outlined.dx-button{
+    border-radius: 6px;
+}
+.dx-dropdownbutton{
+    height: 26px;
+    border-radius: 4px;
+    &.dx-state-hover,
+    &> .dx-button.dx-state-hover{
+        background-color: $neutral-90!important;
+    }
+    .dx-button.dx-state-hover {
+        background-color: $neutral-90!important;
+
+    }
+    .dx-button{
+        border: 1px solid transparent;
+        &.dx-state-focused{
+            background-color: transparent !important;
+            border: 1px solid $neutral-30;
+            border-radius: 4px;
+            .dx-icon{
+                margin-left: 0px;
+            }
+        }
+        .dx-icon{
+          margin-left: 0px!important;
+          margin-top: 0;
+        }
+        .dx-button-text {
+            padding-top: 0
+        }
+    }
+}
+
+.dx-dropdownbutton-popup-wrapper{
+    .dx-overlay-content{
+        left: calc(100% - 20px);
+    }
+    .dx-scrollview-content{
+        max-height: 300px;
+        .dx-list-item{
+            border-radius: 6px;
+            color: $neutral-30;
+            &.dx-state-hover,&.dx-state-focused{
+                color: $neutral-10 !important;
+                font-weight: 400;
+                background-color: $neutral-90;
+                .dx-icon{
+                    color: $neutral-30;
+                }
+            }
+        }
+        .dx-list-item-content{
+            height: 30px;
+        }
+    }
+}
+
+// scheduler list
+
+dx-draggable.drag-item{
+    display: block;
+    cursor: pointer;
+    min-width: 235px;
+    // height: 60px;
+    min-height: 60px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    position: relative;
+    .icon.icon-group.plus-btn{
+        visibility: hidden;
+    }
+    &:hover{
+        background-color: $neutral-90;
+        .icon.icon-group.plus-btn{
+            visibility: visible;
+        }
+    }
+    &:hover{
+        .grab-area{
+            visibility: visible;
+        }
+    }
+    .grab-area{
+        visibility: hidden;
+        position: absolute;
+        top: 21px;
+        left: 0;
+    }
+}
+
+.dx-menu-item {
+  color:$neutral-30;
+}
+
+.dx-list:not(
+  .dx-list-select-decorator-enabled
+) .dx-list-item.dx-state-hover{
+  background-color: $neutral-90;
+  color: $neutral-10!important;
+  &:hover{
+    .icon-star{
+      display: inline;
+    }
+  }
+}
+
+.error-list.dx-list:not(
+  .dx-list-select-decorator-enabled
+) .dx-list-item.dx-state-hover{
+    color: $text-gray!important;
+}
+
+.hidden-select-box .dx-list:not(
+  .dx-list-select-decorator-enabled
+) .dx-list-item.dx-state-hover{
+  background-color: $neutral-90;
+  color: red!important;
+  &:hover{
+    cursor: default;
+    .icon-star{
+      display: inline;
+    }
+  }
+}
+
+.dx-menu-item.dx-state-hover{
+  color: $neutral-10!important;
+}
+
+.hidden-select-box{
+    visibility: hidden;
+    position: absolute !important;
+    top: 0 !important;
+    width: 250px !important;
+    right: 10px;
+}
+
+.custom-item {
+    position: relative;
+    margin-left: -15px;
+    padding-left: 15px;
+    margin-right: -15px;
+    padding-right: 20px;
+    margin-top: -10px;
+    padding-top: 10px;
+    height: 30px;
+    margin-bottom: -10px;
+    padding-bottom: 5px;
+    background-color: $neutral-100;
+    color: $neutral-30 !important;
+    cursor: default;
+}
+
+#menu-select-box{
+    input{
+        font-family: "Roboto-Medium";
+        font-size: 0.75rem;
+    }
+}

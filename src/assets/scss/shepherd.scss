@@ -1,0 +1,209 @@
+@import "./colors";
+
+.shepherd-element {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px #0003;
+  max-width: 400px;
+  opacity: 1;
+  outline: none;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
+
+  width: 100%;
+  z-index: 9999;
+}
+
+.shepherd-element {
+  &[data-popper-placement="right"] {
+    margin-left: 12px !important;
+  }
+  &[data-popper-placement="left"] {
+    margin-right: 12px !important;
+  }
+  &[data-popper-placement="bottom"] {
+    margin-top: 12px !important;
+  }
+  &[data-popper-placement="top"] {
+    margin-bottom: 12px !important;
+  }
+  &[data-popper-placement="right-start"] {
+    margin-left: 12px !important;
+    .shepherd-arrow {
+      top: unset !important;
+      bottom: 100%;
+    }
+  }
+  &[data-popper-placement="bottom-start"] {
+    margin-top: 12px !important;
+    .shepherd-arrow {
+      left: calc(-50% + 50px) !important;
+    }
+  }
+}
+
+.shepherd-content {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.shepherd-header {
+  font-family: Roboto-Medium;
+  font-size: 0.875rem;
+  line-height: 20px;
+  background: transparent !important;
+  padding: 14px 14px 14px 20px !important;
+  min-height: 46px !important;
+}
+
+.shepherd-title {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  font-family: Roboto;
+  font-weight: 500 !important;
+}
+
+.shepherd-footer {
+  padding: 14px 14px 14px 20px;
+  position: relative;
+  justify-content: stretch;
+  align-items: center;
+  .onboarding-summary {
+    // position: absolute;
+    font-size: 0.75rem;
+    font-family: Roboto;
+    color: $neutral-40;
+    // left: 10px;
+    // top: 4px;
+    margin-right: auto;
+  }
+}
+
+.shepherd-text {
+  font-family: Roboto;
+  font-size: 0.8125rem;
+  line-height: 18px;
+  padding: 0 20px 8px;
+  color: $neutral-40;
+}
+
+.shepherd-cancel-icon {
+  background: transparent;
+  border: none;
+  color: #808080bf;
+  cursor: pointer;
+  font-size: 2em;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  transition: color 0.5s ease;
+}
+
+.shepherd-cancel-icon {
+  position: absolute;
+  right: 15px;
+  top: 14px;
+  width: 1.125rem;
+  height: 1.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: $neutral-90;
+  }
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: Lumen;
+    visibility: visible;
+    content: "\e5cd";
+    font-size: 1.12rem !important;
+    -webkit-text-stroke-width: 0.02em;
+    -webkit-font-smoothing: antialiased;
+    color: $text-dark-gray;
+  }
+
+  [aria-hidden="true"] {
+    visibility: hidden;
+  }
+}
+
+.shepherd-button {
+  border: none;
+  border-radius: 4px;
+  height: 26px;
+  min-width: 34px;
+  margin-right: 6px;
+  padding: 4px 8px;
+  background-color: $brand-10;
+  color: $neutral-100;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  line-height: 18px;
+
+  &:not(:disabled):hover {
+    background-color: $brand-00;
+  }
+  &.shepherd-button-secondary {
+    background: $neutral-80;
+    color: $neutral-30;
+    &:not(:disabled):hover {
+      background-color: $neutral-60;
+    }
+    i::before {
+      font-size: 18px;
+      line-height: 18px;
+      color: $neutral-30;
+    }
+  }
+  &.shepherd-finish-button {
+    min-width: 4.375rem;
+  }
+  i::before {
+    font-size: 18px;
+    line-height: 18px;
+    color: $neutral-100;
+  }
+}
+
+.shepherd-arrow:before {
+  background-color: $neutral-100 !important;
+}
+
+.shepherd-arrow-top .shepherd-arrow {
+  transform: translate3d(0, 1rem, 0) !important;
+}
+
+.powered-by-genius {
+  min-height: 26px;
+  background-image: url(../images/powered_by-dark.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  margin: 8px 0;
+}
+
+.shepherd-target {
+  z-index: 10000000;
+
+  position: relative;
+}
+
+.shepherd-modal-overlay-container.shepherd-modal-is-visible {
+  height: 100vh;
+  opacity: 0.5;
+  transform: translateZ(0);
+  z-index: 100;
+  position: relative;
+  top: -32px;
+  width: 100vw;
+  transition:
+    all 0.3s ease-out,
+    height 0s 0s,
+    opacity 0.3s 0s;
+}

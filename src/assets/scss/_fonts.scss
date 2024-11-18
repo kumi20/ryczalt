@@ -1,0 +1,86 @@
+@font-face {
+  font-family: "Geomanist";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/GEOMANIST-REGULAR.OTF") format("opentype");
+}
+
+@font-face {
+  font-family: "GeomanistBook";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/GEOMANIST-BOOK.OTF") format("opentype");
+}
+
+@font-face {
+  font-family: "GeomanistMedium";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/GEOMANIST-MEDIUM.OTF") format("opentype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Inter-VariableFont.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "InterBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Inter-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "InterMedium";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Inter-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-bold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GeomanistBook";
+  src: url("../fonts/Geomanist-Book.eot");
+  src:
+    local("Geomanist Book"),
+    local("Geomanist-Book"),
+    url("../fonts/Geomanist-Book.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Geomanist-Book.woff2") format("woff2"),
+    url("../fonts/Geomanist-Book.woff") format("woff"),
+    url("../fonts/Geomanist-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+$GeomanistBook: "GeomanistBook";
+$Geomanist: "Geomanist";
+$GeomanistMedium: "GeomanistMedium";
+$Inter: "Inter";
+$InterBold: "InterBold";
+$InterMedium: "InterMedium";
+$Roboto: "Roboto";
+$Roboto-Medium: "Roboto-Medium";
+$Roboto-Bold: "Roboto-bold";

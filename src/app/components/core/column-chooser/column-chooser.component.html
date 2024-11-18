@@ -1,0 +1,111 @@
+<dx-popup
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  [showTitle]="true"
+  [title]="'columnChooser.popupTitle' | translate"
+  [(visible)]="visible"
+  [showCloseButton]="false"
+  width="660"
+  height="70%"
+  (onTitleRendered)="onTitleRendered($event)"
+  [wrapperAttr]="{ id: unicalGuid }"
+  [fullScreen]="fullScreen"
+  (fullScreenChange)="fullScreenChange($event)"
+>
+  <dxo-position my="bottom" at="bottom" of="window"> </dxo-position>
+
+  <div *dxTemplate="let content of 'content'">
+    <div class="text-right title-pop-up">
+      <span
+        (click)="resetColumns()"
+        [id]="'default' + unicalGuid"
+        style="margin-right: 50px"
+        class="reset-settings marg-r-13"
+        >{{ "buttons.setDefaultSettings" | translate }}</span
+      >
+      @if (!fullScreen) {
+      <dx-button
+        type="default"
+        stylingMode="text"
+        (click)="toggleFullScreen()"
+        [id]="'fitToWidth' + unicalGuid"
+        icon="icon absui-icon--fullscreen2"
+      >
+      </dx-button>
+      } @if (fullScreen) {
+      <dx-button
+        type="default"
+        stylingMode="text"
+        (click)="toggleFullScreen()"
+        [id]="'fitToWidth' + unicalGuid"
+        icon="icon absui-icon--fullscreen-off"
+      >
+      </dx-button>
+      }
+
+      <dx-button
+        text="{{ 'buttons.save' | translate }}"
+        type="success"
+        class="marg-r-13"
+        (onClick)="saveColumns()"
+        [id]="'add' + unicalGuid"
+      >
+      </dx-button>
+      <dx-button
+        text="{{ 'buttons.cancel' | translate }}"
+        type="danger"
+        (onClick)="hideColumnsConfig()"
+        [id]="'cancel' + unicalGuid"
+      ></dx-button>
+    </div>
+    <div class="list-wrapper">
+      <i class="icon absui-icon--table-cells-column"></i>
+      <p class="p-header">{{ "buttons.columns" | translate }}</p>
+      <div class="seperator"></div>
+      <br />
+
+      @if (rawColumns) {
+      <dx-list
+        [dataSource]="rawColumns"
+        [elementAttr]="{ class: 'columns-list' }"
+        [(height)]="height"
+        displayExpr="caption"
+        keyExpr="name"
+        selectionMode="multiple"
+        [showSelectionControls]="true"
+        [(selectedItemKeys)]="visibleRawColumns"
+      >
+        <dxo-item-dragging
+          group="cols"
+          [data]="rawColumns"
+          [onReorder]="onReorder"
+          [allowReordering]="true"
+        >
+        </dxo-item-dragging>
+      </dx-list>
+      } @if (!rawColumns) {
+      <dx-list
+        #list
+        [dataSource]="columns"
+        [elementAttr]="{ class: 'columns-list' }"
+        [(height)]="height"
+        displayExpr="caption"
+        keyExpr="name"
+        selectionMode="multiple"
+        [showSelectionControls]="true"
+        [(selectedItemKeys)]="visibleColumns"
+      >
+        <dxo-item-dragging
+          group="cols"
+          [data]="columns"
+          [onReorder]="onReorder"
+          [allowReordering]="true"
+        >
+        </dxo-item-dragging>
+      </dx-list>
+      }
+    </div>
+  </div>
+</dx-popup>

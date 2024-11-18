@@ -1,0 +1,198 @@
+@import "../../assets/scss/colors";
+
+.dx-treelist-rowsview .dx-treelist-collapsed span::before {
+    content: "\e146";
+    font-family: Lumen;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    margin-left: 0px;
+}
+.dx-treelist-rowsview .dx-row-focused .dx-treelist-expanded span::before {
+    color: $neutral-100;
+}
+
+.dx-treelist-rowsview .dx-treelist-expanded span::before {
+    content: "\e909";
+    font-family: Lumen;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    margin-left: 0px;
+    color: $neutral-30;
+}
+
+dx-tree-list {
+    input {
+        padding-left: 4px;
+        padding-top: 4px;
+    }
+    tr[aria-expanded="true"] {
+        background: $neutral-90;
+    }
+    .dx-treelist-rowsview .dx-row-focused.dx-data-row > td:not(.dx-focused),
+    .dx-treelist-rowsview .dx-row-focused.dx-data-row > td.dx-focused {
+        background-color: $neutral-40;
+        color: $neutral-100;
+    }
+    .dx-treelist-rowsview .dx-row-focused.dx-data-row > td,
+    .dx-treelist-rowsview .dx-row-focused.dx-data-row > tr:last-child > td {
+        border-bottom: none;
+    }
+    .dx-treelist-headers .dx-texteditor-input,
+    .dx-treelist-rowsview .dx-texteditor-input {
+        min-height: 0;
+    }
+    tr.dx-data-row {
+        height: 35px;
+    }
+    .dx-header-row {
+        td {
+            font-family: Roboto-Medium;
+            background-color: $neutral-95;
+            color: $neutral-10;
+            font-size: 0.75rem;
+            line-height: 14px;
+            border-right: 1px solid $neutral-80;
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+    .dx-data-row {
+        font-family: Roboto;
+        font-size: 0.75rem;
+        line-height: 14px;
+    }
+}
+
+// .dx-cell-focus-disabled .blocked-txt{
+//     color: $neutral-100;
+// }
+// .blocked-txt{
+//     color: $neutral-20;
+// }
+
+.dx-treelist-content .dx-treelist-table .dx-row > td,
+.dx-treelist-content .dx-treelist-table .dx-row > tr > td {
+    vertical-align: middle;
+}
+.dx-treelist-focus-overlay {
+    border: none;
+}
+
+dx-tree-list.tree-list-as-tree-view {
+    .dx-treelist-headers {
+        display: none;
+    }
+    .dx-treelist-headers + .dx-treelist-rowsview {
+        border-top: none;
+    }
+    .dx-treelist-container {
+        background-color: transparent;
+    }
+    .dx-row.dx-data-row.dx-column-lines:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+    .dx-row.dx-data-row.dx-selection {
+        td {
+            background-color: transparent !important;
+            border-bottom: none !important;
+            border-top: none !important;
+        }
+        .dx-treelist-text-content {
+            font-weight: bold;
+            color: $brand-10 !important;
+        }
+    }
+    tr.dx-data-row {
+        height: 28px;
+    }
+    .dx-treelist-expanded span::before {
+        content: "\e5c5" !important;
+        color: $text-dark-gray;
+        font-size: 16px;
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        left: -5px;
+        top: 5px;
+    }
+    tr td.dx-treelist-cell-expandable {
+        padding-top: 5px;
+        padding-bottom: 4px;
+    }
+    .dx-treelist-collapsed span::before {
+        content: "\ea1d" !important;
+        color: $text-dark-gray;
+        font-size: 16px;
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        left: -5px;
+        top: 5px;
+    }
+    tr[aria-expanded="true"] {
+        background: transparent !important;
+    }
+}
+
+.configuration-grid .dx-treelist-rowsview .dx-row-focused .dx-treelist-expanded span::before {
+    color: $neutral-10;
+}
+
+.configuration-grid .dx-treelist-rowsview .dx-state-hover.dx-data-row > td {
+    background-color: $neutral-95 !important;
+}
+
+.configuration-grid .dx-data-row:hover {
+    background-color: $neutral-95 !important;
+}
+.configuration-grid .dx-treelist-rowsview .dx-row-focused.dx-data-row > td:not(.dx-focused),
+dx-tree-list.configuration-grid .dx-treelist-rowsview .dx-row-focused.dx-data-row > td.dx-focused {
+    background-color: $neutral-90 !important;
+    //color: $neutral-10;
+    border-bottom: 1px solid $neutral-70;
+    color: $neutral-30;
+}
+
+.configuration-grid .dx-treelist-rowsview tr:not(.dx-row-focused) .dx-treelist-empty-space {
+    color: $neutral-30;
+}
+
+.configuration-grid .dx-row-focused {
+    .dx-progressbar-percent,
+    i::before,
+    .black-txt,
+    .grey-txt,
+    .hov-underline {
+        color: $neutral-10 !important;
+    }
+}
+
+.configuration-grid .dx-datagrid-rowsview .dx-row-focused.dx-data-row {
+    .dx-command-edit:not(.dx-focused) .dx-link,
+    > td:not(.dx-focused),
+    > tr > td:not(.dx-focused) {
+        background-color: $neutral-90 !important;
+        color: $neutral-10 !important;
+    }
+}
+
+// .configuration-grid .dx-treelist .dx-row-lines > td {
+//     border-bottom: 1px solid $neutral-70;
+// }
+
+.configuration-grid .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) {
+    > td,
+    > tr:last-child > td {
+        background-color: $neutral-90 !important;
+        color: $neutral-10 !important;
+    }
+}
+
+.deliveries-status .dx-treeview-node li.dx-treeview-node .dx-item > .dx-item-content.dx-treeview-item-content {
+    height: auto !important;
+}

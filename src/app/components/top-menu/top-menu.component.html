@@ -1,0 +1,53 @@
+<div class="top-menu-wrapper" style="z-index: 10000">
+  <dx-scroll-view
+    width="95%"
+    height="36"
+    direction="horizontal"
+    showScrollbar="never"
+    [useNative]="false"
+    style="margin-left: -6px"
+  >
+    @if (showMenu) {
+    <dx-menu
+      #menu
+      [dataSource]="products"
+      displayExpr="name"
+      orientation="horizontal"
+      submenuDirection="auto"
+      cssClass="top-menu"
+      [hideSubmenuOnMouseLeave]="false"
+      (onck)="itemClick($event)"
+      itemTemplate="menuItem"
+    >
+      <div
+        *dxTemplate="let item of 'menuItem'"
+        class="top-menu-item text-left"
+        routerLinkActive="active"
+        [routerLink]="[item.url]"
+        [class.active]="item.patchMain"
+        [ngClass]="item?.class"
+      >
+        <div class="d-flex flex-row">
+          @if(item.signature){
+          <div class="box-signature" [ngClass]="item?.classCss">
+            <p>{{ item.signature }}</p>
+          </div>
+          } @if(item.url){
+
+          <div
+            [ngClass]="item?.classCss"
+            style="background: transparent !important"
+          >
+            <a class="a-link" [routerLink]="[item.url]" tabIndex="-1">
+              <span class="dx-menu-item-text">
+                {{ item.name | translate }}</span
+              >
+            </a>
+          </div>
+          }
+        </div>
+      </div>
+    </dx-menu>
+    }
+  </dx-scroll-view>
+</div>

@@ -1,0 +1,216 @@
+@import "../../../assets/scss/colors";
+
+.cas-panel {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(80deg, $neutral-85 4.65%, $neutral-95 87.51%);
+}
+
+.cas-loader-box {
+  width: 82px;
+  height: 82px;
+  background: $neutral-100;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-top: calc(50vh - 61px);
+}
+
+.title-log-page {
+  color: $text-dark-gray;
+
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 122.222% */
+  margin-bottom: 32px;
+}
+
+.demo-title-2 {
+  color: $text-light-gray;
+  text-align: center;
+  /* subheader-13/medium */
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 0px;
+  line-height: 18px; /* 138.462% */
+}
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.absui-login-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #eff0f1;
+  flex-direction: column;
+}
+
+.absui-login-page__container {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  flex-grow: 2;
+  padding: 0;
+  width: 100%;
+  background: url(../../../assets/images/ryczalt_bg.webp) right center no-repeat #eff0f1;
+  background-size: auto;
+}
+
+.absui-login-panel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: 40%;
+  padding: 32px;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0px 6px 16px 0px rgba(35, 36, 42, 0.1);
+  box-sizing: border-box;
+}
+
+.absui-login-panel__title {
+  font:
+    normal 500 32px / 40px "Inter",
+    sans-serif;
+  margin: 0 0 8px;
+}
+
+.wapro-html-new .absui-login-panel__sub-title {
+  font:
+    normal 600 18px / 22px "Roboto",
+    sans-serif;
+  margin: 0 0 32px;
+  color: #222;
+}
+
+.absui-login-panel__form {
+  position: relative;
+  width: 360px;
+  margin: 0 auto;
+}
+
+.absui-login-panel__lang {
+  text-align: right;
+}
+
+.absui-backdrop.show {
+  visibility: visible;
+  opacity: 0.4;
+}
+
+.absui-dropdown.show .absui-input-group-append .absui-input-group-controls,
+.absui-form-control:hover + .absui-input-group-append .absui-input-group-controls {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-color: var(--neutral-60, $neutral-60);
+}
+
+.show .absui-dropdown__menu {
+  display: block;
+}
+.absui-dropdown__item {
+  margin: 6px 8px;
+  &:hover {
+    background-color: var(--neutral-90, $neutral-90);
+  }
+}
+
+.absui-dropdown__link {
+  display: block;
+  width: 100%;
+  clear: both;
+  font-weight: 400;
+  color: var(--neutral-20, $neutral-20);
+  text-align: inherit;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  line-height: 15px;
+  min-height: 0px;
+  padding: 8px 22px 7px 8px;
+  white-space: normal;
+  span {
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 0.75rem;
+    line-height: 16px;
+  }
+}
+
+.absui-btn {
+  background-color: transparent;
+  border: none;
+  padding: 4px 8px 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  &:hover {
+    background-color: var(--neutral-90, $neutral-90);
+  }
+}
+.show .absui-btn {
+  background-color: var(--neutral-40, $neutral-40);
+  color: var(--neutral-100, $neutral-100);
+}
+
+.absui-form-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+
+@media (min-width: 1920px) {
+  .absui-login-page__container {
+    flex-grow: 1;
+    width: 80%;
+    height: 80%;
+    max-width: 1920px;
+    max-height: 1080px;
+    margin: 5% auto;
+    border: 1px solid #d3d6da;
+    border-radius: 16px;
+    box-shadow: 0px 10px 32px 0px rgba(35, 36, 42, 0.13);
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 1920px) {
+  .wapro-html-new .absui-login-panel {
+    border-radius: 0 8px 8px 0;
+    border-left: 5px solid #bc1a22;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .absui-login-panel {
+    width: 100%;
+    min-height: unset;
+    margin: 0;
+    padding: 80px 32px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 1023.98px) {
+  .absui-login-panel {
+    width: 608px;
+    min-height: 900px;
+    margin: 40px auto;
+  }
+}

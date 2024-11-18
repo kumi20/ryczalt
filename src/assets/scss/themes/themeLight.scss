@@ -1,0 +1,251 @@
+@mixin colorThemeLight() {
+  // --background_color_primary: #{$neutral-100};
+  // --background_color_secondary: #{$neutral-60};
+  // --text_color: #{$text-gray};
+
+  --text-brand: #{$text-brand};
+  --text-dark-gray: #{$text-dark-gray};
+  --text-light-gray: #{$text-light-gray};
+  --text-gray: #{$text-gray};
+  --text-black: #{$text-black};
+  --text-info: #{$text-info};
+  --text-positive: #{$text-positive};
+  --text-negative: #{$text-negative};
+  --text-warning: #{$text-warning};
+  --text-brand-inverted: #{$text-brand-inverted};
+  --text-white: #{$text-white};
+
+  --brand-00: #{$brand-00};
+  --brand-10: #{$brand-10};
+  --brand-20: #{$brand-20};
+  --brand-30: #{$brand-30};
+  --brand-70: #{$brand-70};
+  --brand-80: #{$brand-80};
+  --brand-90: #{$brand-90};
+  --brand-neutral-00: #{$brand-neutral-00};
+  --brand-neutral-10: #{$brand-neutral-10};
+  --brand-85: #{$brand-85};
+
+  --neutral-10: #{$neutral-10};
+  --neutral-20: #{$neutral-20};
+  --neutral-30: #{$neutral-30};
+  --neutral-40: #{$neutral-40};
+  --neutral-40-opacity-90: rgba($neutral-40, 0.9);
+  --neutral-50: #{$neutral-50};
+  --neutral-60: #{$neutral-60};
+  --neutral-70: #{$neutral-70};
+  --neutral-80: #{$neutral-80};
+  --neutral-85: #{$neutral-85};
+  --neutral-90: #{$neutral-90};
+  --neutral-95: #{$neutral-95};
+  --neutral-100: #{$neutral-100};
+
+  --accent-teal: #{$accent-teal};
+  --accent-light-green: #{$accent-light-green};
+  --accent-blue-grey: #{$accent-blue-grey};
+  --accent-red: #{$accent-red};
+  --accent-light-blue: #{$accent-light-blue};
+  --accent-orange: #{$accent-orange};
+  --accent-green: #{$accent-green};
+  --accent-pink: #{$accent-pink};
+  --accent-purple: #{$accent-purple};
+  --accent-deep-purple: #{$accent-deep-purple};
+  --accent-indigo: #{$accent-indigo};
+  --accent-blue: #{$accent-blue};
+  --accent-cyan: #{$accent-cyan};
+  --accent-lime: #{$accent-lime};
+  --accent-brown: #{$accent-brown};
+  --accent-grey: #{$accent-grey};
+
+  /* icons */
+  --icons-teal: #{$icons-teal};
+  --icons-light-green: #{$icons-light-green};
+  --icons-blue-grey: #{$icons-blue-grey};
+  --icons-red: #{$icons-red};
+  --icons-light-blue: #{$icons-light-blue};
+  --icons-orange: #{$icons-orange};
+  --icons-green: #{$icons-green};
+  --icons-pink: #{$icons-pink};
+  --icons-purple: #{$icons-purple};
+  --icons-deep-purple: #{$icons-deep-purple};
+  --icons-indigo: #{$icons-indigo};
+  --icons-blue: #{$icons-blue};
+  --icons-cyan: #{$icons-cyan};
+  --icons-lime: #{$icons-lime};
+  --icons-brown: #{$icons-brown};
+  --icons-grey: #{$icons-grey};
+
+  --theme-positive-10: #{$theme-positive-10};
+  --theme-positive-20: #{$theme-positive-20};
+  --theme-positive-30: #{$theme-positive-30};
+  --theme-positive-70: #{$theme-positive-70};
+  --theme-positive-80: #{$theme-positive-80};
+  --theme-positive-85: #{$theme-positive-85};
+  --theme-positive-90: #{$theme-positive-90};
+  --theme-positive-100: #{$theme-positive-100};
+
+  --theme-warning-10: #{$theme-warning-10};
+  --theme-warning-20: #{$theme-warning-20};
+  --theme-warning-30: #{$theme-warning-30};
+  --theme-warning-70: #{$theme-warning-70};
+  --theme-warning-80: #{$theme-warning-80};
+  --theme-warning-90: #{$theme-warning-90};
+
+  --theme-info-10: #{$theme-info-10};
+  --theme-info-20: #{$theme-info-20};
+  --theme-info-30: #{$theme-info-30};
+  --theme-info-70: #{$theme-info-70};
+  --theme-info-80: #{$theme-info-80};
+  --theme-info-90: #{$theme-info-90};
+
+  --tagfill-red: #{$tagfill-red};
+  --tagfill-pink: #{$tagfill-pink};
+  --tagfill-purple: #{$tagfill-purple};
+  --tagfill-deep-purple: #{$tagfill-deep-purple};
+  --tagfill-indigo: #{$tagfill-indigo};
+  --tagfill-blue: #{$tagfill-blue};
+  --tagfill-light-blue: #{$tagfill-light-blue};
+  --tagfill-cyan: #{$tagfill-cyan};
+  --tagfill-teal: #{$tagfill-teal};
+  --tagfill-green: #{$tagfill-green};
+  --tagfill-light-green: #{$tagfill-light-green};
+  --tagfill-lime: #{$tagfill-lime};
+  --tagfill-yellow: #{$tagfill-yellow};
+  --tagfill-amber: #{$tagfill-amber};
+  --tagfill-orange: #{$tagfill-orange};
+  --tagfill-deep-orange: #{$tagfill-deep-orange};
+  --tagfill-brown: #{$tagfill-brown};
+  --tagfill-grey: #{$tagfill-grey};
+  --tagfill-blue-grey: #{$tagfill-blue-grey};
+  --tagfill-white: #{$tagfill-white};
+  --tagfill-deep-teal: #{$tagfill-deep-teal};
+  --tagfill-deep-indigo: #{$tagfill-deep-indigo};
+
+  --tagtxt-red: #{$tagtxt-red};
+  --tagtxt-pink: #{$tagtxt-pink};
+  --tagtxt-purple: #{$tagtxt-purple};
+  --tagtxt-deep-purple: #{$tagtxt-deep-purple};
+  --tagtxt-indigo: #{$tagtxt-indigo};
+  --tagtxt-blue: #{$tagtxt-blue};
+  --tagtxt-light-blue: #{$tagtxt-light-blue};
+  --tagtxt-cyan: #{$tagtxt-cyan};
+  --tagtxt-teal: #{$tagtxt-teal};
+  --tagtxt-green: #{$tagtxt-green};
+  --tagtxt-light-green: #{$tagtxt-light-green};
+  --tagtxt-lime: #{$tagtxt-lime};
+  --tagtxt-yellow: #{$tagtxt-yellow};
+  --tagtxt-amber: #{$tagtxt-amber};
+  --tagtxt-orange: #{$tagtxt-orange};
+  --tagtxt-deep-orange: #{$tagtxt-deep-orange};
+  --tagtxt-brown: #{$tagtxt-brown};
+  --tagtxt-grey: #{$tagtxt-grey};
+  --tagtxt-blue-grey: #{$tagtxt-blue-grey};
+  --tagtxt-dark: #{$tagtxt-dark};
+  --tagtxt-deep-teal: #{$tagtxt-deep-teal};
+  --tagtxt-deep-indigo: #{$tagtxt-deep-indigo};
+
+  --abs-brands-cloud-20: #{$abs-brands-cloud-20};
+  --abs-brands-cloud-70: #{$abs-brands-cloud-70};
+
+  --theme-negative-70: #{$theme-negative-70};
+  --theme-negative-90: #{$theme-negative-90};
+
+  --globals-tags-100-md-green: #{$globals-tags-100-md-green};
+  --globals-dedicated-font-for-tags-green: #{$globals-dedicated-font-for-tags-green};
+
+  --globals-tags-100-md-yellow: #{$globals-tags-100-md-yellow};
+  --globals-dedicated-font-for-tags-yellow: #{$globals-dedicated-font-for-tags-yellow};
+
+  --globals-tags-100-md-blue: #{$globals-tags-100-md-blue};
+  --globals-dedicated-font-for-tags-blue: #{$globals-dedicated-font-for-tags-blue};
+
+  --theme-warning-70: #{$theme-warning-70};
+  --theme-warning-90: #{$theme-warning-90};
+
+  --globals-tags-100-md-cyan: #{$globals-tags-100-md-cyan};
+  --globals-dedicated-font-for-tags-cyan: #{$globals-dedicated-font-for-tags-cyan};
+
+  --globals-tags-100-md-light-blue: #{$globals-tags-100-md-light-blue};
+  --globals-dedicated-font-for-tags-light-blue: #{$globals-dedicated-font-for-tags-light-blue};
+
+  --globals-tags-100-md-deep-orange: #{$globals-tags-100-md-deep-orange};
+  --globals-dedicated-font-for-tags-deep-orange: #{$globals-dedicated-font-for-tags-deep-orange};
+
+  --globals-tags-100-md-orange: #{$globals-tags-100-md-orange};
+  --globals-dedicated-font-for-tags-orange: #{$globals-dedicated-font-for-tags-orange};
+
+  --globals-tags-100-md-amber: #{$globals-tags-100-md-amber};
+  --globals-dedicated-font-for-tags-amber: #{$globals-dedicated-font-for-tags-amber};
+
+  --globals-tags-100-md-lime: #{$globals-tags-100-md-lime};
+  --globals-dedicated-font-for-tags-lime: #{$globals-dedicated-font-for-tags-lime};
+
+  --globals-tags-100-md-teal: #{$globals-tags-100-md-teal};
+  --globals-dedicated-font-for-tags-teal: #{$globals-dedicated-font-for-tags-teal};
+
+  --globals-tags-100-md-light-green: #{$globals-tags-100-md-light-green};
+  --globals-dedicated-font-for-tags-light-green: #{$globals-dedicated-font-for-tags-light-green};
+
+  --globals-tags-100-md-red: #{$globals-tags-100-md-red};
+  --globals-dedicated-font-for-tags-red: #{$globals-dedicated-font-for-tags-red};
+
+  --globals-tags-100-md-blue-grey: #{$globals-tags-100-md-blue-grey};
+  --globals-dedicated-font-for-tags-blue-grey: #{$globals-dedicated-font-for-tags-blue-grey};
+
+  --globals-tags-100-md-brown: #{$globals-tags-100-md-brown};
+  --globals-dedicated-font-for-tags-brown: #{$globals-dedicated-font-for-tags-brown};
+
+  --globals-tags-100-md-indigo: #{$globals-tags-100-md-indigo};
+  --globals-dedicated-font-for-tags-indigo: #{$globals-dedicated-font-for-tags-indigo};
+
+  --globals-dedicated-font-for-tags-pink: #{$globals-dedicated-font-for-tags-pink};
+
+  --globals-tags-100-md-purple: #{$globals-tags-100-md-purple};
+  --globals-dedicated-font-for-tags-purple: #{$globals-dedicated-font-for-tags-purple};
+
+  --globals-tags-100-md-deep-purple: #{$globals-tags-100-md-deep-purple};
+  --globals-dedicated-font-for-tags-deep-purple: #{$globals-dedicated-font-for-tags-deep-purple};
+
+  --teal-900: #{$teal900};
+  --teal-900-round: #{$teal900Round};
+
+  --avatartext-red: #{$avatartext-red};
+  --avatartext-pink: #{$avatartext-pink};
+  --avatartext-purple: #{$avatartext-purple};
+  --avatartext-deep-purple: #{$avatartext-deep-purple};
+  --avatartext-indigo: #{$avatartext-indigo};
+  --avatartext-blue: #{$avatartext-blue};
+  --avatartext-light-blue: #{$avatartext-light-blue};
+  --avatartext-cyan: #{$avatartext-cyan};
+  --avatartext-teal: #{$avatartext-teal};
+  --avatartext-green: #{$avatartext-green};
+  --avatartext-light-green: #{$avatartext-light-green};
+  --avatartext-lime: #{$avatartext-lime};
+  --avatartext-yellow: #{$avatartext-yellow};
+  --avatartext-amber: #{$avatartext-amber};
+  --avatartext-orange: #{$avatartext-orange};
+  --avatartext-deep-orange: #{$avatartext-deep-orange};
+  --avatartext-brown: #{$avatartext-brown};
+  --avatartext-gray: #{$avatartext-gray};
+  --avatartext-blue-gray: #{$avatartext-blue-gray};
+
+  --avatarfill-red: #{$avatarfill-red};
+  --avatarfill-pink: #{$avatarfill-pink};
+  --avatarfill-purple: #{$avatarfill-purple};
+  --avatarfill-deep-purple: #{$avatarfill-deep-purple};
+  --avatarfill-indigo: #{$avatarfill-indigo};
+  --avatarfill-blue: #{$avatarfill-blue};
+  --avatarfill-light-blue: #{$avatarfill-light-blue};
+  --avatarfill-cyan: #{$avatarfill-cyan};
+  --avatarfill-teal: #{$avatarfill-teal};
+  --avatarfill-green: #{$avatarfill-green};
+  --avatarfill-light-green: #{$avatarfill-light-green};
+  --avatarfill-lime: #{$avatarfill-lime};
+  --avatarfill-yellow: #{$avatarfill-yellow};
+  --avatarfill-amber: #{$avatarfill-amber};
+  --avatarfill-orange: #{$avatarfill-orange};
+  --avatarfill-deep-orange: #{$avatarfill-deep-orange};
+  --avatarfill-brown: #{$avatarfill-brown};
+  --avatarfill-gray: #{$avatarfill-gray};
+  --avatarfill-blue-gray: #{$avatarfill-blue-gray};
+}

@@ -1,0 +1,158 @@
+@import "../../../../assets//scss/colors";
+:ng-host {
+  &:focus {
+    border: 2px solid red !important;
+  }
+}
+.chips-btn {
+  width: auto;
+  height: 26px;
+  background-color: $neutral-90 !important;
+  border-radius: 30px;
+  padding: 0 8px;
+  display: inline-block;
+  border: 2px solid transparent !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: $neutral-85 !important;
+    border: 2px solid transparent !important;
+  }
+
+  &:focus {
+    background-color: $neutral-90 !important;
+    border: 2px solid $brand-neutral-10 !important;
+  }
+}
+
+.chips-btn-opened {
+  // border: 1px solid $neutral-30;
+}
+
+.chips-selected {
+  background-color: $theme-warning-90 !important;
+  border: 2px solid $theme-warning-80 !important;
+  .chips-btn-name {
+    color: $text-gray !important;
+  }
+
+  b,
+  .chips-btn-selected {
+    color: $text-dark-gray !important;
+  }
+
+  &:hover {
+    border: 2px solid $theme-warning-80 !important;
+    background-color: $theme-warning-80 !important;
+  }
+
+  &:focus {
+    background-color: $theme-warning-90 !important;
+    border: 2px solid $brand-neutral-10 !important;
+  }
+}
+
+.clear-panel {
+  border-top: 1px solid $neutral-80;
+  height: 36px;
+  margin-left: -5px;
+  width: calc(100% + 10px);
+}
+
+.chips-btn-name {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.75rem;
+  line-height: 14px;
+  color: $text-light-gray;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.selected-chip {
+  color: $brand-10 !important;
+  font-weight: 500 !important;
+}
+
+.chips-btn-selected {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 14px;
+  margin-left: 2px;
+  color: $neutral-10;
+  display: inline-block;
+  position: relative;
+  top: 8px;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .absui-icon--multiplication {
+  &::before {
+    font-size: 14px !important;
+    line-height: 14px;
+    color: $neutral-30;
+    position: relative;
+
+    left: 7px;
+    top: 0px;
+    height: 22px;
+    display: inline-flex;
+    width: 22px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+
+  &:hover {
+    &::before {
+      background-color: $theme-warning-70 !important;
+      color: $text-brand !important;
+    }
+  }
+}
+
+:host ::ng-deep .dx-list-item-content {
+  font-family: Roboto;
+  font-size: 0.75rem;
+  line-height: 10px;
+  padding: 10px 15px;
+}
+
+.absui-icon--pin-classic:before {
+  font-family: "Lumen";
+  content: "\e9ea";
+  display: inline-block;
+  font-size: 14px !important;
+  line-height: 14px;
+  color: $text-light-gray;
+  margin-right: 5px;
+  top: 1px;
+  position: relative;
+}
+
+.chips-list {
+  background: $neutral-100;
+  box-sizing: border-box;
+  border: 1px solid $neutral-80;
+  box-shadow:
+    0px 2px 1px rgb(0 0 0 / 6%),
+    0px 4px 20px rgb(0 0 0 / 10%);
+  border-radius: 8px;
+  padding: 5px 5px;
+  min-width: 210px;
+  width: auto;
+  position: absolute;
+  z-index: 20;
+  &.mobile-chips-list {
+    position: fixed;
+    margin-top: -10px;
+  }
+}

@@ -1,0 +1,118 @@
+@import "../../assets/scss/colors";
+
+//przycisk dodaj
+.btn-add:before {
+  content: "\e147";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk pokaż
+.btn-show:before {
+  content: "\e98b";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk usuń
+.btn-show:before {
+  content: "\e872";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk drukuj
+.btn-print:before {
+  content: "\e8ad";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk operacje
+.btn-operation:before {
+  content: "\e5d4";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk suma
+.btn-suma:before {
+  content: "\eb17";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk korekty
+.btn-corrections:before {
+  content: "\e9ba";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk zaliczki
+.btn-advance-payments:before {
+  content: "\eac0";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk e dokumenty
+.btn-e-documents:before {
+  content: "\eb2c";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk Wykonaj kontrolę
+.btn-perform-checks:before {
+  content: "\e980";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk Wykonaj naprawę
+.btn-make-repair:before {
+  content: "\e992";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk Resetuj status
+.btn-reset-status:before {
+  content: "\e042";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+//przycisk Szczegóły
+.btn-details:before {
+  content: "\e88e";
+  color: $neutral-30;
+  font-size: 1.125rem !important;
+  -webkit-text-stroke-width: 0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+}

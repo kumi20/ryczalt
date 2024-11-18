@@ -1,0 +1,17 @@
+<router-outlet />
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#body' }"
+  [visible]="event.loadingVisible"
+  [showIndicator]="false"
+  [shading]="false"
+  [hideOnOutsideClick]="false"
+  (onShown)="event.onShown()"
+  (onHidden)="event.onHidden()"
+>
+  <div *dxTemplate="let content of 'content'">
+    <wapro-loader mode="primary" message=""></wapro-loader>
+  </div>
+</dx-load-panel>

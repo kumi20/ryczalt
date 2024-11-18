@@ -1,0 +1,109 @@
+<div class="custom-wrapper">
+  @if (!hideFilter) {
+  <dx-button
+    [id]="'filter' + unicalGuid"
+    [icon]="icon"
+    class="left-inside-btn"
+    (onClick)="toggleSelectBox()"
+    [ngClass]="{ 'active-btn': selectBoxOpened }"
+  ></dx-button>
+  } @if (selectedDataType !== 'number') {
+  <dx-text-box
+    #inputBox
+    [showClearButton]="true"
+    class="inline inline-search-text-box"
+    [ngClass]="{
+      'dx-state-focused': selectBoxOpened,
+      'full-container simple-search': hideFilter
+    }"
+    [placeholder]="
+      hideFilter
+        ? (customSearchText || searchTxt) + '...'
+        : searchIn +
+          ': ' +
+          (findSelectedItemObject(selectedItem)?.label || '') +
+          '...'
+    "
+    valueChangeEvent="keyup"
+    [(value)]="_filterValue"
+    (onValueChanged)="onTextValueChanged($event)"
+    [width]="width ? width : 320"
+    [mask]="mask"
+    [maskRules]="maskRules"
+    (onFocusIn)="onFocusIn()"
+    (onFocusOut)="onFocusOut()"
+    autocapitalize="none"
+    (onKeyUp)="keyup($event)"
+  >
+    <dxi-button
+      name="search"
+      location="before"
+      [options]="searchButton"
+    ></dxi-button>
+    @if (_filterValue) {
+    <dxi-button name="clear" location="after" [options]="clearButton">
+    </dxi-button>
+    }
+  </dx-text-box>
+  } @if (selectedDataType === 'number') {
+  <dx-number-box
+    #inputBox
+    [ngClass]="hideFilter ? 'simple-search' : null"
+    [showClearButton]="_filterValue != '' && _filterValue != null"
+    (onKeyUp)="keyup($event)"
+    class="inline inline-search-text-box"
+    [ngClass]="{
+      'border-active': selectBoxOpened,
+      'focus-active': focus,
+      'full-container': hideFilter
+    }"
+    [placeholder]="
+      hideFilter
+        ? (customSearchText || searchTxt) + '...'
+        : searchIn +
+          ': ' +
+          (findSelectedItemObject(selectedItem)?.label || '') +
+          '...'
+    "
+    valueChangeEvent="keyup"
+    [(value)]="_filterValue"
+    (onValueChanged)="onTextValueChanged($event)"
+    (onFocusIn)="onFocusIn()"
+    (onFocusOut)="onFocusOut()"
+    autocapitalize="none"
+  >
+    <dxi-button
+      name="search"
+      location="before"
+      [options]="searchButton"
+    ></dxi-button>
+    <dxi-button
+      name="clear"
+      location="after"
+      [options]="clearButton"
+    ></dxi-button>
+  </dx-number-box>
+  } @if (!hideFilter) {
+  <dx-select-box
+    [opened]="selectBoxOpened"
+    (onOpened)="onOpened()"
+    (onClosed)="onClosed()"
+    [items]="items"
+    valueExpr="value"
+    displayExpr="label"
+    [(value)]="selectedItem"
+    class="hidden-select-box"
+    (onValueChanged)="onSelectBoxValueChanged($event)"
+    style="top: -1.5px !important; left: 70px"
+  >
+  </dx-select-box>
+  }
+</div>
+<dx-tooltip
+  [target]="'#filter' + unicalGuid"
+  hideEvent="dxhoverend"
+  [hideOnOutsideClick]="false"
+  [showEvent]="{ name: 'dxhoverstart', delay: 1000 }"
+>
+  <div *dxTemplate="let data of 'content'">{{ searchIn }}...</div>
+</dx-tooltip>

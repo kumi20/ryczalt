@@ -1,0 +1,26 @@
+@import "./colors";
+
+.dx-form-group-caption {
+  font-size: 0.875rem;
+  line-height: 16px;
+  font-weight: 700;
+  color: $neutral-20;
+}
+
+.dx-field-item-help-text,
+.dx-field-item-label-text {
+  color: $neutral-20;
+  font-weight: 500;
+}
+
+.text-area-100 .dx-textarea {
+  max-width: 100%;
+}
+
+.radio-group-pad {
+  padding-top: 6px;
+}
+
+.min-100 .dx-widget {
+  min-height: 100px;
+}

@@ -1,0 +1,438 @@
+{
+  "actions": "Actions",
+"theVariantHasBeenChanged": "The variant has been changed. The change will be visible after relogging.",
+  "payForSelectedLicenses": "Pay for selected licenses",
+  "endTrialPeriod": "End trial period",
+  "paymentLinkGenerated": "Payment link generated.",
+  "youAreCurrentlyUsingTheTrialPeriod": "You are currently using the trial period of the service, do you want to end the trial period and go into production mode?<br><br>The operation involves setting a new service expiration date and purchasing a subscription (the operation is irreversible).<br><br>After completing the process, you will be redirected to the payment page and you will also receive a pro forma invoice by email. After making the payment, you must log in to the service again to download the new subscription status.<br><br>Do you want to continue?",
+  "changeVariant": "Change variant",
+  "changingVariant": "Changing variant",
+  "expireDate": "Expire date",
+  "numberOfCompanies": "Number of companies",
+  "listOfCompanies": "List of companies",
+  "assignedUsers": "Assigned users",
+  "yourServices": "Your services",
+  "totalLicenses": "Total licenses",
+  "license": "License",
+  "pleaseWait": "Please wait",
+  "dataIsLoading": "Data is loading...",
+  "application": "Application",
+  "applications": "Applications",
+  "adding": "Adding",
+  "editing": "Editing",
+  "backToTheLoginPage": "Back to the login page",
+  "yourControlCenter": "Your Control Center",
+  "accountStatistics": "Account statistics",
+  "availableApps": "Available apps",
+  "next": "Next",
+  "noDataText": "No data",
+  "notifications": "Notifications",
+  "messages": "Messages",
+  "back": "Back",
+  "no-data": "No data",
+  "select": "Select",
+  "searchIn": "Search in",
+  "accountCreation": "Account creation",
+  "registration": "Registration",
+  "downloadFromGus": "Download from GUS",
+  "activation": "Activation",
+  "text-step-one": "In order for us to create an account for you, your email will be needed.",
+  "weNeedSomeMoreInformationAboutYou": "We need some more information about you",
+  "specificInformation": "Specific information",
+  "insertNIP": "Insert your VAT number",
+  "companyName": "Company name",
+  "block": "Block access to the application",
+  "unblock": "Unblock access to the application",
+  "blockAccessToRDP": "Active access to RDP",
+  "unblockAccessToRDP": "Desactive access to RDP",
+  "cantSaveToClipboard": "Error during copying to clipboard",
+  "savedToClipboard": "Saved to clipboard",
+  "description": "Description",
+  "createdAccount": "You have just created an account on our website<br>Check your e-mail.<br>We have sent you an activation link.",
+  "integrationTokens": "Integration tokens",
+  "addNewToken": "Add new token",
+  "validTo": "Valid to",
+  "createdAt": "Created at",
+  "active": "Active",
+  "inactive": "Inactive",
+  "menu":{
+    "start": "Start",
+    "groups": "Groups",
+    "users": "Users",
+    "companies": "Companies",
+    "licenses": "Licenses",
+    "log-out": "Log out",
+    "administrator": "Admini",
+    "agreements": "Agreements",
+    "clients": "Clients",
+    "navigationPanelUser":{
+      "personalize": "Personalize",
+      "languageApplications": "Lang. applications",
+      "polishLanguage": "Polish",
+      "englishLanguage": "English",
+      "passwordChange": "Password change",
+      "versionInformation": "Version information",
+      "help": "Help"
+    },
+    "userList": "User list",
+    "listOfUsersByCompanies": "List of users by companies",
+    "databases": "Databases",
+    "historyOfMail": "History of mail"
+  },
+  "start":{
+    "userInfo":{
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "names": "Names",
+      "companyVAT": "Company VAT",
+      "phoneNumber": "Phone number"
+    }
+  },
+  "agreement":{
+    "agreementCode": "Agreement code",
+    "agreementUrl": "Agreement url",
+    "content": "Content",
+    "validFrom": "Valid from",
+    "agreementType": "Agreement type"
+  },
+  "logOn":{
+    "title": "Log in to the system",
+    "login": "Login",
+    "password": "Password",
+    "register": "Sign up",
+    "btn-log": "Sign In",
+    "repeatPsw": "Repeat password",
+    "login-required": "Login is required",
+    "password-required": "Password is required",
+    "header": "management portal",
+    "dont-remember-psw": "I forgot password",
+    "error-log-on": "Wrong password or login"
+  },
+  "session":{
+    "end": "Until the end of the session ",
+    "extensionOfTheSession": "Extension of the session"
+  },
+  "companies":{
+    "partnerVat": "Partner VAT",
+    "pleaseEnterAvalidVatNumber": "Please enter a valid vat number",
+    "addNewCompany": "Add new company",
+    "getFromGUS": "Get from GUS",
+    "chooseCompany": "Choose a company",
+    "title": "Companies",
+    "grid": {
+      "columns": {
+        "name": "Name",
+        "vat": "Vat",
+        "dbHost": "DB Host",
+        "dbDatabase": "Database"
+      }
+    },
+    "form": {
+      "title": "Add company",
+      "city": "City",
+      "street": "Street",
+      "postalCode": "Postal Code",
+      "phone": "Phone",
+      "succes-response": "Added new company",
+      "isActive": "Is active"
+    }
+  },
+  "users":{
+    "activeUsers": "Active users",
+    "moveToArchive": "Move to archive",
+    "movedToArchive": "The user has been moved to the archive",
+    "doYouWantRestoreUser": "Do you want to restore the user?",
+    "restoreFromArchive": "Restore from archive",
+    "dateAddToArchive": "Date add to archive",
+    "archive": "Archive",
+    "selectAplication": "Select application",
+    "doYpuWantMoveUserToArchive": "The option to move to the archive prevents the specified user from using the application. Restoring a user from the archive is possible after 30 days at the earliest.<br><br>Do you want to move the user <b>{{firstName}} {{lastName}}</b> to the <b>archive</b>?",
+    "changeDatabaseUserandPsw": "Change database user and password",
+    "doYouWantAddUserToGroup": "Do you want to add the user to the group?",
+    "theUserAdditionProcessHasBeenCompleted":"The user addition process has been completed. A link to confirm the correctness of the email has been sent to the provided email address.<br><br>The user should use the link to confirm the email and set a password if it is a new account.",
+    "inviteNewUsersToUseTheApp": "Invite new users to use the app.",
+    "youDontNeedToCreateAnewAccountToManageMoreCompanies": "You don't need to create a new account to manage more companies.",
+    "addNewUser": "Add new user",
+    "company": "Company",
+    "impersonate": "Impersonate",
+    "cancelImpersonate": "Cancel impersonate",
+    "groupByCompanyName": "Group by company name",
+    "nameFilter": "filter",
+    "user": "User",
+    "title": "Users",
+    "group": "Group",
+    "addUserToGroup": "Add user to group",
+    "removeUserFromGroup": "Remove user from group",
+    "import": "Import",
+    "grid": {
+      "columns" : {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "phone": "Phone",
+        "companies": "Companies",
+        "groups": "Groups",
+        "numberOfUsers": "Number of users"
+      }
+    },
+    "isActive": "Active",
+    "form": {
+      "title":"Add user"
+    }
+  },
+  "groups":{
+    "userGroupManagement": "User group management",
+    "manageUserGroups": "Manage user groups",
+    "assignToGroup": "Assign to group",
+    "youCanAssignUsersToGroupsAndGiveThemPermissions": "You can assign users to groups and give them permissions.",
+    "title": "Groups",
+    "form":{
+      "title": "Add Group"
+    },
+    "grid": {
+      "columns": {
+        "name": "Name",
+        "permissions": "Permissions"
+      }
+    }
+  },
+  "permissions":{
+    "title": "Permissions",
+    "grid": {
+      "columns" : {
+        "permissionCode": "Permission Code",
+        "module": "Module",
+        "rule": "Rule",
+        "read": "Read",
+        "write": "Write",
+        "update": "Update"
+      }
+    }
+  },
+  "buttons":{
+    "add": "Add",
+    "delete": "Delete",
+    "edit": "Edit",
+    "goto": "Go to",
+    "choose": "Choose",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "columns": "Columns",
+    "setDefault": "Set default",
+    "setDefaultSettings": "Set default settings"
+  },
+  "user-groups":{
+    "add-title": "Add Groups to User"
+  },
+  "user-companies":{
+    "add-title": "Add user to company"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "confirm": "Confirm",
+  "information": "Information",
+  "confirmDelete": "Are you sure you want to delete this record?",
+  "deleted-record": "The record has been deleted",
+  "updated-record": "The data has been updated",
+  "error-adding-record": "Error adding record",
+  "succes-response": "The data has been saved",
+  "empty-value": "(Empty)",
+  "form": {
+    "required": "The field is required",
+    "email": "Please enter a valid email address"
+  },
+  "UPCOMING_RENEWALS": "Upcoming Renewals ({{output}} days)",
+  "form-financial-document":{
+    "title": "Adding a financial document",
+    "type": "Type",
+    "number": "Number",
+    "date": "Date",
+    "bill": "Bill",
+    "the-titel": "The title",
+    "exchange": "Exchange",
+    "payer-type":{
+      "payer-type": "Payer type",
+      "contractor": "Contractor",
+      "worker": "Worker",
+      "office": "Office"
+    },
+    "payer": "Payer",
+    "operation-code": "Operation code",
+    "statement-number": "Statement number",
+    "tabs":{
+      "items": "Items",
+      "other": "Other",
+      "payment": "Payment",
+      "split-payment": "Split payment"
+    },
+    "grid":{
+      "item-description": "Item description",
+      "amount": "Amount",
+      "currency-amount": "Currency amount",
+      "payer-name": "Payer name",
+      "impact": "Impact",
+      "outflow": "Outflow"
+    },
+    "operations": "Operations",
+    "show-reckoning": "Show reckoning",
+    "count": "Count"
+  },
+  "columnChooser": {
+    "title": "Available columns",
+    "popupTitle": "Table Settings"
+  },
+  "messagesPanel":{
+    "text": "Messages",
+    "dataFrom": "Date from",
+    "dataTo": "Date to",
+    "textNotification": "Text notification",
+    "priority": "Priority"
+  },
+  "userGuide": {
+    "runGuideAgain": "You can start the tutorial hints by clicking on the icon",
+    "users":{
+      "1": {
+        "title": "Users",
+        "text": "The user list shows all accounts that are visible under your service accounts. ",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "2": {
+        "title": "Users",
+        "text": "Using the Add or Correct option you can add or change user data.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "3": {
+        "title": "Users",
+        "text": "The Add or Remove User from Group options allow you to assign a user to a permission group.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "4": {
+        "title": "Users",
+        "text": "Using the Block access to the application and Unlock access to the application options, you can temporarily block a user's access to the application, thus freeing up the ability for another user to enable it instead.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "5": {
+        "title": "Users",
+        "text": "The Import option is dedicated to users who have accounts in the application and want to import them to Wapro Anywhere Online, thus changing their logins to email addresses.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      }
+    },
+    "dashboard": {
+      "1": {
+        "title": "Start",
+        "text": "The Home tab provides a summary of your account. Here you can quickly check which users, companies and applications you have.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "2": {
+        "title": "Groups",
+        "text": "The Groups tab allows you to create and manage permissions for user groups",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "3": {
+        "title": "Users",
+        "text": "The Users tab allows you to view the list of users, add them and grant access to the application. You can also import existing accounts from the app.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "4": {
+        "title": "Companies",
+        "text": "The Companies tab allows you to view the companies available under your account.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "5": {
+        "title": "Quick actions",
+        "text": "Using quick actions, you can add or import a user and assign him to a group.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "6": {
+        "title": "Statistics",
+        "text": "The statistics section in numbers shows how many companies, users and user groups there are in your account.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "7": {
+        "title": "Companies Section",
+        "text": "The Companies section is a quick preview of what companies you have created.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "8": {
+        "title": "Available applications",
+        "text": "In the Available applications section you will find information about the applications you have purchased as part of the service and how many users you have created in them.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      },
+      "9": {
+        "title": "Users section",
+        "text": "The Users section allows you to immediately see the list of logins you have created within your account and see what group they have access to.",
+        "buttons": {
+          "1": "Tekst btn 1"
+        }
+      }
+    }
+  },
+  "licenses":{
+    "addInterconector": "Add Interconector",
+    "download": "Download",
+    "downloadAndInstal": "Download and install Wapro Interconnector via Wapro ERP Installer on your computer.",
+    "licenseNumber": "License number",
+    "variantName": "Variant",
+     "versionNumber": "Version number",
+     "numberOfUsers":"Number of users",
+     "promotionCode": "Promotion code",
+     "addLicense": "Add license",
+     "updateVariant": "Update variant",
+     "orderSummary": "Order Summary",
+     "currentVariant": "Current variant",
+     "newVariant": "New variant",
+     "monthlyToPay": "Monthly to pay",
+     "updatedVariant": "Updated variant!",
+     "yourNewVariant": "Your new variant is now active. Log back into the application to use all the features of the new variant.",
+     "seeetailedDifferencesBetweenVariants": "If you want to see the differences between the variants live, check out the demo version",
+     "continueInStore": "Continue in store",
+     "toPay": "Should I pay for the selected licenses: <br><br><b>{{net}}</b> PLN net<br><b>{{gross}}</b> PLN gross<br><br>Do you want to have it?"
+  },
+  "clients":{
+    "activeFrom": "Active from",
+    "activeTo": "Active to",
+    "addNewClient": "Add new client",
+    "editClient": "Edit client",
+    "goToArchive": "Disabling the ability to work with the application and inability to upgrade to a subscription.",
+    "restoreFromArchive": "Restoring from the archive enables the user and includes them in the subscription. They can be restored after 30 days from being added.",
+    "restoreConfirm": "Restoring a user from the archive will allow them to work with the application and include them in the number of users for the subscription.<br><br>Do you want to restore the user from the archive?"
+  },
+  "emailHistory":{
+    "recipient": "Recipient",
+    "subject": "Subject",
+    "sendDate": "Send date",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "companyName":"Nazwa firmy",
+    "email": "Email",
+    "emailSent": "Email sent"
+  }
+}

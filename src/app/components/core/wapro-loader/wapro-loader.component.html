@@ -1,0 +1,119 @@
+@switch (mode) { @case ('primary') {
+<ng-container *ngTemplateOutlet="primaryLoader"></ng-container>
+} @default {
+<ng-container *ngTemplateOutlet="defaultLoader"></ng-container>
+} }
+
+<ng-template #defaultLoader>
+  <div class="loader-box" [ngStyle]="{ 'font-size.px': spinnerSize }">
+    <svg viewBox="0 0 50 50" class="spinner spinner--default">
+      <circle
+        class="ring"
+        cx="25"
+        cy="25"
+        r="22.5"
+        [attr.stroke]="config.spinnerColor"
+      />
+      <circle
+        class="line"
+        cx="25"
+        cy="25"
+        r="22.5"
+        [attr.stroke]="config.outerBgColor"
+      />
+    </svg>
+  </div>
+</ng-template>
+
+<ng-template #primaryLoader>
+  <div
+    class="primary-loader-wrapper"
+    [ngStyle]="{
+    'background-color': config.backgroundColor,
+    'position': config.position,
+    'top': config.top,
+    'left': config.left,
+    'width': config.width,
+    'height': config.height,
+    'max-width': config.maxWidth,
+    'max-height': config.maxHeight,
+
+  }"
+  >
+    <div
+      [ngStyle]="{
+        'font-size.px': spinnerSize,
+        'width.px': spinnerSize,
+        'height.px': spinnerSize
+      }"
+      style="position: relative; overflow: hidden"
+    >
+      <!-- LITERA W -->
+      <!-- <svg viewBox="0 0 50 50" class="spinner spinner--primary">
+          <circle cx="25" cy="25" r="22.5" fill="#DC1E28" class="primary-bg" />
+          <path
+            transform="translate(3, 2) scale(0.6)"
+            d="M36.5397 33.6704L32.1464 48H27.6799L21.5 28H25.8921L30.1367 43.3262C30.1367 43.3262 30.1733 43.2486 34.6032 28H38.4749C42.8682 43.2486 42.9048 43.3262 42.9048 43.3262L47.1861 28H51.5794L45.3994 48H40.8952L36.5397 33.6704Z"
+            fill="white"
+            class="primary-letter"
+            />
+            <circle class="ring ring--primary" cx="25" cy="25" r="22.5" />
+            <circle class="line line--primary" cx="25" cy="25" r="22.5" />
+          </svg> -->
+
+      <!-- CHUMURKA -->
+      <svg
+        viewBox="0 0 50 50"
+        class="spinner spinner--primary"
+        [ngStyle]="{ border: config.border }"
+      >
+        <circle cx="25" cy="25" r="22.5" [attr.fill]="config.innerBgColor" />
+
+        <circle
+          class="ring"
+          cx="25"
+          cy="25"
+          r="22.5"
+          [attr.stroke]="config.outerBgColor"
+        />
+        <circle
+          class="line"
+          cx="25"
+          cy="25"
+          r="22.5"
+          [attr.stroke]="config.spinnerColor"
+        />
+      </svg>
+      <svg
+        width="28"
+        height="23"
+        viewBox="0 0 28 23"
+        fill="none"
+        class="spinner spinner--cloud"
+        xmlns="http://www.w3.org/2000/svg"
+        style="position: absolute"
+      >
+        <path
+          d="M21.5538 6.57075C21.5538 2.97692 18.6496 0 15.0835 0C13.5457 0 12.1374 0.540212 11.0257 1.44058C9.97512 2.29498 8.84465 3.03055 7.64969 3.65126C7.83597 4.24131 7.96165 4.88878 7.96165 5.57843C7.96165 6.38299 7.82497 7.16845 7.55432 7.92318C7.57363 7.91553 7.58905 7.90788 7.60778 7.90022C9.71276 7.01516 11.665 5.84278 13.4123 4.42136C13.7436 4.15315 14.303 3.83132 15.0758 3.83132C16.3848 3.83132 17.4734 4.79297 17.6906 6.0497C17.7705 7.10331 17.5991 7.6933 17.5043 7.93469C16.263 10.1262 16.3165 11.107 18.1778 13.9001C18.5168 12.13 19.9703 10.9806 20.8384 9.53236C21.0555 9.18371 21.2225 8.80439 21.3333 8.42513C21.3256 8.44809 21.3405 8.40211 21.3333 8.42513C21.3636 8.32167 21.3978 8.17988 21.4204 8.06877C21.4204 8.05346 21.4281 8.03815 21.432 8.02279C21.5081 7.62436 21.5389 7.11096 21.5499 6.5669L21.5538 6.57075Z"
+          [attr.fill]="config.logoColor"
+        />
+        <path
+          d="M23.0659 7.0692C22.9821 8.31822 22.6205 9.60551 22.0423 10.7971C23.4655 11.5327 24.3413 13.0767 24.1699 14.7817C23.9908 16.6169 22.5406 18.1149 20.725 18.3448C20.5503 18.3678 20.3711 18.3793 20.1997 18.3793C18.9551 18.3793 18.076 17.8276 17.5585 17.3602C16.8392 16.7165 15.9369 16.3947 15.0307 16.3947C14.2089 16.3947 13.3866 16.659 12.7014 17.1993C11.727 17.9578 10.5623 18.3601 9.32931 18.3601C8.96001 18.3601 8.58301 18.3219 8.20653 18.249C5.66008 17.7586 3.81032 15.4138 3.81032 12.6744C3.81032 11.9427 3.9018 11.1994 4.29369 10.4753C4.58694 9.86992 4.96726 9.42931 5.28308 8.99251C5.89599 8.14577 6.44056 7.00786 6.44056 5.58264C6.44056 5.13818 6.37166 4.71294 6.26142 4.31445C6.21953 4.33361 6.1815 4.35278 6.13961 4.36808C3.18968 5.60945 0 7.88142 0 12.6744C0 17.1724 3.09487 21.1647 7.48725 22.0114C8.1112 22.1302 8.72412 22.1876 9.32546 22.1876C11.4762 22.1876 13.4555 21.452 15.0307 20.2222C16.4087 21.452 18.2166 22.2068 20.1997 22.2068C20.5271 22.2068 20.8584 22.1876 21.1973 22.1455C24.7635 21.6973 27.6071 18.7586 27.9609 15.1571C28.3186 11.5021 26.1834 8.31051 23.0697 7.0692H23.0659Z"
+          [attr.fill]="config.logoColor"
+        />
+      </svg>
+    </div>
+
+    @if (loaderText) {
+    <p class="loader-text">{{ message }}</p>
+    } @if (canAbort) {
+    <dx-button
+      type="danger"
+      [text]="abortBtnText"
+      (onClick)="abort()"
+    ></dx-button>
+    }
+  </div>
+</ng-template>
+
+<ng-template #spinner> </ng-template>

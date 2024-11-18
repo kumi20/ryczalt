@@ -1,0 +1,112 @@
+@if (!appDateRangeChips) {
+<div
+  style="
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 6px;
+    position: relative;
+    top: -2px;
+  "
+  [ngStyle]="{ top: positionTop }"
+  class="mobile-position"
+>
+  <div
+    class="chips-btn"
+    tabindex="0"
+    (click)="swapChipsList()"
+    (keydown.enter)="swapChipsList()"
+    (keydown.space)="swapChipsList()"
+    [ngClass]="{
+      'chips-btn-opened': isChipsList(),
+      'chips-selected': selectedValue != '' || customDisplayValue
+    }"
+  >
+    <i style="height: 12px"></i>
+    <p class="chips-btn-name">{{ name }}</p>
+    @if (selectedValue != '' || customDisplayValue) {
+    <p class="chips-btn-name" style="margin-right: 2px">:</p>
+    } @if (selectedValue != '' || customDisplayValue) {
+    <p class="chips-btn-selected">
+      {{ customDisplayValue || selectedValue }}
+    </p>
+    } @if (selectedValue != '' && !disabledClear) {
+    <i class="icon absui-icon--multiplication" (click)="clearValue()"></i>
+    }
+  </div>
+  @if (isChipsList()) {
+  <div class="chips-list">
+    <dx-list
+      #listRef
+      [dataSource]="list"
+      [searchEnabled]="false"
+      (onItemClick)="onItemClick($event)"
+      [width]="width ? width : 210"
+      [height]="listHeight ? listHeight : 'auto'"
+    >
+      <div
+        *dxTemplate="let item of 'item'"
+        [ngClass]="{ 'selected-chip': item[labelExpr] == selectedValue }"
+      >
+        {{ item[labelExpr] }}
+      </div>
+    </dx-list>
+  </div>
+  }
+</div>
+} @if (appDateRangeChips) {
+<div
+  style="
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 6px;
+    position: relative;
+    top: -2px;
+  "
+  [ngStyle]="{ top: positionTop }"
+  class="mobile-position"
+>
+  <div
+    class="chips-btn"
+    tabindex="0"
+    (click)="swapChipsList()"
+    (keydown.enter)="swapChipsList()"
+    (keydown.space)="swapChipsList()"
+    [ngClass]="{
+      'chips-btn-opened': isChipsList(),
+      'chips-selected': selectedValue != '' || customDisplayValue
+    }"
+    [id]="'dateRangeFilter' + unicalGuid"
+  >
+    <i style="height: 12px"></i>
+    <p class="chips-btn-name">{{ name }}</p>
+    @if (selectedValue != '' || customDisplayValue) {
+    <p class="chips-btn-name" style="margin-right: 2px">:</p>
+    } @if (selectedValue != '' || customDisplayValue) {
+    <p class="chips-btn-selected">
+      {{ customDisplayValue || selectedValue }}
+    </p>
+    } @if (selectedValue != '' && !disabledClear) {
+    <i class="icon absui-icon--multiplication" (click)="clearValue()"></i>
+    }
+  </div>
+  @if (isChipsList()) {
+  <div class="chips-list">
+    <dx-list
+      #listRef
+      [dataSource]="list"
+      [searchEnabled]="false"
+      (onItemClick)="onItemClick($event)"
+      [width]="width ? width : 210"
+      [height]="listHeight ? listHeight : 'auto'"
+    >
+      <div
+        *dxTemplate="let item of 'item'"
+        [ngClass]="{ 'selected-chip': item[labelExpr] == selectedValue }"
+      >
+        {{ item[labelExpr] }}
+      </div>
+    </dx-list>
+  </div>
+  }
+</div>
+}

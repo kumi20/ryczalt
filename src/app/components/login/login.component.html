@@ -1,0 +1,91 @@
+@if (!isCas) {
+<div class="login absui-login-page wapro-html-new wapro-anycloud">
+  <div class="absui-login-page__container" id="container">
+    <div class="absui-login-panel cas-login-step">
+      <div class="absui-login-panel__form">
+        <div>
+          <h1 class="absui-login-panel__title">Ryczałt</h1>
+          <h2 class="absui-login-panel__sub-title">
+            Zaloguj się aby kontynuować
+          </h2>
+        </div>
+        <form
+          id="fm1"
+          [formGroup]="form"
+          class="form-horizontal login-form form-log"
+        >
+          <div class="absui-form-group" id="usernameSection">
+            <label for="username" class="absui-login-panel__label"
+              ><span class="accesskey">I</span>dentyfikator:</label
+            >
+            <dx-text-box
+              name="login"
+              placeholder=""
+              id="login"
+              [showClearButton]="false"
+              [inputAttr]="{ autocomplete: 'off' }"
+              mode="email"
+              valueChangeEvent="input"
+              #firstFocus
+              width="360"
+              autocapitalize="none"
+              style="max-width: 360px"
+              formControlName="login"
+              [ngClass]="{'input-required': form.get('login')?.invalid && form.get('login').touched}"
+            >
+            </dx-text-box>
+          </div>
+          <div class="absui-form-group">
+            <label for="password" class="absui-login-panel__label"
+              ><span class="accesskey">H</span>asło:
+              </label
+            ><br />
+            <dx-text-box
+              name="password"
+              placeholder=""
+              id="password"
+              [inputAttr]="{ autocomplete: 'off' }"
+              mode="password"
+              autocapitalize="none"
+              valueChangeEvent="input"
+              width="360"
+              style="max-width: 360px"
+              formControlName="password"
+              [ngClass]="{'input-required': form.get('password')?.invalid && form.get('password').touched}"
+              (onEnterKey)="onLog()"
+            >
+            </dx-text-box>
+          </div>
+          <dx-button
+            mode="submit"
+            id="btn-log"
+            class="btn-dx-primary"
+            text="Zaloguj"
+            [useSubmitBehavior]="true"
+            [height]="48"
+            style="max-width: 360px"
+            width="360"
+            (onClick)="onLog()"
+            (onEnterKey)="onLog()"
+          >
+          </dx-button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="cas-panel">
+  <div class="cas-loader-box">
+    <wapro-loader
+      [config]="configLoader"
+      mode="primary"
+      [loaderText]="false"
+    ></wapro-loader>
+  </div>
+  <p class="title-log-page" style="margin-bottom: 6px; margin-top: 20px">
+    {{ "dataIsLoading" | translate }}
+  </p>
+  <p class="demo-title-2">{{ "pleaseWait" | translate }}</p>
+</div>
+}

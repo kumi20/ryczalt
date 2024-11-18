@@ -1,0 +1,199 @@
+/* text */
+$text-brand: #bc1a22;
+$text-dark-gray: #222222;
+$text-light-gray: #666666;
+$text-gray: #4c4c4c;
+$text-white: #ffffff;
+
+/* brand */
+$brand-00: #a2161e;
+$brand-00Hover: #871219;
+$brand-10: #bc1a22;
+$brand-20: #dc1e28;
+$brand-30: #ea6269;
+$brand-70: #f8c9cc;
+$brand-80: #fadbdd;
+$brand-90: #f8f1f1;
+$brand-neutral-00: #25292b;
+$brand-neutral-10: #30393f;
+$brand-85: #f5eded;
+
+/* neutral */
+$neutral-10: #000000;
+$neutral-20: #333333;
+$neutral-30: #4c4c4c;
+$neutral-40: #666666;
+$neutral-40-opacity-90: rgba($neutral-40, 0.9);
+$neutral-50: #b3b3b3;
+$neutral-60: #cccccc;
+$neutral-70: #dddddd;
+$neutral-80: #e5e5e5;
+$neutral-85: #ededed;
+$neutral-90: #f5f5f5;
+$neutral-95: #fafafa;
+$neutral-100: #ffffff;
+
+/* accent */
+$accent-teal: #4db6ac;
+$accent-light-green: #aed581;
+$accent-blue-grey: #90a4ae;
+$accent-red: #e57373;
+$accent-light-blue: #4fc3f7;
+$accent-orange: #ffb74d;
+$accent-green: #81c784;
+$accent-blue-intrastate: #b3e5fc;
+$accent-green-intrastate: #c8e6c9;
+
+/* theme-positive */
+$theme-positive-10: #49a333;
+$theme-positive-30: #8ad577;
+$theme-positive-20: #57c33c;
+$theme-positive-70: #d6f1d0;
+$theme-positive-90: #f1faef;
+
+/* theme-warning */
+$theme-warning-20: #ee9f07;
+$theme-warning-10: #bc7e06;
+$theme-warning-70: #fdeac4;
+$theme-warning-80: #fef1d7;
+$theme-warning-90: #fef8eb;
+
+/* $theme-info */
+$theme-info-10: #0074ad;
+$theme-info-20: #008cd2;
+$theme-info-70: #c2ebff;
+$theme-info-90: #ebf8ff;
+
+/* tags */
+/* tag fill color */
+$tagfill-red: #ffcdd2;
+$tagfill-pink: #f8bbd0;
+$tagfill-purple: #e1bee7;
+$tagfill-deep-purple: #d1c4e9;
+$tagfill-indigo: #c5cae9;
+$tagfill-blue: #bbdefb;
+$tagfill-light-blue: #b3e5fc;
+$tagfill-cyan: #b2ebf2;
+$tagfill-teal: #b2dfdb;
+$tagfill-green: #c8e6c9;
+$tagfill-light-green: #dcedc8;
+$tagfill-lime: #f0f4c3;
+$tagfill-yellow: #fff9c4;
+$tagfill-amber: #ffecb3;
+$tagfill-orange: #ffe0b2;
+$tagfill-deep-orange: #ffccbc;
+$tagfill-brown: #d7ccc8;
+$tagfill-grey: #f5f5f5;
+$tagfill-blue-grey: #cfd8dc;
+$tagfill-white: #ffffff;
+
+/* tag text color */
+$tagtxt-red: #741111;
+$tagtxt-pink: #6e0c40;
+$tagtxt-purple: #3c1071;
+$tagtxt-deep-purple: #151c66;
+$tagtxt-indigo: #151c66;
+$tagtxt-blue: #0b3a83;
+$tagtxt-light-blue: #01467d;
+$tagtxt-cyan: #004d51;
+$tagtxt-teal: #003e34;
+$tagtxt-green: #164c1a;
+$tagtxt-light-green: #295518;
+$tagtxt-lime: #524b0f;
+$tagtxt-yellow: #6f390a;
+$tagtxt-amber: #733200;
+$tagtxt-orange: #7c2c00;
+$tagtxt-deep-orange: #782208;
+$tagtxt-brown: #321f1c;
+$tagtxt-grey: #1b1b1b;
+$tagtxt-blue-grey: #1f282d;
+$tagtxt-dark: #272e33;
+
+/* other */
+$icons-orange: #a86800;
+$icons-teal: #00796b;
+$icons-cyan: #00838f;
+
+/* other */
+$icons-orange: #a86800;
+$icons-teal: #00796b;
+$icons-cyan: #00838f;
+$abs-brands-cloud-20: #00aaa0;
+$abs-brands-cloud-70: #c2ebe8;
+$theme-negative-90: #faeded;
+
+$globals-tags-100-md-deep-purple: #d1c4e9;
+$globals-dedicated-font-for-tags-deep-purple: #281676;
+$teal900: #004d40;
+$teal900Round: #e0f2f1;
+
+/* accent */
+$accent-teal: #4db6ac;
+$accent-light-green: #aed581;
+$accent-blue-grey: #90a4ae;
+$accent-red: #e57373;
+$accent-light-blue: #4fc3f7;
+$accent-orange: #ffb74d;
+$accent-green: #81c784;
+$accent-pink: #f06292;
+$accent-purple: #ba68c8;
+$accent-deep-purple: #9575cd;
+$accent-indigo: #7986cb;
+$accent-blue: #64b5f6;
+$accent-cyan: #4dd0e1;
+$accent-lime: #dce775;
+$accent-brown: #a1887f;
+$accent-grey: #e0e0e0;
+
+$globals-tags-100-md-green: #c8e6c9;
+$globals-dedicated-font-for-tags-green: #164c1a;
+
+$globals-tags-100-md-yellow: #fff9c4;
+$globals-dedicated-font-for-tags-yellow: #6f390a;
+
+$globals-tags-100-md-blue: #bbdefb;
+$globals-dedicated-font-for-tags-blue: #0b3a83;
+
+$globals-tags-100-md-cyan: #b2ebf2;
+$globals-dedicated-font-for-tags-cyan: #004d51;
+
+$globals-tags-100-md-light-blue: #b3e5fc;
+$globals-dedicated-font-for-tags-light-blue: #01467d;
+
+$globals-tags-100-md-deep-orange: #ffccbc;
+$globals-dedicated-font-for-tags-deep-orange: #782208;
+
+$globals-tags-100-md-orange: #ffe0b2;
+$globals-dedicated-font-for-tags-orange: #7c2c00;
+
+$globals-tags-100-md-amber: #ffecb3;
+$globals-dedicated-font-for-tags-amber: #733200;
+
+$globals-tags-100-md-lime: #f0f4c3;
+$globals-dedicated-font-for-tags-lime: #524b0f;
+
+$globals-tags-100-md-teal: #b2dfdb;
+$globals-dedicated-font-for-tags-teal: #003e34;
+
+$globals-tags-100-md-light-green: #dcedc8;
+$globals-dedicated-font-for-tags-light-green: #295518;
+
+$globals-tags-100-md-red: #ffcdd2;
+$globals-dedicated-font-for-tags-red: #741111;
+
+$globals-tags-100-md-blue-grey: #cfd8dc;
+$globals-dedicated-font-for-tags-blue-grey: #1f282d;
+
+$globals-tags-100-md-brown: #d7ccc8;
+$globals-dedicated-font-for-tags-brown: #321f1c;
+
+$globals-tags-100-md-indigo: #c5cae9;
+$globals-dedicated-font-for-tags-indigo: #151c66;
+
+$globals-dedicated-font-for-tags-pink: #6e0c40;
+
+$globals-tags-100-md-purple: #e1bee7;
+$globals-dedicated-font-for-tags-purple: #3c1071;
+
+$globals-tags-100-md-deep-purple: #d1c4e9;
+$globals-dedicated-font-for-tags-deep-purple: #281676;

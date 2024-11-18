@@ -1,0 +1,241 @@
+[
+  {
+    "view": "dashboard",
+    "defaultStepOptions": {
+      "classes": "shadow-md bg-purple-dark",
+      "cancelIcon": {
+        "enabled": true
+      }
+    },
+    "steps": [
+
+
+
+      {
+        "attachTo": {
+          "element": ".dashboard-step-1",
+          "on": "right"
+        },
+        "classes": "shepherd-arrow-top",
+        "buttons": [
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-1"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-2",
+          "on": "bottom"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-2"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-3",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-3"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-4",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-4"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-5",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-5"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-6",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-6"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-7",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-7"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-8",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-8"
+      },
+      {
+        "attachTo": {
+          "element": ".dashboard-step-9",
+          "on": "right"
+        },
+        "classes": "",
+        "buttons": [
+          {
+            "action": "back",
+            "secondary": true
+          },
+          {
+            "action": "next"
+          }
+        ],
+        "id": "dashboard-step-9"
+      }
+    ]
+  },
+  {
+    "view": "users",
+    "defaultStepOptions": {
+      "classes": "shadow-md bg-purple-dark",
+      "cancelIcon": {
+        "enabled": true
+      }
+    },
+    "steps": [
+      {
+        "attachTo": {
+          "element": ".user-step-1",
+          "on": "right"
+        },
+        "classes": "shepherd-arrow-top",
+        "buttons": [
+          {
+            "action": "next"
+          }
+        ],
+        "id": "user-step-1"
+      },
+      {
+        "attachTo": {
+          "element": ".user-step-2",
+          "on": "right"
+        },
+        "classes": "shepherd-arrow-top",
+        "buttons": [
+          {
+            "action": "next"
+          }
+        ],
+        "id": "user-step-2"
+      },
+      {
+        "attachTo": {
+          "element": ".user-step-3",
+          "on": "right"
+        },
+        "classes": "shepherd-arrow-top",
+        "buttons": [
+          {
+            "action": "next"
+          }
+        ],
+        "id": "user-step-3"
+      },
+      {
+        "attachTo": {
+          "element": ".user-step-4",
+          "on": "right"
+        },
+        "classes": "shepherd-arrow-top",
+        "buttons": [
+          {
+            "action": "next"
+          }
+        ],
+        "id": "user-step-4"
+      },
+      {
+        "attachTo": {
+          "element": ".user-step-5",
+          "on": "right"
+        },
+        "classes": "shepherd-arrow-top",
+        "buttons": [
+          {
+            "action": "next"
+          }
+        ],
+        "id": "user-step-5"
+      }
+    ]
+  }
+]

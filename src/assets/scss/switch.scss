@@ -1,0 +1,184 @@
+@import "./colors";
+
+.dx-switch {
+  width: 21px;
+  margin-top: 2px;
+  position: relative;
+  height: 21px;
+  margin-right: 5px;
+}
+
+.switch-on-border {
+  .dx-switch-container {
+    overflow: hidden;
+    /* margin: 0 -6px 0 0; */
+    padding: 0.1px 1px;
+    width: 19px;
+    height: 11px;
+    border: 1px solid $brand-10 !important;
+    background: $neutral-100;
+    border-radius: 8px;
+  }
+}
+
+.dx-switch.dx-state-readonly .dx-switch-container {
+  border-color: $neutral-50;
+  background-color: #fff;
+}
+
+.dx-state-readonly .dx-switch-handle::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid $neutral-50;
+  background-color: $neutral-50;
+}
+
+.dx-switch-container {
+  overflow: hidden;
+  /* margin: 0 -6px 0 0; */
+  padding: 0.1px 1px;
+  width: 19px;
+  height: 11px;
+  border: 1px solid $neutral-20;
+  background: $neutral-100;
+  border-radius: 8px;
+}
+
+.payment-switch .dx-switch-container {
+  overflow: hidden;
+  padding: 0.1px 1px;
+  width: 24px;
+  height: 14px;
+  border: 1px solid $neutral-20;
+  background: $neutral-100;
+  border-radius: 8px;
+}
+
+.payment-switch .dx-switch-handle::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid $neutral-20;
+  background-color: $neutral-100;
+}
+
+.payment-switch.dx-switch-on-value .dx-switch-handle::before {
+  background-color: $neutral-100;
+  border: 1px solid $brand-10 !important;
+  width: 10px !important;
+  position: relative;
+  top: 0px;
+  right: 2px !important;
+  height: 10px !important;
+}
+
+.dx-switch.dx-state-hover .dx-switch-handle::before {
+  background-color: $neutral-100;
+  border: 1px solid $neutral-30;
+}
+
+.dx-switch.dx-state-hover .dx-switch-container {
+  background-color: transparent;
+  border-color: $neutral-30;
+}
+
+.dx-switch.dx-state-focused .dx-switch-container {
+  border: 1px solid $neutral-10;
+  background: $neutral-100;
+}
+
+.dx-switch-inner {
+  width: 270%;
+  height: 100%;
+}
+
+.switch-on {
+  float: left;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 50%;
+  padding-left: 26px;
+}
+.dx-switch.dx-state-focused .dx-switch-handle::before {
+  border: 1px solid $neutral-10;
+  background: $neutral-100;
+}
+
+.dx-switch.dx-state-active .dx-switch-handle::before {
+  background-color: transparent;
+}
+.dx-switch.dx-state-active .dx-switch-container {
+  border-color: $brand-neutral-10;
+  background-color: transparent;
+}
+
+.dx-switch-on-value .dx-switch-handle::before {
+  background-color: $neutral-100;
+  border: 1px solid $brand-10 !important;
+  width: 7px;
+  position: relative;
+  top: 0px;
+  right: -2px;
+  height: 7px;
+}
+
+.dx-switch-on-value.dx-state-focused .dx-switch-handle::before {
+  background-color: $neutral-100;
+}
+
+.dx-switch-on-value.dx-state-active .dx-switch-handle::before {
+  background-color: $brand-10;
+}
+
+.dx-switch-on-value .dx-state-hover {
+  border: 1px solid $brand-10;
+}
+
+.dx-switch-handle::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid $neutral-20;
+  background-color: white;
+}
+
+.dx-switch-off {
+  padding-left: 2px;
+  color: transparent;
+}
+
+.dx-switch-handle {
+  position: relative;
+  float: left;
+  flex-basis: 14px;
+  flex-shrink: 0;
+  width: 14px;
+  height: 18px;
+  margin-top: 1px;
+  box-sizing: border-box;
+}
+
+.dx-switch-on {
+  color: transparent;
+}
+
+.dx-switch-on-value .dx-switch-container {
+  background-color: $brand-10 !important;
+  border: 1px solid $brand-10;
+}
+
+.dx-switch-on-value.dx-switch.dx-state-focused .dx-switch-container {
+  border-color: $brand-10;
+}
+
+.dx-switch-on-value.dx-switch.dx-state-hover .dx-switch-container {
+  background-color: $brand-10;
+  border-color: $brand-10;
+}
+
+.dx-switch.dx-state-focused.dx-state-active .dx-switch-handle::before {
+  border: 1px solid $neutral-10;
+  background: $neutral-100;
+}

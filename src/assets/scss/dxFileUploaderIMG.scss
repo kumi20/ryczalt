@@ -1,0 +1,141 @@
+@import "./colors";
+
+.dx-fileuploader-empty .dx-fileuploader-input-wrapper {
+  height: 320px;
+  width: 320px;
+  border: 1px dashed var(--neutral-50, $neutral-50);
+  border-radius: 4px;
+  background: var(--neutral-100, $neutral-100);
+}
+
+.dx-fileuploader-wrapper {
+  padding: 0;
+}
+
+.dx-fileuploader-empty .dx-fileuploader-input-wrapper::after {
+  content: "";
+  background: url("../images/Empty-state/drag&drop.svg") no-repeat top center;
+  background-size: 80px 80px;
+  height: 80px;
+  width: 80px;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.dx-fileuploader-empty .dx-fileuploader-input-wrapper .dx-button {
+  margin-top: 82px;
+}
+
+.dx-fileuploader-empty .dx-fileuploader-input-wrapper::after {
+  padding-top: 76px;
+  width: 149px;
+  content: "lub przeciągnij aby załączyć";
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-light-gray, $text-light-gray);
+}
+
+.dx-fileuploader-input-wrapper {
+  border: 1px dashed var(--neutral-50, $neutral-50);
+  border-radius: 4px;
+  width: 320px;
+  height: 74px;
+  align-items: center;
+  padding: 12px;
+  background: var(--neutral-100, $neutral-100);
+}
+
+.dx-fileuploader-input-wrapper::after {
+  padding: 0;
+  margin: 0;
+}
+
+.dx-fileuploader-dragover .dx-fileuploader-input-label {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding: 14px 9px;
+  border: 1px dashed var(--brand-10, $brand-10) !important;
+  border-radius: 4px;
+  background: var(--brand-90, $brand-90) !important;
+  z-index: 100;
+}
+
+.dx-fileuploader-empty .dx-fileuploader-input-wrapper .dx-button {
+  width: 114px;
+  height: 26px;
+  background: var(--neutral-80, $neutral-80);
+  border-radius: 4px;
+}
+
+.dx-fileuploader-dragover .dx-fileuploader-input-wrapper::after {
+  content: "";
+}
+
+// .ngx-editor.dx-fileuploader:not(.dx-fileuploader-empty) .dx-fileuploader-wrapper {
+//   display: none;
+// }
+
+.ngx-editor:not(.dx-fileuploader-empty)
+  .dx-widget.dx-button.dx-button-mode-contained.dx-button-normal.dx-button-has-text.dx-fileuploader-button {
+  color: var(--text-brand, $text-brand);
+  border: none;
+  left: 269px;
+  top: 2px;
+  background: transparent;
+  &:hover {
+    background: transparent !important;
+  }
+  &:focus {
+    border: none !important;
+  }
+  // display: none;
+}
+
+.dx-fileuploader-empty
+  .dx-widget.dx-button.dx-button-mode-contained.dx-button-normal.dx-button-has-text.dx-fileuploader-button {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+}
+
+.dx-widget.dx-button.dx-button-mode-contained.dx-button-normal.dx-button-has-text.dx-fileuploader-button {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+}
+
+img {
+  max-width: 320px;
+  max-height: 320px;
+}
+
+.dx-fileuploader-empty .dx-fileuploader-input-label {
+  cursor: pointer;
+}
+
+.dx-fileuploader-dragover {
+  height: 320px;
+  width: 100%;
+}
+.dx-fileuploader-empty.dx-fileuploader-dragover .dx-fileuploader-input-label {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding: 14px 9px;
+  border: 1px dashed var(--brand-10, $brand-10) !important;
+  border-radius: 4px;
+  background: var(--brand-90, $brand-90) !important;
+}
+
+.dx-fileuploader-dragover .dx-fileuploader-input-container {
+  height: 100%;
+  width: 100%;
+}
+
+.dx-fileuploader-input-container input {
+  height: 100%;
+}

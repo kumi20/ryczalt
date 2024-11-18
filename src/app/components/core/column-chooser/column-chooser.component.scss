@@ -1,0 +1,60 @@
+@import "../../../../assets//scss/colors";
+
+.marg-r-13 {
+  margin-right: 13px;
+}
+
+.seperator {
+  height: 1px;
+  width: 100%;
+  background: $neutral-80;
+}
+
+.item-container {
+  border-radius: 6px;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 8.5px 15px;
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+    cursor: move;
+  }
+}
+
+.p-item-name {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-light-gray;
+}
+
+.p-header {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-light-gray;
+  display: inline-block;
+  margin-left: 6px;
+  position: relative;
+  top: -4px;
+  margin-bottom: 5px;
+}
+.reset-settings {
+  z-index: 1;
+  //@at-root: #DC1E28;
+  color: $neutral-30;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+  position: relative;
+  top: 3px;
+}
+
+.list-wrapper {
+  padding-left: 15px;
+  padding-right: 10px;
+}
