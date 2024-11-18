@@ -50,13 +50,42 @@
         <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
         <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
 
-        <!-- <dxi-column
-          cellTemplate="markerConfigTemplate"
-          [width]="0"
-          [fixed]="true"
-        ></dxi-column> -->
+        <dxi-column
+          caption="customers.customerName"
+          dataField="customerName"
+        ></dxi-column>
+
+        <dxi-column
+          caption="customers.street"
+          dataField="street"
+          [width]="200"
+        ></dxi-column>
+
+        <dxi-column
+          caption="customers.city"
+          dataField="city"
+          [width]="150"
+        ></dxi-column>
+
+        <dxi-column
+          caption="customers.postalCode"
+          dataField="postalCode"
+          [width]="150"
+        ></dxi-column>
+
+        <dxi-column
+          caption="customers.email"
+          dataField="email"
+          [width]="200"
+        ></dxi-column>
+
+        <dxi-column
+          caption="customers.phone"
+          dataField="phone"
+          [width]="150"
+        ></dxi-column>
       </dx-data-grid>
-      </div>
+    </div>
   </div>
 </ng-template>
 
