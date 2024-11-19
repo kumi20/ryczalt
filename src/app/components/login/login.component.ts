@@ -9,6 +9,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoaderConfig } from '../core/wapro-loader/wapro-loader.interface';
 import { EventService } from '../../services/event-services.service';
 import { AuthService } from '../../services/auth.service';
+import { LicenseService } from '../../services/license.service';
+import { License } from '../../interface/license';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
   isCas: boolean = false;
   configLoader: any;
   event = inject(EventService);
-
+  licenseService = inject(LicenseService);
   authService = inject(AuthService);
 
   constructor() {
@@ -52,12 +54,33 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.checkSessionData();
   }
 
   private initForm() {
     this.form = this.formBuilder.group({
       login: ['', Validators.required],
       password: ['', Validators.required],
+    });
+  }
+
+  private checkSessionData(): void {
+    const sessionData = localStorage.getItem('sessionData');
+    if (sessionData) {
+      this.event.sessionData = this.event.decryptString(sessionData);
+    }
+  }
+
+  checkLicenseValidity():Promise<License> {
+    return new Promise((resolve, reject) => {
+      this.licenseService.getLicenseInfo().subscribe({
+        next: (license) => {
+          resolve(license);
+        },
+        error: (error) => {
+          reject(error);
+        }
+      });
     });
   }
 
@@ -68,7 +91,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.form.value).subscribe({
       next: () => {
-        this.router.navigate(['/content/customers']);
+        this.checkLicenseValidity().then((isValid: License) => {
+          this.event.sessionData = isValid;
+          localStorage.setItem('sessionData', this.event.encryptString(this.event.sessionData));
+          this.router.navigate(['/content/customers']);
+        });
       },
       error: (error) => {
         this.event.showNotification('error', error.error.error);

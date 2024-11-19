@@ -97,7 +97,7 @@ export class CustomDropdownBoxComponent implements OnInit, OnChanges {
   mask: string = '';
   maskRules: any = null; // typ w devexpressie -> any
   searchButton = {
-    icon: 'icon icon-search',
+    icon: 'search',
     type: 'default',
     onClick: (e: ClickEvent) => {
       e.element.closest('dx-text-box')?.classList.add('dx-state-focused');

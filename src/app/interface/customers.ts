@@ -1,6 +1,6 @@
 export interface Customer{
   customerId: number;
-  name: string;
+  customerName: string;
   street: string;
   city: string;
   postalCode: string;
@@ -9,6 +9,9 @@ export interface Customer{
   accountNumber: string;
   addressDetails: AddressDetails;
   contactDetails: ContactDetails;
+  isSupplier: boolean;
+  isRecipient: boolean;
+  isOffice: boolean;
 }
 
 export interface AddressDetails {

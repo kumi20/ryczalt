@@ -1,0 +1,64 @@
+<dx-popup
+  [width]="300"
+  [height]="170"
+  position="center"
+  [showCloseButton]="false"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  [showTitle]="true"
+  [title]="'offices.taxOffice' | translate"
+  [visible]="isVisible()"
+  (onShown)="event.onShownPopUp()"
+  (onHidden)="event.onHiddenPopUp()"
+  (visibleChange)="onVisibleChange($event)"
+  (onInitialized)="onInit($event)"
+  [resizeEnabled]="false"
+>
+  <div class="text-right title-pop-up">
+    <dx-button
+      text="{{ 'buttons.save' | translate }}"
+      style="margin-right: 6px"
+      type="success"
+      (onClick)="(null)"
+      [id]="'add_customer'"
+      *ngIf="!readOnly"
+    ></dx-button>
+
+    <dx-button
+      text="{{ 'buttons.cancel' | translate }}"
+      type="danger"
+      (onClick)="closeWindow()"
+      [id]="'cancel_customer'"
+    ></dx-button>
+
+    <dx-tooltip
+      [target]="'#add_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.save" | translate }} (F10)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#cancel_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.cancel" | translate }} (Esc)
+      </div>
+    </dx-tooltip>
+  </div>
+
+  <div class="d-flex justify-content-center flex-wrap">
+    <p>new-customer works!</p>
+  </div>
+</dx-popup>
+
+

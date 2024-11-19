@@ -103,6 +103,7 @@
         direction="vertical"
         showScrollbar="onHover"
       >
+      <i class="fa fa-brands fa-angular"></i>
         <dx-menu
           #menu
           [dataSource]="navigation"
@@ -265,10 +266,6 @@
       "
     >
       <div>
-        @if(location != '/content/start' && location != '/content/licenses' &&
-        location != '/content/variants'){
-        <app-top-menu [items]="submenu"></app-top-menu>
-        }
         <router-outlet></router-outlet>
       </div>
     </div>
@@ -392,9 +389,6 @@
 </header>
 <div id="content">
   <div>
-    @if (!isMenuMobile) {
-    <app-top-menu [items]="submenu" [code]="code"></app-top-menu>
-    }
     <router-outlet></router-outlet>
   </div>
 </div>

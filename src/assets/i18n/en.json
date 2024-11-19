@@ -1,10 +1,29 @@
 {
+  "buttons":{
+    "cancel": "Cancel"
+  },
+  "menu": {
+    "start": "Start",
+    "companies": "Companies",
+    "customers": "Customers",
+    "log-out": "Log out",
+    "navigationPanelUser": {
+      "languageApplications": "Language applications",
+      "polishLanguage": "Polish",
+      "englishLanguage": "English",
+      "versionInformation": "Version information"
+    }
+  },
   "customers": {
+    "type": "Type",
     "customerName": "Customer name",
     "street": "Street, building number, apartment number",
     "city": "City",
     "postalCode": "Postal code",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone",
+    "isSupplier": "Supplier",
+    "isRecipient": "Recipient",
+    "isOffice": "Office"
   }
 }

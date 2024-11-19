@@ -1,10 +1,29 @@
 {
+  "buttons":{
+    "cancel": "Anuluj"
+  },
+  "menu": {
+    "start": "Start",
+    "companies": "Firmy",
+    "customers": "Kontrahenci",
+    "log-out": "Wyloguj",
+    "navigationPanelUser": {
+      "languageApplications": "Język aplikacji",
+      "polishLanguage": "Polski",
+      "englishLanguage": "Angielski",
+      "versionInformation": "Informacje o wersji"
+    }
+  },
   "customers": {
+    "type": "Typ",
     "customerName": "Nazwa firmy",
     "street": "Ulica, nr budynku, nr lokalu",
     "city": "Miejscowość",
     "postalCode": "Kod pocztowy",
     "email": "Email",
-    "phone": "Telefon"
+    "phone": "Telefon",
+    "isSupplier": "Dostawca",
+    "isRecipient": "Odbiorca",
+    "isOffice": "Urząd"
   }
 }

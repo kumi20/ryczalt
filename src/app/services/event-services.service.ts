@@ -5,8 +5,10 @@ import notify from 'devextreme/ui/notify';
 import * as CryptoJS from 'crypto-js';
 import { AppServices } from './app-services.service';
 import { environment } from '../../environments/environment';
+import { License } from '../interface/license';
 
 const SALT = '%CxR$%j$i9^2:9_0*2Q!230xs.+';
+const TOOLTIP_DELAY = 600;
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +30,18 @@ export class EventService {
   queueList: any[] = [];
   showDotQueueTask: boolean = false;
 
-  tooltipShowEvent = { name: 'dxhoverstart', delay: 600 };
   userListRefresh = new Subject<any>();
+  sortingRule: string = 'DESC';
+
+  sessionData: License  = {
+    licenseNumber: '',
+    dataStart: '',
+    dataEnd: '',
+    isActive: false,
+  };
+
+  tooltipShowEvent = { name: 'dxhoverstart', delay: TOOLTIP_DELAY };
+  activeShortcuts = new Subject<any>();
 
   constructor() {
     this.languageSubscription = new Subscription();
@@ -159,6 +171,25 @@ export class EventService {
         offset: '-24px 80px',
       },
     });
+  };
+
+  onShownPopUp = (unicalGuid?: any) => {
+    let object = {
+      unicalGuid: unicalGuid,
+      value: true,
+    };
+    this.activeShortcuts.next(object);
+  };
+
+  onHiddenPopUp = (unicalGuid?: any) => {
+    let object = {
+      unicalGuid: unicalGuid,
+      value: false,
+    };
+    setTimeout(() => {
+      this.activeShortcuts.next(object);
+      // this.removeKeyboardEventListeners();
+    }, 500);
   };
 
   // DATASOURCE - funkcje bazowe dla bledu i dolaczanie tokena

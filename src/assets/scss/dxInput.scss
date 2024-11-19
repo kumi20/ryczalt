@@ -379,12 +379,8 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   top: -22px;
 }
 
-.dx-dropdowneditor-icon {
-  font: 16px/16px Lumen;
-}
 
 .dx-dropdowneditor-icon::before {
-  content: "\e5c5";
   position: absolute;
   display: block;
   width: 18px;
@@ -403,7 +399,6 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   width: 24px;
   height: 22px;
   border-radius: 6px;
-  font-family: "Lumen";
   background-position: 8px 8px;
   background-size: 14px 14px;
   font-size: 14px !important;
@@ -510,10 +505,6 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   text-align: center;
   border-radius: 3px;
   margin-left: 12px;
-}
-
-.dx-icon-clear::before {
-  content: "\e5cd";
 }
 
 .dx-placeholder {
@@ -1321,11 +1312,9 @@ dx-select-box {
   }
 
   .dx-icon-clear {
-    font: 1.187rem/1.187rem Lumen;
     color: $neutral-30;
   }
   .dx-icon-clear::before {
-    content: "\e90b";
     position: relative;
     color: $neutral-30;
     font-size: 16px;

@@ -79,8 +79,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.event.deviceType = this.deviceType();
     this.initMessages();
     this.initializeTranslation();
+    this.checkSessionData();
   }
 
+  private checkSessionData(): void {
+    const sessionData = localStorage.getItem('sessionData');
+    if (sessionData) {
+      this.event.sessionData = this.event.decryptString(sessionData);
+    }
+  }
 
   private initializeTranslation(): void {
     this.locale = this.getLocale();

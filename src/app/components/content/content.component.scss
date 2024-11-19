@@ -305,7 +305,7 @@ header {
 :host ::ng-deep .dx-toolbar .dx-toolbar-items-container {
   height: 32px;
   overflow: visible;
-  background: $brand-00;
+  background: #337ab7;
 }
 
 :host ::ng-deep .menu-toggle-btn {
@@ -314,7 +314,7 @@ header {
     border-radius: 0px;
     width: 82px;
     height: 32px;
-    background: $brand-00;
+    background: #337ab7;
     border: hidden;
 
     &.dx-state-hover {
@@ -659,12 +659,8 @@ h5 {
   margin-right: 10px;
 }
 
-:host ::ng-deep .dx-icon-menu {
-  font: normal normal normal 21px Lumen;
-}
 
 :host ::ng-deep .dx-icon-menu::before {
-  content: "\eabf";
   color: $neutral-100;
   font-size: 1.3125rem;
   position: relative;

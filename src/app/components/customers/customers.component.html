@@ -12,12 +12,43 @@
   </div>
 </ng-container>
 
-<ng-template #topButtons></ng-template>
+<ng-template #topButtons>
+  <dx-button
+    class="btn-dx-top-menu-folder"
+    icon="fa fa-plus-square-o"
+    stylingMode="text"
+    type="default"
+    [disabled]="!event.sessionData.isActive"
+    (onClick)="addNewRecord()"
+    name="btn-add-customer"
+    [id]="'btn-add'"
+  >
+  </dx-button>
+</ng-template>
 <ng-template #grid>
   <div class="d-flex flex-column">
+    <div>
+      <app-custom-dropdown-box
+        [items]="filterCriteria"
+        [filterValue]="filterValue"
+        (onValueChanged)="onFilterDataChanged($event)"
+        style="margin-right: 10px"
+        [width]="320"
+        [selectedItem]="orderBy()"
+      >
+      </app-custom-dropdown-box>
+
+      <app-custom-chips-button
+        [deleteFilter]="deleteFilter()"
+        name="{{ 'customers.type' | translate }}"
+        [list]="filterOptions"
+        (onValueChanged)="onValueChangedFilterType($event)"
+      >
+      </app-custom-chips-button>
+    </div>
 
     <div>
-    <dx-data-grid
+      <dx-data-grid
         [dataSource]="dataSource"
         [wordWrapEnabled]="false"
         [showBorders]="true"
@@ -35,7 +66,7 @@
       >
         <dxo-load-panel [enabled]="false"></dxo-load-panel>
         <dxo-scrolling
-          mode="infinite"
+          mode="virtual"
           columnRenderingMode="virtual"
           [preloadEnabled]="true"
         >
@@ -51,43 +82,125 @@
         <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
 
         <dxi-column
-          caption="customers.customerName"
+          caption="{{ 'customers.customerName' | translate }}"
           dataField="customerName"
+          [allowSorting]="false"
+          headerCellTemplate="customerName"
+          [cssClass]="
+            orderBy() == 'customerName' ? 'sort-column-bg' : 'sort-column-muted'
+          "
         ></dxi-column>
+        <div *dxTemplate="let data of 'customerName'">
+          <div
+            class="grid-header-wrapper"
+            (click)="setSearchCriteria('customerName')"
+          >
+            {{ "customers.customerName" | translate }}
+            @if(orderBy() == 'customerName'){
+            <i
+              class="header-sort-icon"
+              [ngClass]="
+                order() === event.sortingRule
+                  ? 'dx-icon  dx-icon-arrowdown'
+                  : 'dx-icon dx-icon-arrowup'
+              "
+            ></i>
+            }
+          </div>
+        </div>
 
         <dxi-column
-          caption="customers.street"
+          caption="{{ 'customers.street' | translate }}"
           dataField="street"
           [width]="200"
+          [allowSorting]="false"
         ></dxi-column>
 
         <dxi-column
-          caption="customers.city"
+          caption="{{ 'customers.city' | translate }}"
           dataField="city"
           [width]="150"
+          [allowSorting]="false"
+          headerCellTemplate="city"
+          [cssClass]="
+            orderBy() == 'city' ? 'sort-column-bg' : 'sort-column-muted'
+          "
         ></dxi-column>
+        <div *dxTemplate="let data of 'city'">
+          <div class="grid-header-wrapper" (click)="setSearchCriteria('city')">
+            {{ "customers.city" | translate }}
+            @if(orderBy() == 'city'){
+            <i
+              class="header-sort-icon"
+              [ngClass]="
+                order() === event.sortingRule
+                  ? 'dx-icon  dx-icon-arrowdown'
+                  : 'dx-icon dx-icon-arrowup'
+              "
+            ></i>
+            }
+          </div>
+        </div>
 
         <dxi-column
-          caption="customers.postalCode"
+          caption="{{ 'customers.postalCode' | translate }}"
           dataField="postalCode"
           [width]="150"
+          [allowSorting]="false"
         ></dxi-column>
 
         <dxi-column
-          caption="customers.email"
+          caption="{{ 'customers.email' | translate }}"
           dataField="email"
           [width]="200"
+          [allowSorting]="false"
         ></dxi-column>
 
         <dxi-column
-          caption="customers.phone"
+          caption="{{ 'customers.phone' | translate }}"
           dataField="phone"
           [width]="150"
+          [allowSorting]="false"
+        ></dxi-column>
+
+        <dxi-column
+          caption="{{ 'customers.isSupplier' | translate }}"
+          dataField="isSupplier"
+          [width]="100"
+          cellTemplate="IsDefault"
+          alignment="center"
+          [allowSorting]="false"
+        ></dxi-column>
+
+        <div *dxTemplate="let data of 'IsDefault'">
+          @if (data.value) {
+          <i class="fa fa-thin fa-check"></i> }
+        </div>
+
+        <dxi-column
+          caption="{{ 'customers.isRecipient' | translate }}"
+          dataField="isRecipient"
+          [width]="100"
+          cellTemplate="IsDefault"
+          alignment="center"
+          [allowSorting]="false"
+        ></dxi-column>
+
+        <dxi-column
+          caption="{{ 'customers.isOffice' | translate }}"
+          dataField="isOffice"
+          [width]="100"
+          cellTemplate="IsDefault"
+          alignment="center"
+          [allowSorting]="false"
         ></dxi-column>
       </dx-data-grid>
     </div>
   </div>
 </ng-template>
 
-
 <ng-template #dropDownMode></ng-template>
+
+@if(isAdd()){
+<app-new-customer [isVisible]="true" (onClosing)="isAdd.set(false)"></app-new-customer>
+}
