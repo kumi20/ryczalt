@@ -15,7 +15,7 @@ export interface Customer{
 }
 
 export interface AddressDetails {
-  name: number;
+  name: string;
   street: string;
   city: string;
   postalCode: string;
@@ -23,8 +23,20 @@ export interface AddressDetails {
 }
 
 export interface ContactDetails {
+  contactPerson: string;
   email: string;
   phone: string;
   website: string;
   fax: string;
+}
+
+export interface Gus {
+  customerName: string;
+  customerVat: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  email: string;
+  phone: string;
 }

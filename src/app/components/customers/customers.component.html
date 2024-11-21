@@ -14,16 +14,76 @@
 
 <ng-template #topButtons>
   <dx-button
-    class="btn-dx-top-menu-folder"
-    icon="fa fa-plus-square-o"
+    class="btn-dx-top-menu"
+    icon="dx-icon dx-icon-add"
     stylingMode="text"
     type="default"
     [disabled]="!event.sessionData.isActive"
     (onClick)="addNewRecord()"
     name="btn-add-customer"
+    text="{{ 'buttons.add' | translate }}"
     [id]="'btn-add'"
   >
   </dx-button>
+
+  <dx-button
+    class="btn-dx-top-menu"
+    icon="dx-icon dx-icon-edit"
+    stylingMode="text"
+    type="default"
+    [disabled]="!event.sessionData.isActive"
+    (onClick)="onEdit()"
+    name="btn-add-customer"
+    text="{{ 'buttons.edit' | translate }}"
+    [id]="'btn-edit'"
+  >
+  </dx-button>
+
+  <dx-button
+    class="btn-dx-top-menu"
+    icon="dx-icon dx-icon-trash"
+    stylingMode="text"
+    type="default"
+    [disabled]="!event.sessionData.isActive"
+    (onClick)="onDeleteConfirm()"
+    name="btn-add-customer"
+    text="{{ 'buttons.delete' | translate }}"
+    [id]="'btn-delete'"
+  >
+  </dx-button>
+
+  <dx-tooltip
+    [target]="'#btn-edit'"
+    hideEvent="dxhoverend"
+    [hideOnOutsideClick]="false"
+    [showEvent]="event.tooltipShowEvent"
+  >
+    <div *dxTemplate="let data of 'content'">
+      {{ "buttons.edit" | translate }} (F2)
+    </div>
+  </dx-tooltip>
+
+  <dx-tooltip
+    [target]="'#btn-delete'"
+    hideEvent="dxhoverend"
+    [hideOnOutsideClick]="false"
+    [showEvent]="event.tooltipShowEvent"
+  >
+    <div *dxTemplate="let data of 'content'">
+      {{ "buttons.delete" | translate }} (Del)
+    </div>
+  </dx-tooltip>
+
+  <dx-tooltip
+    [target]="'#btn-add'"
+    hideEvent="dxhoverend"
+    [hideOnOutsideClick]="false"
+    [showEvent]="event.tooltipShowEvent"
+  >
+    <div *dxTemplate="let data of 'content'">
+      {{ "buttons.add" | translate }} (ctrl + n)
+    </div>
+  </dx-tooltip>
 </ng-template>
 <ng-template #grid>
   <div class="d-flex flex-column">
@@ -63,6 +123,11 @@
         [(focusedRowIndex)]="focusedRowIndex"
         [allowColumnReordering]="true"
         [focusedRowEnabled]="true"
+        (onFocusedRowChanged)="onFocusedRowChanged($event)"
+        (onKeyDown)="onKeyDown($event)"
+        [allowColumnResizing]="event.deviceType !== 'mobile'"
+        (onRowDblClick)="onRowDblClick($event)"
+        #dxGrid
       >
         <dxo-load-panel [enabled]="false"></dxo-load-panel>
         <dxo-scrolling
@@ -110,10 +175,40 @@
         </div>
 
         <dxi-column
+          caption="NIP"
+          dataField="customerVat"
+          [width]="150"
+          [allowSorting]="false"
+          headerCellTemplate="customerVat"
+          [cssClass]="
+            orderBy() == 'customerVat' ? 'sort-column-bg' : 'sort-column-muted'
+          "
+          hidingPriority="8"
+        ></dxi-column>
+        <div *dxTemplate="let data of 'customerVat'">
+          <div
+            class="grid-header-wrapper"
+            (click)="setSearchCriteria('customerVat')"
+          >
+            NIP @if(orderBy() == 'customerVat'){
+            <i
+              class="header-sort-icon"
+              [ngClass]="
+                order() === event.sortingRule
+                  ? 'dx-icon  dx-icon-arrowdown'
+                  : 'dx-icon dx-icon-arrowup'
+              "
+            ></i>
+            }
+          </div>
+        </div>
+
+        <dxi-column
           caption="{{ 'customers.street' | translate }}"
           dataField="street"
           [width]="200"
           [allowSorting]="false"
+          hidingPriority="7"
         ></dxi-column>
 
         <dxi-column
@@ -125,6 +220,7 @@
           [cssClass]="
             orderBy() == 'city' ? 'sort-column-bg' : 'sort-column-muted'
           "
+          hidingPriority="6"
         ></dxi-column>
         <div *dxTemplate="let data of 'city'">
           <div class="grid-header-wrapper" (click)="setSearchCriteria('city')">
@@ -147,6 +243,7 @@
           dataField="postalCode"
           [width]="150"
           [allowSorting]="false"
+          hidingPriority="5"
         ></dxi-column>
 
         <dxi-column
@@ -154,6 +251,7 @@
           dataField="email"
           [width]="200"
           [allowSorting]="false"
+          hidingPriority="4"
         ></dxi-column>
 
         <dxi-column
@@ -161,6 +259,7 @@
           dataField="phone"
           [width]="150"
           [allowSorting]="false"
+          hidingPriority="3"
         ></dxi-column>
 
         <dxi-column
@@ -170,11 +269,14 @@
           cellTemplate="IsDefault"
           alignment="center"
           [allowSorting]="false"
+          hidingPriority="2"
         ></dxi-column>
 
         <div *dxTemplate="let data of 'IsDefault'">
           @if (data.value) {
-          <i class="fa fa-thin fa-check"></i> }
+
+          <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
+          }
         </div>
 
         <dxi-column
@@ -184,6 +286,7 @@
           cellTemplate="IsDefault"
           alignment="center"
           [allowSorting]="false"
+          hidingPriority="1"
         ></dxi-column>
 
         <dxi-column
@@ -193,6 +296,7 @@
           cellTemplate="IsDefault"
           alignment="center"
           [allowSorting]="false"
+          hidingPriority="0"
         ></dxi-column>
       </dx-data-grid>
     </div>
@@ -202,5 +306,23 @@
 <ng-template #dropDownMode></ng-template>
 
 @if(isAdd()){
-<app-new-customer [isVisible]="true" (onClosing)="isAdd.set(false)"></app-new-customer>
+<app-new-customer
+  [isVisible]="true"
+  (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
+  [mode]="mode"
+  (onSaving)="onSaving($event)"
+  [customer]="focusedElement()"
+></app-new-customer>
+}
+
+<qumi-keyboard-shortcuts [shortcuts]="shortcuts" [disabled]="isAdd()">
+</qumi-keyboard-shortcuts>
+
+@if (isDelete()) {
+<app-confirm-dialog
+  [isVisible]="isDelete()"
+  (onRemoving)="delete()"
+  (onClosing)="closeConfirm()"
+>
+</app-confirm-dialog>
 }

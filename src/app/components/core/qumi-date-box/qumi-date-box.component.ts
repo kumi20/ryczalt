@@ -24,9 +24,9 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'wapro-date-box',
-  templateUrl: './wapro-date-box.component.html',
-  styleUrls: ['./wapro-date-box.component.scss'],
+  selector: 'qumi-date-box',
+  templateUrl: './qumi-date-box.component.html',
+  styleUrls: ['./qumi-date-box.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
+  ViewChild,
   inject,
   input,
   signal,
@@ -14,7 +16,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { environment } from '../../../environments/environment';
 import { LoadOptions } from 'devextreme/data';
 import DataSource from 'devextreme/data/data_source';
-import { DxDataGridModule } from 'devextreme-angular';
+import { DxDataGridModule, DxTooltipModule } from 'devextreme-angular';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CustomChipsButtonComponent } from '../core/custom-chips-button/custom-chips-button.component';
 import { Customer } from '../../interface/customers';
@@ -22,39 +24,49 @@ import { FilterCriteria } from '../../interface/filterCriteria';
 import { CustomDropdownBoxComponent } from '../core/custom-dropdown-box/custom-dropdown-box.component';
 import { NewCustomerComponent } from './new-customer/new-customer.component';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
+import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
+import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
+import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-customers',
   standalone: true,
   imports: [
-
-  CommonModule,
+    CommonModule,
     DxDataGridModule,
     TranslateModule,
     CustomDropdownBoxComponent,
     CustomChipsButtonComponent,
     NewCustomerComponent,
-    DxButtonModule
+    DxButtonModule,
+    NgShortcutsComponent,
+    DxTooltipModule,
+    ConfirmDialogComponent
   ],
 
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomersComponent implements OnInit, AfterViewInit {
+  @ViewChild('dxGrid', { static: false }) dxGrid: any;
   dropDownBoxMode = input<boolean>(false);
 
   dataSource: DataSource = new DataSource({});
 
   appServices = inject(AppServices);
+  customerServices = inject(CustomerService);
   event = inject(EventService);
   translate = inject(TranslateService);
+  cdr = inject(ChangeDetectorRef);
 
-  heightGrid: number | string = 'calc(100vh - 170px)';
+  heightGrid: number | string = 'calc(100vh - 150px)';
   selectedRows: Customer[] = [];
   focusedRowIndex: number = 0;
 
   pageSize: number = 50;
+  mode: 'add' | 'edit' | 'show' = 'add';
 
   filterValue: string = '';
   filterCriteria: FilterCriteria[] = [
@@ -65,6 +77,10 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     {
       value: 'city',
       label: this.translate.instant('customers.city'),
+    },
+    {
+      value: 'customerVat',
+      label: 'NIP',
     },
   ];
   orderBy = signal<string>('customerName');
@@ -77,13 +93,46 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   ];
   deleteFilter = signal<boolean>(true);
   typeFilter: null | 0 | 1 | 2 = null;
-  isAdd = signal<boolean>(false)
+  isAdd = signal<boolean>(false);
+
+  shortcuts: ShortcutInput[] = [];
+  isDelete = signal<boolean>(false);
+  focusedElement = signal<Customer | null>(null);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.getData();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.shortcuts = [
+      {
+        key: 'ctrl + n',
+        preventDefault: true,
+        allowIn: [AllowIn.Input, AllowIn.Textarea],
+        command: () => {
+          this.addNewRecord();
+        },
+      },
+      {
+        key: 'F2',
+        preventDefault: true,
+        allowIn: [AllowIn.Input, AllowIn.Textarea],
+        command: () => {
+          this.onEdit();
+        },
+      },
+      {
+        key: 'del',
+        preventDefault: true,
+        allowIn: [AllowIn.Input, AllowIn.Textarea],
+        command: () => {
+          this.onDeleteConfirm();
+        },
+      },
+    ];
+  }
 
   getData() {
     this.dataSource = new DataSource({
@@ -96,8 +145,10 @@ export class CustomersComponent implements OnInit, AfterViewInit {
         onLoading(loadOptions: LoadOptions) {
           loadOptions.requireTotalCount = true;
         },
-        onLoaded: (data: Customer[]) => {
-          console.log(data);
+        onLoaded: () => {
+          setTimeout(() => {
+            this.event.setFocus(this.dxGrid)
+          }, 0);
         },
       }),
     });
@@ -108,7 +159,6 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     obj.orderBy = this.orderBy();
     obj.order = this.order();
 
-
     switch (this.orderBy()) {
       case 'customerName':
         obj['customerName'] = this.filterValue;
@@ -116,9 +166,12 @@ export class CustomersComponent implements OnInit, AfterViewInit {
       case 'city':
         obj['city'] = this.filterValue;
         break;
+      case 'customerVat':
+        obj['customerVat'] = this.filterValue;
+        break;
     }
 
-    switch(this.typeFilter){
+    switch (this.typeFilter) {
       case 0:
         obj['isSupplier'] = true;
         break;
@@ -159,11 +212,84 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   onValueChangedFilterType(event: any) {
-    this.typeFilter = (event === '') ? null : event;
+    this.typeFilter = event === '' ? null : event;
     this.getData();
   }
 
-  addNewRecord(){
-    this.isAdd.set(true)
+  addNewRecord() {
+    this.mode = 'add';
+    this.isAdd.set(true);
+  }
+
+  onSaving(event: any) {
+    this.isAdd.set(false);
+    this.dataSource.reload().then((data) => {
+      const index = data.findIndex(
+        (x: any) => x.customerId === Number(event.customerId)
+      );
+
+      if (index !== -1) {
+        this.focusedRowIndex = index;
+      } else {
+        this.focusedRowIndex = 0;
+      }
+
+      this.cdr.detectChanges();
+    });
+  }
+
+  onDeleteConfirm(){
+    this.isDelete.set(true)
+  }
+
+  closeConfirm(){
+    this.isDelete.set(false)
+    this.event.setFocus(this.dxGrid)
+  }
+
+  getFocusedElement() {
+    return this.dxGrid.instance
+      .getDataSource()
+      .items()
+      .find((_el: any, i: any) => this.focusedRowIndex === i);
+  }
+
+
+  delete(){
+    this.isDelete.set(false)
+
+    const id = this.getFocusedElement().customerId;
+
+    this.customerServices.deleteCustomer(id).subscribe(() => {
+      this.dataSource.reload().then(() => {
+        this.focusedRowIndex = 0;
+      });
+    });
+  }
+
+  onFocusedRowChanged(event: any) {
+    this.focusedElement.set(event.row.data);
+  }
+
+  onEdit(){
+    this.mode = 'edit';
+    this.focusedElement.set(this.getFocusedElement());
+    this.isAdd.set(true);
+  }
+
+  onKeyDown(event: any){
+    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter']
+
+    if(BLOCKED_KEYS.includes(event.event.key)){
+      event.event.preventDefault()
+    }
+  }
+
+  onRowDblClick(e: any){
+    if (this.dropDownBoxMode()) {
+      return;
+    }
+
+    this.onEdit();
   }
 }

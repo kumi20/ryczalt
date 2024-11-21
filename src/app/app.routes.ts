@@ -31,6 +31,13 @@ export const routes: Routes = [
             (m) => m.CustomersComponent
           ),
       },
+      {
+        path : 'dictionaries/countries',
+        loadComponent: () =>
+          import('./components/country/country.component').then(
+            (m) => m.CountryComponent
+          ),
+      }
     ],
   },
   {

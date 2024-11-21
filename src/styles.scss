@@ -16,7 +16,6 @@
 @import "./assets/scss/iconBtn.scss";
 @import "./assets/scss/kanban.scss";
 @import "./assets/scss/keyboard.scss";
-@import "./assets/scss/lemena-icon.scss";
 @import "./assets/scss/menu.scss";
 @import "./assets/scss/mobile.scss";
 @import "./assets/scss/ngxPhotoEditorModule.scss";
@@ -29,8 +28,8 @@
 @import "./assets/scss/switch.scss";
 @import "./assets/scss/tabs.scss";
 @import "./assets/scss/typography.scss";
-@import "./assets/scss/variables.scss";
-@import "./assets/scss/wapro-assistant.css";
+
+
 
 *:focus {
   outline: none;
@@ -549,9 +548,8 @@ app-custom-dropdown-box {
   text-align: center;
   line-height: 16px;
   font-size: 1rem;
-  font-family: Lumen;
+  border-color: #dc3545;
   color: $brand-10;
-  content: "\e002";
   left: calc(100% - 25px);
 }
 
@@ -579,24 +577,9 @@ app-custom-dropdown-box {
   background: $theme-warning-70 !important;
 }
 
-.input-warning .dx-texteditor-input-container::after {
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  margin-top: -8px;
-  width: 16px;
-  height: 16px;
-  text-align: center;
-  line-height: 16px;
-  font-size: 1rem;
-  font-family: Lumen;
-  color: $theme-warning-20;
-  content: "\e002";
-  left: calc(100% - 25px);
-}
 
 .input-required {
-  border: 1px solid $brand-10 !important;
+  border: 1px solid #dc3545 !important;
   background: $brand-90 !important;
 }
 
@@ -1055,8 +1038,6 @@ dx-tree-view {
   // }
 
   .dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened::before {
-    font-family: Lumen;
-    content: "\e5c5";
     font-size: 16px;
     width: 18px;
     height: 18px;
@@ -2949,4 +2930,41 @@ ng-keyboard-shortcuts-help-item .item {
       ) !important;
     }
   }
+
+
+}
+
+.form-group{
+  margin-bottom: 6px;
+
+  label{
+    margin-right: 6px;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .custom-inline-group {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .custom-inline-group label {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .custom-inline-group .form-control {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.col-md-6{
+  max-width: 50%;
+}
+
+.form-column__header{
+  text-align: left;
+    border-bottom: 1px solid $neutral-60;
+    margin-bottom: 10px;
+    padding-bottom: 5PX;
 }

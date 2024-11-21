@@ -180,9 +180,8 @@ export class AppServices {
     if (
       window.localStorage.getItem('app-ryczalt-token') &&
       new Date().getTime() <=
-        helper.decodeToken(
-          localStorage.getItem('app-ryczalt-token') as string
-        ).exp *
+        helper.decodeToken(localStorage.getItem('app-ryczalt-token') as string)
+          .exp *
           1000
     ) {
       return true;

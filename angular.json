@@ -35,8 +35,6 @@
               "node_modules/devextreme/dist/css/dx.common.css",
               "node_modules/devextreme/dist/css/dx.light.css",
 			        "node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/assets/scss/lemena-icon.scss",
-
               "src/styles.scss"
 
 

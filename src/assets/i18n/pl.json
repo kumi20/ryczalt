@@ -1,12 +1,21 @@
 {
+  "yes": "Tak",
+  "no": "Nie",
+  "confirmDelete": "Czy na pewno chcesz usunąć ten ren rekord?",
   "buttons":{
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "add": "Dodaj",
+    "save": "Zapisz",
+    "delete": "Usuń",
+    "edit": "Edytuj"
   },
   "menu": {
     "start": "Start",
     "companies": "Firmy",
     "customers": "Kontrahenci",
     "log-out": "Wyloguj",
+    "dictionaries": "Słowniki",
+    "countries": "Kraje",
     "navigationPanelUser": {
       "languageApplications": "Język aplikacji",
       "polishLanguage": "Polski",
@@ -14,9 +23,23 @@
       "versionInformation": "Informacje o wersji"
     }
   },
+  "toolbar":{
+    "adding": "Dodaj",
+    "editing": "Edytuj",
+    "preview": "Podgląd"
+  },
   "customers": {
+    "contactPerson": "Osoba kontaktowa",
+    "companyData": "Dane firmy",
+    "addressesData": "Dane adresowe",
+    "contactData": "Dane kontaktowe",
+    "accountNumber": "Numer konta",
+    "country": "Kraj",
+    "incorectVatNumber": "Nieprawidłowy numer NIP",
+    "customerVat": "NIP",
     "type": "Typ",
     "customerName": "Nazwa firmy",
+    "name": "Nazwa",
     "street": "Ulica, nr budynku, nr lokalu",
     "city": "Miejscowość",
     "postalCode": "Kod pocztowy",
@@ -24,6 +47,11 @@
     "phone": "Telefon",
     "isSupplier": "Dostawca",
     "isRecipient": "Odbiorca",
-    "isOffice": "Urząd"
+    "isOffice": "Urząd",
+    "downloadFromGus": "Pobierz z GUS"
+  },
+  "country":{
+    "code": "Kod",
+    "isSystem": "Systemowy"
   }
 }

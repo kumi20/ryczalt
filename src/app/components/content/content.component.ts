@@ -247,11 +247,29 @@ export class ContentComponent implements OnInit, AfterViewInit {
         classCss: 'redHeader',
       },
       {
-        id: '1',
+        id: '2',
         name: this.translate.instant('menu.customers'),
         icon: 'dx-icon-accountbox',
         url: 'content/customers',
         items: [],
+        tooltip: false,
+        code: null,
+        signature: 'K',
+        classCss: 'redHeader',
+      },
+      {
+        id: '2',
+        name: this.translate.instant('menu.dictionaries'),
+        icon: 'dx-icon-inactivefolder',
+        url: 'content/dictionaries/countries',
+        items: [
+          {
+            id: '2.1',
+            name: this.translate.instant('menu.countries'),
+            icon: '',
+            url: 'content/dictionaries/countries',
+          }
+        ],
         tooltip: false,
         code: null,
         signature: 'S',

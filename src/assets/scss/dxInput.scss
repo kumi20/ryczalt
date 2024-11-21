@@ -225,12 +225,11 @@ dx-tag-box.dx-texteditor {
 }
 
 .dx-checkbox-checked .dx-checkbox-icon {
-  font: 17px/17px Lumen;
   text-align: center;
 }
 
 .dx-checkbox-checked .dx-checkbox-icon::before {
-  content: "\e9a7" !important;
+
   position: absolute;
   display: block;
   width: 15px;
@@ -334,7 +333,7 @@ label {
 .dx-calendar-navigator-next-month.dx-button .dx-icon,
 .dx-calendar-navigator-next-view.dx-button .dx-icon {
   color: $neutral-30;
-  font-family: "Lumen";
+
   position: relative;
   top: 4px;
   left: 7px;
@@ -342,7 +341,6 @@ label {
 
 .dx-calendar-navigator-previous-month.dx-button .dx-icon,
 .dx-calendar-navigator-previous-view.dx-button .dx-icon {
-  font-family: "Lumen";
   position: relative;
   top: 4px;
   left: 7px;
@@ -365,7 +363,7 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   color: $neutral-30;
   opacity: 1;
   &::before {
-    content: "\e5c7";
+
     color: $brand-10;
   }
 }
@@ -647,7 +645,7 @@ dx-text-area.dictionary .dx-texteditor-container {
   width: 15px;
   height: 15px;
   border-radius: 2px;
-  border: 1px solid $neutral-50;
+  border: 1px solid $neutral-50!important;
   border: none;
 }
 
@@ -807,7 +805,7 @@ dx-date-box {
   }
 }
 .dx-datebox-calendar .dx-dropdowneditor-icon {
-  font: 1.187rem/1.187rem Lumen;
+
   &::before {
     content: "\ea10" !important;
     font-size: 16px;
@@ -816,7 +814,7 @@ dx-date-box {
 }
 
 .wapro-date-box.dx-datebox-calendar .dx-dropdowneditor-icon {
-  font: 1.187rem/1.187rem Lumen;
+
   &::before {
     content: "\ea10" !important;
     font-size: 16px;
@@ -829,10 +827,7 @@ dx-date-box {
 /* dropdow */
 dx-select-box {
   .dx-dropdowneditor-icon {
-    font: 1.187rem/1.187rem Lumen;
     &::before {
-      //content: "\e313";
-      content: "\e5c5";
       font-size: 16px;
     }
   }
@@ -847,13 +842,11 @@ dx-drop-down-box {
   .dx-dropdowneditor-icon {
     border: 1px solid transparent;
     color: $neutral-30;
-    font: 1.187rem/1.187rem Lumen;
     width: 22px;
     height: 100%;
     text-align: center;
     border-radius: 3px;
     &::before {
-      content: "\e5c5";
       font-size: 16px;
     }
   }
@@ -875,7 +868,6 @@ dx-drop-down-box {
 }
 
 .dx-numberbox-spin-up-icon {
-  font: 16px/1 Lumen;
   color: $neutral-30;
 }
 
@@ -884,7 +876,6 @@ dx-drop-down-box {
 }
 
 .dx-numberbox-spin-down-icon {
-  font: 16px/1 Lumen;
   color: $neutral-30;
 }
 
@@ -1153,7 +1144,6 @@ input[type="number"] {
 }
 
 .dx-checkbox {
-  font: 17px/17px Lumen;
   text-align: center;
   .dx-checkbox.dx-state-hover .dx-checkbox-icon {
     border: none;
@@ -1166,7 +1156,6 @@ input[type="number"] {
 
 .dx-checkbox .dx-checkbox-icon::before {
   color: $neutral-50;
-  content: "\eab2";
   position: absolute;
   display: block;
   width: 15px;
@@ -1193,7 +1182,6 @@ input[type="number"] {
     box-shadow: 0px 0px 8px rgba(88, 99, 106, 0.3);
     filter: drop-shadow(0px 0px 8px rgba(88, 99, 106, 0.3));
   }
-  border: none !important;
 }
 
 .dx-header-row .dx-checkbox.dx-state-focused .dx-checkbox-icon {
@@ -1408,8 +1396,7 @@ dx-select-box {
     border: 1px solid transparent;
   }
   .dx-radiobutton-icon.dx-radiobutton-icon-checked::before {
-    font-family: "Lumen";
-    content: "\eb63";
+
     font-size: 18px;
     color: $brand-10;
     border: none !important;
@@ -1444,8 +1431,8 @@ dx-select-box {
     }
 
     &::before {
-      font-family: "Lumen";
-      content: "\ea83";
+
+
       color: $neutral-50;
       font-size: 18px;
       position: relative;

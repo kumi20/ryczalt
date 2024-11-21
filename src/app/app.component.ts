@@ -71,6 +71,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   focusedRowSelected: any[] = [];
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // Sprawdź, czy użytkownik nacisnął Ctrl + N
+    if (event.ctrlKey && event.key === 'n') {
+      event.preventDefault(); // Zapobiegamy domyślnemu działaniu przeglądarki
+    }
+  }
+
   constructor() {}
 
   ngOnInit() {}

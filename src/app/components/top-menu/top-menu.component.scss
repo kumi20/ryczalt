@@ -19,8 +19,7 @@
 :host ::ng-deep {
   .dx-menu-item.dx-state-hover {
     .icon-expanded::before {
-      font-family: Lumen;
-      content: "\e5c7";
+
       cursor: pointer;
       font-size: 18px;
       line-height: 16px;
@@ -31,8 +30,6 @@
 
 .icon-expanded::before {
   vertical-align: middle;
-  font-family: Lumen;
-  content: "\e5c5";
   cursor: pointer;
   font-size: 18px;
   line-height: 16px;

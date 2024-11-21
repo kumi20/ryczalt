@@ -33,7 +33,7 @@ export class EventService {
   userListRefresh = new Subject<any>();
   sortingRule: string = 'DESC';
 
-  sessionData: License  = {
+  sessionData: License = {
     licenseNumber: '',
     dataStart: '',
     dataEnd: '',
@@ -42,6 +42,36 @@ export class EventService {
 
   tooltipShowEvent = { name: 'dxhoverstart', delay: TOOLTIP_DELAY };
   activeShortcuts = new Subject<any>();
+
+  countryLIst = [
+    { name: 'Austria', code: 'AT' },
+    { name: 'Belgia', code: 'BE' },
+    { name: 'Bułgaria', code: 'BG' },
+    { name: 'Chorwacja', code: 'HR' },
+    { name: 'Cypr', code: 'CY' },
+    { name: 'Czechy', code: 'CZ' },
+    { name: 'Dania', code: 'DK' },
+    { name: 'Estonia', code: 'EE' },
+    { name: 'Finlandia', code: 'FI' },
+    { name: 'Francja', code: 'FR' },
+    { name: 'Grecja', code: 'GR' },
+    { name: 'Hiszpania', code: 'ES' },
+    { name: 'Holandia', code: 'NL' },
+    { name: 'Irlandia', code: 'IE' },
+    { name: 'Litwa', code: 'LT' },
+    { name: 'Luksemburg', code: 'LU' },
+    { name: 'Łotwa', code: 'LV' },
+    { name: 'Malta', code: 'MT' },
+    { name: 'Niemcy', code: 'DE' },
+    { name: 'Polska', code: 'PL' },
+    { name: 'Portugalia', code: 'PT' },
+    { name: 'Rumunia', code: 'RO' },
+    { name: 'Słowacja', code: 'SK' },
+    { name: 'Słowenia', code: 'SI' },
+    { name: 'Szwecja', code: 'SE' },
+    { name: 'Węgry', code: 'HU' },
+    { name: 'Włochy', code: 'IT' },
+  ];
 
   constructor() {
     this.languageSubscription = new Subscription();
@@ -173,6 +203,29 @@ export class EventService {
     });
   };
 
+  //function returns default width for documents popup
+  setWidthPopUp = () => {
+    if (window.innerWidth < 1440) {
+      return String(window.innerWidth);
+    }
+    if (window.innerWidth < 1920) {
+      return '1440';
+    }
+    return String(0.75 * window.innerWidth);
+  };
+
+  //function set height popup
+  // funkcja ustawia wysokość popupu
+  setHeightPopUp = () => {
+    if (window.innerHeight < 800) {
+      return String(window.innerHeight);
+    }
+    if (window.innerHeight < 1000) {
+      return '800';
+    }
+    return String(0.75 * window.innerHeight);
+  };
+
   onShownPopUp = (unicalGuid?: any) => {
     let object = {
       unicalGuid: unicalGuid,
@@ -201,8 +254,7 @@ export class EventService {
       delete ajaxOptions.data.filter;
     }
     ajaxOptions.headers = {
-      Authorization:
-        'Bearer ' + localStorage.getItem('app-ryczalt-token'),
+      Authorization: 'Bearer ' + localStorage.getItem('app-ryczalt-token'),
     };
     if (ajaxOptions.data.key) {
       ajaxOptions.url += '/' + ajaxOptions.data.key;

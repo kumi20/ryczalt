@@ -1,12 +1,21 @@
 {
+  "yes": "Yes",
+  "no": "No",
+  "confirmDelete": "Are you sure you want to delete this record?",
   "buttons":{
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "add": "Add",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit"
   },
   "menu": {
     "start": "Start",
     "companies": "Companies",
     "customers": "Customers",
     "log-out": "Log out",
+    "dictionaries": "Dictionaries",
+    "countries": "Countries",
     "navigationPanelUser": {
       "languageApplications": "Language applications",
       "polishLanguage": "Polish",
@@ -14,9 +23,23 @@
       "versionInformation": "Version information"
     }
   },
+  "toolbar":{
+    "adding": "Add",
+    "editing": "Edit",
+    "preview": "Preview"
+  },
   "customers": {
+    "contactPerson": "Contact person",
+    "companyData": "Company data",
+    "addressesData": "Address data",
+    "contactData": "Contact data",
+    "accountNumber": "Account number",
+    "country": "Country",
+    "incorectVatNumber": "Incorrect VAT number",
+    "customerVat": "NIP",
     "type": "Type",
     "customerName": "Customer name",
+    "name": "Name",
     "street": "Street, building number, apartment number",
     "city": "City",
     "postalCode": "Postal code",
@@ -24,6 +47,11 @@
     "phone": "Phone",
     "isSupplier": "Supplier",
     "isRecipient": "Recipient",
-    "isOffice": "Office"
+    "isOffice": "Office",
+    "downloadFromGus": "Download from GUS"
+  },
+  "country":{
+    "code": "Code",
+    "isSystem": "System"
   }
 }

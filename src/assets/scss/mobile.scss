@@ -201,7 +201,6 @@
 }
 
 .navbar-toggler-mobile .dx-icon-menu::before {
-  content: "\eabf";
   color: $neutral-100 !important;
   font-size: 1.3125rem;
   padding: 12px 12px;
@@ -229,7 +228,7 @@
   display: inline-block;
 }
 
-.menu-mobile.dx-popup-wrapper > .dx-overlay-content {
+.menu-mobile.dx-popup-wrapper>.dx-overlay-content {
   border: none;
   background: #ffffff;
   box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
@@ -238,7 +237,7 @@
   height: calc(100% - 105px) !important;
 }
 
-.about-program.dx-popup-wrapper > .dx-overlay-content {
+.about-program.dx-popup-wrapper>.dx-overlay-content {
   border: none;
   background: #ffffff;
   box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
@@ -269,13 +268,13 @@
 }
 
 .nav-mobile {
-  height: 40px;
+  height: 30px;
   background-color: $brand-00;
 }
 
 .navbar-toggler-mobile {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   background-color: $brand-00;
   display: inline-block;
 }
@@ -348,12 +347,22 @@
 //-----------------------------------
 
 @media (max-width: 1000px) {
+  .col-md-6 {
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+
+  .d-inline-block {
+    display: inline-block !important;
+    width: 100%;
+  }
+
   .popup-form .flex-box-column-content {
     gap: 12px 0 !important;
     display: grid;
   }
 
-  .main-mobile-grid .dx-datagrid .dx-row > td {
+  .main-mobile-grid .dx-datagrid .dx-row>td {
     padding: 5px;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -375,6 +384,7 @@
   .btn-dx-top-menu-folder {
     height: 32px !important;
   }
+
   .dx-button-mode-contained.dx-button-danger {
     height: 32px !important;
   }
@@ -390,6 +400,7 @@
   app-additional-operation {
     display: none;
   }
+
   .top-menu .top-menu-item .dx-menu-item-text {
     font-size: 14px !important;
   }
@@ -512,8 +523,8 @@
     font-size: 22px !important;
   }
 
-  .dx-scrollable-native > div.dx-scrollable-wrapper > .dx-scrollable-container,
-  .dx-scrollable-native.dx-scrollable-wrapper > .dx-scrollable-container {
+  .dx-scrollable-native>div.dx-scrollable-wrapper>.dx-scrollable-container,
+  .dx-scrollable-native.dx-scrollable-wrapper>.dx-scrollable-container {
     -webkit-overflow-scrolling: touch;
     position: relative;
     height: 125%;
@@ -542,7 +553,7 @@
     height: 34px;
   }
 
-  .dx-datagrid .dx-row.dx-column-lines.dx-header-row > td:not(:last-child) {
+  .dx-datagrid .dx-row.dx-column-lines.dx-header-row>td:not(:last-child) {
     border-right: none;
   }
 
@@ -592,6 +603,7 @@
 
   .chips-btn {
     margin-bottom: 10px;
+
     &.btn-filter-box {
       margin-bottom: 0;
       padding-right: 0 !important;
@@ -601,6 +613,7 @@
   .col-md-6 {
     padding-right: 15px !important;
   }
+
   .dropDownBoxClassGrid {
     height: 263px !important;
     width: 100% !important;
@@ -610,8 +623,8 @@
     display: none;
   }
 
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > td,
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > tr:last-child > td {
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>td,
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>tr:last-child>td {
     background-color: #666666 !important;
     color: $neutral-30 !important;
   }
@@ -650,13 +663,8 @@
     padding-left: 1px;
   }
 
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > td .dx-checkbox .dx-checkbox-icon::before,
-  .dx-datagrid-rowsview
-    .dx-row-focused.dx-data-row:not(.dx-row-lines)
-    > tr:last-child
-    > td
-    .dx-checkbox
-    .dx-checkbox-icon::before {
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>td .dx-checkbox .dx-checkbox-icon::before,
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>tr:last-child>td .dx-checkbox .dx-checkbox-icon::before {
     content: "\eab2";
     position: absolute;
     color: $neutral-50 !important;
@@ -675,7 +683,7 @@
       padding: 0 16px;
     }
 
-    .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-scrollable .dx-tabs-wrapper {
+    .dx-tabpanel>.dx-tabpanel-tabs .dx-tabs-scrollable .dx-tabs-wrapper {
       display: table-row;
       top: 1px;
       position: relative;
@@ -721,8 +729,8 @@
   }
 
   .dx-scrollable-native.dx-scrollable-both,
-  .dx-scrollable-native.dx-scrollable-both > .dx-scrollable-wrapper > .dx-scrollable-container,
-  .dx-scrollable-native.dx-scrollable-both > div > .dx-scrollable-wrapper > .dx-scrollable-container {
+  .dx-scrollable-native.dx-scrollable-both>.dx-scrollable-wrapper>.dx-scrollable-container,
+  .dx-scrollable-native.dx-scrollable-both>div>.dx-scrollable-wrapper>.dx-scrollable-container {
     touch-action: pan-y;
     float: none;
     overflow-x: hidden;
@@ -731,28 +739,29 @@
   }
 
   .dx-scrollable-native.dx-scrollable-vertical,
-  .dx-scrollable-native.dx-scrollable-vertical > .dx-scrollable-wrapper > .dx-scrollable-container,
-  .dx-scrollable-native.dx-scrollable-vertical > div > .dx-scrollable-wrapper > .dx-scrollable-container {
+  .dx-scrollable-native.dx-scrollable-vertical>.dx-scrollable-wrapper>.dx-scrollable-container,
+  .dx-scrollable-native.dx-scrollable-vertical>div>.dx-scrollable-wrapper>.dx-scrollable-container {
     touch-action: pan-y;
     overflow-x: hidden;
     overflow-y: auto !important;
     width: 100%;
   }
 
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row > td,
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row > tr:last-child > td {
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row>td,
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row>tr:last-child>td {
     border-bottom: none;
   }
 
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > td,
-  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > tr:last-child > td {
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>td,
+  .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>tr:last-child>td {
     background-color: transparent !important;
   }
 
   .dropDownBoxClassGrid {
+
     .dx-row-focused.dx-data-row .dx-command-edit:not(.dx-focused) .dx-link,
-    .dx-datagrid-rowsview .dx-row-focused.dx-data-row > td:not(.dx-focused),
-    .dx-datagrid-rowsview .dx-row-focused.dx-data-row > tr > td:not(.dx-focused) {
+    .dx-datagrid-rowsview .dx-row-focused.dx-data-row>td:not(.dx-focused),
+    .dx-datagrid-rowsview .dx-row-focused.dx-data-row>tr>td:not(.dx-focused) {
       background-color: $neutral-40;
       color: $neutral-100;
     }
@@ -775,7 +784,7 @@
     display: inline-block;
   }
 
-  .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs {
+  .dx-tabpanel>.dx-tabpanel-tabs .dx-tabs {
     box-shadow: none;
     height: 44px !important;
   }
@@ -815,14 +824,14 @@
     font-size: 1rem !important;
   }
 
-  .dx-popup-wrapper > .dx-overlay-content {
+  .dx-popup-wrapper>.dx-overlay-content {
     box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
     border-radius: 6px;
     min-width: 300px !important;
     max-width: 100%;
   }
 
-  .big-form-mobile.dx-popup-wrapper > .dx-overlay-content {
+  .big-form-mobile.dx-popup-wrapper>.dx-overlay-content {
     box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
     border-radius: 0px;
     min-width: 100% !important;
@@ -839,6 +848,7 @@
     background: $neutral-100;
     z-index: 10;
     background: $neutral-95;
+
     header {
       padding: 10px 8px 14px;
       background: $neutral-100;
@@ -860,7 +870,7 @@
     padding: 6px 0px !important;
   }
 
-  .document-form-mobile.dx-popup-wrapper > .dx-overlay-content {
+  .document-form-mobile.dx-popup-wrapper>.dx-overlay-content {
     box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
     border-radius: 0px;
     min-width: 300px !important;
@@ -933,7 +943,7 @@
     background-color: transparent !important;
   }
 
-  .menu-mobile.dx-popup-wrapper > .dx-overlay-content {
+  .menu-mobile.dx-popup-wrapper>.dx-overlay-content {
     box-shadow: none;
     min-width: 100% !important;
     min-height: 70% !important;
@@ -947,7 +957,7 @@
     font-size: 20px !important;
   }
 
-  .settings-mobile.dx-popup-wrapper > .dx-overlay-content {
+  .settings-mobile.dx-popup-wrapper>.dx-overlay-content {
     min-width: 320px !important;
   }
 
@@ -970,6 +980,7 @@
     width: auto !important;
     margin-left: 6px;
   }
+
   .treeIconBeside.dx-texteditor.dx-editor-outlined {
     width: calc(100vw - 164px) !important;
   }
@@ -1057,7 +1068,7 @@
   gap: 8px;
   margin-bottom: 8px;
 
-  & > * {
+  &>* {
     margin-bottom: 0;
     flex: 1 1 calc(100% - 40px);
   }
