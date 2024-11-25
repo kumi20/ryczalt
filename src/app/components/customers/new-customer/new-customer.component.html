@@ -86,6 +86,7 @@
                 form.get('customerVat')?.invalid &&
                 form.get('customerVat')?.touched
             }"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-text-box>
         </div>
 
@@ -95,6 +96,7 @@
             text="Pobierz z GUS"
             width="276"
             (onClick)="getCustomerData()"
+            [disabled]="!event.sessionData.isActive"
           ></dx-button>
         </div>
 
@@ -113,6 +115,7 @@
                 form.get('customerName')?.invalid &&
                 form.get('customerName')?.touched
             }"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-text-area>
         </div>
 
@@ -129,6 +132,7 @@
               'input-required':
                 form.get('street')?.invalid && form.get('street')?.touched
             }"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-text-box>
         </div>
 
@@ -146,6 +150,7 @@
                 form.get('postalCode')?.invalid &&
                 form.get('postalCode')?.touched
             }"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-text-box>
         </div>
 
@@ -162,6 +167,7 @@
               'input-required':
                 form.get('city')?.invalid && form.get('city')?.touched
             }"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-text-box>
         </div>
 
@@ -171,12 +177,14 @@
           >
           <app-country
             [dropDownBoxMode]="true"
-            [controlNameForm]="form.value.country"
+            [controlNameForm]="form.value.countryId"
             [className]="
-              form.controls['country'].invalid &&
-              form.controls['country'].touched
+              form.controls['countryId'].invalid &&
+              form.controls['countryId'].touched
             "
-            (onChoosed)="onChoosedCountry($event, 'country')"
+            (setPLId)="setPLId($event)"
+            (onChoosed)="onChoosedCountry($event, 'countryId')"
+            #countryBox
           ></app-country>
         </div>
 
@@ -189,6 +197,7 @@
             width="276"
             formControlName="accountNumber"
             class="d-inline-block"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-text-box>
         </div>
 
@@ -197,18 +206,21 @@
             text="{{ 'customers.isRecipient' | translate }}"
             width="276"
             formControlName="isRecipient"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-check-box
           ><br />
           <dx-check-box
             text="{{ 'customers.isSupplier' | translate }}"
             width="276"
             formControlName="isSupplier"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-check-box
           ><br />
           <dx-check-box
             text="{{ 'customers.isOffice' | translate }}"
             width="276"
             formControlName="isOffice"
+            [readOnly]="!event.sessionData.isActive"
           ></dx-check-box>
         </div>
       </div>
@@ -226,6 +238,7 @@
               width="276"
               formControlName="name"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -237,6 +250,7 @@
               width="276"
               formControlName="street"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -248,6 +262,7 @@
               width="276"
               formControlName="postalCode"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -259,6 +274,7 @@
               width="276"
               formControlName="city"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -269,7 +285,7 @@
 
           <app-country
             [dropDownBoxMode]="true"
-            [controlNameForm]="form.value.addressDetails.country"
+            [controlNameForm]="form.value.addressDetails.countryId"
             (onChoosed)="onChoosedCountry($event, 'adress')"
           ></app-country>
 
@@ -289,6 +305,7 @@
               width="276"
               formControlName="contactPerson"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -300,6 +317,7 @@
               width="276"
               formControlName="phone"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -309,6 +327,7 @@
               width="276"
               formControlName="fax"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -318,6 +337,7 @@
               width="276"
               formControlName="email"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
 
@@ -327,6 +347,7 @@
               width="276"
               formControlName="website"
               class="d-inline-block"
+              [readOnly]="!event.sessionData.isActive"
             ></dx-text-box>
           </div>
         </div>

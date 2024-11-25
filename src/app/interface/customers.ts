@@ -4,7 +4,7 @@ export interface Customer{
   street: string;
   city: string;
   postalCode: string;
-  country: string;
+  countryId: number;
   customerVat: string;
   accountNumber: string;
   addressDetails: AddressDetails;
@@ -19,7 +19,7 @@ export interface AddressDetails {
   street: string;
   city: string;
   postalCode: string;
-  country: string;
+  countryId: number;
 }
 
 export interface ContactDetails {

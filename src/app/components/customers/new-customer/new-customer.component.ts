@@ -39,6 +39,7 @@ import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboa
 import { Customer } from '../../../interface/customers';
 import { CountryComponent } from '../../country/country.component';
 import { Country } from '../../../interface/country';
+import { Verify } from 'crypto';
 
 @Component({
   selector: 'app-new-customer',
@@ -70,6 +71,7 @@ export class NewCustomerComponent
   @Output() onClosing = new EventEmitter();
   @Output() onSaving = new EventEmitter();
   @ViewChild('inputCustomerVat') inputCustomerVat: any;
+  @ViewChild('countryBox') countryBox: any;
 
   event = inject(EventService);
   translate = inject(TranslateService);
@@ -94,6 +96,7 @@ export class NewCustomerComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer']) {
       if (this.mode() === 'edit') {
+        console.log(this.customer());
         this.title = this.translate.instant('toolbar.editing');
         this.form.patchValue(this.customer());
         this.isValidVatNumber.set(
@@ -148,6 +151,10 @@ export class NewCustomerComponent
     e.component.registerKeyHandler('escape', function () {});
   }
 
+  setPLId(e: number){
+    if(this.mode() === 'edit' || this.mode() === 'show') return;
+    this.form.controls['countryId'].setValue(e);
+  }
   initForm(): FormGroup {
     return this.fb.group({
       customerId: [null],
@@ -162,7 +169,7 @@ export class NewCustomerComponent
       street: ['', [Validators.required, Validators.maxLength(100)]],
       city: ['', [Validators.required, Validators.maxLength(50)]],
       postalCode: ['', [Validators.required]],
-      country: ['Polska', [Validators.required, Validators.maxLength(50)]],
+      countryId: [null, [Validators.required, Validators.maxLength(50)]],
       customerVat: ['', [Validators.required]],
       accountNumber: ['', []],
 
@@ -172,7 +179,7 @@ export class NewCustomerComponent
         street: [''],
         city: [''],
         postalCode: [''],
-        country: [''],
+        countryId: [null],
       }),
 
       // Zagnieżdżony FormGroup dla contactDetails
@@ -204,6 +211,11 @@ export class NewCustomerComponent
       .subscribe(
         (data) => {
           this.form.patchValue(data);
+
+          const index = this.countryBox.countryList().find((country: Country)=> country.name === data.country);
+          if(index){
+            this.form.controls['countryId'].setValue(index.countryId);
+          }
         },
         (err) => {
           this.event.showNotification('error', err);
@@ -217,11 +229,11 @@ export class NewCustomerComponent
   }
 
   checkValidVatNumber(VatNumber: string): boolean {
-    const countryValue = this.form.get('country')?.value;
+    const countryValue = this.form.get('countryId')?.value;
 
     if (
-      countryValue.toLowerCase() === 'polska' ||
-      countryValue.toLowerCase() === ''
+      countryValue === 21 ||
+      countryValue === null
     ) {
       return this.event.isValidNip(this.removeLettersFromNIP(VatNumber));
     } else {
@@ -299,12 +311,13 @@ export class NewCustomerComponent
 
   onChoosedCountry(e: Country, controler: string) {
     if(e){
-      if (controler === 'country') {
-        this.form.controls[controler].setValue(e.name);
+      if (controler === 'countryId') {
+        this.form.controls[controler].setValue(e.countryId);
         return;
       }
 
-      this.form.controls['addressDetails'].get('country')?.setValue(e.name);
+      this.form.controls['addressDetails'].get('countryId')?.setValue(e.countryId);
+      console.log(this.form.value)
     }
   }
 }

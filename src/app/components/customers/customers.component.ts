@@ -217,6 +217,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   addNewRecord() {
+    if(!this.event.sessionData.isActive) return;
     this.mode = 'add';
     this.isAdd.set(true);
   }
@@ -256,6 +257,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 
 
   delete(){
+    if(!this.event.sessionData.isActive) return;
     this.isDelete.set(false)
 
     const id = this.getFocusedElement().customerId;
@@ -272,6 +274,8 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   onEdit(){
+    if(!this.event.sessionData.isActive) return;
+
     this.mode = 'edit';
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);

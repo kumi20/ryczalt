@@ -33,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CountryComponent implements OnInit, OnChanges {
   @Output() onChoosed = new EventEmitter();
+  @Output() setPLId = new EventEmitter();
 
   @ViewChild('gridDropDown') gridDropDown: any;
 
@@ -57,6 +58,11 @@ export class CountryComponent implements OnInit, OnChanges {
     this.countryServices.getCountries().subscribe({
       next: (data: Country[]) => {
         this.countryList.set(data);
+
+        const inPl = data.find((x) => x.name === 'Polska');
+        if (inPl) {
+          this.setPLId.emit(inPl.countryId);
+        }
         if(this.chossingRecord != null) {
           const index = data.findIndex((x) => x.name === this.chossingRecord);
           if (index >= 0) {
