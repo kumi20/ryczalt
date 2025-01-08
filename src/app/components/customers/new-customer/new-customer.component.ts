@@ -39,7 +39,6 @@ import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboa
 import { Customer } from '../../../interface/customers';
 import { CountryComponent } from '../../country/country.component';
 import { Country } from '../../../interface/country';
-import { Verify } from 'crypto';
 
 @Component({
   selector: 'app-new-customer',
@@ -96,7 +95,6 @@ export class NewCustomerComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer']) {
       if (this.mode() === 'edit') {
-        console.log(this.customer());
         this.title = this.translate.instant('toolbar.editing');
         this.form.patchValue(this.customer());
         this.isValidVatNumber.set(
@@ -105,8 +103,8 @@ export class NewCustomerComponent
       }
 
       if (this.mode() === 'show') {
-        this.title = this.translate.instant('toolbar.showing');
-        this.form.patchValue(this.customer);
+        this.title = this.translate.instant('toolbar.preview');
+        this.form.patchValue(this.customer());
         this.form.disable();
       }
     }
@@ -151,8 +149,8 @@ export class NewCustomerComponent
     e.component.registerKeyHandler('escape', function () {});
   }
 
-  setPLId(e: number){
-    if(this.mode() === 'edit' || this.mode() === 'show') return;
+  setPLId(e: number) {
+    if (this.mode() === 'edit' || this.mode() === 'show') return;
     this.form.controls['countryId'].setValue(e);
   }
   initForm(): FormGroup {
@@ -212,8 +210,10 @@ export class NewCustomerComponent
         (data) => {
           this.form.patchValue(data);
 
-          const index = this.countryBox.countryList().find((country: Country)=> country.name === data.country);
-          if(index){
+          const index = this.countryBox
+            .countryList()
+            .find((country: Country) => country.name === data.country);
+          if (index) {
             this.form.controls['countryId'].setValue(index.countryId);
           }
         },
@@ -231,10 +231,7 @@ export class NewCustomerComponent
   checkValidVatNumber(VatNumber: string): boolean {
     const countryValue = this.form.get('countryId')?.value;
 
-    if (
-      countryValue === 21 ||
-      countryValue === null
-    ) {
+    if (countryValue === 21 || countryValue === null) {
       return this.event.isValidNip(this.removeLettersFromNIP(VatNumber));
     } else {
       return true;
@@ -310,14 +307,16 @@ export class NewCustomerComponent
   }
 
   onChoosedCountry(e: Country, controler: string) {
-    if(e){
+    if (e) {
       if (controler === 'countryId') {
         this.form.controls[controler].setValue(e.countryId);
         return;
       }
 
-      this.form.controls['addressDetails'].get('countryId')?.setValue(e.countryId);
-      console.log(this.form.value)
+      this.form.controls['addressDetails']
+        .get('countryId')
+        ?.setValue(e.countryId);
+      console.log(this.form.value);
     }
   }
 }

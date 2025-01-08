@@ -8,6 +8,11 @@ import {
   inject,
   input,
   signal,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+  Input
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppServices } from '../../services/app-services.service';
@@ -16,7 +21,12 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { environment } from '../../../environments/environment';
 import { LoadOptions } from 'devextreme/data';
 import DataSource from 'devextreme/data/data_source';
-import { DxDataGridModule, DxTooltipModule } from 'devextreme-angular';
+import {
+  DxDataGridModule,
+  DxDropDownBoxModule,
+  DxScrollViewModule,
+  DxTooltipModule,
+} from 'devextreme-angular';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CustomChipsButtonComponent } from '../core/custom-chips-button/custom-chips-button.component';
 import { Customer } from '../../interface/customers';
@@ -42,18 +52,26 @@ import { CustomerService } from '../../services/customer.service';
     DxButtonModule,
     NgShortcutsComponent,
     DxTooltipModule,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DxScrollViewModule,
+    DxDropDownBoxModule,
   ],
 
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomersComponent implements OnInit, AfterViewInit {
+export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('dxGrid', { static: false }) dxGrid: any;
-  dropDownBoxMode = input<boolean>(false);
+  @ViewChild('gridDropDown') gridDropDown: any;
+  @ViewChild('contractorsBox') contractorsBox: any;
+  @Output() onChoosed = new EventEmitter();
+  @Input() readOnly: boolean = false;
 
+  dropDownBoxMode = input<boolean>(false);
+  className = input<boolean | null | undefined>(false);
   dataSource: DataSource = new DataSource({});
+  controlNameForm = input<number | null>(null);
 
   appServices = inject(AppServices);
   customerServices = inject(CustomerService);
@@ -98,6 +116,12 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   shortcuts: ShortcutInput[] = [];
   isDelete = signal<boolean>(false);
   focusedElement = signal<Customer | null>(null);
+  isGridBoxOpened: boolean = false;
+
+  chossingRecord: null | number = null;
+  dataSourceDropDown: Customer[] = [];
+  searchTimer: any;
+  SearchKey: string = '';
 
   constructor() {}
 
@@ -105,10 +129,25 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['controlNameForm'] && this.dropDownBoxMode()) {
+      this.chossingRecord = changes['controlNameForm'].currentValue;
+
+      if (this.chossingRecord !== null) {
+        this.customerServices
+          .getCustomerById(this.chossingRecord)
+          .subscribe((data) => {
+            this.dataSourceDropDown = data;
+            this.cdr.detectChanges();
+          });
+      }
+    }
+  }
+
   ngAfterViewInit(): void {
     this.shortcuts = [
       {
-        key: 'ctrl + n',
+        key: 'alt + n',
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: () => {
@@ -119,8 +158,9 @@ export class CustomersComponent implements OnInit, AfterViewInit {
         key: 'F2',
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
-        command: () => {
-          this.onEdit();
+        command: (data) => {
+          if (data.event.shiftKey) this.onShow();
+          if (!data.event.shiftKey) this.onEdit();
         },
       },
       {
@@ -147,7 +187,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
         },
         onLoaded: () => {
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid)
+            this.event.setFocus(this.dxGrid);
           }, 0);
         },
       }),
@@ -181,6 +221,10 @@ export class CustomersComponent implements OnInit, AfterViewInit {
       case 2:
         obj['isOffice'] = true;
         break;
+    }
+
+    if(this.SearchKey !== ''){
+      obj['customerName'] = this.SearchKey;
     }
     return obj;
   }
@@ -217,7 +261,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   addNewRecord() {
-    if(!this.event.sessionData.isActive) return;
+    if (!this.event.sessionData.isActive) return;
     this.mode = 'add';
     this.isAdd.set(true);
   }
@@ -239,13 +283,14 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onDeleteConfirm(){
-    this.isDelete.set(true)
+  onDeleteConfirm() {
+    if (!this.event.sessionData.isActive) return;
+    this.isDelete.set(true);
   }
 
-  closeConfirm(){
-    this.isDelete.set(false)
-    this.event.setFocus(this.dxGrid)
+  closeConfirm() {
+    this.isDelete.set(false);
+    this.event.setFocus(this.dxGrid);
   }
 
   getFocusedElement() {
@@ -255,10 +300,9 @@ export class CustomersComponent implements OnInit, AfterViewInit {
       .find((_el: any, i: any) => this.focusedRowIndex === i);
   }
 
-
-  delete(){
-    if(!this.event.sessionData.isActive) return;
-    this.isDelete.set(false)
+  delete() {
+    if (!this.event.sessionData.isActive) return;
+    this.isDelete.set(false);
 
     const id = this.getFocusedElement().customerId;
 
@@ -273,27 +317,76 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     this.focusedElement.set(event.row.data);
   }
 
-  onEdit(){
-    if(!this.event.sessionData.isActive) return;
+  onEdit() {
+    if (!this.event.sessionData.isActive) return;
 
     this.mode = 'edit';
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);
   }
 
-  onKeyDown(event: any){
-    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter']
+  onShow() {
+    this.mode = 'show';
+    this.focusedElement.set(this.getFocusedElement());
+    this.isAdd.set(true);
+  }
 
-    if(BLOCKED_KEYS.includes(event.event.key)){
-      event.event.preventDefault()
+  onKeyDown(event: any) {
+    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
+
+    if (BLOCKED_KEYS.includes(event.event.key)) {
+      event.event.preventDefault();
     }
   }
 
-  onRowDblClick(e: any){
+  onRowDblClick(e: any) {
     if (this.dropDownBoxMode()) {
+      this.onChoosingRecord(e.data);
       return;
     }
 
     this.onEdit();
+  }
+
+  onChoosingRecord = (e: Customer) => {
+    if (this.event.sessionData.isActive) {
+      this.dataSourceDropDown = [e];
+      this.chossingRecord = e.customerId;
+      this.onChoosed.emit(e);
+      this.isGridBoxOpened = false;
+      this.SearchKey = '';
+    }
+  };
+
+  onOpenedChanged(e: any) {
+    if (e) {
+      try {
+        setTimeout(() => {
+          this.gridDropDown.instance.focus();
+        }, 500);
+      } catch {}
+      this.getData();
+    } else {
+      this.isGridBoxOpened = false;
+    }
+  }
+
+  onValueChanged = (e: any) => {
+    if (e.value == null) {
+      this.onChoosed.emit(null);
+    }
+  };
+
+  grid_onInput(){
+    clearTimeout(this.searchTimer);
+    this.searchTimer = setTimeout(() => {
+      this.SearchKey = this.contractorsBox.text;
+      this.getData();
+      this.isGridBoxOpened = true;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.contractorsBox?.instance?.focus();
+      }, 500);
+    }, 500);
   }
 }

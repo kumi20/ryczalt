@@ -1,0 +1,76 @@
+@import "../../../assets/scss/colors";
+
+.select-data {
+  display: inline-block;
+  background-color: #fef8eb !important;
+  border: 2px solid #fef1d7 !important;
+  border-radius: 30px;
+  padding: 0px 8px;
+  width: auto;
+  height: 26px;
+  align-items: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 14px;
+  margin-left: 2px;
+  box-sizing: border-box;
+  color: #000000;
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+
+  strong {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.75rem;
+    line-height: 14px;
+    color: #666666;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+
+.add-select-data {
+  display: inline-block;
+  border-radius: 30px;
+  height: 26px;
+  background-color: $theme-warning-80;
+  width: 26px;
+  position: relative;
+  top: -2px;
+  left: -10px;
+  box-sizing: border-box;
+  text-align: center;
+  p {
+    margin-bottom: 0px;
+    position: relative;
+    top: 5px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.summary {
+  padding: 20px 10px;
+  background-color: $neutral-90;
+  border-top: 1px solid $neutral-60;
+
+  text-align: right;
+  label {
+    width: 350px;
+    display: inline-block;
+    text-align: left !important;
+  }
+  p {
+    margin-bottom: 0px;
+    display: inline-block;
+    width: 100px;
+  }
+}

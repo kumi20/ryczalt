@@ -13,77 +13,102 @@
 </ng-container>
 
 <ng-template #topButtons>
-  <dx-button
-    class="btn-dx-top-menu"
-    icon="dx-icon dx-icon-add"
-    stylingMode="text"
-    type="default"
-    [disabled]="!event.sessionData.isActive"
-    (onClick)="addNewRecord()"
-    name="btn-add-customer"
-    text="{{ 'buttons.add' | translate }}"
-    [id]="'btn-add'"
-  >
-  </dx-button>
+  <dx-scroll-view width="95%" height="100%" direction="horizontal">
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-add"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive"
+      (onClick)="addNewRecord()"
+      name="btn-add-customer"
+      text="{{ 'buttons.add' | translate }}"
+      [id]="'btn-add'"
+    >
+    </dx-button>
 
-  <dx-button
-    class="btn-dx-top-menu"
-    icon="dx-icon dx-icon-edit"
-    stylingMode="text"
-    type="default"
-    [disabled]="!event.sessionData.isActive || !focusedElement()"
-    (onClick)="onEdit()"
-    name="btn-add-customer"
-    text="{{ 'buttons.edit' | translate }}"
-    [id]="'btn-edit'"
-  >
-  </dx-button>
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-edit"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || !focusedElement()"
+      (onClick)="onEdit()"
+      name="btn-add-customer"
+      text="{{ 'buttons.edit' | translate }}"
+      [id]="'btn-edit'"
+    >
+    </dx-button>
 
-  <dx-button
-    class="btn-dx-top-menu"
-    icon="dx-icon dx-icon-trash"
-    stylingMode="text"
-    type="default"
-    [disabled]="!event.sessionData.isActive || !focusedElement()"
-    (onClick)="onDeleteConfirm()"
-    name="btn-add-customer"
-    text="{{ 'buttons.delete' | translate }}"
-    [id]="'btn-delete'"
-  >
-  </dx-button>
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-eyeopen"
+      stylingMode="text"
+      type="default"
+      [disabled]="!focusedElement()"
+      (onClick)="onShow()"
+      text="{{ 'buttons.preview' | translate }}"
+      [id]="'btn-eyeopen'"
+    >
+    </dx-button>
 
-  <dx-tooltip
-    [target]="'#btn-edit'"
-    hideEvent="dxhoverend"
-    [hideOnOutsideClick]="false"
-    [showEvent]="event.tooltipShowEvent"
-  >
-    <div *dxTemplate="let data of 'content'">
-      {{ "buttons.edit" | translate }} (F2)
-    </div>
-  </dx-tooltip>
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-trash"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || !focusedElement()"
+      (onClick)="onDeleteConfirm()"
+      name="btn-add-customer"
+      text="{{ 'buttons.delete' | translate }}"
+      [id]="'btn-delete'"
+    >
+    </dx-button>
 
-  <dx-tooltip
-    [target]="'#btn-delete'"
-    hideEvent="dxhoverend"
-    [hideOnOutsideClick]="false"
-    [showEvent]="event.tooltipShowEvent"
-  >
-    <div *dxTemplate="let data of 'content'">
-      {{ "buttons.delete" | translate }} (Del)
-    </div>
-  </dx-tooltip>
+    <dx-tooltip
+      [target]="'#btn-edit'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.edit" | translate }} (F2)
+      </div>
+    </dx-tooltip>
 
-  <dx-tooltip
-    [target]="'#btn-add'"
-    hideEvent="dxhoverend"
-    [hideOnOutsideClick]="false"
-    [showEvent]="event.tooltipShowEvent"
-  >
-    <div *dxTemplate="let data of 'content'">
-      {{ "buttons.add" | translate }} (ctrl + n)
-    </div>
-  </dx-tooltip>
+    <dx-tooltip
+      [target]="'#btn-delete'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.delete" | translate }} (Del)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#btn-eyeopen'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.preview" | translate }} (Shift + F2)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#btn-add'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.add" | translate }} (alt + n)
+      </div>
+    </dx-tooltip>
+  </dx-scroll-view>
 </ng-template>
 <ng-template #grid>
   <div class="d-flex flex-column">
@@ -303,7 +328,119 @@
   </div>
 </ng-template>
 
-<ng-template #dropDownMode></ng-template>
+<ng-template #dropDownMode>
+  <dx-drop-down-box
+    [value]="chossingRecord"
+    valueExpr="customerId"
+    [deferRendering]="false"
+    displayExpr="customerName"
+    [(opened)]="isGridBoxOpened"
+    [dataSource]="dataSourceDropDown"
+    [showClearButton]="false"
+    style="width: 276px; display: inline-block"
+    (onValueChanged)="onValueChanged($event)"
+    class="contractors-form-step-2"
+    (openedChange)="onOpenedChanged($event)"
+    (keydown.space)="isGridBoxOpened = true"
+    [ngClass]="{ 'input-required': className() === true }"
+    [readOnly]="!event.sessionData.isActive || readOnly"
+    [acceptCustomValue]="true"
+    (onInput)="grid_onInput()"
+    [openOnFieldClick]="false"
+    #contractorsBox
+  >
+    <div *dxTemplate="let data of 'content'" style="height: 280px">
+      <div class="row">
+        <div class="col-md-12" class="no-padding" *ngIf="isGridBoxOpened">
+          <dx-data-grid
+            [dataSource]="dataSource"
+            [wordWrapEnabled]="false"
+            [showBorders]="true"
+            [height]="260"
+            [(selectedRowKeys)]="selectedRows"
+            class=""
+            [columnResizingMode]="'widget'"
+            [remoteOperations]="true"
+            [columnAutoWidth]="false"
+            [allowColumnResizing]="true"
+            [autoNavigateToFocusedRow]="true"
+            [(focusedRowIndex)]="focusedRowIndex"
+            [allowColumnReordering]="true"
+            [focusedRowEnabled]="true"
+            (onFocusedRowChanged)="onFocusedRowChanged($event)"
+            (onKeyDown)="onKeyDown($event)"
+            [allowColumnResizing]="event.deviceType !== 'mobile'"
+            (onRowClick)="onRowDblClick($event)"
+            #dxGrid
+          >
+            <dxo-load-panel [enabled]="false"></dxo-load-panel>
+            <dxo-scrolling
+              mode="virtual"
+              columnRenderingMode="virtual"
+              [preloadEnabled]="true"
+            >
+            </dxo-scrolling>
+            <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
+            <dxo-selection
+              [mode]="'single'"
+              showCheckBoxesMode="always"
+              selectAllMode="page"
+            >
+            </dxo-selection>
+            <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+            <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+            <dxi-column
+              [width]="event.deviceType != 'mobile' ? 45 : 10"
+              cellTemplate="editTemplate"
+              [allowSorting]="false"
+              alignment="center"
+            >
+            </dxi-column>
+            <div *dxTemplate="let data of 'editTemplate'" tabindex="-1">
+              <dx-button
+                class="btn-dx-top-menu-folder-grid"
+                icon="dx-icon dx-icon-edit"
+                (onClick)="onEdit()"
+                [disabled]="!event.sessionData.isActive"
+              >
+              </dx-button>
+            </div>
+
+            <dxi-column
+              caption="{{ 'customers.customerName' | translate }}"
+              dataField="customerName"
+              [allowSorting]="false"
+            ></dxi-column>
+
+            <dxi-column
+              caption="NIP"
+              dataField="customerVat"
+              [width]="150"
+              [allowSorting]="false"
+            ></dxi-column>
+          </dx-data-grid>
+        </div>
+      </div>
+      <div
+        class="align-items-center bottom-drop-box d-flex pb-0"
+        style="height: auto"
+      >
+        <dx-button
+          class="btn-dx-top-menu-folder"
+          icon="dx-icon dx-icon-add"
+          type="normal"
+          stylingMode="text"
+          id="btn-add-contractors"
+          [id]="'btn-drop-add'"
+          (onClick)="addNewRecord()"
+          [disabled]="!event.sessionData.isActive"
+        >
+        </dx-button>
+      </div>
+    </div>
+  </dx-drop-down-box>
+</ng-template>
 
 @if(isAdd()){
 <app-new-customer

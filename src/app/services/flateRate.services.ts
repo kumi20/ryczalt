@@ -7,30 +7,47 @@ import {
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Gus, Customer } from '../interface/customers';
+import {
+  CheckIfMonthIsClosed,
+  OpenCloseRequest,
+  FlateRate,
+  SummaryMonth,
+} from '../interface/flateRate';
 
 const token = localStorage.getItem('app-ryczalt-token');
 
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerService {
+export class FlateRateService {
   private apiUrl = `${environment.domain}`; // zakładam, że masz zdefiniowany baseUrl w environment
 
   constructor(private http: HttpClient) {}
 
-  postCustomer(data: Customer): Observable<any> {
+  put(data: FlateRate) {
+    const params = new HttpParams().set('id', data.ryczaltId);
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
     return this.http
-      .post<Customer>(`${this.apiUrl}customers`, data, { headers })
+      .put<FlateRate>(`${this.apiUrl}flateRate`, data, { params, headers })
       .pipe(catchError(this.handleError));
   }
 
-  getCustomerById(id: number): Observable<any> {
+  post(data: FlateRate) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    return this.http
+      .post<FlateRate>(`${this.apiUrl}flateRate`, data, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  delete(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -38,61 +55,71 @@ export class CustomerService {
     };
 
     return this.http
-      .get<Number>(`${this.apiUrl}customers`, { params, headers })
+      .delete<Number>(`${this.apiUrl}flateRate`, { params, headers })
       .pipe(catchError(this.handleError));
   }
 
-  deleteCustomer(id: number): Observable<any> {
-    const params = new HttpParams().set('id', id);
+  openMonth(object: OpenCloseRequest): Observable<any> {
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
     return this.http
-      .delete<Number>(`${this.apiUrl}customers`, { params, headers })
+      .post<CheckIfMonthIsClosed>(`${this.apiUrl}flateRate/openMonth`, object, {
+        headers,
+      })
       .pipe(catchError(this.handleError));
   }
 
-  putCustomer(data: Customer): Observable<any> {
-    const params = new HttpParams().set('id', data.customerId);
+  closeMonth(object: OpenCloseRequest): Observable<any> {
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
     return this.http
-      .put<Customer>(`${this.apiUrl}customers`, data, { params, headers })
+      .post<CheckIfMonthIsClosed>(
+        `${this.apiUrl}flateRate/closeMonth`,
+        object,
+        {
+          headers,
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 
-  getCustomerByVat(vatNumber: string): Observable<Gus> {
-    const params = new HttpParams().set('nip', vatNumber);
+  summaryMonth(month: number, year: number) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+    let params = new HttpParams().set('month', month).set('year', year);
+    return this.http
+      .get<SummaryMonth>(`${this.apiUrl}flateRate/summaryMonth`, {
+        params,
+        headers,
+      })
+      .pipe(catchError(this.handleError));
+  }
 
+  checkIfMonthIsClosed(
+    month: number,
+    year: number
+  ): Observable<CheckIfMonthIsClosed> {
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
-    return this.http
-      .get<Gus>(`${this.apiUrl}customers/gus`, { params, headers })
-      .pipe(
-        map((response) => this.mapToCustomer(response)),
-        catchError(this.handleError)
-      );
-  }
+    let params = new HttpParams().set('month', month).set('year', year);
 
-  private mapToCustomer(data: any): Gus {
-    return {
-      customerName: data.customerName || '',
-      customerVat: data.customerVat || '',
-      street: data.street || '',
-      city: data.city || '',
-      postalCode: data.postalCode || '',
-      country: data.country || '',
-      email: data.email || '',
-      phone: data.phone || '',
-    };
+    return this.http
+      .get<CheckIfMonthIsClosed>(`${this.apiUrl}flateRate/statusMonth`, {
+        params,
+        headers,
+      })
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

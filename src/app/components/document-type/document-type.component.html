@@ -18,7 +18,7 @@
 
 <ng-template #grid>
   <dx-data-grid
-    [dataSource]="countryList()"
+    [dataSource]="documentList()"
     [wordWrapEnabled]="false"
     [showBorders]="true"
     [height]="heightGrid"
@@ -45,29 +45,6 @@
     <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
     <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
 
-    <div *dxTemplate="let data of 'IsDefault'">
-      @if (data.value) {
-
-      <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
-      }
-    </div>
-
-    <dxi-column
-      caption="{{ 'country.isSystem' | translate }}"
-      dataField="isSystem"
-      [width]="100"
-      cellTemplate="IsDefault"
-      alignment="center"
-      [allowSorting]="false"
-      hidingPriority="1"
-    ></dxi-column>
-    <dxi-column
-      caption="{{ 'country.code' | translate }}"
-      dataField="code"
-      [allowSorting]="false"
-      width="100"
-    ></dxi-column>
-
     <dxi-column
       caption="{{ 'customers.name' | translate }}"
       dataField="name"
@@ -79,13 +56,13 @@
 <ng-template #dropDownMode>
   <dx-drop-down-box
     [value]="chossingRecord"
-    valueExpr="countryId"
+    valueExpr="documentTypeId"
     [deferRendering]="false"
     displayExpr="name"
     [(opened)]="isGridBoxOpened"
-    [dataSource]="countryList()"
+    [dataSource]="documentList()"
     [showClearButton]="false"
-    style="width: 276px; display: inline-block;"
+    style="width: 276px; display: inline-block"
     (onValueChanged)="onValueChanged($event)"
     class="contractors-form-step-2"
     (openedChange)="onOpenedChanged($event)"
@@ -98,7 +75,7 @@
         <div class="col-md-12" class="no-padding" *ngIf="isGridBoxOpened">
           <dx-data-grid
             #gridDropDown
-            [dataSource]="countryList()"
+            [dataSource]="documentList()"
             [wordWrapEnabled]="true"
             [showBorders]="true"
             shortcut
@@ -119,33 +96,12 @@
             <dxo-selection [mode]="'single'" showCheckBoxesMode="always">
             </dxo-selection>
             <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-            <dxi-column
-              caption="{{ 'country.isSystem' | translate }}"
-              dataField="isSystem"
-              [width]="100"
-              cellTemplate="IsDefault"
-              alignment="center"
-              [allowSorting]="false"
-              hidingPriority="1"
-            ></dxi-column>
-            <dxi-column
-              caption="{{ 'country.code' | translate }}"
-              dataField="code"
-              [allowSorting]="false"
-              width="100"
-            ></dxi-column>
 
             <dxi-column
               caption="{{ 'customers.name' | translate }}"
               dataField="name"
               [allowSorting]="false"
             ></dxi-column>
-            <div *dxTemplate="let data of 'IsDefault'">
-              @if (data.value) {
-
-              <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
-              }
-            </div>
           </dx-data-grid>
         </div>
       </div>

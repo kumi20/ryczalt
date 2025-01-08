@@ -1,0 +1,488 @@
+<dx-popup
+  [width]="event.setWidthPopUp()"
+  [height]="event.setHeightPopUp()"
+  position="bottom"
+  [showCloseButton]="false"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  maxWidth="100vw"
+  maxHeight="100vh"
+  [showTitle]="true"
+  [title]="title"
+  [visible]="isVisible()"
+  (onShown)="event.onShownPopUp(); event.setFocus(inputDate)"
+  (onHidden)="event.onHiddenPopUp()"
+  (visibleChange)="onVisibleChange($event)"
+  (onInitialized)="onInit($event)"
+  [resizeEnabled]="false"
+>
+  <div class="text-right title-pop-up">
+    @if(this.mode() !== 'show'){
+    <dx-button
+      text="{{ 'buttons.save' | translate }}"
+      style="margin-right: 6px"
+      type="success"
+      (onClick)="onSave()"
+      [id]="'add_customer'"
+    ></dx-button>
+    }
+
+    <dx-button
+      text="{{ 'buttons.cancel' | translate }}"
+      type="danger"
+      (onClick)="closeWindow()"
+      [id]="'cancel_customer'"
+    ></dx-button>
+
+    <dx-tooltip
+      [target]="'#add_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.save" | translate }} (ctrl + s)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#cancel_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.cancel" | translate }} (Esc)
+      </div>
+    </dx-tooltip>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "flateRate.documentData" | translate }}
+        </div>
+      </div>
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.typeOfRegister" | translate }}
+            <strong>*</strong>
+          </label>
+          <app-document-type
+            [dropDownBoxMode]="true"
+            [controlNameForm]="form.value.documentTypeId"
+            (onChoosed)="onChoosedDocumentType($event)"
+            [readOnly]="!event.sessionData.isActive || mode() === 'show'"
+          ></app-document-type>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.invoiceNumber" | translate }}
+            <strong>*</strong>
+          </label>
+          <dx-text-box
+            id="customerVat"
+            class="d-inline-block"
+            [width]="276"
+            [readOnly]="!event.sessionData.isActive"
+            formControlName="documentNumber"
+            [ngClass]="{
+              'input-required':
+                form.get('documentNumber')?.invalid &&
+                form.get('documentNumber')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.taxLiabilityDate" | translate }}
+            <strong>*</strong>
+          </label>
+          <dx-date-box
+            class="d-inline-block"
+            type="date"
+            width="276"
+            [displayFormat]="event.dateFormat"
+            formControlName="taxLiabilityDate"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('taxLiabilityDate')?.invalid &&
+                form.get('taxLiabilityDate')?.touched
+            }"
+          ></dx-date-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right; padding-right: 15%">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.dateOfIssue" | translate }}
+            <strong>*</strong>
+          </label>
+          <dx-date-box
+            class="d-inline-block"
+            type="date"
+            width="276"
+            [displayFormat]="event.dateFormat"
+            formControlName="documentDate"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('documentDate')?.invalid &&
+                form.get('documentDate')?.touched
+            }"
+          ></dx-date-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.saleDate" | translate }}
+            <strong>*</strong>
+          </label>
+          <dx-date-box
+            class="d-inline-block"
+            type="date"
+            width="276"
+            [displayFormat]="event.dateFormat"
+            formControlName="dateOfSell"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('dateOfSell')?.invalid &&
+                form.get('dateOfSell')?.touched
+            }"
+          ></dx-date-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "vatRegister.customerData" | translate }}
+        </div>
+        <div class="col-md-6" style="text-align: right">
+          <div class="form-group">
+            <label for="customerVat" class="d-inline-block">
+              {{ "customers.customerName" | translate }}
+              <strong>*</strong>
+            </label>
+
+            <app-customers
+              [dropDownBoxMode]="true"
+              [controlNameForm]="form.value.customerId"
+              [className]="
+                form.get('customerId')?.invalid &&
+                form.get('customerId')?.touched
+              "
+              (onChoosed)="onChoosedCustomer($event)"
+              [readOnly]="!event.sessionData.isActive || mode() === 'show'"
+            ></app-customers>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "vatRegister.salesDocumented" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.saleByRate" | translate }} 23%
+          </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive"
+            formControlName="rate23Net"
+            (onValueChanged)="
+              countGross('rate23Gross', 'rate23Vat', $event, 23)
+            "
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate23Vat"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate23Gross"
+            (onValueChanged)="countNett('rate23Net', 'rate23Vat', $event, 23)"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.saleByRate" | translate }} 8%
+          </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate8Net"
+            (onValueChanged)="countGross('rate8Gross', 'rate8Vat', $event, 8)"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate8Vat"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate8Gross"
+            (onValueChanged)="countNett('rate8Net', 'rate8Vat', $event, 8)"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.saleByRate" | translate }} 5%
+          </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate5Net"
+            (onValueChanged)="countGross('rate5Gross', 'rate5Vat', $event, 5)"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate5Vat"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate5Gross"
+            (onValueChanged)="countNett('rate5Net', 'rate5Vat', $event, 5)"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.domesticSales" | translate }} 0%
+          </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate0"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block"> Eksport 0% </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="export0"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block"> WDT 0% </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="wdt0"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="text-align: right"></div>
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block"> WŚU </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="wsu"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.exemptSales" | translate }}
+          </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="exemptSales"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+      <div class="col-md-4" style="text-align: right"></div>
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "vatRegister.reverseCharge" | translate }}
+          </label>
+
+          <dx-number-box
+            width="140"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="reverseCharge"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "vatRegister.additionalOptions" | translate }}
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <dx-check-box
+            [text]="'vatRegister.deliveryOfGoods' | translate"
+            width="150"
+            formControlName="isDelivery"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-check-box>
+        </div>
+
+        <div class="form-group">
+          <dx-check-box
+            [text]="'vatRegister.provisionOfServices' | translate"
+            width="150"
+            formControlName="isServices"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-check-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: left">
+        <div class="form-group">
+          <dx-check-box
+            [text]="
+              'vatRegister.thePurchaserOfTheServiceIsObligedToPayVAT'
+                | translate
+            "
+            width="280"
+            formControlName="isCustomerPayer"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-check-box>
+        </div>
+
+        <div class="form-group">
+          <dx-check-box
+            [text]="'vatRegister.triangularTransaction' | translate"
+            width="280"
+            formControlName="isThreeSided"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-check-box>
+        </div>
+      </div>
+    </div>
+  </form>
+</dx-popup>
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="!isVisible()"
+></qumi-keyboard-shortcuts>

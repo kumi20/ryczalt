@@ -11,16 +11,17 @@ import {
   ViewChild,
   OnChanges,
   SimpleChanges,
+  ChangeDetectorRef,
   Input
 } from '@angular/core';
-import { CountryService } from '../../services/country-service';
-import { Country } from '../../interface/country';
+import { DocumentTypeService } from '../../services/document-type.services';
+import { DocumentType } from '../../interface/documentType';
 import { EventService } from '../../services/event-services.service';
 import { DxDataGridModule, DxDropDownBoxModule } from 'devextreme-angular';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-country',
+  selector: 'app-document-type',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,11 +29,10 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     DxDropDownBoxModule,
   ],
-  templateUrl: './country.component.html',
-  styleUrl: './country.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './document-type.component.html',
+  styleUrl: './document-type.component.scss',
 })
-export class CountryComponent implements OnInit, OnChanges {
+export class DocumentTypeComponent implements OnInit, OnChanges {
   @Output() onChoosed = new EventEmitter();
   @Output() setPLId = new EventEmitter();
   @Input() readOnly: boolean = false;
@@ -42,34 +42,24 @@ export class CountryComponent implements OnInit, OnChanges {
   className = input<boolean>(false);
   controlNameForm = input<string>('');
 
-  countryServices = inject(CountryService);
+  documentTypeService = inject(DocumentTypeService);
   event = inject(EventService);
 
-  countryList = signal<Country[]>([]);
+  documentList = signal<DocumentType[]>([]);
   heightGrid: number | string = 'calc(100vh - 100px)';
   focusedRowIndex: number = 0;
   pageSize: number = 300;
   isGridBoxOpened: boolean = false;
+  cdr = inject(ChangeDetectorRef)
 
   chossingRecord: null | string = null;
 
   constructor() {}
 
   ngOnInit() {
-    this.countryServices.getCountries().subscribe({
-      next: (data: Country[]) => {
-        this.countryList.set(data);
-
-        const inPl = data.find((x) => x.name === 'Polska');
-        if (inPl) {
-          this.setPLId.emit(inPl.countryId);
-        }
-        if(this.chossingRecord != null) {
-          const index = data.findIndex((x) => x.name === this.chossingRecord);
-          if (index >= 0) {
-            this.focusedRowIndex = index;
-          }
-        }
+    this.documentTypeService.get().subscribe({
+      next: (data: DocumentType[]) => {
+        this.documentList.set(data);
       },
       error: (error) => {
         this.event.httpErrorNotification(error);
@@ -77,9 +67,10 @@ export class CountryComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['controlNameForm'] && this.dropDownBoxMode()) {
       this.chossingRecord = changes['controlNameForm'].currentValue;
+      this.cdr.detectChanges(); 
     }
   }
 
@@ -103,9 +94,8 @@ export class CountryComponent implements OnInit, OnChanges {
     }
   }
 
-  onChoosingRecord = (e: Country) => {
+  onChoosingRecord = (e: DocumentType) => {
     if (this.event.sessionData.isActive) {
-
       this.chossingRecord = e.name;
       this.onChoosed.emit(e);
       this.isGridBoxOpened = false;

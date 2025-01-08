@@ -1,0 +1,270 @@
+<dx-popup
+  [width]="event.setWidthPopUp()"
+  [height]="event.setHeightPopUp()"
+  position="bottom"
+  [showCloseButton]="false"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  maxWidth="100vw"
+  maxHeight="100vh"
+  [showTitle]="true"
+  [title]="title"
+  [visible]="isVisible()"
+  (onShown)="event.onShownPopUp(); event.setFocus(inputDate)"
+  (onHidden)="event.onHiddenPopUp()"
+  (visibleChange)="onVisibleChange($event)"
+  (onInitialized)="onInit($event)"
+  [resizeEnabled]="false"
+>
+  <div class="text-right title-pop-up">
+    @if(this.mode() !== 'show'){
+    <dx-button
+      text="{{ 'buttons.save' | translate }}"
+      style="margin-right: 6px"
+      type="success"
+      (onClick)="onSave()"
+      [id]="'add_customer'"
+    ></dx-button>
+    }
+
+    <dx-button
+      text="{{ 'buttons.cancel' | translate }}"
+      type="danger"
+      (onClick)="closeWindow()"
+      [id]="'cancel_customer'"
+    ></dx-button>
+
+    <dx-tooltip
+      [target]="'#add_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.save" | translate }} (ctrl + s)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#cancel_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.cancel" | translate }} (Esc)
+      </div>
+    </dx-tooltip>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "flateRate.documentData" | translate }}
+        </div>
+      </div>
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.dateOfEntryForm" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-date-box
+            class="d-inline-block"
+            type="date"
+            width="276"
+            [displayFormat]="event.dateFormat"
+            formControlName="dateOfEntry"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('dateOfEntry')?.invalid &&
+                form.get('dateOfEntry')?.touched
+            }"
+          ></dx-date-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.dateOfReceipt" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-date-box
+            class="d-inline-block"
+            type="date"
+            width="276"
+            [displayFormat]="event.dateFormat"
+            formControlName="dateOfReceipt"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('dateOfReceipt')?.invalid &&
+                form.get('dateOfReceipt')?.touched
+            }"
+          ></dx-date-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right; padding-right: 15%">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.documentNumber" | translate }}
+            <strong>*</strong>
+          </label>
+          <dx-text-box
+            width="276"
+            formControlName="documentNumber"
+            class="d-inline-block"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('documentNumber')?.invalid &&
+                form.get('documentNumber')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "flateRate.amountsOfIncomeTaxedAtRates" | translate }}
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 17%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate17"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 15%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate15"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 14%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate14"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 12,5%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate12_5"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 12%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate12"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right; padding-right: 15%">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 10%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate10"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 8,5%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate8_5"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 5,5%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate5_5"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.byRate" | translate }} 3%
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="rate3"
+          ></dx-number-box>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "flateRate.remarks" | translate }}
+        </div>
+
+        <dx-text-area
+          formControlName="remarks"
+          style="max-width: 100%; height: 100px !important"
+        ></dx-text-area>
+      </div>
+    </div>
+  </form>
+</dx-popup>
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="!isVisible()"
+></qumi-keyboard-shortcuts>

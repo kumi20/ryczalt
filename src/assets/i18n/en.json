@@ -2,12 +2,13 @@
   "yes": "Yes",
   "no": "No",
   "confirmDelete": "Are you sure you want to delete this record?",
-  "buttons":{
+  "buttons": {
     "cancel": "Cancel",
     "add": "Add",
     "save": "Save",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "preview": "Preview"
   },
   "menu": {
     "start": "Start",
@@ -16,6 +17,9 @@
     "log-out": "Log out",
     "dictionaries": "Dictionaries",
     "countries": "Countries",
+    "flateRate": "Flate rate",
+    "vatSell": "VAT Sell",
+    "documentType": "Document types",
     "navigationPanelUser": {
       "languageApplications": "Language applications",
       "polishLanguage": "Polish",
@@ -23,7 +27,7 @@
       "versionInformation": "Version information"
     }
   },
-  "toolbar":{
+  "toolbar": {
     "adding": "Add",
     "editing": "Edit",
     "preview": "Preview"
@@ -50,8 +54,51 @@
     "isOffice": "Office",
     "downloadFromGus": "Download from GUS"
   },
-  "country":{
+  "country": {
     "code": "Code",
     "isSystem": "System"
+  },
+  "flateRate": {
+    "month": "Month",
+    "year": "Year",
+    "closeMonth": "Close month",
+    "opneMonth": "open monthc",
+    "dateOfEntry": "Date of entry",
+    "documentNumber": "Document number",
+    "totalRevenue": "Total revenue",
+    "rate": "Rate",
+    "documentData": "Document data",
+    "dateOfEntryForm": "Date of entry",
+    "dateOfReceipt": "Date of receipt",
+    "amountsOfIncomeTaxedAtRates": "Amounts of income taxed at rates",
+    "byRate": "By rate",
+    "remarks": "Remarks",
+    "theAmountOfIncomeTaxedAtTheRate": "The amount of income taxed at the rate",
+    "doYouWantToAdd": "Do you want to add the document {{number}} to the VAT sales register?",
+    "doYouWantToRemoveTheRelatedEntryFromTheVATRegister": "Do you want to remove the related entry from the VAT register?"
+  },
+  "vatRegister": {
+    "documentDate": "Document date",
+    "datOFSell": "Date of sell",
+    "customerName": "Customer name",
+    "grossSalesValue": "Gross sales value",
+    "taxDue": "Tax due",
+    "typeOfRegister": "Type of register",
+    "invoiceNumber": "Invoice number",
+    "taxLiabilityDate": "Tax liability date",
+    "dateOfIssue": "Date of issue",
+    "saleDate": "Sale date",
+    "customerData": "Customer data",
+    "salesDocumented": "Sales documented",
+    "saleByRate": "Sale by rate",
+    "exemptSales": "Exempt sales",
+    "reverseCharge": "Reverse charge",
+    "additionalOptions": "Additional options",
+    "deliveryOfGoods": "Delivery of goods",
+    "provisionOfServices": "Provision of services",
+    "triangularTransaction": "Triangular transaction",
+    "thePurchaserOfTheServiceIsObligedToPayVAT": "The purchaser of the service is obliged to pay VAT",
+    "doYouWantToRemoveTheRelatedEntryFromTheRevenueRecords": "Do you want to remove the related entry from the revenue records?",
+    "doYouWantToAddTheDocument": "Do you want to add the document {{number}} to the revenue register?"
   }
 }

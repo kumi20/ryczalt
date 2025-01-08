@@ -229,7 +229,6 @@ dx-tag-box.dx-texteditor {
 }
 
 .dx-checkbox-checked .dx-checkbox-icon::before {
-
   position: absolute;
   display: block;
   width: 15px;
@@ -335,15 +334,12 @@ label {
   color: $neutral-30;
 
   position: relative;
-  top: 4px;
-  left: 7px;
 }
 
 .dx-calendar-navigator-previous-month.dx-button .dx-icon,
 .dx-calendar-navigator-previous-view.dx-button .dx-icon {
   position: relative;
-  top: 4px;
-  left: 7px;
+
   color: $neutral-30;
 }
 
@@ -363,7 +359,6 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   color: $neutral-30;
   opacity: 1;
   &::before {
-
     color: $brand-10;
   }
 }
@@ -376,7 +371,6 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   position: relative;
   top: -22px;
 }
-
 
 .dx-dropdowneditor-icon::before {
   position: absolute;
@@ -645,7 +639,7 @@ dx-text-area.dictionary .dx-texteditor-container {
   width: 15px;
   height: 15px;
   border-radius: 2px;
-  border: 1px solid $neutral-50!important;
+  border: 1px solid $neutral-50 !important;
   border: none;
 }
 
@@ -805,21 +799,17 @@ dx-date-box {
   }
 }
 .dx-datebox-calendar .dx-dropdowneditor-icon {
-
   &::before {
-    content: "\ea10" !important;
     font-size: 16px;
     color: $neutral-30;
   }
 }
 
 .wapro-date-box.dx-datebox-calendar .dx-dropdowneditor-icon {
-
   &::before {
-    content: "\ea10" !important;
     font-size: 16px;
     position: absolute;
-    left: 11.5px;
+    left: 23.5px;
     color: $neutral-30;
   }
 }
@@ -1396,7 +1386,6 @@ dx-select-box {
     border: 1px solid transparent;
   }
   .dx-radiobutton-icon.dx-radiobutton-icon-checked::before {
-
     font-size: 18px;
     color: $brand-10;
     border: none !important;
@@ -1431,8 +1420,6 @@ dx-select-box {
     }
 
     &::before {
-
-
       color: $neutral-50;
       font-size: 18px;
       position: relative;

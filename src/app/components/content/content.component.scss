@@ -659,7 +659,6 @@ h5 {
   margin-right: 10px;
 }
 
-
 :host ::ng-deep .dx-icon-menu::before {
   color: $neutral-100;
   font-size: 1.3125rem;
@@ -912,10 +911,8 @@ h5 {
 
   .dx-menu .dx-menu-item-expanded {
     &::after {
-      font-family: "Lumen";
       font-size: 1.1875rem;
       line-height: 19px;
-      content: "\ea1d";
       color: $neutral-40;
       position: absolute;
       top: 20px;

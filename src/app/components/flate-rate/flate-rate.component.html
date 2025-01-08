@@ -1,0 +1,470 @@
+<div class="top-menu-panel">
+  <ng-container *ngTemplateOutlet="topButtons"></ng-container>
+</div>
+<div class="center-panel-scroll-verticall">
+  <div>
+    <ng-container *ngTemplateOutlet="grid"></ng-container>
+  </div>
+</div>
+
+<ng-template #topButtons>
+  <dx-scroll-view width="95%" height="100%" direction="horizontal">
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-add"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || isClosed()"
+      (onClick)="addNewRecord()"
+      name="btn-add-customer"
+      text="{{ 'buttons.add' | translate }}"
+      [id]="'btn-add'"
+    ></dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-edit"
+      stylingMode="text"
+      type="default"
+      [disabled]="
+        !event.sessionData.isActive || !focusedElement() || isClosed()
+      "
+      (onClick)="onEdit()"
+      text="{{ 'buttons.edit' | translate }}"
+      [id]="'btn-edit'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-eyeopen"
+      stylingMode="text"
+      type="default"
+      [disabled]="!focusedElement()"
+      (onClick)="onShow()"
+      text="{{ 'buttons.preview' | translate }}"
+      [id]="'btn-eyeopen'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-trash"
+      stylingMode="text"
+      type="default"
+      [disabled]="
+        !event.sessionData.isActive || !focusedElement() || isClosed()
+      "
+      (onClick)="onDeleteConfirm()"
+      name="btn-add-customer"
+      text="{{ 'buttons.delete' | translate }}"
+      [id]="'btn-delete'"
+    ></dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      [icon]="
+        isClosed() ? 'dx-icon dx-icon-imgarlock' : 'dx-icon dx-icon-imgarunlock'
+      "
+      stylingMode="text"
+      type="default"
+      [text]="
+        isClosed()
+          ? ('flateRate.opneMonth' | translate)
+          : ('flateRate.closeMonth' | translate)
+      "
+      (onClick)="onOpenClose()"
+    ></dx-button>
+
+    <div class="select-data">
+      <div class="add-select-data" (click)="minusMonth()">
+        <p>
+          <i class="dx-icon dx-icon-minus"></i>
+        </p>
+      </div>
+      <strong>{{ "flateRate.month" | translate }}:</strong>
+      {{ month() }}
+      <div class="add-select-data" style="left: 10px" (click)="plusMonth()">
+        <p>
+          <i class="dx-icon dx-icon-add"></i>
+        </p>
+      </div>
+    </div>
+
+    <div class="select-data">
+      <div class="add-select-data" (click)="minusYear()">
+        <p>
+          <i class="dx-icon dx-icon-minus"></i>
+        </p>
+      </div>
+      <strong>{{ "flateRate.year" | translate }}:</strong>
+      {{ year() }}
+      <div class="add-select-data" style="left: 10px" (click)="plusYear()">
+        <p>
+          <i class="dx-icon dx-icon-add"></i>
+        </p>
+      </div>
+    </div>
+
+    <dx-tooltip
+      [target]="'#btn-edit'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.edit" | translate }} (F2)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#btn-eyeopen'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.preview" | translate }} (Shift + F2)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#btn-delete'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.delete" | translate }} (Del)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#btn-add'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.add" | translate }} (alt + n)
+      </div>
+    </dx-tooltip>
+  </dx-scroll-view>
+</ng-template>
+
+<ng-template #grid>
+  <dx-scroll-view width="100%" height="100%" direction="vertical">
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [wordWrapEnabled]="false"
+      [showBorders]="true"
+      [height]="heightGrid"
+      [(selectedRowKeys)]="selectedRows"
+      class=""
+      [columnResizingMode]="'widget'"
+      [remoteOperations]="true"
+      [columnAutoWidth]="false"
+      [allowColumnResizing]="true"
+      [autoNavigateToFocusedRow]="true"
+      [(focusedRowIndex)]="focusedRowIndex"
+      [allowColumnReordering]="true"
+      [focusedRowEnabled]="true"
+      (onFocusedRowChanged)="onFocusedRowChanged($event)"
+      (onKeyDown)="onKeyDown($event)"
+      [allowColumnResizing]="event.deviceType !== 'mobile'"
+      (onRowDblClick)="onRowDblClick($event)"
+      #dxGrid
+    >
+      <dxo-load-panel [enabled]="false"></dxo-load-panel>
+      <dxo-scrolling mode="virtual"></dxo-scrolling>
+      <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
+      <dxo-selection
+        [mode]="'single'"
+        showCheckBoxesMode="always"
+        selectAllMode="page"
+      ></dxo-selection>
+      <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+      <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+      <dxi-column
+        caption="Lp"
+        dataField="lp"
+        [width]="50"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.dateOfEntry' | translate }}"
+        dataField="dateOfEntry"
+        [width]="110"
+        [allowSorting]="false"
+        hidingPriority="7"
+        dataType="date"
+        [format]="{ type: event.dateFormat }"
+        width="110"
+        alignment="left"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.documentNumber' | translate }}"
+        dataField="documentNumber"
+        [allowSorting]="false"
+        hidingPriority="6"
+      ></dxi-column>
+
+      <div *dxTemplate="let cell of 'TotalNetAmountCurrency'">
+        {{ cell.value | priceFormat }}
+      </div>
+
+      <dxi-column
+        caption="{{ 'flateRate.totalRevenue' | translate }}"
+        dataField="totalRevenue"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 17%"
+        dataField="rate17"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 8,5%"
+        dataField="rate8_5"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 5,5%"
+        dataField="rate5_5"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 3%"
+        dataField="rate3"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 10%"
+        dataField="rate10"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 12%"
+        dataField="rate12"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 12,5%"
+        dataField="rate12_5"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 14%"
+        dataField="rate14"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'flateRate.rate' | translate }} 15%"
+        dataField="rate15"
+        [width]="200"
+        [allowSorting]="false"
+        hidingPriority="6"
+        cellTemplate="TotalNetAmountCurrency"
+      ></dxi-column>
+    </dx-data-grid>
+
+    <div class="summary">
+      <div class="row">
+        <div class="col-md-6" style="text-align: start">
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            17%</label
+          >
+          <p style="text-align: end">
+            {{ summaryMonthData.sum_rate17 | priceFormat }}
+          </p>
+          <br />
+
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            15%</label
+          >
+          <p style="text-align: end">
+            {{ summaryMonthData.sum_rate15 | priceFormat }}
+          </p>
+          <br />
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            14%</label
+          >
+          <p style="text-align: end">
+            {{ summaryMonthData.sum_rate14 | priceFormat }}
+          </p>
+          <br />
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            12,5%</label
+          >
+          <p style="text-align: end">
+            {{ summaryMonthData.sum_rate12_5 | priceFormat }}
+          </p>
+          <br />
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            12%</label
+          >
+          <p style="text-align: end">
+            {{ summaryMonthData.sum_rate12 | priceFormat }}
+          </p>
+          <br />
+        </div>
+
+        <div class="col-md-6">
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            10%</label
+          >
+          <p>
+            {{ summaryMonthData.sum_rate10 | priceFormat }}
+          </p>
+          <br />
+
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            8,5%</label
+          >
+          <p>
+            {{ summaryMonthData.sum_rate8_5 | priceFormat }}
+          </p>
+          <br />
+
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            5,5%</label
+          >
+          <p>
+            {{ summaryMonthData.sum_rate5_5 | priceFormat }}
+          </p>
+          <br />
+
+          <label
+            >{{
+              "flateRate.theAmountOfIncomeTaxedAtTheRate" | translate
+            }}
+            3%</label
+          >
+          <p>
+            {{ summaryMonthData.sum_rate3 | priceFormat }}
+          </p>
+          <br />
+
+          <label>{{ "flateRate.totalRevenue" | translate }} </label>
+          <p>
+            {{ summaryMonthData.total_sum | priceFormat }}
+          </p>
+          <br />
+        </div>
+      </div>
+    </div>
+  </dx-scroll-view>
+</ng-template>
+
+@if (isDelete()) {
+<app-confirm-dialog
+  [isVisible]="isDelete()"
+  (onRemoving)="delete()"
+  (onClosing)="closeConfirm()"
+></app-confirm-dialog>
+} @if(isAdd()){
+<app-new-flate-rate
+  [isVisible]="true"
+  (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
+  [mode]="mode"
+  (onSaving)="onSaving($event)"
+  [flateRate]="focusedElement()"
+></app-new-flate-rate>
+}
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="isAdd()"
+></qumi-keyboard-shortcuts>
+
+@if(isAddVatRegister()){
+  <app-confirm-dialog
+  [isVisible]="true"
+  (onRemoving)="yesAddVatRegister()"
+  (onClosing)="isAddVatRegister.set(false)"
+  confirmText="flateRate.doYouWantToAdd"
+  [paramsMsg]="paramsNumber"
+></app-confirm-dialog>
+}
+
+@if(isNewVatRegister()){
+  <app-new-vat-register
+  [isVisible]="true"
+  (onClosing)="isNewVatRegister.set(false);"
+  [mode]="'add'"
+  (onSaving)="onSavingVatRegister($event)"
+  [vatRegisterFlate]="vatRegisterFlate"
+></app-new-vat-register>
+}
+
+@if(isConfirmDeleteVatRegister()){
+<app-confirm-dialog
+  [isVisible]="true"
+  (onRemoving)="yesDeleteVatRegister()"
+  (onClosing)="isConfirmDeleteVatRegister.set(false)"
+  confirmText="flateRate.doYouWantToRemoveTheRelatedEntryFromTheVATRegister"
+></app-confirm-dialog>
+}

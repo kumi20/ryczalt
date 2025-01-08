@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class PriceFormatPipe implements PipeTransform {
-  transform(value: number): string {
+  transform(value: number | string): string {
+    value = Number(value)
     if (isNaN(value)) {
       return '';
     }

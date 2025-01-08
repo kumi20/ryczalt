@@ -2,12 +2,13 @@
   "yes": "Tak",
   "no": "Nie",
   "confirmDelete": "Czy na pewno chcesz usunąć ten ren rekord?",
-  "buttons":{
+  "buttons": {
     "cancel": "Anuluj",
     "add": "Dodaj",
     "save": "Zapisz",
     "delete": "Usuń",
-    "edit": "Edytuj"
+    "edit": "Edytuj",
+    "preview": "Podgląd"
   },
   "menu": {
     "start": "Start",
@@ -16,6 +17,9 @@
     "log-out": "Wyloguj",
     "dictionaries": "Słowniki",
     "countries": "Kraje",
+    "flateRate": "Ryczałt",
+    "vatSell": "VAT Sprzedaży",
+    "documentType": "Typy dokumentów",
     "navigationPanelUser": {
       "languageApplications": "Język aplikacji",
       "polishLanguage": "Polski",
@@ -23,7 +27,7 @@
       "versionInformation": "Informacje o wersji"
     }
   },
-  "toolbar":{
+  "toolbar": {
     "adding": "Dodaj",
     "editing": "Edytuj",
     "preview": "Podgląd"
@@ -50,8 +54,58 @@
     "isOffice": "Urząd",
     "downloadFromGus": "Pobierz z GUS"
   },
-  "country":{
+  "country": {
     "code": "Kod",
     "isSystem": "Systemowy"
+  },
+  "flateRate": {
+    "month": "Miesiąc",
+    "year": "Rok",
+    "closeMonth": "Zamknij miesiąc",
+    "opneMonth": "Otwórz miesiąc",
+    "dateOfEntry": "Data przychodu",
+    "documentNumber": "Numer dowodu",
+    "totalRevenue": "Ogółem przychód",
+    "rate": "Stawka",
+    "documentData": "Dane dokumentu",
+    "dateOfEntryForm": "Data wpisu",
+    "dateOfReceipt": "Data przychodu",
+    "amountsOfIncomeTaxedAtRates": "Kwoty przychodów opodatkowane według stawek",
+    "byRate": "Według stawki",
+    "remarks": "Uwagi",
+    "theAmountOfIncomeTaxedAtTheRate": "Kwota przychodu opodatkowana wg stawki",
+    "doYouWantToAdd": "Czy chcesz dodać dokument {{number}} do rejestry vat sprzedaży?",
+    "doYouWantToRemoveTheRelatedEntryFromTheVATRegister": "Czy chcesz usunąc powiązany wpis z rejestru vat?"
+  },
+  "vatRegister": {
+    "documentDate": "Data dokumentu",
+    "datOFSell": "Data sprzedaży",
+    "customerName": "Nazwa (imię i nazwisko)",
+    "grossSalesValue": "Wartość sprzedaży brutto",
+    "taxDue": "Podatek należny",
+    "typeOfRegister": "Typ rejestru",
+    "invoiceNumber": "Numer faktury",
+    "taxLiabilityDate": "Data obowiązku podatkowego",
+    "dateOfIssue": "Data wystawienia",
+    "saleDate": "Data sprzedaży",
+    "customerData": "Dane kontrahenta",
+    "salesDocumented": "Sprzedaż udokumentowana",
+    "saleByRate": "Sprzedaż wg stawki",
+    "exemptSales": "Sprzedaż zwolniona",
+    "reverseCharge": "Odwrotne obciążenie",
+    "additionalOptions": "Opcje dodatkowe",
+    "deliveryOfGoods": "Dostawa towarów",
+    "provisionOfServices": "Świadczenie usług",
+    "triangularTransaction": "Transakcja trójstronna",
+    "thePurchaserOfTheServiceIsObligedToPayVAT": "Nabywca usługi zobowiązany do zapłaty VAT",
+    "doYouWantToRemoveTheRelatedEntryFromTheRevenueRecords": "Czy chcesz usunąc powiązany wpis z ewidencji przychodów?",
+    "doYouWantToAddTheDocument": "Czy chcesz dodać dokument {{number}} do ewidencji przychodów?",
+    "nettValue": "Wartość netto",
+    "domesticSales": "Sprzedaż krajowa",
+    "intraCommunitySupplyOfGoods": "Wewnątrzwspólnotowa dostawa towarów",
+    "intraCommunitySupplyOfServices": "Wewnątrzwspólnotowe świadczenie usług",
+    "export": "Eksport",
+    "nettSalesValue": "Wartość sprzedaży netto",
+    "salesTaxPayable": "Podatek należny od sprzedaży"
   }
 }

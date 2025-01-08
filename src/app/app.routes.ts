@@ -25,6 +25,20 @@ export const routes: Routes = [
       ),
     children: [
       {
+        path: 'flate-rate',
+        loadComponent: () =>
+          import('./components/flate-rate/flate-rate.component').then(
+            (m) => m.FlateRateComponent
+          ),
+      },
+      {
+        path: 'vat-register-sell',
+        loadComponent: () =>
+          import('./components/vat-register/vat-register.component').then(
+            (m) => m.VatRegisterComponent
+          ),
+      },
+      {
         path: 'customers',
         loadComponent: () =>
           import('./components/customers/customers.component').then(
@@ -32,12 +46,19 @@ export const routes: Routes = [
           ),
       },
       {
-        path : 'dictionaries/countries',
+        path: 'dictionaries/countries',
         loadComponent: () =>
           import('./components/country/country.component').then(
             (m) => m.CountryComponent
           ),
-      }
+      },
+      {
+        path: 'dictionaries/document-type',
+        loadComponent: () =>
+          import('./components/document-type/document-type.component').then(
+            (m) => m.DocumentTypeComponent
+          ),
+      },
     ],
   },
   {

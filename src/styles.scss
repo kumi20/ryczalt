@@ -29,8 +29,6 @@
 @import "./assets/scss/tabs.scss";
 @import "./assets/scss/typography.scss";
 
-
-
 *:focus {
   outline: none;
 }
@@ -577,7 +575,6 @@ app-custom-dropdown-box {
   background: $theme-warning-70 !important;
 }
 
-
 .input-required {
   border: 1px solid #dc3545 !important;
   background: $brand-90 !important;
@@ -1045,8 +1042,6 @@ dx-tree-view {
   }
 
   .dx-treeview-toggle-item-visibility::before {
-    font-family: Lumen;
-    content: "\ea1d";
     font-size: 16px;
     width: 18px;
     height: 18px;
@@ -2930,18 +2925,15 @@ ng-keyboard-shortcuts-help-item .item {
       ) !important;
     }
   }
-
-
 }
 
-.form-group{
+.form-group {
   margin-bottom: 6px;
 
-  label{
+  label {
     margin-right: 6px;
   }
 }
-
 
 @media (min-width: 768px) {
   .custom-inline-group {
@@ -2958,13 +2950,28 @@ ng-keyboard-shortcuts-help-item .item {
   }
 }
 
-.col-md-6{
+.col-md-6 {
   max-width: 50%;
 }
 
-.form-column__header{
+.col-md-4{
+  max-width: 33%;
+}
+
+.form-column__header {
   text-align: left;
-    border-bottom: 1px solid $neutral-60;
-    margin-bottom: 10px;
-    padding-bottom: 5PX;
+  border-bottom: 1px solid $neutral-60;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.dx-datebox-date .dx-dropdowneditor-icon::before {
+  content: "\f026";
+  position: absolute;
+  display: block;
+  width: 18px;
+  top: 50%;
+  margin-top: -9px;
+  left: 50%;
+  margin-left: 0px;
 }

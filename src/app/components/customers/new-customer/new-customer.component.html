@@ -19,6 +19,7 @@
   [resizeEnabled]="false"
 >
   <div class="text-right title-pop-up">
+    @if(mode() !== 'show'){
     <dx-button
       text="{{ 'buttons.save' | translate }}"
       style="margin-right: 6px"
@@ -26,6 +27,7 @@
       (onClick)="onSave()"
       [id]="'add_customer'"
     ></dx-button>
+    }
 
     <dx-button
       text="{{ 'buttons.cancel' | translate }}"
@@ -65,9 +67,10 @@
         </div>
 
         <div class="form-group">
-          <label for="customerVat" class="d-inline-block"
-            >{{ "customers.customerVat" | translate }} <strong>*</strong></label
-          >
+          <label for="customerVat" class="d-inline-block">
+            {{ "customers.customerVat" | translate }}
+            <strong>*</strong>
+          </label>
           <dx-text-box
             id="customerVat"
             width="276"
@@ -101,10 +104,10 @@
         </div>
 
         <div class="form-group d-inline-block">
-          <label for="customerName" class="d-inline-block"
-            >{{ "customers.customerName" | translate }}
-            <strong>*</strong></label
-          >
+          <label for="customerName" class="d-inline-block">
+            {{ "customers.customerName" | translate }}
+            <strong>*</strong>
+          </label>
           <dx-text-area
             id="customerName"
             width="276"
@@ -120,9 +123,10 @@
         </div>
 
         <div class="form-group">
-          <label for="customerAddress" class="d-inline-block"
-            >{{ "customers.street" | translate }} <strong>*</strong></label
-          >
+          <label for="customerAddress" class="d-inline-block">
+            {{ "customers.street" | translate }}
+            <strong>*</strong>
+          </label>
           <dx-text-box
             id="customerAddress"
             width="276"
@@ -137,9 +141,10 @@
         </div>
 
         <div class="form-group">
-          <label for="postalCode" class="d-inline-block"
-            >{{ "customers.postalCode" | translate }} <strong>*</strong></label
-          >
+          <label for="postalCode" class="d-inline-block">
+            {{ "customers.postalCode" | translate }}
+            <strong>*</strong>
+          </label>
           <dx-text-box
             id="postalCode"
             width="276"
@@ -155,9 +160,10 @@
         </div>
 
         <div class="form-group">
-          <label for="city" class="d-inline-block"
-            >{{ "customers.city" | translate }} <strong>*</strong></label
-          >
+          <label for="city" class="d-inline-block">
+            {{ "customers.city" | translate }}
+            <strong>*</strong>
+          </label>
           <dx-text-box
             id="city"
             width="276"
@@ -172,9 +178,10 @@
         </div>
 
         <div class="form-group">
-          <label class="d-inline-block" for="country"
-            >{{ "customers.country" | translate }} <strong>*</strong></label
-          >
+          <label class="d-inline-block" for="country">
+            {{ "customers.country" | translate }}
+            <strong>*</strong>
+          </label>
           <app-country
             [dropDownBoxMode]="true"
             [controlNameForm]="form.value.countryId"
@@ -184,14 +191,15 @@
             "
             (setPLId)="setPLId($event)"
             (onChoosed)="onChoosedCountry($event, 'countryId')"
+            [readOnly]="!event.sessionData.isActive || mode() ==='show'"
             #countryBox
           ></app-country>
         </div>
 
         <div class="form-group">
-          <label class="d-inline-block" for="customerPhone">{{
-            "customers.accountNumber" | translate
-          }}</label>
+          <label class="d-inline-block" for="customerPhone">
+            {{ "customers.accountNumber" | translate }}
+          </label>
           <dx-text-box
             id="accountNumber"
             width="276"
@@ -207,15 +215,15 @@
             width="276"
             formControlName="isRecipient"
             [readOnly]="!event.sessionData.isActive"
-          ></dx-check-box
-          ><br />
+          ></dx-check-box>
+          <br />
           <dx-check-box
             text="{{ 'customers.isSupplier' | translate }}"
             width="276"
             formControlName="isSupplier"
             [readOnly]="!event.sessionData.isActive"
-          ></dx-check-box
-          ><br />
+          ></dx-check-box>
+          <br />
           <dx-check-box
             text="{{ 'customers.isOffice' | translate }}"
             width="276"
@@ -224,16 +232,16 @@
           ></dx-check-box>
         </div>
       </div>
-      <div class="col-md-6" style="text-align: right; padding-right: 150px">
+      <div class="col-md-6" style="text-align: right; padding-right: 15%">
         <div class="form-column__header">
           {{ "customers.addressesData" | translate }}
         </div>
 
         <div formGroupName="addressDetails">
           <div class="form-group">
-            <label for="customerVat" class="d-inline-block">{{
-              "customers.name" | translate
-            }}</label>
+            <label for="customerVat" class="d-inline-block">
+              {{ "customers.name" | translate }}
+            </label>
             <dx-text-box
               width="276"
               formControlName="name"
@@ -243,9 +251,9 @@
           </div>
 
           <div class="form-group">
-            <label for="customerVat" class="d-inline-block">{{
-              "customers.street" | translate
-            }}</label>
+            <label for="customerVat" class="d-inline-block">
+              {{ "customers.street" | translate }}
+            </label>
             <dx-text-box
               width="276"
               formControlName="street"
@@ -255,9 +263,9 @@
           </div>
 
           <div class="form-group">
-            <label for="customerVat" class="d-inline-block">{{
-              "customers.postalCode" | translate
-            }}</label>
+            <label for="customerVat" class="d-inline-block">
+              {{ "customers.postalCode" | translate }}
+            </label>
             <dx-text-box
               width="276"
               formControlName="postalCode"
@@ -267,9 +275,9 @@
           </div>
 
           <div class="form-group">
-            <label for="customerVat" class="d-inline-block">{{
-              "customers.city" | translate
-            }}</label>
+            <label for="customerVat" class="d-inline-block">
+              {{ "customers.city" | translate }}
+            </label>
             <dx-text-box
               width="276"
               formControlName="city"
@@ -279,16 +287,16 @@
           </div>
 
           <div class="form-group">
-            <label class="d-inline-block" for="country">{{
-              "customers.country" | translate
-            }}</label>
+            <label class="d-inline-block" for="country">
+              {{ "customers.country" | translate }}
+            </label>
 
-          <app-country
-            [dropDownBoxMode]="true"
-            [controlNameForm]="form.value.addressDetails.countryId"
-            (onChoosed)="onChoosedCountry($event, 'adress')"
-          ></app-country>
-
+            <app-country
+              [dropDownBoxMode]="true"
+              [controlNameForm]="form.value.addressDetails.countryId"
+              (onChoosed)="onChoosedCountry($event, 'adress')"
+              [readOnly]="!event.sessionData.isActive || mode() ==='show'"
+            ></app-country>
           </div>
         </div>
 
@@ -298,9 +306,9 @@
 
         <div formGroupName="contactDetails">
           <div class="form-group">
-            <label class="d-inline-block">{{
-              "customers.contactPerson" | translate
-            }}</label>
+            <label class="d-inline-block">
+              {{ "customers.contactPerson" | translate }}
+            </label>
             <dx-text-box
               width="276"
               formControlName="contactPerson"
@@ -310,9 +318,9 @@
           </div>
 
           <div class="form-group">
-            <label class="d-inline-block">{{
-              "customers.phone" | translate
-            }}</label>
+            <label class="d-inline-block">
+              {{ "customers.phone" | translate }}
+            </label>
             <dx-text-box
               width="276"
               formControlName="phone"
@@ -356,5 +364,7 @@
   </form>
 </dx-popup>
 
-<qumi-keyboard-shortcuts [shortcuts]="shortcuts" [disabled]="!isVisible()">
-</qumi-keyboard-shortcuts>
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="!isVisible()"
+></qumi-keyboard-shortcuts>

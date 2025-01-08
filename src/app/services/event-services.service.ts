@@ -39,9 +39,11 @@ export class EventService {
     dataEnd: '',
     isActive: false,
   };
+  formatPLN = '###,###,###,##0.00';
 
   tooltipShowEvent = { name: 'dxhoverstart', delay: TOOLTIP_DELAY };
   activeShortcuts = new Subject<any>();
+  dateFormat = 'yyyy-MM-dd';
 
   countryLIst = [
     { name: 'Austria', code: 'AT' },
@@ -259,5 +261,20 @@ export class EventService {
     if (ajaxOptions.data.key) {
       ajaxOptions.url += '/' + ajaxOptions.data.key;
     }
+  };
+
+  //function returns gross price
+  countAmountGross = (netto: number, taxrate: number) => {
+    let tax = !isNaN(taxrate) ? taxrate : 0;
+    let gross = Number(netto) + Number(netto) * (tax / 100);
+    return Number(gross.toFixed(4));
+  };
+
+  //function returns net price
+  countAmountNet = (brutto: number, taxrate: number) => {
+    let tax = !isNaN(taxrate) ? taxrate : 0;
+
+    let netto = Number(brutto) - Number(brutto) * (tax / (tax + 100));
+    return Number(netto.toFixed(2));
   };
 }
