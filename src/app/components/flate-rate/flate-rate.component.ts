@@ -34,9 +34,9 @@ import { error } from 'console';
 import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
 import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { NewFlateRateComponent } from './new-flate-rate/new-flate-rate.component';
-import { throwIfEmpty } from 'rxjs';
 import { NewVatRegisterComponent } from '../vat-register/new-vat-register/new-vat-register.component';
 import { VatRegisterService } from '../../services/vatRegister.service';
+import { DateRangeComponent } from '../date-range/date-range.component';
 
 @Component({
   selector: 'app-flate-rate',
@@ -52,7 +52,8 @@ import { VatRegisterService } from '../../services/vatRegister.service';
     DxTooltipModule,
     NewFlateRateComponent,
     DxScrollViewModule,
-    NewVatRegisterComponent
+    NewVatRegisterComponent,
+    DateRangeComponent
   ],
   templateUrl: './flate-rate.component.html',
   styleUrl: './flate-rate.component.scss',
@@ -60,8 +61,6 @@ import { VatRegisterService } from '../../services/vatRegister.service';
 })
 export class FlateRateComponent implements OnInit, AfterViewInit {
   @ViewChild('dxGrid') dxGrid: any;
-  month = signal<number>(new Date().getMonth() + 1);
-  year = signal<number>(new Date().getFullYear());
 
   flateRateService = inject(FlateRateService);
   event = inject(EventService);
@@ -97,7 +96,8 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
   vatRegisterFlate: FlateRate | null = null;
   isConfirmDeleteVatRegister = signal<boolean>(false);
   vatRegisterId: number | null = null;
-
+  month = signal<number>(this.event.globalDate.month);
+  year = signal<number>(this.event.globalDate.year);
   vatRegisterService = inject(VatRegisterService)
 
   constructor() {}
@@ -135,6 +135,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         },
       },
     ];
+    this.cdr.detectChanges();
   }
 
   onFocusedRowChanged(event: any) {
@@ -362,5 +363,11 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
       this.checkIfMonthIsClosed();
       this.cdr.detectChanges();
     });
+  }
+
+  onDateRangeChange(event: {month: number, year: number}) {
+    this.month.set(event.month);
+    this.year.set(event.year);
+    this.getData();
   }
 }

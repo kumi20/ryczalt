@@ -23,26 +23,24 @@ import { LoadOptions } from 'devextreme/data';
 import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { TranslateModule } from '@ngx-translate/core';
 import {
-  VatRegister,
-  SummaryMonthVatRegiser,
+  VatRegisterBuy,
+  VatPurchaseSummary,
 } from '../../interface/vatRegister';
 import { PriceFormatPipe } from '../../pipe/currency';
-import { NewVatRegisterComponent } from './new-vat-register/new-vat-register.component';
 import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component';
 import { VatRegisterService } from '../../services/vatRegister.service';
 import { FlateRateService } from '../../services/flateRate.services';
 import { sign } from 'crypto';
-import { NewFlateRateComponent } from '../flate-rate/new-flate-rate/new-flate-rate.component';
 import {
   OpenCloseRequest,
   CheckIfMonthIsClosed,
 } from '../../interface/flateRate';
 import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
+import { NewVatRegisterBuyComponent } from './new-vat-register-buy/new-vat-register-buy.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
 
 @Component({
-  selector: 'app-vat-register',
-  standalone: true,
+  selector: 'app-vat-register-buy',
   imports: [
     DxButtonModule,
     DxoGridModule,
@@ -52,18 +50,17 @@ import { DateRangeComponent } from '../date-range/date-range.component';
     TranslateModule,
     DxDataGridModule,
     PriceFormatPipe,
-    NewVatRegisterComponent,
     ConfirmDialogComponent,
     NgShortcutsComponent,
-    NewFlateRateComponent,
+    NewVatRegisterBuyComponent,
     DateRangeComponent
   ],
-  templateUrl: './vat-register.component.html',
-  styleUrl: './vat-register.component.scss',
+  templateUrl: './vat-register-buy.component.html',
+  styleUrl: './vat-register-buy.component.scss',
 })
-export class VatRegisterComponent implements OnInit, AfterViewInit {
+export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
   @ViewChild('dxGrid') dxGrid: any;
-
+  
   event = inject(EventService);
   cdr = inject(ChangeDetectorRef);
   vatRegisterService = inject(VatRegisterService);
@@ -72,43 +69,40 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
   mode: 'add' | 'edit' | 'show' = 'add';
   dataSource: DataSource = new DataSource({});
   heightGrid: number | string = 'calc(100vh - 260px)';
-  selectedRows: VatRegister[] = [];
-  focusedRowIndex: number = 0;
-  focusedElement = signal<VatRegister | null>(null);
-  isAdd = signal<boolean>(false);
+  uri: string = 'registeVat/buy';
   pageSize: number = 50;
+  focusedElement = signal<VatRegisterBuy | null>(null);
+  selectedRows: VatRegisterBuy[] = [];
+  focusedRowIndex: number = 0;
+  isAdd = signal<boolean>(false);
   isDelete = signal<boolean>(false);
   shortcuts: ShortcutInput[] = [];
-  isConfirmDeleteFlateRate = signal<boolean>(false);
-  ryczltId: number | null = null;
-  uri: string = 'registeVat/sell';
-  paramsNumber: any;
-  flatRegister: VatRegister | null = null;
-  isAddFlateRegister = signal<boolean>(false);
-  isNewFlateRegister = signal<boolean>(false);
   month = signal<number>(this.event.globalDate.month);
   year = signal<number>(this.event.globalDate.year);
-  summaryMonthData: SummaryMonthVatRegiser = {
-    TotalGrossSales: 0,
-    Net23: 0,
-    Vat23: 0,
-    Net8: 0,
-    Vat8: 0,
-    Net5: 0,
-    Vat5: 0,
-    Net0: 0,
-    Export0: 0,
-    WDT0: 0,
-    WSU: 0,
-    ExemptSales: 0,
-    ReverseCharge: 0,
-    TotalNetSales: 0,
-    TotalVat: 0,
+  
+  summaryMonthData: VatPurchaseSummary = {
+    total_net_23: 0,
+    total_vat_23: 0,
+    total_net_8: 0,
+    total_vat_8: 0,
+    total_net_5: 0,
+    total_vat_5: 0,
+    total_zw_net_23: 0,
+    total_zw_vat_23: 0,
+    total_zw_net_8: 0,
+    total_zw_vat_8: 0,
+    total_zw_net_5: 0,
+    total_zw_vat_5: 0,
+    total_net: 0,
+    total_net_not_deductible: 0,
+    total_gross: 0,
+    total_net_deductible: 0,
+    total_vat_deductible: 0,
   };
-
+  
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getData();
   }
 
@@ -188,6 +182,18 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
     return obj;
   }
 
+  onFocusedRowChanged(event: any) {
+    this.focusedElement.set(event.row.data);
+  }
+
+  onKeyDown(event: any) {
+    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
+
+    if (BLOCKED_KEYS.includes(event.event.key)) {
+      event.event.preventDefault();
+    }
+  }
+
   minusMonth() {
     if (this.month() > 1) {
       this.month.set(this.month() - 1);
@@ -212,25 +218,32 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
-  onFocusedRowChanged(event: any) {
-    this.focusedElement.set(event.row.data);
+  addNewRecord() {
+    this.mode = 'add';
+    if (!this.event.sessionData.isActive || this.isClosed()) return;
+
+    this.isAdd.set(true);
   }
 
-  onKeyDown(event: any) {
-    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
-
-    if (BLOCKED_KEYS.includes(event.event.key)) {
-      event.event.preventDefault();
-    }
+  onSaving(event: any) {
+    this.isAdd.set(false);
+    this.dataSource.reload().then((data) => {
+      this.summaryMonth();
+      const index = data.findIndex(
+        (x: any) =>
+          x.vatRegisterId === Number(event.vatRegisterId.vatRegisterId)
+      );
+      if (index !== -1) {
+        this.focusedRowIndex = index;
+      } else {
+        this.focusedRowIndex = 0;
+      }
+      this.checkIfMonthIsClosed();
+      this.cdr.detectChanges();
+    });
   }
 
-  onRowDblClick(e: any) {
-    // if (this.dropDownBoxMode()) {
-    //   return;
-    // }
-    this.onEdit();
-  }
-
+  
   onEdit() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
@@ -246,13 +259,6 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
       .find((_el: any, i: any) => this.focusedRowIndex === i);
   }
 
-  addNewRecord() {
-    this.mode = 'add';
-    if (!this.event.sessionData.isActive || this.isClosed()) return;
-
-    this.isAdd.set(true);
-  }
-
   onShow() {
     this.mode = 'show';
     this.focusedElement.set(this.getFocusedElement());
@@ -262,6 +268,32 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
   onDeleteConfirm() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(true);
+  }
+  
+  onRowDblClick(e: any) {
+    this.onEdit();
+  }
+
+  closeConfirm() {
+    this.isDelete.set(false);
+    this.event.setFocus(this.dxGrid);
+  }
+
+  delete() {
+    if (!this.event.sessionData.isActive || this.isClosed()) return;
+    this.isDelete.set(false);
+
+    const id = this.getFocusedElement().vatRegisterId;
+    this.vatRegisterService.delete(id).subscribe({
+      next: () => {
+        this.dataSource.reload().then(() => {
+          this.focusedRowIndex = 0;
+        });
+      },
+      error: (error) => {
+        this.event.httpErrorNotification(error);
+      },
+    });
   }
 
   onOpenClose() {
@@ -291,79 +323,9 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onSaving(event: any) {
-    this.isAdd.set(false);
-    this.dataSource.reload().then((data) => {
-      this.summaryMonth();
-      const index = data.findIndex(
-        (x: any) =>
-          x.vatRegisterId === Number(event.vatRegisterId.vatRegisterId)
-      );
-
-      if (event.mode === 'add' && this.uri === 'registeVat/sell') {
-        this.paramsNumber = {
-          number: event.data.documentNumber,
-        };
-        event.data.vatRegisterId = event.vatRegisterId.vatRegisterId;
-        this.flatRegister = event.data;
-        this.isAddFlateRegister.set(true);
-      }
-
-      if (index !== -1) {
-        this.focusedRowIndex = index;
-      } else {
-        this.focusedRowIndex = 0;
-      }
-      this.checkIfMonthIsClosed();
-      this.cdr.detectChanges();
-    });
-  }
-
-  closeConfirm() {
-    this.isDelete.set(false);
-    this.event.setFocus(this.dxGrid);
-  }
-
-  delete() {
-    if (!this.event.sessionData.isActive || this.isClosed()) return;
-    this.isDelete.set(false);
-
-    const id = this.getFocusedElement().vatRegisterId;
-    this.ryczltId = this.getFocusedElement().ryczltId;
-    this.vatRegisterService.delete(id).subscribe({
-      next: () => {
-        if (this.ryczltId != null) {
-          this.isConfirmDeleteFlateRate.set(true);
-        }
-
-        this.dataSource.reload().then(() => {
-          this.focusedRowIndex = 0;
-        });
-      },
-      error: (error) => {
-        this.event.httpErrorNotification(error);
-      },
-    });
-  }
-
-  yesAddFlateRegister() {
-    this.isAddFlateRegister.set(false);
-    this.isNewFlateRegister.set(true);
-  }
-
-  yesDeleteFlateRate() {
-    this.isConfirmDeleteFlateRate.set(false);
-    this.flateRateService.delete(this.ryczltId as number).subscribe();
-  }
-
-  onSavingFlate() {
-    this.isNewFlateRegister.set(false);
-    this.dataSource.reload();
-  }
-
   summaryMonth() {
-    this.vatRegisterService.summaryMonth(this.month(), this.year()).subscribe({
-      next: (data: SummaryMonthVatRegiser) => {
+    this.vatRegisterService.summaryMonthBuy(this.month(), this.year()).subscribe({
+      next: (data: VatPurchaseSummary) => {
         this.summaryMonthData = data;
       },
       error: (err) => {

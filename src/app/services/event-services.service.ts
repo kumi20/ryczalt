@@ -75,6 +75,11 @@ export class EventService {
     { name: 'Włochy', code: 'IT' },
   ];
 
+  globalDate = {
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+  }
+
   constructor() {
     this.languageSubscription = new Subscription();
   }

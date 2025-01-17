@@ -19,7 +19,9 @@
     "countries": "Kraje",
     "flateRate": "Ryczałt",
     "vatSell": "VAT Sprzedaży",
+    "vatBuy": "VAT Zakupu",
     "documentType": "Typy dokumentów",
+    "internalEvidence": "Dowody wewnetrzne",
     "navigationPanelUser": {
       "languageApplications": "Język aplikacji",
       "polishLanguage": "Polski",
@@ -106,6 +108,37 @@
     "intraCommunitySupplyOfServices": "Wewnątrzwspólnotowe świadczenie usług",
     "export": "Eksport",
     "nettSalesValue": "Wartość sprzedaży netto",
-    "salesTaxPayable": "Podatek należny od sprzedaży"
+    "salesTaxPayable": "Podatek należny od sprzedaży",
+    "nrInvoices": "Numer faktury",
+    "recivedDate": "Data otrzymania",
+    "gorssBuyValue": "Wartość zakupu brutto",
+    "netBuyValue": "Wartość zakupu netto",
+    "deductibleVat": "VAT podlegający odliczeniu",
+    "postingDate": "Data księgowania",
+    "purchasesForTaxableSales": "Zakupy służące sprzedaży opodatkowanej",
+    "purchasesForTaxableAndExemptSales": "Zakupy służące sprzedaży opodatkowanej i zwolnionej",
+    "shoppingByRate": "Zakupy wg stawki",
+    "importGoodsFromUe": "Import towarów z UE (WNT)",
+    "importGoodsFromOutsideUe": "Import towarów spoza UE",
+    "importServicesUe": "Import usług z UE",
+    "importServicesOutsideUe": "Import usług spoza UE",
+    "VATdeduction": "Odliczenie 50% VAT",
+    "fixedAssets": "Środek trwały",
+    "correctFixedAssets": "Korekta środka trwałego",
+    "splitPaymentMechanism": "Mechanizm podzielonej płatności",
+    "purchaseFixedAssets": "Zakupy środka trwałego",
+    "purchaseMarking": "Oznaczenie dowodu nabycia",
+    "shoppingValue": "Wartość zakupów",
+    "purchasesWithoutDeduction": "Zakupy za które nie przysługuje odliczenie"
+  },
+  "internalEvidence": {
+    "kindOfInternalEvidence": "Rodzaj dowodu wewnętrznego",
+    "numberOfInternalEvidence": "Numer dowodu wewnętrznego",
+    "dateOfIssue": "Data wystawienia",
+    "value": "Wartość",
+    "personIssuing": "Osoba wystawiająca",
+    "purposeOfExpenditure": "Cel wydatku",
+    "income": "Przychód",
+    "expense": "Rozchód"
   }
 }

@@ -92,6 +92,11 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form.value).subscribe({
       next: () => {
         this.checkLicenseValidity().then((isValid: License) => {
+          this.event.globalDate = {
+            month: new Date().getMonth() + 1,
+            year: new Date().getFullYear()
+          };
+          localStorage.setItem('dataRange', JSON.stringify(this.event.globalDate));
           this.event.sessionData = isValid;
           localStorage.setItem('sessionData', this.event.encryptString(this.event.sessionData));
           this.router.navigate(['/content/customers']);

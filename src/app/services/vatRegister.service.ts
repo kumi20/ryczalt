@@ -10,6 +10,7 @@ import { catchError, map } from 'rxjs/operators';
 import {
   VatRegister,
   SummaryMonthVatRegiser,
+  VatPurchaseSummary
 } from './../interface/vatRegister';
 
 const token = localStorage.getItem('app-ryczalt-token');
@@ -138,5 +139,49 @@ export class VatRegisterService {
           : '',
     });
     return throwError(errorMessage);
+  }
+
+
+  postBuy(data: VatRegister) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    return this.http
+      .post<VatRegister>(`${this.apiUrl}registeVat/buy`, data, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  putBuy(data: VatRegister) {
+    const params = new HttpParams().set('id', data.vatRegisterId);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    return this.http
+      .put<VatRegister>(`${this.apiUrl}registeVat/buy`, data, {
+        params,
+        headers,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  summaryMonthBuy(
+    month: number,
+    year: number
+  ): Observable<VatPurchaseSummary> {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+    let params = new HttpParams().set('month', month).set('year', year);
+    return this.http
+      .get<VatPurchaseSummary>(`${this.apiUrl}registeVat/summaryMonthBuy`, {
+        params,
+        headers,
+      })
+      .pipe(catchError(this.handleError));
   }
 }

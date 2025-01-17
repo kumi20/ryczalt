@@ -157,15 +157,15 @@
       <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
 
       <dxi-column
-        caption="{{ 'flateRate.documentNumber' | translate }}"
+        caption="{{ 'vatRegister.nrInvoices' | translate }}"
         dataField="documentNumber"
         [allowSorting]="false"
         hidingPriority="6"
       ></dxi-column>
 
       <dxi-column
-        caption="{{ 'vatRegister.documentDate' | translate }}"
-        dataField="documentDate"
+        caption="{{ 'vatRegister.recivedDate' | translate }}"
+        dataField="dateOfSell"
         [width]="110"
         [allowSorting]="false"
         hidingPriority="7"
@@ -176,8 +176,8 @@
       ></dxi-column>
 
       <dxi-column
-        caption="{{ 'vatRegister.datOFSell' | translate }}"
-        dataField="dateOfSell"
+        caption="{{ 'vatRegister.dateOfIssue' | translate }}"
+        dataField="documentDate"
         [width]="110"
         [allowSorting]="false"
         hidingPriority="7"
@@ -195,7 +195,7 @@
       ></dxi-column>
 
       <dxi-column
-        caption="{{ 'vatRegister.grossSalesValue' | translate }}"
+        caption="{{ 'vatRegister.gorssBuyValue' | translate }}"
         dataField="grossSum"
         [width]="200"
         [allowSorting]="false"
@@ -204,7 +204,7 @@
       ></dxi-column>
 
       <dxi-column
-        caption="{{ 'vatRegister.taxDue' | translate }}"
+        caption="{{ 'vatRegister.deductibleVat' | translate }}"
         dataField="vatSum"
         [width]="200"
         [allowSorting]="false"
@@ -220,102 +220,73 @@
     <div class="summary">
       <div class="row">
         <div class="col-md-6" style="text-align: start">
-          <label>{{ "vatRegister.grossSalesValue" | translate }}</label>
+          <label>{{ "vatRegister.gorssBuyValue" | translate }}</label>
           <p style="text-align: end">
-            {{ summaryMonthData.TotalGrossSales | priceFormat }}
+            {{ summaryMonthData.total_gross | priceFormat }}
           </p>
+          <br />
+
+          <label>{{ "vatRegister.purchasesWithoutDeduction" | translate }}  (...)</label>
+          <p style="text-align: end">{{ summaryMonthData.total_net_not_deductible | priceFormat }}</p>
           <br />
 
           <label>{{ "vatRegister.nettValue" | translate }} 23%</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Net23 | priceFormat }}
-          </p>
+          <p style="text-align: end">{{ summaryMonthData.total_net_23 | priceFormat }}</p>
           <br />
 
           <label>VAT 23%</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Vat23 | priceFormat }}
-          </p>
+          <p style="text-align: end">{{ summaryMonthData.total_vat_23 | priceFormat }}</p>
           <br />
 
           <label>{{ "vatRegister.nettValue" | translate }} 8%</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Net8 | priceFormat }}
-          </p>
+          <p style="text-align: end">{{ summaryMonthData.total_net_8 | priceFormat }}</p>
           <br />
 
           <label>VAT 8%</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Vat8 | priceFormat }}
-          </p>
+          <p style="text-align: end">{{ summaryMonthData.total_vat_8 | priceFormat }}</p>
           <br />
 
           <label>{{ "vatRegister.nettValue" | translate }} 5%</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Net5 | priceFormat }}
-          </p>
+          <p style="text-align: end">{{ summaryMonthData.total_net_5 | priceFormat }}</p>
           <br />
 
           <label>VAT 5%</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Vat5 | priceFormat }}
-          </p>
+          <p style="text-align: end">{{ summaryMonthData.total_vat_5 | priceFormat }}</p>
+          <br />
         </div>
 
         <div class="col-md-6">
-          <label>{{ "vatRegister.domesticSales" | translate }}</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Net0 | priceFormat }}
-          </p>
+          <label>{{ "vatRegister.nettValue" | translate }} 23%</label>
+          <p style="text-align: end">{{summaryMonthData.total_zw_net_23|priceFormat}}</p>
           <br />
 
-          <label
-            >{{
-              "vatRegister.intraCommunitySupplyOfGoods" | translate
-            }}
-            0%</label
-          >
-          <p style="text-align: end">
-            {{ summaryMonthData.WDT0 | priceFormat }}
-          </p>
+          <label>VAT 23%</label>
+          <p style="text-align: end">{{ summaryMonthData.total_zw_vat_23 | priceFormat }}</p>
           <br />
 
-          <label
-            >{{ "vatRegister.intraCommunitySupplyOfServices" | translate }}
-          </label>
-          <p style="text-align: end">
-            {{ summaryMonthData.WSU | priceFormat }}
-          </p>
+          <label>{{ "vatRegister.nettValue" | translate }} 8%</label>
+          <p style="text-align: end">{{ summaryMonthData.total_zw_net_8 | priceFormat }}</p>
           <br />
 
-          <label>{{ "vatRegister.export" | translate }} 0% </label>
-          <p style="text-align: end">
-            {{ summaryMonthData.Export0 | priceFormat }}
-          </p>
+          <label>VAT 8%</label>
+          <p style="text-align: end">{{ summaryMonthData.total_zw_vat_8 | priceFormat }}</p>
           <br />
 
-          <label>{{ "vatRegister.exemptSales" | translate }}</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.ExemptSales | priceFormat }}
-          </p>
+          <label>{{ "vatRegister.nettValue" | translate }} 5%</label>
+          <p style="text-align: end">{{ summaryMonthData.total_zw_net_5 | priceFormat }}</p>
           <br />
 
-          <label>{{ "vatRegister.reverseCharge" | translate }}</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.ReverseCharge | priceFormat }}
-          </p>
+          <label>VAT 5%</label>
+          <p style="text-align: end">{{ summaryMonthData.total_zw_vat_5 | priceFormat }}</p>
           <br />
 
-          <label>{{ "vatRegister.nettSalesValue" | translate }}</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.TotalNetSales | priceFormat }}
-          </p>
+          <label>{{ "vatRegister.netBuyValue" | translate }}</label>
+          <p style="text-align: end">{{ summaryMonthData.total_net | priceFormat }}</p>
           <br />
 
-          <label>{{ "vatRegister.salesTaxPayable" | translate }}</label>
-          <p style="text-align: end">
-            {{ summaryMonthData.TotalVat | priceFormat }}
-          </p>
+          <label>{{ "vatRegister.deductibleVat" | translate }}</label>
+          <p style="text-align: end">{{ summaryMonthData.total_vat_deductible | priceFormat }}</p>
+          <br />
         </div>
       </div>
     </div>
@@ -323,42 +294,19 @@
 </ng-template>
 
 @if(isAdd()){
-<app-new-vat-register
+<app-new-vat-register-buy
   [isVisible]="true"
   (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
   [mode]="mode"
   (onSaving)="onSaving($event)"
   [vatRegister]="focusedElement()"
-></app-new-vat-register>
+></app-new-vat-register-buy>
 } @if (isDelete()) {
 <app-confirm-dialog
   [isVisible]="isDelete()"
   (onRemoving)="delete()"
   (onClosing)="closeConfirm()"
 ></app-confirm-dialog>
-} @if(isConfirmDeleteFlateRate()){
-<app-confirm-dialog
-  [isVisible]="true"
-  (onRemoving)="yesDeleteFlateRate()"
-  (onClosing)="isConfirmDeleteFlateRate.set(false)"
-  confirmText="vatRegister.doYouWantToRemoveTheRelatedEntryFromTheRevenueRecords"
-></app-confirm-dialog>
-} @if(isAddFlateRegister()){
-<app-confirm-dialog
-  [isVisible]="true"
-  (onRemoving)="yesAddFlateRegister()"
-  (onClosing)="isAddFlateRegister.set(false)"
-  confirmText="vatRegister.doYouWantToAddTheDocument"
-  [paramsMsg]="paramsNumber"
-></app-confirm-dialog>
-} @if(isNewFlateRegister()){
-<app-new-flate-rate
-  [isVisible]="true"
-  (onClosing)="isNewFlateRegister.set(false)"
-  [mode]="'add'"
-  (onSaving)="onSavingFlate()"
-  [vatRegisterData]="flatRegister"
-></app-new-flate-rate>
 }
 
 <qumi-keyboard-shortcuts

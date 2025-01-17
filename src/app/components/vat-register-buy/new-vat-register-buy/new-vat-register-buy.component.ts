@@ -19,7 +19,9 @@ import {
   DxNumberBoxModule,
   DxPopupModule,
   DxTextBoxModule,
+  DxTabPanelModule,
   DxTooltipModule,
+  DxSelectBoxModule
 } from 'devextreme-angular';
 import { EventService } from '../../../services/event-services.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -35,12 +37,12 @@ import { DocumentTypeComponent } from '../../document-type/document-type.compone
 import { CustomersComponent } from '../../customers/customers.component';
 import { CommonModule } from '@angular/common';
 import { VatRegisterService } from '../../../services/vatRegister.service';
-import { FlateRate } from '../../../interface/flateRate';
+
 import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
+import { FlateRate } from '../../../interface/flateRate';
 
 @Component({
-  selector: 'app-new-vat-register',
-  standalone: true,
+  selector: 'app-new-vat-register-buy',
   imports: [
     DxPopupModule,
     DxButtonModule,
@@ -55,14 +57,14 @@ import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboa
     DxNumberBoxModule,
     DxCheckBoxModule,
     CommonModule,
+    DxSelectBoxModule,
     NgShortcutsComponent,
+    DxTabPanelModule
   ],
-  templateUrl: './new-vat-register.component.html',
-  styleUrl: './new-vat-register.component.scss',
+  templateUrl: './new-vat-register-buy.component.html',
+  styleUrl: './new-vat-register-buy.component.scss'
 })
-export class NewVatRegisterComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+export class NewVatRegisterBuyComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit{
   @Output() onClosing = new EventEmitter();
   @Output() onSaving = new EventEmitter();
   @ViewChild('inputDate') inputDate: any;
@@ -70,6 +72,7 @@ export class NewVatRegisterComponent
   event = inject(EventService);
   translate = inject(TranslateService);
   fb = inject(FormBuilder);
+  cdr = inject(ChangeDetectorRef);
   vatRegister = input<any>();
   vatRegisterService = inject(VatRegisterService);
 
@@ -79,13 +82,41 @@ export class NewVatRegisterComponent
   vatRegisterFlate = input<FlateRate | null>();
   shortcuts: ShortcutInput[] = [];
   form: FormGroup = new FormGroup({});
-  cdr = inject(ChangeDetectorRef);
+
+  tabPanelItems = [
+    this.translate.instant('vatRegister.purchasesForTaxableSales'),
+    this.translate.instant('vatRegister.purchasesForTaxableAndExemptSales')
+  ]
+
+  selectedIndex: number = 0;
+
+  proofMarking: string[] = [
+    '',
+    'MK - faktura wystawiona przez podatnika, który wybrał metodę kasową',
+    'VAT_RR - Faktura VAT rr, o której mowa w art. 116 ustawy',
+    'WEW - Dokument wewnętrzny'
+  ]
 
   constructor() {
     this.form = this.initForm();
   }
 
   ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['vatRegister']) {
+      if (this.mode() === 'edit') {
+        this.title = this.translate.instant('toolbar.editing');
+        this.form.patchValue(this.vatRegister());
+      }
+
+      if (this.mode() === 'show') {
+        this.title = this.translate.instant('toolbar.preview');
+        this.form.patchValue(this.vatRegister());
+        this.form.disable();
+      }
+    }
+  }
 
   ngAfterViewInit(): void {
     this.shortcuts = [
@@ -109,52 +140,6 @@ export class NewVatRegisterComponent
     this.cdr.detectChanges();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['vatRegister']) {
-      if (this.mode() === 'edit') {
-        this.title = this.translate.instant('toolbar.editing');
-        this.form.patchValue(this.vatRegister());
-      }
-
-      if (this.mode() === 'show') {
-        this.title = this.translate.instant('toolbar.preview');
-        this.form.patchValue(this.vatRegister());
-        this.form.disable();
-      }
-    }
-
-    if (changes['vatRegisterFlate']) {
-      if (this.mode() === 'add') {
-        this.form.patchValue({
-          documentNumber:
-            changes['vatRegisterFlate'].currentValue.documentNumber,
-          documentDate: changes['vatRegisterFlate'].currentValue.dateOfEntry,
-          dateOfSell: changes['vatRegisterFlate'].currentValue.dateOfEntry,
-          taxLiabilityDate:
-            changes['vatRegisterFlate'].currentValue.dateOfReceipt,
-          rate23Net:
-            changes['vatRegisterFlate'].currentValue.rate3 +
-            changes['vatRegisterFlate'].currentValue.rate5_5 +
-            changes['vatRegisterFlate'].currentValue.rate8_5 +
-            changes['vatRegisterFlate'].currentValue.rate10 +
-            changes['vatRegisterFlate'].currentValue.rate12 +
-            changes['vatRegisterFlate'].currentValue.rate12_5 +
-            changes['vatRegisterFlate'].currentValue.rate14 +
-            changes['vatRegisterFlate'].currentValue.rate15 +
-            changes['vatRegisterFlate'].currentValue.rate17,
-          ryczltId: changes['vatRegisterFlate'].currentValue.ryczaltId,
-        });
-
-        this.countGross(
-          'rate23Gross',
-          'rate23Vat',
-          { value: this.form.value.rate23Net },
-          23
-        );
-      }
-    }
-  }
-
   ngOnDestroy(): void {
     this.event.onHiddenPopUp();
   }
@@ -168,43 +153,40 @@ export class NewVatRegisterComponent
       dateOfSell: [new Date(), Validators.required],
       documentNumber: ['', Validators.required],
       customerId: [null, Validators.required],
-      rate23Net: [0],
-      rate23Vat: [0],
-      rate23Gross: [0],
-      rate8Net: [0],
-      rate8Vat: [0],
-      rate8Gross: [0],
-      rate5Net: [0],
-      rate5Vat: [0],
-      rate5Gross: [0],
+      sell23net: [0],
+      sell23vat: [0],
+      sell23gross: [0],
+      sell23ZWnet: [0],
+      sell23ZWvat: [0],
+      sell23ZWgross: [0],
+      sell8net: [0],
+      sell8vat: [0],
+      sell8gross: [0],
+      sell8ZWnet: [0],
+      sell8ZWvat: [0],
+      sell8ZWgross: [0],
+      sell5net: [0],
+      sell5vat: [0],
+      sell5gross: [0],
+      sell5ZWnet: [0],
+      sell5ZWvat: [0],
+      sell5ZWgross: [0],
       rate0: [0],
-      export0: [0],
-      wdt0: [0],
-      wsu: [0],
-      exemptSales: [0],
-      reverseCharge: [0],
-      isDelivery: [0],
-      isServices: [0],
-      isCustomerPayer: [0],
-      isThreeSided: [0],
-      ryczltId: [null],
-      isSell: [1],
+      isSell: [0],
       isClosed: [0],
+      wnt: [0],
+      importOutsideUe: [0],
+      importServicesUe: [0],
+      importServicesOutsideUe: [0],
+      deduction50: [0],
+      fixedAssets: [0],
+      correctFixedAssets: [0],
+      MPP: [0],
+      purchaseFixedAssets: [0],
+      isReverseCharge: [0],
+      isThreeSided: [0],
+      purchaseMarking: ['']
     });
-  }
-
-  onVisibleChange(e: any) {
-    if (!e) {
-      this.onClosing.emit(true);
-    }
-  }
-
-  closeWindow() {
-    this.onClosing.emit(true);
-  }
-
-  onInit(e: any) {
-    e.component.registerKeyHandler('escape', function () {});
   }
 
   countGross(gross: string, vat: string, e: any, rate: number) {
@@ -223,30 +205,77 @@ export class NewVatRegisterComponent
     this.form.controls[vat].setValue(vatAmount);
   }
 
-  parseToInt() {
-    this.form.controls['isCustomerPayer'].setValue(
-      this.form.value.isCustomerPayer ? 1 : 0
-    );
-    this.form.controls['isDelivery'].setValue(
-      this.form.value.isDelivery ? 1 : 0
-    );
-    this.form.controls['isServices'].setValue(
-      this.form.value.isServices ? 1 : 0
-    );
-    this.form.controls['isThreeSided'].setValue(
-      this.form.value.isThreeSided ? 1 : 0
-    );
+  onVisibleChange(e: any) {
+    if (!e) {
+      this.onClosing.emit(true);
+    }
   }
 
-  onChoosedCustomer(e: any) {
-    this.form.controls['customerId'].setValue(e.customerId);
+  closeWindow() {
+    this.onClosing.emit(true);
+  }
+
+  onInit(e: any) {
+    e.component.registerKeyHandler('escape', function () {});
   }
 
   onChoosedDocumentType(e: any) {
     this.form.controls['documentTypeId'].setValue(e.documentTypeId);
   }
 
-  onSave() {
+  onChoosedCustomer(e: any) {
+    this.form.controls['customerId'].setValue(e.customerId);
+  }
+
+  parseToInt() {
+    console.log(this.form.value);
+
+    this.form.controls['wnt'].setValue(
+      this.form.value.wnt ? 1 : 0
+    );
+
+    this.form.controls['importOutsideUe'].setValue(
+      this.form.value.importOutsideUe ? 1 : 0
+    );
+
+    this.form.controls['importServicesUe'].setValue(
+      this.form.value.importServicesUe ? 1 : 0
+    );
+
+    this.form.controls['importServicesOutsideUe'].setValue(
+      this.form.value.importServicesOutsideUe ? 1 : 0
+    );
+
+    this.form.controls['isThreeSided'].setValue(
+      this.form.value.isThreeSided ? 1 : 0
+    );
+
+    this.form.controls['deduction50'].setValue(
+      this.form.value.deduction50 ? 1 : 0
+    );
+
+    this.form.controls['fixedAssets'].setValue(
+      this.form.value.fixedAssets ? 1 : 0
+    );
+
+    this.form.controls['correctFixedAssets'].setValue(
+      this.form.value.correctFixedAssets ? 1 : 0
+    );
+
+    this.form.controls['MPP'].setValue(
+      this.form.value.MPP ? 1 : 0
+    );
+
+    this.form.controls['isReverseCharge'].setValue(
+      this.form.value.isReverseCharge ? 1 : 0
+    );
+
+    this.form.controls['purchaseFixedAssets'].setValue(
+      this.form.value.purchaseFixedAssets ? 1 : 0
+    );
+  }
+
+  onSave(){
     this.form.markAllAsTouched();
 
     if (this.form.invalid || this.mode() === 'show') return;
@@ -254,7 +283,7 @@ export class NewVatRegisterComponent
     this.parseToInt();
 
     if (this.mode() === 'add') {
-      this.vatRegisterService.post(this.form.value).subscribe({
+      this.vatRegisterService.postBuy(this.form.value).subscribe({
         next: (data) => {
           this.onSaving.emit({
             data: this.form.value,
@@ -269,7 +298,7 @@ export class NewVatRegisterComponent
     }
 
     if (this.mode() === 'edit') {
-      this.vatRegisterService.put(this.form.value).subscribe({
+      this.vatRegisterService.putBuy(this.form.value).subscribe({
         next: (data) => {
           this.onSaving.emit({
             data: this.form.value,

@@ -76,35 +76,7 @@
       (onClick)="onOpenClose()"
     ></dx-button>
 
-    <div class="select-data">
-      <div class="add-select-data" (click)="minusMonth()">
-        <p>
-          <i class="dx-icon dx-icon-minus"></i>
-        </p>
-      </div>
-      <strong>{{ "flateRate.month" | translate }}:</strong>
-      {{ month() }}
-      <div class="add-select-data" style="left: 10px" (click)="plusMonth()">
-        <p>
-          <i class="dx-icon dx-icon-add"></i>
-        </p>
-      </div>
-    </div>
-
-    <div class="select-data">
-      <div class="add-select-data" (click)="minusYear()">
-        <p>
-          <i class="dx-icon dx-icon-minus"></i>
-        </p>
-      </div>
-      <strong>{{ "flateRate.year" | translate }}:</strong>
-      {{ year() }}
-      <div class="add-select-data" style="left: 10px" (click)="plusYear()">
-        <p>
-          <i class="dx-icon dx-icon-add"></i>
-        </p>
-      </div>
-    </div>
+    <app-date-range (dateRangeChange)="onDateRangeChange($event)"></app-date-range>
 
     <dx-tooltip
       [target]="'#btn-edit'"

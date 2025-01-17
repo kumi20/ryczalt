@@ -1,0 +1,184 @@
+<div class="top-menu-panel">
+  <ng-container *ngTemplateOutlet="topButtons"></ng-container>
+</div>
+<div class="center-panel-scroll-verticall">
+  <div>
+    <ng-container *ngTemplateOutlet="grid"></ng-container>
+  </div>
+</div>
+
+<ng-template #topButtons>
+  <dx-scroll-view width="95%" height="100%" direction="horizontal">
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-add"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || isClosed()"
+      (onClick)="addNewRecord()"
+      name="btn-add-customer"
+      text="{{ 'buttons.add' | translate }}"
+      [id]="'btn-add'"
+    ></dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-edit"
+      stylingMode="text"
+      type="default"
+      [disabled]="
+        !event.sessionData.isActive || !focusedElement() || isClosed()
+      "
+      (onClick)="onEdit()"
+      text="{{ 'buttons.edit' | translate }}"
+      [id]="'btn-edit'"
+    ></dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-eyeopen"
+      stylingMode="text"
+      type="default"
+      [disabled]="!focusedElement()"
+      (onClick)="onShow()"
+      text="{{ 'buttons.preview' | translate }}"
+      [id]="'btn-eyeopen'"
+    ></dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-trash"
+      stylingMode="text"
+      type="default"
+      [disabled]="
+        !event.sessionData.isActive || !focusedElement() || isClosed()
+      "
+      (onClick)="onDeleteConfirm()"
+      name="btn-add-customer"
+      text="{{ 'buttons.delete' | translate }}"
+      [id]="'btn-delete'"
+    ></dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      [icon]="
+        isClosed() ? 'dx-icon dx-icon-imgarlock' : 'dx-icon dx-icon-imgarunlock'
+      "
+      stylingMode="text"
+      type="default"
+      [text]="
+        isClosed()
+          ? ('flateRate.opneMonth' | translate)
+          : ('flateRate.closeMonth' | translate)
+      "
+      (onClick)="onOpenClose()"
+    ></dx-button>
+
+    <app-date-range
+      (dateRangeChange)="onDateRangeChange($event)"
+    ></app-date-range>
+  </dx-scroll-view>
+</ng-template>
+
+<ng-template #grid>
+  <dx-scroll-view width="100%" height="100%" direction="vertical">
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [wordWrapEnabled]="false"
+      [showBorders]="true"
+      [height]="heightGrid"
+      [(selectedRowKeys)]="selectedRows"
+      class=""
+      [columnResizingMode]="'widget'"
+      [remoteOperations]="true"
+      [columnAutoWidth]="false"
+      [allowColumnResizing]="true"
+      [autoNavigateToFocusedRow]="true"
+      [(focusedRowIndex)]="focusedRowIndex"
+      [allowColumnReordering]="true"
+      [focusedRowEnabled]="true"
+      (onFocusedRowChanged)="onFocusedRowChanged($event)"
+      (onKeyDown)="onKeyDown($event)"
+      [allowColumnResizing]="event.deviceType !== 'mobile'"
+      (onRowDblClick)="onRowDblClick($event)"
+      #dxGrid
+    >
+      <dxo-load-panel [enabled]="false"></dxo-load-panel>
+      <dxo-scrolling mode="virtual"></dxo-scrolling>
+      <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
+      <dxo-selection
+        [mode]="'single'"
+        showCheckBoxesMode="always"
+        selectAllMode="page"
+      ></dxo-selection>
+      <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+      <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+      <dxi-column
+        caption="{{ 'internalEvidence.kindOfInternalEvidence' | translate }}"
+        dataField="isCoast"
+        [width]="200"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'internalEvidence.numberOfInternalEvidence' | translate }}"
+        dataField="documentNumber"
+        [width]="200"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'internalEvidence.dateOfIssue' | translate }}"
+        dataField="documentDate"
+        [width]="150"
+        dataType="date"
+        [format]="{ type: event.dateFormat }"
+        width="110"
+        alignment="left"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'internalEvidence.value' | translate }}"
+        dataField="amount"
+        [width]="100"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'internalEvidence.personIssuing' | translate }}"
+        dataField="personIssuing"
+        [width]="200"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'internalEvidence.purposeOfExpenditure' | translate }}"
+        dataField="description"
+        [allowSorting]="false"
+      ></dxi-column>
+    </dx-data-grid>
+  </dx-scroll-view>
+</ng-template>
+
+@if(this.isAdd()){
+<app-new-internal-evidence
+  [isVisible]="isAdd()"
+  [mode]="mode"
+  (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
+  (onSaving)="onSaving($event)"
+  [internalEvidence]="focusedElement()"
+></app-new-internal-evidence>
+} @if (isDelete()) {
+<app-confirm-dialog
+  [isVisible]="isDelete()"
+  (onRemoving)="delete()"
+  (onClosing)="closeConfirm()"
+></app-confirm-dialog>
+}
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="isAdd()"
+></qumi-keyboard-shortcuts>

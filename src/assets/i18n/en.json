@@ -19,7 +19,9 @@
     "countries": "Countries",
     "flateRate": "Flate rate",
     "vatSell": "VAT Sell",
+    "vatBuy": "VAT Buy",
     "documentType": "Document types",
+    "internalEvidence": "Internal evidence",
     "navigationPanelUser": {
       "languageApplications": "Language applications",
       "polishLanguage": "Polish",
@@ -99,6 +101,37 @@
     "triangularTransaction": "Triangular transaction",
     "thePurchaserOfTheServiceIsObligedToPayVAT": "The purchaser of the service is obliged to pay VAT",
     "doYouWantToRemoveTheRelatedEntryFromTheRevenueRecords": "Do you want to remove the related entry from the revenue records?",
-    "doYouWantToAddTheDocument": "Do you want to add the document {{number}} to the revenue register?"
+    "doYouWantToAddTheDocument": "Do you want to add the document {{number}} to the revenue register?",
+    "nrInvoices": "Number of invoice",
+    "recivedDate": "Received date",
+    "gorssBuyValue": "Gross buy value",
+    "netBuyValue": "Net buy value",
+    "deductibleVat": "Deductible VAT",
+    "postingDate": "Posting date",
+    "purchasesForTaxableSales": "Purchases for taxable sales",
+    "purchasesForTaxableAndExemptSales": "Purchases for taxable and exempt sales",
+    "shoppingByRate": "Shopping by rate",
+    "importGoodsFromUe": "Import goods from UE (WNT)",
+    "importGoodsFromOutsideUe": "Import goods from outside UE",
+    "importServicesUe": "Import services from UE",
+    "importServicesOutsideUe": "Import services from outside UE",
+    "VATdeduction": "VAT deduction 50%",
+    "fixedAssets": "Fixed asset",
+    "correctFixedAssets": "Correct fixed asset",
+    "splitPaymentMechanism": "Split payment mechanism",
+    "purchaseFixedAssets": "Purchase fixed asset",
+    "purchaseMarking": "Purchase marking",
+    "shoppingValue": "Shopping value",
+    "purchasesWithoutDeduction": "Purchases without deduction"
+  },
+  "internalEvidence": {
+    "kindOfInternalEvidence": "Kind of internal evidence",
+    "numberOfInternalEvidence": "Number of internal evidence",
+    "dateOfIssue": "Date of issue",
+    "value": "Value",
+    "personIssuing": "Person issuing",
+    "purposeOfExpenditure": "Purpose of expenditure",
+    "income": "Income",
+    "expense": "Expense"
   }
 }

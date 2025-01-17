@@ -172,6 +172,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
         },
       },
     ];
+    this.cdr.detectChanges();
   }
 
   getData() {

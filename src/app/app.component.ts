@@ -81,7 +81,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const dataRange = localStorage.getItem('dataRange');
+    if (dataRange) {
+      this.event.globalDate = JSON.parse(dataRange);
+    }
+  }
 
   ngAfterViewInit() {
     this.event.deviceType = this.deviceType();

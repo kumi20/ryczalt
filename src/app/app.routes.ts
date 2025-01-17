@@ -39,6 +39,20 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'vat-register-buy',
+        loadComponent: () =>
+          import('./components/vat-register-buy/vat-register-buy.component').then(
+            (m) => m.VatRegisterBuyComponent
+          ),
+      },
+      {
+        path: 'internal-evidence',
+        loadComponent: () =>
+          import('./components/internal-evidence/internal-evidence.component').then(
+            (m) => m.InternalEvidenceComponent
+          ),
+      },
+      {
         path: 'customers',
         loadComponent: () =>
           import('./components/customers/customers.component').then(
