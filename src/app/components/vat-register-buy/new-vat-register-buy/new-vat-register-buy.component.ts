@@ -153,24 +153,24 @@ export class NewVatRegisterBuyComponent implements OnInit, OnChanges, OnDestroy,
       dateOfSell: [new Date(), Validators.required],
       documentNumber: ['', Validators.required],
       customerId: [null, Validators.required],
-      sell23net: [0],
-      sell23vat: [0],
-      sell23gross: [0],
-      sell23ZWnet: [0],
-      sell23ZWvat: [0],
-      sell23ZWgross: [0],
-      sell8net: [0],
-      sell8vat: [0],
-      sell8gross: [0],
-      sell8ZWnet: [0],
-      sell8ZWvat: [0],
-      sell8ZWgross: [0],
-      sell5net: [0],
-      sell5vat: [0],
-      sell5gross: [0],
-      sell5ZWnet: [0],
-      sell5ZWvat: [0],
-      sell5ZWgross: [0],
+      sell23Net: [0],
+      sell23Vat: [0],
+      sell23Gross: [0],
+      sell23ZWNet: [0],
+      sell23ZWVat: [0],
+      sell23ZWGross: [0],
+      sell8Net: [0],
+      sell8Vat: [0],
+      sell8Gross: [0],
+      sell8ZWNet: [0],
+      sell8ZWVat: [0],
+      sell8ZWGross: [0],
+      sell5Net: [0],
+      sell5Vat: [0],
+      sell5Gross: [0],
+      sell5ZWNet: [0],
+      sell5ZWVat: [0],
+      sell5ZWGross: [0],
       rate0: [0],
       isSell: [0],
       isClosed: [0],
@@ -227,60 +227,10 @@ export class NewVatRegisterBuyComponent implements OnInit, OnChanges, OnDestroy,
     this.form.controls['customerId'].setValue(e.customerId);
   }
 
-  parseToInt() {
-    console.log(this.form.value);
-
-    this.form.controls['wnt'].setValue(
-      this.form.value.wnt ? 1 : 0
-    );
-
-    this.form.controls['importOutsideUe'].setValue(
-      this.form.value.importOutsideUe ? 1 : 0
-    );
-
-    this.form.controls['importServicesUe'].setValue(
-      this.form.value.importServicesUe ? 1 : 0
-    );
-
-    this.form.controls['importServicesOutsideUe'].setValue(
-      this.form.value.importServicesOutsideUe ? 1 : 0
-    );
-
-    this.form.controls['isThreeSided'].setValue(
-      this.form.value.isThreeSided ? 1 : 0
-    );
-
-    this.form.controls['deduction50'].setValue(
-      this.form.value.deduction50 ? 1 : 0
-    );
-
-    this.form.controls['fixedAssets'].setValue(
-      this.form.value.fixedAssets ? 1 : 0
-    );
-
-    this.form.controls['correctFixedAssets'].setValue(
-      this.form.value.correctFixedAssets ? 1 : 0
-    );
-
-    this.form.controls['MPP'].setValue(
-      this.form.value.MPP ? 1 : 0
-    );
-
-    this.form.controls['isReverseCharge'].setValue(
-      this.form.value.isReverseCharge ? 1 : 0
-    );
-
-    this.form.controls['purchaseFixedAssets'].setValue(
-      this.form.value.purchaseFixedAssets ? 1 : 0
-    );
-  }
-
   onSave(){
     this.form.markAllAsTouched();
 
     if (this.form.invalid || this.mode() === 'show') return;
-
-    this.parseToInt();
 
     if (this.mode() === 'add') {
       this.vatRegisterService.postBuy(this.form.value).subscribe({

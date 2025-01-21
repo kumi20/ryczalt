@@ -163,7 +163,6 @@ export class NewFlateRateComponent
       dateOfEntry: [new Date(), Validators.required],
       dateOfReceipt: [new Date(), Validators.required],
       documentNumber: ['', Validators.required],
-      totalRevenue: [0],
       isClose: [0],
       rate3: [0],
       rate5_5: [0],

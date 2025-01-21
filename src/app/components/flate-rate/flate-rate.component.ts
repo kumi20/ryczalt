@@ -154,6 +154,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.flateRateService.summaryMonth(this.month(), this.year()).subscribe({
       next: (data: SummaryMonth) => {
         this.summaryMonthData = data;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.event.httpErrorNotification(err);
@@ -168,7 +169,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
       store: AspNetData.createStore({
         key: 'ryczaltId',
         onBeforeSend: this.event.onBeforeSendDataSource,
-        loadUrl: `${environment.domain}flateRate`,
+        loadUrl: `${environment.domain}flat-rate`,
         loadParams: this.getLoadParams(),
         onAjaxError: this.event.onAjaxDataSourceError,
         onLoading(loadOptions: LoadOptions) {
@@ -311,12 +312,13 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
 
     this.flateRateService.delete(id).subscribe({
       next: () => {
-        if(this.vatRegisterId != null){
+        if(this.vatRegisterId != null && this.vatRegisterId !== 0){
           this.isConfirmDeleteVatRegister.set(true)
         }
 
         this.dataSource.reload().then(() => {
           this.focusedRowIndex = 0;
+          this.summaryMonth();
         });
       },
       error: (error) => {
@@ -342,10 +344,10 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
   onSaving(event: any) {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
+      this.summaryMonth();
       const index = data.findIndex(
         (x: any) => x.ryczaltId === Number(event.flateRateId.flateRateId)
       );
-
       if(event.mode === 'add'){
         this.paramsNumber = {
           number: event.data.documentNumber
@@ -354,7 +356,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         this.vatRegisterFlate =  event.data;
         this.isAddVatRegister.set(true);
       }
-     
+
       if (index !== -1) {
         this.focusedRowIndex = index;
       } else {

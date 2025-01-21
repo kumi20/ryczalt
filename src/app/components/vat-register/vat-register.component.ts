@@ -80,7 +80,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
   isDelete = signal<boolean>(false);
   shortcuts: ShortcutInput[] = [];
   isConfirmDeleteFlateRate = signal<boolean>(false);
-  ryczltId: number | null = null;
+  ryczaltId: number | null = null;
   uri: string = 'registeVat/sell';
   paramsNumber: any;
   flatRegister: VatRegister | null = null;
@@ -329,10 +329,10 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
     this.isDelete.set(false);
 
     const id = this.getFocusedElement().vatRegisterId;
-    this.ryczltId = this.getFocusedElement().ryczltId;
+    this.ryczaltId = this.getFocusedElement().ryczaltId;
     this.vatRegisterService.delete(id).subscribe({
       next: () => {
-        if (this.ryczltId != null) {
+        if (this.ryczaltId != null && this.ryczaltId !== 0) {
           this.isConfirmDeleteFlateRate.set(true);
         }
 
@@ -353,7 +353,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
 
   yesDeleteFlateRate() {
     this.isConfirmDeleteFlateRate.set(false);
-    this.flateRateService.delete(this.ryczltId as number).subscribe();
+    this.flateRateService.delete(this.ryczaltId as number).subscribe();
   }
 
   onSavingFlate() {

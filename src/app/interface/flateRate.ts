@@ -13,7 +13,7 @@ export interface FlateRate {
   dateOfReceipt: string;
   documentNumber: string;
   totalRevenue: number;
-  isClose: number;
+  isClose: boolean;
   rate3: number;
   rate5_5: number;
   rate8_5: number;

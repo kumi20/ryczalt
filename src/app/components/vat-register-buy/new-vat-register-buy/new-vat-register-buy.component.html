@@ -234,7 +234,7 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell23net"
+                        formControlName="sell23Net"
                         (onValueChanged)="
                           countGross('sell23gross', 'sell23vat', $event, 23)
                         "
@@ -244,12 +244,12 @@
 
                   <div class="col-md-4" style="text-align: right;">
                     <div class="form-group">
-                      <dx-number-box
+                        <dx-number-box
                         width="140"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell23vat"
+                        formControlName="sell23Vat"
                       ></dx-number-box>
                     </div>
                   </div>
@@ -261,9 +261,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell23gross"
+                        formControlName="sell23Gross"
                         (onValueChanged)="
-                          countNett('sell23net', 'sell23vat', $event, 23)
+                          countNett('sell23Net', 'sell23Vat', $event, 23)
                         "
                       ></dx-number-box>
                     </div>
@@ -281,9 +281,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell8net"
+                        formControlName="sell8Net"
                         (onValueChanged)="
-                          countGross('sell8gross', 'sell8vat', $event, 8)
+                          countGross('sell8Gross', 'sell8Vat', $event, 8)
                         "
                       ></dx-number-box>
                     </div>
@@ -296,7 +296,7 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell8vat"
+                        formControlName="sell8Vat"
                       ></dx-number-box>
                     </div>
                   </div>
@@ -308,9 +308,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell8gross"
+                        formControlName="sell8Gross"
                         (onValueChanged)="
-                          countNett('sell8net', 'sell8vat', $event, 8)
+                          countNett('sell8Net', 'sell8Vat', $event, 8)
                         "
                       ></dx-number-box>
                     </div>
@@ -328,9 +328,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell5net"
+                        formControlName="sell5Net"
                         (onValueChanged)="
-                          countGross('sell5gross', 'sell5vat', $event, 5)
+                          countGross('sell5Gross', 'sell5Vat', $event, 5)
                         "
                       ></dx-number-box>
                     </div>
@@ -343,7 +343,7 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell5vat"
+                        formControlName="sell5Vat"
                       ></dx-number-box>
                     </div>
                   </div>
@@ -355,9 +355,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell5gross"
+                        formControlName="sell5Gross"
                         (onValueChanged)="
-                          countNett('sell5net', 'sell5vat', $event, 5)
+                          countNett('sell5Net', 'sell5Vat', $event, 5)
                         "
                       ></dx-number-box>
                     </div>
@@ -381,9 +381,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell23ZWnet"
+                        formControlName="sell23ZWNet"
                         (onValueChanged)="
-                          countGross('sell23ZWgross', 'sell23ZWvat', $event, 23)
+                          countGross('sell23ZWGross', 'sell23ZWVat', $event, 23)
                         "
                       ></dx-number-box>
                     </div>
@@ -396,7 +396,7 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell23ZWvat"
+                        formControlName="sell23ZWVat"
                       ></dx-number-box>
                     </div>
                   </div>
@@ -408,9 +408,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell23ZWgross"
+                        formControlName="sell23ZWGross"
                         (onValueChanged)="
-                          countNett('sell23ZWnet', 'sell23ZWvat', $event, 23)
+                          countNett('sell23ZWNet', 'sell23ZWVat', $event, 23)
                         "
                       ></dx-number-box>
                     </div>
@@ -428,9 +428,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell8ZWnet"
+                        formControlName="sell8ZWNet"
                         (onValueChanged)="
-                          countGross('sell8ZWgross', 'sell8ZWvat', $event, 8)
+                          countGross('sell8ZWGross', 'sell8ZWVat', $event, 8)
                         "
                       ></dx-number-box>
                     </div>
@@ -443,7 +443,7 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell8ZWvat"
+                        formControlName="sell8ZWVat"
                       ></dx-number-box>
                     </div>
                   </div>
@@ -455,9 +455,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell8ZWgross"
+                        formControlName="sell8ZWGross"
                         (onValueChanged)="
-                          countNett('sell8ZWnet', 'sell8ZWvat', $event, 8)
+                          countNett('sell8ZWNet', 'sell8ZWVat', $event, 8)
                         "
                       ></dx-number-box>
                     </div>
@@ -475,9 +475,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell5ZWnet"
+                        formControlName="sell5ZWNet"
                         (onValueChanged)="
-                          countGross('sell5ZWgross', 'sell5ZWvat', $event, 5)
+                          countGross('sell5ZWGross', 'sell5ZWVat', $event, 5)
                         "
                       ></dx-number-box>
                     </div>
@@ -490,7 +490,7 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell5ZWvat"
+                        formControlName="sell5ZWVat"
                       ></dx-number-box>
                     </div>
                   </div>
@@ -502,9 +502,9 @@
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
-                        formControlName="sell5ZWgross"
+                        formControlName="sell5ZWGross"
                         (onValueChanged)="
-                          countNett('sell5ZWnet', 'sell5ZWvat', $event, 5)
+                          countNett('sell5ZWNet', 'sell5ZWVat', $event, 5)
                         "
                       ></dx-number-box>
                     </div>

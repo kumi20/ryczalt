@@ -26,7 +26,7 @@ export class DocumentTypeService {
     };
 
     return this.http
-      .get<Country[]>(`${this.apiUrl}documnetsType`, { headers })
+      .get<Country[]>(`${this.apiUrl}document-types`, { headers })
       .pipe(catchError(this.handleError));
   }
 

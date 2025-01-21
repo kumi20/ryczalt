@@ -62,7 +62,7 @@ export class CountryComponent implements OnInit, OnChanges {
 
         const inPl = data.find((x) => x.name === 'Polska');
         if (inPl) {
-          this.setPLId.emit(inPl.countryId);
+          this.setPLId.emit(inPl.id);
         }
         if(this.chossingRecord != null) {
           const index = data.findIndex((x) => x.name === this.chossingRecord);

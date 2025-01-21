@@ -32,7 +32,7 @@ export class FlateRateService {
     };
 
     return this.http
-      .put<FlateRate>(`${this.apiUrl}flateRate`, data, { params, headers })
+      .put<FlateRate>(`${this.apiUrl}flat-rate`, data, { params, headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -43,7 +43,7 @@ export class FlateRateService {
     };
 
     return this.http
-      .post<FlateRate>(`${this.apiUrl}flateRate`, data, { headers })
+      .post<FlateRate>(`${this.apiUrl}flat-rate`, data, { headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -55,7 +55,7 @@ export class FlateRateService {
     };
 
     return this.http
-      .delete<Number>(`${this.apiUrl}flateRate`, { params, headers })
+      .delete<Number>(`${this.apiUrl}flat-rate`, { params, headers })
       .pipe(catchError(this.handleError));
   }
 
@@ -66,7 +66,7 @@ export class FlateRateService {
     };
 
     return this.http
-      .post<CheckIfMonthIsClosed>(`${this.apiUrl}flateRate/openMonth`, object, {
+      .post<CheckIfMonthIsClosed>(`${this.apiUrl}open-month`, object, {
         headers,
       })
       .pipe(catchError(this.handleError));
@@ -80,7 +80,7 @@ export class FlateRateService {
 
     return this.http
       .post<CheckIfMonthIsClosed>(
-        `${this.apiUrl}flateRate/closeMonth`,
+        `${this.apiUrl}close-month`,
         object,
         {
           headers,
@@ -96,7 +96,7 @@ export class FlateRateService {
     };
     let params = new HttpParams().set('month', month).set('year', year);
     return this.http
-      .get<SummaryMonth>(`${this.apiUrl}flateRate/summaryMonth`, {
+      .get<SummaryMonth>(`${this.apiUrl}flat-rate/summary`, {
         params,
         headers,
       })
@@ -115,7 +115,7 @@ export class FlateRateService {
     let params = new HttpParams().set('month', month).set('year', year);
 
     return this.http
-      .get<CheckIfMonthIsClosed>(`${this.apiUrl}flateRate/statusMonth`, {
+      .get<CheckIfMonthIsClosed>(`${this.apiUrl}statusMonth`, {
         params,
         headers,
       })

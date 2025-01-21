@@ -142,7 +142,7 @@ export class NewVatRegisterComponent
             changes['vatRegisterFlate'].currentValue.rate14 +
             changes['vatRegisterFlate'].currentValue.rate15 +
             changes['vatRegisterFlate'].currentValue.rate17,
-          ryczltId: changes['vatRegisterFlate'].currentValue.ryczaltId,
+            ryczaltId: changes['vatRegisterFlate'].currentValue.ryczaltId,
         });
 
         this.countGross(
@@ -187,7 +187,7 @@ export class NewVatRegisterComponent
       isServices: [0],
       isCustomerPayer: [0],
       isThreeSided: [0],
-      ryczltId: [null],
+      ryczaltId: [null],
       isSell: [1],
       isClosed: [0],
     });
@@ -223,21 +223,6 @@ export class NewVatRegisterComponent
     this.form.controls[vat].setValue(vatAmount);
   }
 
-  parseToInt() {
-    this.form.controls['isCustomerPayer'].setValue(
-      this.form.value.isCustomerPayer ? 1 : 0
-    );
-    this.form.controls['isDelivery'].setValue(
-      this.form.value.isDelivery ? 1 : 0
-    );
-    this.form.controls['isServices'].setValue(
-      this.form.value.isServices ? 1 : 0
-    );
-    this.form.controls['isThreeSided'].setValue(
-      this.form.value.isThreeSided ? 1 : 0
-    );
-  }
-
   onChoosedCustomer(e: any) {
     this.form.controls['customerId'].setValue(e.customerId);
   }
@@ -250,8 +235,6 @@ export class NewVatRegisterComponent
     this.form.markAllAsTouched();
 
     if (this.form.invalid || this.mode() === 'show') return;
-
-    this.parseToInt();
 
     if (this.mode() === 'add') {
       this.vatRegisterService.post(this.form.value).subscribe({

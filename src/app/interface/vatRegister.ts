@@ -41,7 +41,7 @@ export interface VatRegister {
   isThreeSided: boolean;
   companyId: number;
   isClosed: boolean;
-  ryczltId: number;
+  ryczaltId: number;
   isSell: boolean;
   customerName: string;
   grossSum: number;

@@ -309,13 +309,13 @@ export class NewCustomerComponent
   onChoosedCountry(e: Country, controler: string) {
     if (e) {
       if (controler === 'countryId') {
-        this.form.controls[controler].setValue(e.countryId);
+        this.form.controls[controler].setValue(e.id);
         return;
       }
 
       this.form.controls['addressDetails']
         .get('countryId')
-        ?.setValue(e.countryId);
+        ?.setValue(e.id);
       console.log(this.form.value);
     }
   }
