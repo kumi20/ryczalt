@@ -82,8 +82,8 @@ export class NewInternalEvidenceComponent
   internalEvidenceService = inject(InternalEvidenceService);
 
   typeList = [
-    { id: true, name: this.translate.instant('internalEvidence.income') },
-    { id: false, name: this.translate.instant('internalEvidence.expense') },
+    { id: false, name: this.translate.instant('internalEvidence.income') },
+    { id: true, name: this.translate.instant('internalEvidence.expense') },
   ];
 
   taxRates: string[] = [
@@ -151,7 +151,7 @@ export class NewInternalEvidenceComponent
   initForm() {
     return this.fb.group({
       internalEvidenceId: [null],
-      isCoast: [true],
+      isCoast: [false],
       documentNumber: ['', Validators.required],
       documentDate: [new Date(), Validators.required],
       description: [null, Validators.required],
