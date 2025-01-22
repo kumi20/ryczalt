@@ -24,6 +24,7 @@ import {
   DxNumberBoxModule,
   DxPopupModule,
   DxTooltipModule,
+  DxTextAreaModule,
 } from 'devextreme-angular';
 import {
   FormBuilder,
@@ -49,6 +50,7 @@ import { InternalEvidenceService } from '../../../services/internal-evidence.ser
     DxDataGridModule,
     DxScrollViewModule,
     DxTextBoxModule,
+    DxTextAreaModule,
     DxDateBoxModule,
     DxSelectBoxModule,
     DxNumberBoxModule,
@@ -80,13 +82,31 @@ export class NewInternalEvidenceComponent
   internalEvidenceService = inject(InternalEvidenceService);
 
   typeList = [
-    { id: 1, name: this.translate.instant('internalEvidence.income') },
-    { id: 0, name: this.translate.instant('internalEvidence.expense') },
+    { id: true, name: this.translate.instant('internalEvidence.income') },
+    { id: false, name: this.translate.instant('internalEvidence.expense') },
   ];
 
-  constructor() {}
+  taxRates: string[] = [
+    '',
+    '3%',
+    '5.5%',
+    '8.5%',
+    '10%',
+    '17%',
+    '20%',
+    '12.5%',
+    '15%',
+    '12%',
+    '14%'
+  ];
 
-  ngOnInit(): void {}
+  constructor() {
+    this.form = this.initForm();
+  }
+
+  ngOnInit(): void {
+
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['internalEvidence']) {
@@ -131,12 +151,15 @@ export class NewInternalEvidenceComponent
   initForm() {
     return this.fb.group({
       internalEvidenceId: [null],
-      isCoast: [1],
+      isCoast: [true],
       documentNumber: ['', Validators.required],
-      documentDate: [null, Validators.required],
-      description: [null],
-      amount: [null],
-      price: [null],
+      documentDate: [new Date(), Validators.required],
+      description: [null, Validators.required],
+      amount: [1, Validators.required],
+      price: ['', [
+        Validators.required,
+        Validators.min(0.01)
+      ]],
       unit: [null],
       personIssuing: [''],
       taxVat: [''],

@@ -132,6 +132,7 @@
     "purchasesWithoutDeduction": "Zakupy za które nie przysługuje odliczenie"
   },
   "internalEvidence": {
+    "internalEvidenceData": "Dane dowodu wewnętrznego",
     "kindOfInternalEvidence": "Rodzaj dowodu wewnętrznego",
     "numberOfInternalEvidence": "Numer dowodu wewnętrznego",
     "dateOfIssue": "Data wystawienia",
@@ -139,6 +140,13 @@
     "personIssuing": "Osoba wystawiająca",
     "purposeOfExpenditure": "Cel wydatku",
     "income": "Przychód",
-    "expense": "Rozchód"
+    "expense": "Rozchód",
+    "nameOfGoodsOrSourceOfIncome": "Nazwa towaru, opłaty lub tytuł i źródło przychodu",
+    "quantity": "Ilość",
+    "price": "Cena",
+    "unit": "Jednostka miary",
+    "signatureOfAuthorizedPerson": "Podpis osoby uprawnionej do wystawienia dowodu wewnętrznego",
+    "posting": "Księgowanie",
+    "taxRate": "Stawka podatku"
   }
 }

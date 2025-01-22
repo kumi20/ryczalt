@@ -128,6 +128,7 @@
     "purchasesWithoutDeduction": "Einkäufe ohne Vorsteuerabzug"
   },
   "internalEvidence": {
+    "internalEvidenceData": "Interner Belegdaten",
     "kindOfInternalEvidence": "Art des internen Belegs",
     "numberOfInternalEvidence": "Nummer des internen Belegs",
     "dateOfIssue": "Ausstellungsdatum",
@@ -135,6 +136,13 @@
     "personIssuing": "Ausstellende Person",
     "purposeOfExpenditure": "Verwendungszweck",
     "income": "Einnahme",
-    "expense": "Ausgabe"
+    "expense": "Ausgabe",
+    "nameOfGoodsOrSourceOfIncome": "Name des Gutes oder Quelle des Einkommens",
+    "quantity": "Menge",
+    "price": "Preis",
+    "unit": "Einheit",
+    "signatureOfAuthorizedPerson": "Unterschrift der befugten Person",
+    "posting": "Buchung",
+    "taxRate": "Steuersatz"
   }
-} 
+}

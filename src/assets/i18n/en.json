@@ -125,6 +125,7 @@
     "purchasesWithoutDeduction": "Purchases without deduction"
   },
   "internalEvidence": {
+    "internalEvidenceData": "Internal evidence data",
     "kindOfInternalEvidence": "Kind of internal evidence",
     "numberOfInternalEvidence": "Number of internal evidence",
     "dateOfIssue": "Date of issue",
@@ -132,6 +133,13 @@
     "personIssuing": "Person issuing",
     "purposeOfExpenditure": "Purpose of expenditure",
     "income": "Income",
-    "expense": "Expense"
+    "expense": "Expense",
+    "nameOfGoodsOrSourceOfIncome": "Name of goods or source of income",
+    "quantity": "Quantity",
+    "price": "Price",
+    "unit": "Unit",
+    "signatureOfAuthorizedPerson": "Signature of authorized person",
+    "posting": "Posting",
+    "taxRate": "Tax rate"
   }
 }

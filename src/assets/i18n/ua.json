@@ -128,6 +128,7 @@
     "purchasesWithoutDeduction": "Покупки без відрахування"
   },
   "internalEvidence": {
+    "internalEvidenceData": "Дані внутрішнього документа",
     "kindOfInternalEvidence": "Вид внутрішнього документа",
     "numberOfInternalEvidence": "Номер внутрішнього документа",
     "dateOfIssue": "Дата видачі",
@@ -135,6 +136,13 @@
     "personIssuing": "Особа, що видала",
     "purposeOfExpenditure": "Призначення витрат",
     "income": "Дохід",
-    "expense": "Витрата"
+    "expense": "Витрата",
+    "nameOfGoodsOrSourceOfIncome": "Назва товару, послуги або джерело доходу",
+    "quantity": "Кількість",
+    "price": "Ціна",
+    "unit": "Одиниця виміру",
+    "signatureOfAuthorizedPerson": "Підпис особи, яка має право видати внутрішній документ",
+    "posting": "Проведення",
+    "taxRate": "Ставка податку"
   }
-} 
+}

@@ -119,7 +119,15 @@
         dataField="isCoast"
         [width]="200"
         [allowSorting]="false"
+        cellTemplate="isCoast"
       ></dxi-column>
+      <div *dxTemplate="let data of 'isCoast'">
+        @if (data.value) {
+        <p style="margin-bottom: 0px;">{{ "internalEvidence.income" | translate }}</p>
+        } @else {
+        <p style="margin-bottom: 0px;">{{ "internalEvidence.expense" | translate }}</p>
+        }
+      </div>
 
       <dxi-column
         caption="{{ 'internalEvidence.numberOfInternalEvidence' | translate }}"

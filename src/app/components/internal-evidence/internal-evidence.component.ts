@@ -42,7 +42,7 @@ import { InternalEvidenceService } from '../../services/internal-evidence.servic
 })
 export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   @ViewChild('dxGrid') dxGrid: any;
-  
+
   event = inject(EventService);
 
   dataSource: DataSource = new DataSource({});
@@ -60,11 +60,13 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   cdr = inject(ChangeDetectorRef);
   isDelete = signal<boolean>(false);
   shortcuts: ShortcutInput[] = [];
-  
+
   flateRateService = inject(FlateRateService);
   internalEvidenceService = inject(InternalEvidenceService);
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getData();1
+  }
 
   ngAfterViewInit() {
     this.shortcuts = [
@@ -128,7 +130,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     return obj;
   }
 
-  
+
   closeConfirm() {
     this.isDelete.set(false);
     this.event.setFocus(this.dxGrid);
@@ -210,7 +212,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
       },
     });
   }
-  
+
   addNewRecord() {
     this.mode = 'add';
     if (!this.event.sessionData.isActive || this.isClosed()) return;
@@ -234,7 +236,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
       const index = data.findIndex(
-        (x: any) => x.internalEvidenceId === Number(event.internalEvidenceId)
+        (x: any) => x.internalEvidenceId === Number(event.internalEvidenceId.internalEvidenceId)
       );
 
       if (index !== -1) {
@@ -247,13 +249,13 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
+
   delete() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(false);
 
     const id = this.getFocusedElement().internalEvidenceId;
-  
+
     this.internalEvidenceService.delete(id).subscribe({
       next: () => {
         this.dataSource.reload().then(() => {
@@ -265,4 +267,4 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
       },
     });
   }
-} 
+}

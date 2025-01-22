@@ -63,7 +63,215 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-column__header">
-          {{ "internalEvidence.documentData" | translate }}
+          {{ "internalEvidence.internalEvidenceData" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-6" style="text-align: right; padding-left: 0px;">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">{{ "internalEvidence.kindOfInternalEvidence" | translate }}</label>
+          <dx-select-box
+            displayExpr="name"
+            valueExpr="id"
+            width="276"
+            formControlName="isCoast"
+            [dataSource]="typeList"
+            [readOnly]="!event.sessionData.isActive"
+            class="d-inline-block"
+
+          ></dx-select-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.documentNumber" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-text-box
+            class="d-inline-block"
+            width="276"
+            formControlName="documentNumber"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('documentNumber')?.invalid &&
+                form.get('documentNumber')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "internalEvidence.dateOfIssue" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-date-box
+            class="d-inline-block"
+            type="date"
+            width="276"
+            [displayFormat]="event.dateFormat"
+            formControlName="documentDate"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('documentDate')?.invalid &&
+                form.get('documentDate')?.touched
+            }"
+          ></dx-date-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "internalEvidence.nameOfGoodsOrSourceOfIncome" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-12">
+        <div class="form-group">
+          <dx-text-area
+            width="940"
+            formControlName="description"
+            style="max-width: 100%; max-height: 200px!important; height: 150px!important;"
+            height="150px!important"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('description')?.invalid &&
+                form.get('description')?.touched
+            }"
+          ></dx-text-area>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "internalEvidence.value" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="amount" class="d-inline-block">
+            {{ "internalEvidence.quantity" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-number-box
+            width="276"
+            formControlName="amount"
+            [min]="0"
+            [showSpinButtons]="true"
+            class="d-inline-block"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('amount')?.invalid &&
+                form.get('amount')?.touched
+            }"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="unit" class="d-inline-block">
+            {{ "internalEvidence.unit" | translate }}
+          </label>
+          <dx-text-box
+            width="276"
+            formControlName="unit"
+            [readOnly]="!event.sessionData.isActive"
+            class="d-inline-block"
+          ></dx-text-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="price" class="d-inline-block">
+            {{ "internalEvidence.price" | translate }}
+          </label>
+          <dx-number-box
+            width="276"
+            class="d-inline-block"
+            [format]="event.formatPLN"
+            formControlName="price"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('price')?.invalid &&
+                form.get('price')?.touched
+            }"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "internalEvidence.signatureOfAuthorizedPerson" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12" style="max-width: 940px; margin: 0 auto;">
+        <dx-text-box
+          formControlName="personIssuing"
+          width="100%"
+          [readOnly]="!event.sessionData.isActive"
+          style="max-width: 100%;"
+        ></dx-text-box>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "internalEvidence.posting" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="max-width: 940px; margin: 0 auto;">
+      <div class="col-md-6" style="text-align: right;">
+        <div class="form-group">
+          <label for="posting" class="d-inline-block">{{ "internalEvidence.taxRate" | translate }}</label>
+          <dx-select-box
+            width="276"
+          formControlName="taxVat"
+          [items]="taxRates"
+          [readOnly]="!event.sessionData.isActive"
+          class="d-inline-block"
+          ></dx-select-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right;">
+        <div class="form-group">
+          <label for="posting" class="d-inline-block">{{ "flateRate.remarks" | translate }}</label>
+          <dx-text-area
+            width="276"
+            formControlName="remarks"
+            [readOnly]="!event.sessionData.isActive"
+            class="d-inline-block"
+            style="max-width: 100%; max-height: 200px!important; height: 150px!important;"
+            height="150px!important"
+          ></dx-text-area>
         </div>
       </div>
     </div>
