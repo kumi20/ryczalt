@@ -73,6 +73,13 @@ export const routes: Routes = [
             (m) => m.DocumentTypeComponent
           ),
       },
+      {
+        path: 'zus',
+        loadComponent: () =>
+          import('./components/zus/zus.component').then(
+            (m) => m.ZusComponent
+          ),
+      },
     ],
   },
   {

@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   AfterViewInit,
   ChangeDetectorRef,
+  HostListener,
 } from '@angular/core';
 import {
   DxButtonModule,
@@ -265,5 +266,10 @@ export class NewVatRegisterComponent
         },
       });
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.closeWindow();
   }
 }

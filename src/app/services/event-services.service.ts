@@ -75,6 +75,33 @@ export class EventService {
     { name: 'Włochy', code: 'IT' },
   ];
 
+  //month list for zus
+  monthList = [
+    { name: 'Styczeń', value: 1 },
+    { name: 'Luty', value: 2 },
+    { name: 'Marzec', value: 3 },
+    { name: 'Kwiecień', value: 4 },
+    { name: 'Maj', value: 5 },
+    { name: 'Czerwiec', value: 6 },
+    { name: 'Lipiec', value: 7 },
+    { name: 'Sierpień', value: 8 },
+    { name: 'Wrzesień', value: 9 },
+    { name: 'Październik', value: 10 },
+    { name: 'Listopad', value: 11 },
+    { name: 'Grudzień', value: 12 },
+  ];
+
+  //year list for zus
+  yearList = [
+    { name: '2024', value: 2024 },
+    { name: '2025', value: 2025 },
+    { name: '2026', value: 2026 },
+    { name: '2027', value: 2027 },
+    { name: '2028', value: 2028 },
+    { name: '2029', value: 2029 },
+    { name: '2030', value: 2030 },
+  ];
+
   globalDate = {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),

@@ -303,18 +303,36 @@ export class ContentComponent implements OnInit, AfterViewInit {
       },
       {
         id: '7',
+        name: this.translate.instant('menu.tax'),
+        icon: 'dx-icon-taskinprogress',
+        url: 'content/zus',
+        tooltip: false,
+        code: null,
+        signature: 'P',
+        classCss: 'redHeader',
+        items: [
+          {
+            id: '71',
+            name: 'ZUS',
+            icon: '',
+            url: 'content/zus',
+          },
+        ],
+      },
+      {
+        id: '8',
         name: this.translate.instant('menu.dictionaries'),
         icon: 'dx-icon-inactivefolder',
         url: 'content/dictionaries/countries',
         items: [
           {
-            id: '71',
+            id: '81',
             name: this.translate.instant('menu.countries'),
             icon: '',
             url: 'content/dictionaries/countries',
           },
           {
-            id: '72',
+            id: '82',
             name: this.translate.instant('menu.documentType'),
             icon: '',
             url: 'content/dictionaries/document-type',

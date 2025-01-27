@@ -27,7 +27,8 @@
       "polishLanguage": "Polski",
       "englishLanguage": "Angielski",
       "versionInformation": "Informacje o wersji"
-    }
+    },
+    "tax": "Podatki"
   },
   "toolbar": {
     "adding": "Dodaj",
@@ -148,5 +149,28 @@
     "signatureOfAuthorizedPerson": "Podpis osoby uprawnionej do wystawienia dowodu wewnętrznego",
     "posting": "Księgowanie",
     "taxRate": "Stawka podatku"
+  },
+  "zus": {
+    "title": "Składki ZUS",
+    "periodFrom": "Okres od",
+    "periodTo": "Okres do",
+    "paymentDeadline": "Termin płatności",
+    "healthInsurance": "Składka na ubezpieczenie zdrowotne",
+    "socialInsurance": "Składka na ubezpieczenie społeczne",
+    "laborFund": "Składka na fundusz pracy",
+    "totalZus": "Razem ZUS",
+    "add": "Dodaj składkę ZUS",
+    "edit": "Edytuj składkę ZUS",
+    "preview": "Podgląd składki ZUS",
+    "delete": "Usuń składkę ZUS",
+    "holidaysContribution": "Wakacje skadkowe",
+    "periodAndBasis": "Okres i podstawa",
+    "incomeToBasis": "Przychód do podstawy",
+    "contributionHeight": "Wysokość składki",
+    "isPaid": "Zapłacone",
+    "paymentDate": "Data wpłaty",
+    "basis": "Podstawa",
+    "guaranteedContributions": "Składka na fundusz pracy i fundusz gwarantowanych świadczeń pracowniczych",
+    "fundsForInterimPensions": "Składka na fundusz emerytur pomostowych"
   }
 }

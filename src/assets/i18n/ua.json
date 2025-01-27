@@ -28,7 +28,8 @@
       "englishLanguage": "Англійська",
       "germanLanguage": "Німецька",
       "versionInformation": "Інформація про версію"
-    }
+    },
+    "tax": "Податки"
   },
   "customers": {
     "contactPerson": "Контактна особа",

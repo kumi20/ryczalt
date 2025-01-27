@@ -27,7 +27,8 @@
       "polishLanguage": "Polish",
       "englishLanguage": "English",
       "versionInformation": "Version information"
-    }
+    },
+    "tax": "Taxes"
   },
   "toolbar": {
     "adding": "Add",

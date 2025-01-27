@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
   AfterViewInit,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -224,5 +225,10 @@ export class NewInternalEvidenceComponent
         this.event.httpErrorNotification(err);
       },
     });
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.closeWindow();
   }
 }

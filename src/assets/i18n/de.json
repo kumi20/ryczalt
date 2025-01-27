@@ -28,7 +28,8 @@
       "englishLanguage": "Englisch",
       "germanLanguage": "Deutsch",
       "versionInformation": "Versionsinformationen"
-    }
+    },
+    "tax": "Steuern"
   },
   "customers": {
     "contactPerson": "Kontaktperson",

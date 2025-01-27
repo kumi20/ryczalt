@@ -12,6 +12,7 @@ import {
   OnChanges,
   SimpleChanges,
   signal,
+  HostListener,
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
@@ -213,5 +214,10 @@ export class NewFlateRateComponent
         this.event.httpErrorNotification(err);
       },
     });
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.closeWindow();
   }
 }

@@ -12,6 +12,7 @@ import {
   OnChanges,
   SimpleChanges,
   signal,
+  HostListener,
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
@@ -318,5 +319,10 @@ export class NewCustomerComponent
         ?.setValue(e.id);
       console.log(this.form.value);
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.closeWindow();
   }
 }

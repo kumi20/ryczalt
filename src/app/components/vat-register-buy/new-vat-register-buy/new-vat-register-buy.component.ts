@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   AfterViewInit,
   ChangeDetectorRef,
+  HostListener,
 } from '@angular/core';
 import {
   DxButtonModule,
@@ -261,5 +262,10 @@ export class NewVatRegisterBuyComponent implements OnInit, OnChanges, OnDestroy,
         },
       });
     }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.closeWindow();
   }
 }
