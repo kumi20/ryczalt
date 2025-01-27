@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, signal, inject, OnInit, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event-services.service';
@@ -7,7 +7,7 @@ import { EventService } from '../../services/event-services.service';
  * Component for managing date range selection with month and year controls.
  * Provides UI for incrementing/decrementing month and year values.
  * Changes are broadcasted across browser tabs and emitted to parent components.
- * 
+ *
  * @example
  * ```html
  * <app-date-range
@@ -24,13 +24,14 @@ import { EventService } from '../../services/event-services.service';
 export class DateRangeComponent implements OnInit {
   /** Emits when either month or year changes */
   @Output() dateRangeChange = new EventEmitter<{month: number, year: number}>();
+  @Input() hideMonth: boolean = false;
 
   /** Service for handling cross-tab communication */
   event = inject(EventService);
-  
+
   /** Current selected month (1-12) */
   month = signal<number>(this.event.globalDate.month);
-  
+
   /** Current selected year */
   year = signal<number>(this.event.globalDate.year);
 
@@ -107,4 +108,4 @@ export class DateRangeComponent implements OnInit {
       year: this.year()
     });
   }
-} 
+}
