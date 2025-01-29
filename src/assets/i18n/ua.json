@@ -29,7 +29,10 @@
       "germanLanguage": "Німецька",
       "versionInformation": "Інформація про версію"
     },
-    "tax": "Податки"
+    "tax": "Податки",
+    "flatRateTax": "Єдиний податок",
+    "zus": "ЗУС",
+    "taxOffices": "Податкові офіси"
   },
   "customers": {
     "contactPerson": "Контактна особа",
@@ -145,5 +148,55 @@
     "signatureOfAuthorizedPerson": "Підпис особи, яка має право видати внутрішній документ",
     "posting": "Проведення",
     "taxRate": "Ставка податку"
+  },
+  "zus": {
+    "title": "ЗУС",
+    "periodFrom": "Період з",
+    "periodTo": "Період до",
+    "paymentDeadline": "Термін оплати",
+    "healthInsurance": "Страхування на випадок непрацездатності",
+    "socialInsurance": "Страхування на випадок соціального страхування",
+    "laborFund": "Страхування на випадок безробіття",
+    "totalZus": "Загальна сума ЗУС",
+    "add": "Додати ЗУС",
+    "edit": "Редагувати ЗУС",
+    "preview": "Перегляд ЗУС",
+    "delete": "Видалити ЗУС",
+    "holidaysContribution": "Відпустки",
+    "periodAndBasis": "Період і підстава",
+    "incomeToBasis": "Дохід до підстави",
+    "contributionHeight": "Висота страховки",
+    "isPaid": "Оплачено",
+    "paymentDate": "Дата вплати",
+    "basis": "Підстава",
+    "guaranteedContributions": "Страхування на випадок безробіття",
+    "fundsForInterimPensions": "Фонд для проміжних пенсій"
+  },
+  "flatRateTax": {
+    "period": "Період",
+    "dataForCalculationOfTax": "Дані для розрахунку податку",
+    "incomeInSelectedMonth": "Дохід у вибраному місяці",
+    "reductionAmountPreviousMonth": "Сума зниження бази оподаткування за попередній місяць",
+    "socialInsurance": "Страхування на випадок непрацездатності",
+    "reductionAmountHealt": "Сума зниження від сплаченої страховки здоров'я",
+    "baseTax": "База оподаткування",
+    "reduceTaxPreviousMonth": "Сума зниження податку за попередній місяць",
+    "reductionAmountFlatRateTax": "Сума зниження податку за попередній місяць",
+    "amountFlatRateTax": "Сума податку",
+    "dataPayment": "Дата вплати",
+    "isPaid": "Оплачено",
+    "reductionAmountFlatRateTaxNextMonth": "Сума зниження бази оподаткування у наступному місяці",
+    "transferHealthInsurance": "Перенос невідшкодованої частини страховки здоров'я на наступний місяць",
+    "tax": "Податок",
+    "healthInsurance": "Відшкодування здоров'я"
+  },
+  "taxOffices": {
+    "code": "Код",
+    "name": "Назва",
+    "postalCode": "Поштовий індекс",
+    "city": "Місто",
+    "address": "Адреса",
+    "phone": "Телефон",
+    "email": "Електронна пошта"
   }
 }

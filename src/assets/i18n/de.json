@@ -29,7 +29,10 @@
       "germanLanguage": "Deutsch",
       "versionInformation": "Versionsinformationen"
     },
-    "tax": "Steuern"
+    "tax": "Steuern",
+    "flatRateTax": "Єдиний податок",
+    "zus": "ЗУС",
+    "taxOffices": "Податкові офіси"
   },
   "customers": {
     "contactPerson": "Kontaktperson",
@@ -145,5 +148,55 @@
     "signatureOfAuthorizedPerson": "Unterschrift der befugten Person",
     "posting": "Buchung",
     "taxRate": "Steuersatz"
+  },
+  "zus": {
+    "title": "ZUS",
+    "periodFrom": "Okres od",
+    "periodTo": "Okres do",
+    "paymentDeadline": "Termin płatności",
+    "healthInsurance": "Składka na ubezpieczenie zdrowotne",
+    "socialInsurance": "Składka na ubezpieczenie społeczne",
+    "laborFund": "Składka na fundusz pracy",
+    "totalZus": "Razem ZUS",
+    "add": "Dodaj składkę ZUS",
+    "edit": "Edytuj składkę ZUS",
+    "preview": "Podgląd składki ZUS",
+    "delete": "Usuń składkę ZUS",
+    "holidaysContribution": "Wakacje skadkowe",
+    "periodAndBasis": "Okres i podstawa",
+    "incomeToBasis": "Przychód do podstawy",
+    "contributionHeight": "Wysokość składki",
+    "isPaid": "Zapłacone",
+    "paymentDate": "Data wpłaty",
+    "basis": "Podstawa",
+    "guaranteedContributions": "Składka na fundusz pracy i fundusz gwarantowanych świadczeń pracowniczych",
+    "fundsForInterimPensions": "Składka na fundusz emerytur pomostowych"
+  },
+  "flatRateTax": {
+    "period": "Periode",
+    "dataForCalculationOfTax": "Daten für die Berechnung des Steuers",
+    "incomeInSelectedMonth": "Einnahmen im ausgewählten Monat",
+    "reductionAmountPreviousMonth": "Reduction amount previous month",
+    "socialInsurance": "Social insurance",
+    "reductionAmountHealt": "Reduction amount health",
+    "baseTax": "Base tax",
+    "reduceTaxPreviousMonth": "Reduce tax previous month",
+    "reductionAmountFlatRateTax": "Reduction amount flat rate tax",
+    "amountFlatRateTax": "Amount flat rate tax",
+    "dataPayment": "Data payment",
+    "isPaid": "Paid",
+    "reductionAmountFlatRateTaxNextMonth": "Reduction amount flat rate tax next month",
+    "transferHealthInsurance": "Transfer health insurance",
+    "tax": "Tax",
+    "healthInsurance": "Health insurance deduction from base"
+    },
+  "taxOffices": {
+    "code": "Kod",
+    "name": "Nazwa",
+    "postalCode": "Kod pocztowy",
+    "city": "Miejscowość",
+    "address": "Adres",
+    "phone": "Telefon",
+    "email": "Email"
   }
 }

@@ -28,7 +28,10 @@
       "englishLanguage": "English",
       "versionInformation": "Version information"
     },
-    "tax": "Taxes"
+    "tax": "Taxes",
+    "flatRateTax": "Flat rate tax",
+    "zus": "ZUS",
+    "taxOffices": "Tax offices"
   },
   "toolbar": {
     "adding": "Add",
@@ -142,5 +145,55 @@
     "signatureOfAuthorizedPerson": "Signature of authorized person",
     "posting": "Posting",
     "taxRate": "Tax rate"
+  },
+  "zus": {
+    "title": "ZUS",
+    "periodFrom": "Period from",
+    "periodTo": "Period to",
+    "paymentDeadline": "Payment deadline",
+    "healthInsurance": "Health insurance",
+    "socialInsurance": "Social insurance",
+    "laborFund": "Labor fund",
+    "totalZus": "Total ZUS",
+    "add": "Add ZUS",
+    "edit": "Edit ZUS",
+    "preview": "Preview ZUS",
+    "delete": "Delete ZUS",
+    "holidaysContribution": "Holidays contribution",
+    "periodAndBasis": "Period and basis",
+    "incomeToBasis": "Income to basis",
+    "contributionHeight": "Contribution height",
+    "isPaid": "Is paid",
+    "paymentDate": "Payment date",
+    "basis": "Basis",
+    "guaranteedContributions": "Guaranteed contributions",
+    "fundsForInterimPensions": "Funds for interim pensions"
+  },
+  "flatRateTax": {
+    "period": "Period",
+    "dataForCalculationOfTax": "Data for calculation of tax",
+    "incomeInSelectedMonth": "Income in selected month",
+    "reductionAmountPreviousMonth": "Reduction amount previous month",
+    "socialInsurance": "Social insurance",
+    "reductionAmountHealt": "Reduction amount health",
+    "baseTax": "Base tax",
+    "reduceTaxPreviousMonth": "Reduce tax previous month",
+    "reductionAmountFlatRateTax": "Reduction amount flat rate tax",
+    "amountFlatRateTax": "Amount flat rate tax",
+    "dataPayment": "Data payment",
+    "isPaid": "Paid",
+    "reductionAmountFlatRateTaxNextMonth": "Reduction amount flat rate tax next month",
+    "transferHealthInsurance": "Transfer health insurance",
+    "tax": "Tax",
+    "healthInsurance": "Health insurance deduction from base"
+  },
+  "taxOffices": {
+    "code": "Code",
+    "name": "Name",
+    "postalCode": "Postal code",
+    "city": "City",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email"
   }
 }

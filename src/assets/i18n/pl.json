@@ -28,7 +28,9 @@
       "englishLanguage": "Angielski",
       "versionInformation": "Informacje o wersji"
     },
-    "tax": "Podatki"
+    "tax": "Podatki",
+    "flatRateTax": "Podatek ryczałtowy",
+    "taxOffices": "Urzędy skarbowe"
   },
   "toolbar": {
     "adding": "Dodaj",
@@ -172,5 +174,32 @@
     "basis": "Podstawa",
     "guaranteedContributions": "Składka na fundusz pracy i fundusz gwarantowanych świadczeń pracowniczych",
     "fundsForInterimPensions": "Składka na fundusz emerytur pomostowych"
+  },
+  "flatRateTax": {
+    "period": "Okres",
+    "dataForCalculationOfTax": "Dane do wyliczenia podatku",
+    "incomeInSelectedMonth": "Przychód w wybranym miesiącu",
+    "reductionAmountPreviousMonth": "Kwota obniżenia podstawy opodatkowania za poprzedni miesiąc",
+    "socialInsurance": "Składka społeczna do odliczenia w bieącym miesiacu",
+    "reductionAmountHealt": "Kwota odliczenia od zapaconej skladki zdrowotnej",
+    "baseTax": "Podstawa opodatkowania",
+    "reduceTaxPreviousMonth": "Kwota obniżenia podatku za poprzedni miesiąc",
+    "reductionAmountFlatRateTax": "Kwota obniżenia ryczatu za poprzedni miesiąc",
+    "amountFlatRateTax": "Kwota ryczałtu",
+    "dataPayment": "Data wpłaty",
+    "isPaid": "Zapłacone",
+    "reductionAmountFlatRateTaxNextMonth": "Kwota obniżenia podstawy opodatkowania w kolejnym miesiącu",
+    "transferHealthInsurance": "Przeniesienie nieodliczonej części skl. zdrowotnej na nastepny miesiac",
+    "tax": "Podatek",
+    "healthInsurance": "Odliczenie zdrowotnej od podstawy"
+  },
+  "taxOffices": {
+    "code": "Kod",
+    "name": "Nazwa",
+    "postalCode": "Kod pocztowy",
+    "city": "Miejscowość",
+    "address": "Adres",
+    "phone": "Telefon",
+    "email": "Email"
   }
 }

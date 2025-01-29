@@ -74,12 +74,26 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'dictionaries/tax-offices',
+        loadComponent: () =>
+          import('./components/office/office.component').then(
+            (m) => m.OfficeComponent
+          ),
+      },
+      {
         path: 'zus',
         loadComponent: () =>
           import('./components/zus/zus.component').then(
             (m) => m.ZusComponent
           ),
       },
+      {
+        path: 'flat-rate-tax',
+        loadComponent: () =>
+          import('./components/flat-rate-tax/flat-rate-tax.component').then(
+            (m) => m.FlatRateTaxComponent
+          ),
+      }
     ],
   },
   {
