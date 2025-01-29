@@ -1,0 +1,92 @@
+<div class="top-menu-panel">
+  <ng-container *ngTemplateOutlet="topButtons"></ng-container>
+</div>
+<div class="center-panel-scroll-verticall">
+  <div>
+    <ng-container *ngTemplateOutlet="grid"></ng-container>
+  </div>
+</div>
+
+<ng-template #topButtons></ng-template>
+
+<ng-template #grid>
+  <dx-data-grid
+    [dataSource]="dataSource"
+    [wordWrapEnabled]="false"
+    [showBorders]="true"
+    [height]="heightGrid"
+    class=""
+    [columnResizingMode]="'widget'"
+    [remoteOperations]="true"
+    [columnAutoWidth]="false"
+    [allowColumnResizing]="true"
+    [autoNavigateToFocusedRow]="true"
+    [(focusedRowIndex)]="focusedRowIndex"
+    [allowColumnReordering]="true"
+    [focusedRowEnabled]="true"
+    (onFocusedRowChanged)="onFocusedRowChanged($event)"
+    (onKeyDown)="onKeyDown($event)"
+    [allowColumnResizing]="event.deviceType !== 'mobile'"
+    (onRowDblClick)="onRowDblClick($event)"
+    #dxGrid
+  >
+    <dxo-load-panel [enabled]="false"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
+    <dxo-selection
+      [mode]="'single'"
+      showCheckBoxesMode="always"
+      selectAllMode="page"
+    ></dxo-selection>
+    <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+    <dxi-column
+      caption="{{ 'taxOffices.code' | translate }}"
+      dataField="code"
+      [width]="200"
+      [allowSorting]="false"
+    ></dxi-column>
+
+    <dxi-column
+      caption="{{ 'taxOffices.name' | translate }}"
+      dataField="name"
+      [allowSorting]="false"
+    ></dxi-column>
+
+    <dxi-column
+      caption="{{ 'taxOffices.postalCode' | translate }}"
+      dataField="postalCode"
+      [width]="200"
+      [allowSorting]="false"
+    ></dxi-column>
+
+    <dxi-column
+      caption="{{ 'taxOffices.city' | translate }}"
+      dataField="city"
+      [width]="200"
+      [allowSorting]="false"
+    ></dxi-column>
+
+    <dxi-column
+      caption="{{ 'taxOffices.address' | translate }}"
+      dataField="address"
+      [width]="200"
+      [allowSorting]="false"
+    ></dxi-column>
+
+    <dxi-column
+      caption="{{ 'taxOffices.phone' | translate }}"
+      dataField="phone"
+      [width]="200"
+      [allowSorting]="false"
+    ></dxi-column>
+
+    <dxi-column
+      caption="{{ 'taxOffices.email' | translate }}"
+      dataField="email"
+      [width]="200"
+      [allowSorting]="false"
+    ></dxi-column>
+  </dx-data-grid>
+</ng-template>

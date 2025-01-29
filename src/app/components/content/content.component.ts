@@ -313,6 +313,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
         items: [
           {
             id: '71',
+            name: this.translate.instant('menu.flatRateTax'),
+            icon: '',
+            url: 'content/flat-rate-tax',
+          },
+          {
+            id: '72',
             name: 'ZUS',
             icon: '',
             url: 'content/zus',
@@ -336,6 +342,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
             name: this.translate.instant('menu.documentType'),
             icon: '',
             url: 'content/dictionaries/document-type',
+          },
+          {
+            id: '84',
+            name: this.translate.instant('menu.taxOffices'),
+            icon: '',
+            url: 'content/dictionaries/tax-offices',
           },
         ],
         tooltip: false,

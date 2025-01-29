@@ -1,0 +1,300 @@
+<dx-popup
+  [width]="event.setWidthPopUp()"
+  [height]="event.setHeightPopUp()"
+  position="bottom"
+  [showCloseButton]="false"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  maxWidth="100vw"
+  maxHeight="100vh"
+  [showTitle]="true"
+  [title]="title"
+  [visible]="isVisible()"
+  (onShown)="event.onShownPopUp();"
+  (onHidden)="event.onHiddenPopUp()"
+  (visibleChange)="onVisibleChange($event)"
+  (onInitialized)="onInit($event)"
+  [resizeEnabled]="false"
+>
+  <div class="text-right title-pop-up">
+    @if(this.mode() !== 'show'){
+    <dx-button
+      text="{{ 'buttons.save' | translate }}"
+      style="margin-right: 6px"
+      type="success"
+      (onClick)="onSave()"
+      [id]="'add_customer'"
+    ></dx-button>
+    }
+
+    <dx-button
+      text="{{ 'buttons.cancel' | translate }}"
+      type="danger"
+      (onClick)="closeWindow()"
+      [id]="'cancel_customer'"
+    ></dx-button>
+
+    <dx-tooltip
+      [target]="'#add_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.save" | translate }} (ctrl + s)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#cancel_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.cancel" | translate }} (Esc)
+      </div>
+    </dx-tooltip>
+  </div>
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ 'flatRateTax.period' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto;">
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.month" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-select-box
+            [items]="event.monthList"
+            formControlName="month"
+            valueExpr="value"
+            displayExpr="name"
+            class="d-inline-block"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            (onValueChanged)="initForm()"
+            width="276"
+            #firstSelect
+          ></dx-select-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flateRate.year" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-select-box
+            [items]="event.yearList"
+            formControlName="year"
+            valueExpr="value"
+            displayExpr="name"
+            class="d-inline-block"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            width="276"
+            (onValueChanged)="initForm()"
+          ></dx-select-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ 'flatRateTax.dataForCalculationOfTax' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto;">
+      <div class="col-md-12" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.incomeInSelectedMonth" | translate }}
+          </label>
+          <dx-number-box
+            [width]="276"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="true"
+            formControlName="income"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.reductionAmountPreviousMonth" | translate }}
+          </label>
+          <dx-number-box
+            [width]="276"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="reductionAmountPreviousMonth"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.socialInsurance" | translate }}
+          </label>
+          <dx-number-box
+            [width]="276"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="socialInsurance"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.reductionAmountHealt" | translate }}
+          </label>
+          <dx-number-box
+            [width]="276"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="reductionAmountHealt"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.baseTax" | translate }}
+          </label>
+
+          <dx-number-box
+            [width]="276"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="true"
+            formControlName="baseTax"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.reductionAmountFlatRateTax" | translate }}
+          </label>
+
+          <dx-number-box
+            [width]="276"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="reduceTaxPreviousMonth"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ 'flatRateTax.tax' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 940px; margin: 0 auto;">
+      <div class="col-md-4" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.amountFlatRateTax" | translate }}
+          </label>
+          <dx-number-box
+            [width]="150"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="amountFlatRateTax"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "flatRateTax.dataPayment" | translate }}
+          </label>
+          <dx-date-box
+            [width]="150"
+            [displayFormat]="event.dateFormat"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="dataPayment"
+            class="d-inline-block"
+          ></dx-date-box>
+        </div>
+      </div>
+
+      <div class="col-md-8" style="text-align: right">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">{{'flatRateTax.reductionAmountFlatRateTaxNextMonth' | translate}}</label>
+          <dx-number-box
+            [width]="95"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="reduceTaxNextMonth"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">{{'flatRateTax.transferHealthInsurance' | translate}}</label>
+          <dx-number-box
+            [width]="95"
+            [min]="0"
+            [step]="1"
+            [format]="event.formatPLN"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            formControlName="transferHealt"
+            class="d-inline-block"
+          ></dx-number-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block"></label>
+          <dx-check-box
+            formControlName="isPaid"
+            text="{{ 'flatRateTax.isPaid' | translate }}"
+            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+          ></dx-check-box>
+        </div>
+      </div>
+    </div>
+  </form>
+</dx-popup>
+
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="!isVisible()"
+></qumi-keyboard-shortcuts>

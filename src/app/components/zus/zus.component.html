@@ -6,7 +6,7 @@
         icon="plus"
         stylingMode="text"
         type="default"
-        [disabled]="!event.sessionData.isActive || isClosed()"
+        [disabled]="!event.sessionData.isActive"
         (onClick)="addNewRecord()"
         text="{{ 'buttons.add' | translate }}"
         [id]="'btn-add'"
@@ -19,7 +19,7 @@
         stylingMode="text"
         type="default"
         [disabled]="
-          !event.sessionData.isActive || !focusedElement() || isClosed()
+          !event.sessionData.isActive || !focusedElement()
         "
         (onClick)="onEdit()"
         text="{{ 'buttons.edit' | translate }}"
@@ -45,7 +45,7 @@
         stylingMode="text"
         type="default"
         [disabled]="
-          !event.sessionData.isActive || !focusedElement() || isClosed()
+          !event.sessionData.isActive || !focusedElement()
         "
         (onClick)="onDeleteConfirm()"
         text="{{ 'buttons.delete' | translate }}"
