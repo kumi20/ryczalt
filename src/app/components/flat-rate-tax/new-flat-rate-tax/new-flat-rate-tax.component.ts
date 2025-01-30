@@ -43,7 +43,7 @@ import { FlatRateTax } from '../../../interface/flatRateTax';
   selector: 'app-new-flat-rate-tax',
   standalone: true,
   imports: [
-  DxPopupModule,
+    DxPopupModule,
     DxButtonModule,
     DxScrollViewModule,
     TranslateModule,
@@ -96,34 +96,142 @@ export class NewFlatRateTaxComponent
     isPaid: [false],
   });
 
-  ngOnInit(): void {}
+  calculateTaxData: any;
+
+  ngOnInit(): void {
+    this.calculate();
+    this.setPaymentDate();
+  }
+
+  calculateTax() {
+    // Obliczanie całkowitego przychodu
+    const formValues = this.form.value;
+    if (
+      !formValues.income ||
+      !formValues.socialInsurance ||
+      !formValues.reductionAmountHealt
+    ) {
+      return null;
+    }
+
+    // Obliczanie podstawy opodatkowania
+    const baseTax = Math.round(
+      this.calculateTaxData.baseTax -
+        Number(this.form.value.reductionAmountPreviousMonth)
+    );
+    this.form.controls['baseTax'].setValue(baseTax);
+    // Obliczanie proporcji dla każdej stawki
+    const tax17 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax17 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.17
+        : 0;
+    const tax15 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax15 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.15
+        : 0;
+    const tax14 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax14 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.14
+        : 0;
+    const tax12_5 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax12_5 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.125
+        : 0;
+    const tax12 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax12 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.12
+        : 0;
+    const tax10 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax10 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.1
+        : 0;
+    const tax8_5 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax8_5 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.085
+        : 0;
+    const tax5_5 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax5_5 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.055
+        : 0;
+    const tax3 =
+      Number(this.form.value.income) > 0
+        ? ((this.calculateTaxData.details.tax3 ?? 0) /
+            Number(this.form.value.income)) *
+          baseTax *
+          0.03
+        : 0;
+
+    // Suma podatku przed odliczeniami
+    const totalTax = Math.round(
+      tax17 + tax15 + tax14 + tax12_5 + tax12 + tax10 + tax8_5 + tax5_5 + tax3
+    );
+    this.form.controls['amountFlatRateTax'].setValue(totalTax);
+    return totalTax;
+  }
+
+  calculate() {
+    this.flatRateTaxService
+      .calculate(
+        this.form.value.month as number,
+        this.form.value.year as number
+      )
+      .subscribe({
+        next: (data) => {
+          this.calculateTaxData = data;
+
+          if (this.mode() === 'add') {
+            this.form.patchValue({
+              baseTax: this.calculateTaxData.baseTax,
+              amountFlatRateTax: this.calculateTaxData.amountFlatRateTax,
+              reduceTaxNextMonth: this.calculateTaxData.reduceTaxNextMonth,
+              income: this.calculateTaxData.income,
+              socialInsurance: this.calculateTaxData.socialInsurance,
+              reductionAmountHealt: this.calculateTaxData.reductionAmountHealt,
+              reduceTaxPreviousMonth:
+                this.calculateTaxData.reduceTaxPreviousMonth,
+            });
+          }
+        },
+        error: (err) => {
+          this.event.httpErrorNotification(err);
+        },
+      });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['flatRateTax']) {
-      if(this.mode() === 'add'){
-        this.flatRateTaxService.calculate(this.form.value.month as number, this.form.value.year as number).subscribe(
-         {
-            next: (data) => {
-              this.form.patchValue({
-                baseTax: data.baseTax,
-                amountFlatRateTax: data.amountFlatRateTax,
-                reduceTaxNextMonth: data.reduceTaxNextMonth,
-                income: data.income,
-                socialInsurance: data.socialInsurance,
-                reductionAmountHealt: data.reductionAmountHealt
-              })
-            console.log(data)
-            },
-            error: (err) => {
-              this.event.httpErrorNotification(err);
-            },
-          }
-        )
-      }
-
       if (this.mode() === 'edit') {
         this.title = this.translate.instant('toolbar.editing');
-        if(this.flatRateTax) this.form.patchValue(this.flatRateTax as any);
+        if (this.flatRateTax) this.form.patchValue(this.flatRateTax as any);
+      }
+
+      if (this.mode() === 'show') {
+        this.form.patchValue(this.flatRateTax as any);
+        this.title = this.translate.instant('toolbar.show');
       }
     }
   }
@@ -163,19 +271,27 @@ export class NewFlatRateTaxComponent
       this.onClosing.emit(true);
     }
   }
+  setFocus() {
+    setTimeout(() => {
+      this.firstSelect.instance.focus();
+    }, 200);
+  }
 
   onInit(e: any) {
     e.component.registerKeyHandler('escape', function () {});
   }
 
   initForm() {
-    console.log('initForm');
+    this.calculate();
+    this.setPaymentDate();
   }
 
   onSave() {
     if (this.form.invalid) return;
 
+    this.firstSelect.instance.focus();
     if (this.mode() === 'add') {
+      this.calculateTax();
       this.flatRateTaxService.post(this.form.value).subscribe(
         (response) => {
           this.onSaving.emit(response);
@@ -200,5 +316,21 @@ export class NewFlatRateTaxComponent
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
     this.closeWindow();
+  }
+
+  setPaymentDate() {
+    const month = this.form.value.month as number;
+    const year = this.form.value.year as number;
+
+    let paymentYear = year;
+    let paymentMonth = month + 1;
+
+    if (month === 12) {
+      paymentYear++;
+      paymentMonth = 1;
+    }
+
+    const paymentDate = new Date(paymentYear, paymentMonth - 1, 20);
+    this.form.controls['dataPayment'].setValue(paymentDate as any);
   }
 }

@@ -14,4 +14,5 @@ export interface FlatRateTaxCalculateResponse {
   income: number;                        // Dodane pole
   socialInsurance: number;               // Dodane pole
   reductionAmountHealt: number;         // Dodane brakujące pole
+  reduceTaxPreviousMonth: number;        // Dodane brakujące pole
 }

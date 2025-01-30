@@ -12,7 +12,7 @@
   [showTitle]="true"
   [title]="title"
   [visible]="isVisible()"
-  (onShown)="event.onShownPopUp();"
+  (onShown)="event.onShownPopUp();setFocus()"
   (onHidden)="event.onHiddenPopUp()"
   (visibleChange)="onVisibleChange($event)"
   (onInitialized)="onInit($event)"
@@ -147,6 +147,7 @@
             [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
             formControlName="reductionAmountPreviousMonth"
             class="d-inline-block"
+            (onValueChanged)="calculateTax()"
           ></dx-number-box>
         </div>
 
@@ -261,7 +262,7 @@
             [min]="0"
             [step]="1"
             [format]="event.formatPLN"
-            [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+            [readOnly]="true"
             formControlName="reduceTaxNextMonth"
             class="d-inline-block"
           ></dx-number-box>
