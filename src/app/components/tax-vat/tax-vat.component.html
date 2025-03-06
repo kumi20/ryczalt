@@ -1,0 +1,174 @@
+<div class="top-menu-panel">
+  <dx-scroll-view width="100%" height="60px">
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="plus"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive"
+      (onClick)="addNewRecord()"
+      text="{{ 'buttons.add' | translate }}"
+      [id]="'btn-add'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="edit"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || !focusedElement()"
+      (onClick)="onEdit()"
+      text="{{ 'buttons.edit' | translate }}"
+      [id]="'btn-edit'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-eyeopen"
+      stylingMode="text"
+      type="default"
+      [disabled]="!focusedElement()"
+      (onClick)="onShow()"
+      text="{{ 'buttons.preview' | translate }}"
+      [id]="'btn-eyeopen'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-trash"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || !focusedElement()"
+      (onClick)="onDeleteConfirm()"
+      text="{{ 'buttons.delete' | translate }}"
+      [id]="'btn-delete'"
+    >
+    </dx-button>
+
+    <app-date-range
+      (dateRangeChange)="onDateRangeChange($event)"
+      [hideMonth]="true"
+    ></app-date-range>
+  </dx-scroll-view>
+</div>
+
+<div class="center-panel-scroll-verticall">
+  <dx-scroll-view width="100%" height="calc(100% - 60px)">
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [wordWrapEnabled]="false"
+      [showBorders]="true"
+      [height]="heightGrid"
+      class=""
+      [columnResizingMode]="'widget'"
+      [columnAutoWidth]="false"
+      [allowColumnResizing]="true"
+      [autoNavigateToFocusedRow]="true"
+      [(focusedRowIndex)]="focusedRowIndex"
+      [allowColumnReordering]="true"
+      [focusedRowEnabled]="true"
+      (onFocusedRowChanged)="onFocusedRowChanged($event)"
+      (onRowDblClick)="onRowDblClick($event)"
+      [allowColumnResizing]="event.deviceType !== 'mobile'"
+      #dxGrid
+    >
+      <dxo-load-panel [enabled]="false"></dxo-load-panel>
+      <dxo-scrolling mode="virtual"></dxo-scrolling>
+      <dxo-paging [pageSize]="pageSize"></dxo-paging>
+      <dxo-selection mode="single"></dxo-selection>
+
+      <dxi-column
+        caption="{{ 'zus.periodFrom' | translate }}"
+        dataField="month"
+        cellTemplate="PeriodFrom"
+        [width]="110"
+      ></dxi-column>
+      <div *dxTemplate="let cell of 'PeriodFrom'">
+        {{ cell.data.ROK }}-{{
+          cell.data.MIESIAC.toString().padStart(2, "0")
+        }}-01
+      </div>
+
+      <dxi-column
+        caption="{{ 'zus.periodTo' | translate }}"
+        cellTemplate="PeriodTo"
+        dataField="year"
+        [width]="110"
+      ></dxi-column>
+      <div *dxTemplate="let cell of 'PeriodTo'">
+        {{ cell.data.ROK }}-{{
+          cell.data.MIESIAC.toString().padStart(2, "0")
+        }}-{{ getLastDayOfMonth(cell.data.ROK, cell.data.MIESIAC) }}
+      </div>
+
+      <dxi-column
+        caption="{{ 'taxVat.taxAmount' | translate }}"
+        cellTemplate="TotalZus"
+        dataField="KWOTA"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'taxVat.taxExcess' | translate }}"
+        cellTemplate="TotalZus"
+        dataField="NADWYZKA"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'zus.paymentDate' | translate }}"
+        dataField="DATA_WPLATY"
+        [width]="110"
+        [allowSorting]="false"
+        hidingPriority="7"
+        dataType="date"
+        [format]="{ type: event.dateFormat }"
+        width="110"
+        alignment="left"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'zus.isPaid' | translate }}"
+        dataField="ZAPLACONY"
+        [allowSorting]="false"
+        hidingPriority="7"
+        alignment="left"
+        cellTemplate="isPaid"
+      ></dxi-column>
+      <div *dxTemplate="let data of 'isPaid'">
+        @if (data.value) {
+
+        <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
+        }
+      </div>
+
+      <div *dxTemplate="let cell of 'TotalZus'">
+        {{
+          toNumber(cell.value)| priceFormat
+        }}
+      </div>
+    </dx-data-grid>
+  </dx-scroll-view>
+</div>
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="isAdd()"
+></qumi-keyboard-shortcuts>
+
+@if(isDelete()) {
+<app-confirm-dialog
+  [isVisible]="isDelete()"
+  (onRemoving)="delete()"
+  (onClosing)="isDelete.set(false)"
+></app-confirm-dialog>
+} @if(isAdd()) {
+<app-add-tax-vat
+  [mode]="mode"
+  [isVisible]="isAdd()"
+  (onClosing)="onClosing()"
+  (onSaving)="onSaving($event)"
+  [taxVat]="focusedElement()"
+></app-add-tax-vat>
+}
