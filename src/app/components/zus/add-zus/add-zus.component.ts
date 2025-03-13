@@ -22,14 +22,19 @@ import {
   DxSelectBoxModule,
   DxTooltipModule,
   DxCheckBoxModule,
-  DxNumberBoxModule
+  DxNumberBoxModule,
 } from 'devextreme-angular';
 import { EventService } from '../../../services/event-services.service';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
 import { CommonModule } from '@angular/common';
-import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ZusService } from '../../../services/zus.service';
 import { ContributionsZUS } from '../../../interface/zus';
 
@@ -47,7 +52,7 @@ import { ContributionsZUS } from '../../../interface/zus';
     DxSelectBoxModule,
     DxDateBoxModule,
     DxCheckBoxModule,
-    DxNumberBoxModule
+    DxNumberBoxModule,
   ],
   templateUrl: './add-zus.component.html',
   styleUrl: './add-zus.component.scss',
@@ -105,7 +110,7 @@ export class AddZusComponent
     if (changes['zus']) {
       if (this.mode() === 'edit') {
         this.title = this.translate.instant('toolbar.editing');
-        if(this.zus) this.form.patchValue(this.zus);
+        if (this.zus) this.form.patchValue(this.zus);
       }
     }
   }
@@ -151,7 +156,7 @@ export class AddZusComponent
       dateSocialPaid: this.dateOfReceipt,
       dateHealthPaid: this.dateOfReceipt,
       dateFpfgswPaid: this.dateOfReceipt,
-      dateFpPaid: this.dateOfReceipt
+      dateFpPaid: this.dateOfReceipt,
     });
 
     return new Date(deadlineYear, nextMonth - 1, 20);
@@ -174,81 +179,112 @@ export class AddZusComponent
     this.submitted = true;
     this.form.markAllAsTouched();
 
-   if(this.form.invalid) return;
+    if (this.form.invalid) return;
 
-   if(this.mode() === 'add'){
-    this.zusService.post(this.form.value).subscribe((res) => {
-      this.onSaving.emit(res);
-    }, (err) => {
-      this.event.httpErrorNotification(err);
-    });
-    return;
-   }
+    if (this.mode() === 'add') {
+      this.zusService.post(this.form.value).subscribe(
+        (res) => {
+          this.onSaving.emit(res);
+        },
+        (err) => {
+          this.event.httpErrorNotification(err);
+        }
+      );
+      return;
+    }
 
-   this.zusService.put(this.form.value).subscribe((res) => {
-    this.onSaving.emit(res);
-   }, (err) => {
-    this.event.httpErrorNotification(err);
-   });
+    this.zusService.put(this.form.value).subscribe(
+      (res) => {
+        this.onSaving.emit(res);
+      },
+      (err) => {
+        this.event.httpErrorNotification(err);
+      }
+    );
   }
 
-  initForm(){
+  initForm() {
     this.firstSelect.instance.focus();
-    this.zusService.getZus(this.form.value.month, this.form.value.year).subscribe((res) => {
-      this.getPaymentDeadline();
-      if(res.data.length > 0){
-        this.incomeToBasis = Number(res.data[0].base);
-        this.incomeToBasisHealth = Number(res.data[0].totalIncome) - Number(res.data[0].previousMonthSocial);
-        if(this.mode() === 'add'){
-          this.form.patchValue({
-            social: Number(res.data[0].social),
-            fpfgsw: Number(res.data[0].FGSP)
-          });
+    this.zusService
+      .getZus(this.form.value.month, this.form.value.year)
+      .subscribe(
+        (res) => {
+          this.getPaymentDeadline();
+          if (res.data.length > 0) {
+            this.incomeToBasis = Number(res.data[0].base);
+            this.incomeToBasisHealth =
+              Number(res.data[0].totalIncome) -
+              Number(res.data[0].previousMonthSocial);
+            if (this.mode() === 'add') {
+              this.form.patchValue({
+                social: this.event.sessionData.isSocialInsurance
+                  ? this.event.sessionData.isSicknessInsurance
+                    ? Number(res.data[0].social) + Number(res.data[0].sickness)
+                    : Number(res.data[0].social)
+                  : 0,
+                fpfgsw: this.event.sessionData.isFPPayer
+                  ? Number(res.data[0].FGSP)
+                  : 0,
+              });
+            }
 
+            if (this.event.sessionData.isHealthInsurance) {
+              //dla roku 2024 skadki zdrowotne
+              if (
+                Number(res.data[0].totalIncome) < 60000 &&
+                this.form.value.year === 2024
+              ) {
+                this.form.patchValue({
+                  contributionHealth: 419.46,
+                });
+              } else if (
+                Number(res.data[0].totalIncome) >= 60000 &&
+                Number(res.data[0].totalIncome) < 300000 &&
+                this.form.value.year === 2024
+              ) {
+                this.form.patchValue({
+                  contributionHealth: 699.11,
+                });
+              } else if (
+                Number(res.data[0].totalIncome) >= 300000 &&
+                this.form.value.year === 2024
+              ) {
+                this.form.patchValue({
+                  contributionHealth: 1258.39,
+                });
+              }
+
+              //dla roku 2025 skadki zdrowotne
+              if (
+                Number(res.data[0].totalIncome) < 60000 &&
+                this.form.value.year === 2025
+              ) {
+                this.form.patchValue({
+                  contributionHealth: 461.66,
+                });
+              } else if (
+                Number(res.data[0].totalIncome) >= 60000 &&
+                Number(res.data[0].totalIncome) < 300000 &&
+                this.form.value.year === 2025
+              ) {
+                this.form.patchValue({
+                  contributionHealth: 769.43,
+                });
+              } else if (
+                Number(res.data[0].totalIncome) >= 300000 &&
+                this.form.value.year === 2025
+              ) {
+                this.form.patchValue({
+                  contributionHealth: 1384.97,
+                });
+              }
+            }
+          }
+        },
+        (err) => {
+          this.event.httpErrorNotification(err);
         }
-
-        //dla roku 2024 skadki zdrowotne
-        if(Number(res.data[0].totalIncome) < 60000 && this.form.value.year === 2024){
-          this.form.patchValue({
-            contributionHealth: 419.46
-          });
-        }
-
-        else if(Number(res.data[0].totalIncome) >= 60000 && Number(res.data[0].totalIncome) < 300000 && this.form.value.year === 2024){
-          this.form.patchValue({
-            contributionHealth: 699.11
-          });
-        }
-
-        else if(Number(res.data[0].totalIncome) >= 300000 && this.form.value.year === 2024){
-          this.form.patchValue({
-            contributionHealth: 1258.39
-          });
-        }
-
-
-        //dla roku 2025 skadki zdrowotne
-        if(Number(res.data[0].totalIncome) < 60000 && this.form.value.year === 2025){
-          this.form.patchValue({
-            contributionHealth: 461.66
-          });
-        }
-
-        else if(Number(res.data[0].totalIncome) >= 60000 && Number(res.data[0].totalIncome) < 300000 && this.form.value.year === 2025){
-          this.form.patchValue({
-            contributionHealth: 769.43
-          });
-        }
-
-        else if(Number(res.data[0].totalIncome) >= 300000 && this.form.value.year === 2025){
-          this.form.patchValue({
-            contributionHealth: 1384.97
-          });
-        }
-      }
-    }, (err) => {
-      this.event.httpErrorNotification(err);
-    });
+      );
   }
 
   @HostListener('document:keydown.escape', ['$event'])

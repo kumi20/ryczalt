@@ -9,7 +9,6 @@ import {
   FlatRateTaxCalculateResponse
 } from '../interface/flatRateTaxCalculate';
 
-const token = localStorage.getItem('app-ryczalt-token');
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,6 @@ export class FlatRateTaxService {
       .set('year', year);
 
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -35,7 +33,6 @@ export class FlatRateTaxService {
 
   post(data: any): Observable<number> {
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -47,7 +44,6 @@ export class FlatRateTaxService {
   put(data: any): Observable<number> {
     const params = new HttpParams().set('id', data.flatRateTaxId);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -59,7 +55,6 @@ export class FlatRateTaxService {
   delete(id: number): Observable<void> {
     const params = new HttpParams().set('id', id);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -69,17 +64,12 @@ export class FlatRateTaxService {
   }
 
   calculate(month: number, year: number): Observable<FlatRateTaxCalculateResponse> {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
     const params = new HttpParams()
       .set('year', year)
       .set('month', month);
 
     return this.http
-      .get<FlatRateTaxCalculateResponse>(`${this.apiUrl}/calculate`, { params, headers })
+      .get<FlatRateTaxCalculateResponse>(`${this.apiUrl}/calculate`, { params })
       .pipe(catchError(this.handleError));
   }
 

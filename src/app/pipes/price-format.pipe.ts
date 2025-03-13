@@ -5,11 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class PriceFormatPipe implements PipeTransform {
-  transform(value: number | null): string {
-    if (value === null) return '';
-    return new Intl.NumberFormat('pl-PL', {
+  transform(value: number | string): string {
+    const numValue = typeof value === 'string' ? parseFloat(value) : value;
+    return numValue.toLocaleString('pl-PL', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
-    }).format(value);
+    });
   }
 }

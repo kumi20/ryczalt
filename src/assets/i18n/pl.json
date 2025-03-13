@@ -26,11 +26,16 @@
       "languageApplications": "Język aplikacji",
       "polishLanguage": "Polski",
       "englishLanguage": "Angielski",
-      "versionInformation": "Informacje o wersji"
+      "germanLanguage": "Niemiecki",
+      "ukrainianLanguage": "Ukraiński",
+      "versionInformation": "Informacje o wersji",
+      "company": "Firma"
     },
     "tax": "Podatki",
     "flatRateTax": "Podatek ryczałtowy",
-    "taxOffices": "Urzędy skarbowe"
+    "taxVat": "Podatek VAT",
+    "taxOffices": "Urzędy skarbowe",
+    "notes": "Uwagi"
   },
   "toolbar": {
     "adding": "Dodaj",
@@ -201,5 +206,32 @@
     "address": "Adres",
     "phone": "Telefon",
     "email": "Email"
+  },
+  "notes": {
+    "text": "Treść",
+    "forIncome": "Dla przychodu",
+    "forexpenses": "Dla rozchodu"
+  },
+  "taxVat": {
+    "taxAmount": "Kwota podatku",
+    "taxExcess": "Nadwyżka podatku"
+  },
+  "company": {
+    "name": "Nazwa",
+    "nip": "NIP",
+    "address": "Adres",
+    "street": "Ulica, nr budynku, nr lokalu",
+    "city": "Miejscowość",
+    "postalCode": "Kod pocztowy",
+    "phone": "Telefon",
+    "email": "Email",
+    "isVatPayer": "Podatnik VAT",
+    "isFPPayer": "Płatnik opłaca skadkę na fundusz pracy",
+    "isHealthInsurance": "Płatnik opłaca ubezpieczenie zdrowotne",
+    "isSocialInsurance": "Płatnik opłaca składkę na ubezpieczenie społeczne",
+    "isSicknessInsurance": "Płatnik opłaca ubezpieczenie chorobowe",
+    "licenseNumber": "Numer licencji",
+    "licenseEndDate": "Data końca licencji",
+    "taxOffice": "Urząd skarbowy"
   }
 }

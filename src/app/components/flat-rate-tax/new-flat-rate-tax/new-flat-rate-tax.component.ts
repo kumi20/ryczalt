@@ -97,6 +97,7 @@ export class NewFlatRateTaxComponent
   });
 
   calculateTaxData: any;
+  isFirstTime: boolean = true;
 
   ngOnInit(): void {
     this.calculate();
@@ -187,7 +188,16 @@ export class NewFlatRateTaxComponent
 
     // Suma podatku przed odliczeniami
     const totalTax = Math.round(
-      tax17 + tax15 + tax14 + tax12_5 + tax12 + tax10 + tax8_5 + tax5_5 + tax3
+      tax17 +
+        tax15 +
+        tax14 +
+        tax12_5 +
+        tax12 +
+        tax10 +
+        tax8_5 +
+        tax5_5 +
+        tax3 -
+        Number(this.form.value.reduceTaxPreviousMonth)
     );
     this.form.controls['amountFlatRateTax'].setValue(totalTax);
     return totalTax;
@@ -215,6 +225,7 @@ export class NewFlatRateTaxComponent
                 this.calculateTaxData.reduceTaxPreviousMonth,
             });
           }
+          this.isFirstTime = false;
         },
         error: (err) => {
           this.event.httpErrorNotification(err);

@@ -9,8 +9,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Gus, Customer } from '../interface/customers';
 
-const token = localStorage.getItem('app-ryczalt-token');
-
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +19,6 @@ export class CustomerService {
 
   postCustomer(data: Customer): Observable<any> {
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -33,7 +30,6 @@ export class CustomerService {
   getCustomerById(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -45,7 +41,6 @@ export class CustomerService {
   deleteCustomer(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -57,7 +52,6 @@ export class CustomerService {
   putCustomer(data: Customer): Observable<any> {
     const params = new HttpParams().set('id', data.customerId);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -69,13 +63,8 @@ export class CustomerService {
   getCustomerByVat(vatNumber: string): Observable<Gus> {
     const params = new HttpParams().set('nip', vatNumber);
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
     return this.http
-      .get<Gus>(`${this.apiUrl}customers/gus`, { params, headers })
+      .get<Gus>(`${this.apiUrl}customers/gus`, { params })
       .pipe(
         map((response) => this.mapToCustomer(response)),
         catchError(this.handleError)

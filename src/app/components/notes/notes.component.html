@@ -1,0 +1,287 @@
+<ng-container>
+  <div *ngIf="!dropDownMode; else dropDownModeTemplate">
+    <div class="top-menu-panel">
+      <ng-container *ngTemplateOutlet="topButtons"></ng-container>
+    </div>
+
+    <div class="center-panel-scroll-verticall">
+      <div>
+        <ng-container *ngTemplateOutlet="grid"></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #topButtons>
+  <dx-scroll-view width="95%" height="100%" direction="horizontal">
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="plus"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive"
+      (onClick)="addNewRecord()"
+      text="{{ 'buttons.add' | translate }}"
+      [id]="'btn-add'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="edit"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || !focusedElement()"
+      (onClick)="onEdit()"
+      text="{{ 'buttons.edit' | translate }}"
+      [id]="'btn-edit'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-eyeopen"
+      stylingMode="text"
+      type="default"
+      [disabled]="!focusedElement()"
+      (onClick)="onShow()"
+      text="{{ 'buttons.preview' | translate }}"
+      [id]="'btn-eyeopen'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="dx-icon dx-icon-trash"
+      stylingMode="text"
+      type="default"
+      [disabled]="!event.sessionData.isActive || !focusedElement()"
+      (onClick)="onDeleteConfirm()"
+      text="{{ 'buttons.delete' | translate }}"
+      [id]="'btn-delete'"
+    >
+    </dx-button>
+  </dx-scroll-view>
+</ng-template>
+
+<ng-template #dropDownModeTemplate>
+  <dx-text-area
+    class="dictionary"
+    [minHeight]="58"
+    style="max-width: 100%; width: 100%"
+    [(value)]="myValue"
+    height="200px!important"
+    width="100%"
+    (onInput)="onInput()"
+    (click)="onClickArea()"
+  ></dx-text-area>
+  <div class="button-content" [style.right.px]="10">
+    <i
+      [ngClass]="{
+        'dx-icon-spinup': isGridBoxOpened(),
+        'dx-icon-spindown': !isGridBoxOpened()
+      }"
+      (click)="onClickArea()"
+    ></i>
+  </div>
+
+  <dx-drop-down-box
+    [deferRendering]="false"
+    [openOnFieldClick]="false"
+    [opened]="isGridBoxOpened()"
+    [dataSource]="[]"
+    [showClearButton]="true"
+    style="
+      max-width: 100%;
+      z-index: -1;
+      position: absolute;
+      border: none!important;
+      top: 32px;
+      left: 15px;
+      border-radius: 6px;
+      width: calc(100% - 30px);
+      height: calc(100% - calc(var(--text-box-margin-bottom, 30px) + 2px));
+    "
+    [readOnly]="!this.event.sessionData.isActive"
+    (onOpened)="onDropdownOpened()"
+    [dropDownOptions]=" {
+    width: 460,
+    maxWidth: '100%',
+  }"
+  >
+    <!-- [width]="widthArea ? widthArea : 'calc(100% - 2px)'" -->
+    <!-- [ngStyle]="{ 'left.px': widthArea <= 450 ? 1 : widthArea - 460 }" -->
+    <div
+      *dxTemplate="let data of 'content'"
+      style="height: 280px; min-height: 280px !important"
+    >
+      <div class="row">
+        <div class="col-md-12" class="no-padding">
+          <dx-data-grid
+            [dataSource]="dataSource"
+            [wordWrapEnabled]="true"
+            [showBorders]="true"
+            shortcut
+            [height]="dropDownHeight"
+            [ngClass]="{ dropDownBoxClassGrid: dropDownMode }"
+            [columnResizingMode]="'widget'"
+            [remoteOperations]="true"
+            (onRowClick)="onRowDblClick($event)"
+            [columnAutoWidth]="true"
+            [allowColumnResizing]="true"
+            (onFocusedRowChanged)="onFocusedRowChanged($event)"
+            [id]="'grid' + unicalGuid"
+            (onSelectionChanged)="onSelectionChanged($event)"
+            [(selectedRowKeys)]="selectedRows"
+            [focusedRowEnabled]="true"
+            [focusedRowIndex]="focusedRowIndex"
+            #dxGrid
+            [hoverStateEnabled]="true"
+            [showColumnHeaders]="true"
+            style="max-width: 450px"
+            [columnAutoWidth]="true"
+          >
+            <dxo-load-panel [enabled]="false"></dxo-load-panel>
+            <dxo-scrolling mode="infinite"></dxo-scrolling>
+            <dxo-paging [pageSize]="50"></dxo-paging>
+            <dxo-selection
+              [mode]="dropDownMode ? 'single' : 'multiple'"
+              showCheckBoxesMode="always"
+            >
+            </dxo-selection>
+            <dxi-column
+              [width]="event.deviceType != 'mobile' ? 45 : 10"
+              cellTemplate="editTemplate"
+              [allowSorting]="false"
+              alignment="center"
+            >
+            </dxi-column>
+
+            <dxi-column
+              caption="{{ 'notes.text' | translate }}"
+              dataField="TRESC"
+              [allowSorting]="false"
+            ></dxi-column>
+
+            <div *dxTemplate="let data of 'editTemplate'" tabindex="-1">
+              <dx-button
+                class="btn-dx-top-menu-folder-grid"
+                icon="edit"
+                [disabled]="!event.sessionData.isActive"
+                (onClick)="onDropdownEditClick()"
+              >
+              </dx-button>
+            </div>
+          </dx-data-grid>
+        </div>
+      </div>
+      <div
+        class="align-items-center bottom-drop-box d-flex pb-0"
+        style="height: auto"
+      >
+        <dx-button
+          class="btn-dx-top-menu-folder"
+          icon="dx-icon dx-icon-add"
+          type="normal"
+          stylingMode="text"
+          id="btn-add-contractors"
+          [id]="'btn-drop-add'"
+          (onClick)="addNewRecord()"
+          [disabled]="!event.sessionData.isActive"
+        >
+        </dx-button>
+      </div>
+    </div>
+  </dx-drop-down-box>
+</ng-template>
+
+<ng-template #grid>
+  <dx-scroll-view width="100%" height="100%" direction="vertical">
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [wordWrapEnabled]="false"
+      [showBorders]="true"
+      [height]="heightGrid"
+      [(selectedRowKeys)]="selectedRows"
+      class=""
+      [columnResizingMode]="'widget'"
+      [remoteOperations]="true"
+      [columnAutoWidth]="false"
+      [allowColumnResizing]="true"
+      [autoNavigateToFocusedRow]="true"
+      [(focusedRowIndex)]="focusedRowIndex"
+      [allowColumnReordering]="true"
+      [focusedRowEnabled]="true"
+      (onFocusedRowChanged)="onFocusedRowChanged($event)"
+      (onKeyDown)="onKeyDown($event)"
+      [allowColumnResizing]="event.deviceType !== 'mobile'"
+      (onRowDblClick)="onRowDblClick($event)"
+      #dxGrid
+    >
+      <dxo-load-panel [enabled]="false"></dxo-load-panel>
+      <dxo-scrolling mode="virtual"></dxo-scrolling>
+      <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
+      <dxo-selection
+        [mode]="'single'"
+        showCheckBoxesMode="always"
+        selectAllMode="page"
+      ></dxo-selection>
+      <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+      <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+      <dxi-column
+        caption="{{ 'notes.text' | translate }}"
+        dataField="TRESC"
+        [allowSorting]="false"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'notes.forIncome' | translate }}"
+        dataField="DLAPRZYCHODU"
+        [allowSorting]="false"
+        hidingPriority="7"
+        width="150"
+        alignment="left"
+        cellTemplate="isPaid"
+      ></dxi-column>
+
+      <dxi-column
+        caption="{{ 'notes.forexpenses' | translate }}"
+        dataField="DLAROZCHODU"
+        [allowSorting]="false"
+        hidingPriority="7"
+        width="150"
+        alignment="left"
+        cellTemplate="isPaid"
+      ></dxi-column>
+
+      <div *dxTemplate="let data of 'isPaid'">
+        @if (data.value) {
+
+        <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
+        }
+      </div>
+    </dx-data-grid>
+  </dx-scroll-view>
+</ng-template>
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="isAdd()"
+></qumi-keyboard-shortcuts>
+
+@if(isAdd()){
+<app-new-notes
+  [isVisible]="isAdd()"
+  [mode]="mode"
+  (onClosing)="isAdd.set(false)"
+  (onSaving)="onSaving($event)"
+  [notes]="focusedElement()"
+></app-new-notes>
+} @if(isDelete()) {
+<app-confirm-dialog
+  [isVisible]="isDelete()"
+  (onRemoving)="delete()"
+  (onClosing)="isDelete.set(false)"
+></app-confirm-dialog>
+}

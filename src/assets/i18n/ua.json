@@ -27,12 +27,16 @@
       "polishLanguage": "Польська",
       "englishLanguage": "Англійська",
       "germanLanguage": "Німецька",
-      "versionInformation": "Інформація про версію"
+      "ukrainianLanguage": "Українська",
+      "versionInformation": "Інформація про версію",
+      "company": "Компанії"
     },
     "tax": "Податки",
     "flatRateTax": "Єдиний податок",
     "zus": "ЗУС",
-    "taxOffices": "Податкові офіси"
+    "taxOffices": "Податкові офіси",
+    "notes": "Примітки",
+    "taxVat": "Податок на додану вартість"
   },
   "customers": {
     "contactPerson": "Контактна особа",
@@ -198,5 +202,27 @@
     "address": "Адреса",
     "phone": "Телефон",
     "email": "Електронна пошта"
+  },
+  "taxVat": {
+    "taxAmount": "Сума податку",
+    "taxExcess": "Перевищення податку"
+  },
+  "company": {
+    "name": "Назва",
+    "nip": "ІПН",
+    "address": "Адреса",
+    "street": "Вулиця, номер будинку, номер квартири",
+    "city": "Місто",
+    "postalCode": "Поштовий індекс",
+    "phone": "Телефон",
+    "email": "Електронна пошта",
+    "isVatPayer": "Платник ПДВ",
+    "isFPPayer": "Платник фонду",
+    "isHealthInsurance": "Платник страховки",
+    "isSocialInsurance": "Платник страховки",
+    "isSicknessInsurance": "Платник страховки",
+    "licenseNumber": "Номер ліцензії",
+    "licenseEndDate": "Дата закінчення ліцензії",
+    "taxOffice": "Податковий офіс"
   }
 }

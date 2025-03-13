@@ -354,7 +354,10 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         }
         event.data.ryczaltId = event.flateRateId.flateRateId;
         this.vatRegisterFlate =  event.data;
+
+        if(this.event.sessionData.isVatPayer){
         this.isAddVatRegister.set(true);
+        }
       }
 
       if (index !== -1) {

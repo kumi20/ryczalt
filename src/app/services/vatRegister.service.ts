@@ -13,8 +13,6 @@ import {
   VatPurchaseSummary
 } from './../interface/vatRegister';
 
-const token = localStorage.getItem('app-ryczalt-token');
-
 @Injectable({
   providedIn: 'root',
 })
@@ -25,39 +23,25 @@ export class VatRegisterService {
 
   put(data: VatRegister) {
     const params = new HttpParams().set('id', data.vatRegisterId);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
 
     return this.http
       .put<VatRegister>(`${this.apiUrl}registeVat/sell`, data, {
         params,
-        headers,
       })
       .pipe(catchError(this.handleError));
   }
 
   post(data: VatRegister) {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
     return this.http
-      .post<VatRegister>(`${this.apiUrl}registeVat/sell`, data, { headers })
+      .post<VatRegister>(`${this.apiUrl}registeVat/sell`, data)
       .pipe(catchError(this.handleError));
   }
 
   delete(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
 
     return this.http
-      .delete<Number>(`${this.apiUrl}registeVat/sell`, { params, headers })
+      .delete<Number>(`${this.apiUrl}registeVat/sell`, { params })
       .pipe(catchError(this.handleError));
   }
 
@@ -95,15 +79,10 @@ export class VatRegisterService {
     month: number,
     year: number
   ): Observable<SummaryMonthVatRegiser> {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
     let params = new HttpParams().set('month', month).set('year', year);
     return this.http
       .get<SummaryMonthVatRegiser>(`${this.apiUrl}registeVat/summaryMonth`, {
         params,
-        headers,
       })
       .pipe(catchError(this.handleError));
   }
@@ -143,27 +122,18 @@ export class VatRegisterService {
 
 
   postBuy(data: VatRegister) {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
 
     return this.http
-      .post<VatRegister>(`${this.apiUrl}registeVat/buy`, data, { headers })
+      .post<VatRegister>(`${this.apiUrl}registeVat/buy`, data)
       .pipe(catchError(this.handleError));
   }
 
   putBuy(data: VatRegister) {
     const params = new HttpParams().set('id', data.vatRegisterId);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
 
     return this.http
       .put<VatRegister>(`${this.apiUrl}registeVat/buy`, data, {
         params,
-        headers,
       })
       .pipe(catchError(this.handleError));
   }
@@ -172,15 +142,10 @@ export class VatRegisterService {
     month: number,
     year: number
   ): Observable<VatPurchaseSummary> {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
     let params = new HttpParams().set('month', month).set('year', year);
     return this.http
       .get<VatPurchaseSummary>(`${this.apiUrl}registeVat/summaryMonthBuy`, {
         params,
-        headers,
       })
       .pipe(catchError(this.handleError));
   }

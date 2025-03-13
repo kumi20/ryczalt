@@ -7,7 +7,8 @@ import config from 'devextreme/core/config';
 import { AuthGuard, IsActiveToken } from './auth.guard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './services/auth.interceptor';
 
 // required for AoT
 export function HttpLoaderFactory(http: HttpClient) {
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     AuthGuard,
     IsActiveToken,
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     TranslateModule.forRoot({
       defaultLanguage: 'pl',
       loader: {

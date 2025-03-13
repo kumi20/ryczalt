@@ -210,6 +210,7 @@
             [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
             formControlName="reduceTaxPreviousMonth"
             class="d-inline-block"
+            (onValueChanged)="calculateTax()"
           ></dx-number-box>
         </div>
       </div>

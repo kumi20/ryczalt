@@ -8,6 +8,11 @@ interface License {
   dataStart: string;
   dataEnd: string;
   isActive: boolean;
+  isVatPayer: boolean;
+  isFPPayer: boolean;
+  isHealthInsurance: boolean;
+  isSocialInsurance: boolean;
+  isSicknessInsurance: boolean;
 }
 
 @Injectable({
@@ -19,12 +24,6 @@ export class LicenseService {
   constructor(private http: HttpClient) {}
 
   getLicenseInfo(): Observable<License> {
-    const token = localStorage.getItem('app-ryczalt-token'); // lub pobierz token z serwisu autoryzacji
-
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    };
-    return this.http.get<License>(this.apiUrl, { headers });
+    return this.http.get<License>(this.apiUrl);
   }
 }

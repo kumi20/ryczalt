@@ -9,8 +9,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Country } from '../interface/country';
 
-const token = localStorage.getItem('app-ryczalt-token');
-
 @Injectable({
   providedIn: 'root',
 })
@@ -20,13 +18,8 @@ export class DocumentTypeService {
   constructor(private http: HttpClient) {}
 
   get(): Observable<any> {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
     return this.http
-      .get<Country[]>(`${this.apiUrl}document-types`, { headers })
+      .get<Country[]>(`${this.apiUrl}document-types`)
       .pipe(catchError(this.handleError));
   }
 

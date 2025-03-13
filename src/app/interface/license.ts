@@ -3,4 +3,9 @@ export interface License {
   dataStart: string;
   dataEnd: string;
   isActive: boolean;
+  isVatPayer: boolean;
+  isFPPayer: boolean;
+  isHealthInsurance: boolean;
+  isSocialInsurance: boolean;
+  isSicknessInsurance: boolean;
 }

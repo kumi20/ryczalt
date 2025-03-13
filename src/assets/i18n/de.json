@@ -27,12 +27,16 @@
       "polishLanguage": "Polnisch",
       "englishLanguage": "Englisch",
       "germanLanguage": "Deutsch",
-      "versionInformation": "Versionsinformationen"
+      "ukrainianLanguage": "Ukrainisch",
+      "versionInformation": "Versionsinformationen",
+      "company": "Unternehmen"
     },
     "tax": "Steuern",
     "flatRateTax": "Єдиний податок",
     "zus": "ЗУС",
-    "taxOffices": "Податкові офіси"
+    "taxOffices": "Податкові офіси",
+    "notes": "Примітки",
+    "taxVat": "Податок на додану вартість"
   },
   "customers": {
     "contactPerson": "Kontaktperson",
@@ -198,5 +202,27 @@
     "address": "Adres",
     "phone": "Telefon",
     "email": "Email"
+  },
+  "taxVat": {
+    "taxAmount": "Steuerbetrag",
+    "taxExcess": "Steuerschuld"
+  },
+  "company": {
+    "name": "Name",
+    "nip": "NIP",
+    "address": "Adresse",
+    "street": "Straße, Hausnummer",
+    "city": "Stadt",
+    "postalCode": "Postleitzahl",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "isVatPayer": "Steuerpflichtiger",
+    "isFPPayer": "Patnik opaca skadkę na fundusz pracy",
+    "isHealthInsurance": "Podatnik opłaca ubezpieczenie zdrowotne",
+    "isSocialInsurance": "Podatnik opłaca składkę na ubezpieczenie społeczne",
+    "isSicknessInsurance": "Podatnik opłaca ubezpieczenie chorobowe",
+    "licenseNumber": "Numer licencji",
+    "licenseEndDate": "Data końca licencji",
+    "taxOffice": "Urząd skarbowy"
   }
 }

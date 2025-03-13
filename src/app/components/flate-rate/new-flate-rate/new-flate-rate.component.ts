@@ -40,6 +40,8 @@ import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
 import { FlateRateService } from '../../../services/flateRate.services';
 import { FlateRate } from '../../../interface/flateRate';
+import { NotesComponent } from '../../notes/notes.component';
+import { Note } from '../../../interface/note.interface';
 
 @Component({
   selector: 'app-new-flate-rate',
@@ -61,6 +63,7 @@ import { FlateRate } from '../../../interface/flateRate';
     NgShortcutsComponent,
     DxNumberBoxModule,
     DxDateBoxModule,
+    NotesComponent,
   ],
   templateUrl: './new-flate-rate.component.html',
   styleUrl: './new-flate-rate.component.scss',
@@ -177,6 +180,15 @@ export class NewFlateRateComponent
       remarks: [''],
       ryczaltId: [null],
       vatRegisterId: [null]
+    });
+  }
+
+  onChoosed(note: Note){
+    console.log('note', note);
+    if(!note) return;
+
+    this.form.patchValue({
+      remarks: note.TRESC
     });
   }
 

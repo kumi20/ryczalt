@@ -38,6 +38,11 @@ export class EventService {
     dataStart: '',
     dataEnd: '',
     isActive: false,
+    isVatPayer: false,
+    isFPPayer: false,
+    isHealthInsurance: false,
+    isSocialInsurance: false,
+    isSicknessInsurance: false,
   };
   formatPLN = '###,###,###,##0.00';
 

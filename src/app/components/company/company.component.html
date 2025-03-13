@@ -1,0 +1,278 @@
+<dx-popup
+  [width]="event.setWidthPopUp()"
+  [height]="event.setHeightPopUp()"
+  position="bottom"
+  [showCloseButton]="false"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  maxWidth="100vw"
+  maxHeight="100vh"
+  [showTitle]="true"
+  [title]="title"
+  [visible]="isVisible()"
+  (onShown)="event.onShownPopUp(); event.setFocus(inputDate); getCompanyData()"
+  (onHidden)="event.onHiddenPopUp()"
+  (visibleChange)="onVisibleChange($event)"
+  (onInitialized)="onInit($event)"
+  [resizeEnabled]="false"
+>
+  <div class="text-right title-pop-up">
+    <dx-button
+      text="{{ 'buttons.save' | translate }}"
+      style="margin-right: 6px"
+      type="success"
+      (onClick)="onSave()"
+      [id]="'add_customer'"
+    ></dx-button>
+
+    <dx-button
+      text="{{ 'buttons.cancel' | translate }}"
+      type="danger"
+      (onClick)="closeWindow()"
+      [id]="'cancel_customer'"
+    ></dx-button>
+
+    <dx-tooltip
+      [target]="'#add_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.save" | translate }} (ctrl + s)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#cancel_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.cancel" | translate }} (Esc)
+      </div>
+    </dx-tooltip>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="row" style="width: 940px; margin: 0 auto">
+      <div class="col-md-6" style="text-align: left">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.name" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-text-area
+            formControlName="name"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            #inputDate
+            [ngClass]="{
+              'input-required':
+                form.get('name')?.invalid &&
+                form.get('name')?.touched
+            }"
+          ></dx-text-area>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.nip" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-text-box
+            formControlName="nip"
+            width="276"
+            [readOnly]="true"
+            [ngClass]="{
+              'input-required':
+                form.get('nip')?.invalid &&
+                form.get('nip')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.street" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-text-box
+            formControlName="address"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('address')?.invalid &&
+                form.get('address')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.city" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-text-box
+            formControlName="city"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('city')?.invalid &&
+                form.get('city')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.postalCode" | translate }}
+            <strong>*</strong>
+          </label>
+
+          <dx-text-box
+            formControlName="postal_code"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('postal_code')?.invalid &&
+                form.get('postal_code')?.touched
+            }"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.phone" | translate }}
+          </label>
+
+          <dx-text-box
+            formControlName="phone"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.email" | translate }}
+          </label>
+
+          <dx-text-box
+            formControlName="email"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+          ></dx-text-box>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: left">
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.licenseNumber" | translate }}
+          </label>
+
+          <dx-text-box
+            formControlName="licenseNumber"
+            width="276"
+            [readOnly]="true"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group">
+          <label for="customerVat" class="d-inline-block">
+            {{ "company.licenseEndDate" | translate }}
+          </label>
+
+          <dx-text-box
+            formControlName="dataEnd"
+            width="276"
+            [readOnly]="true"
+          ></dx-text-box>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 50px;">
+          <label for="customerVat" class="d-inline-block" style="width: 100%;">
+            {{ "company.taxOffice" | translate }}
+          </label>
+
+          <div class="d-inline-block" >
+            <app-office
+              [readOnly]="!event.sessionData.isActive"
+              [dropDownBoxMode]="true"
+              [controlNameForm]="form.value.ID_URZAD_SKARBOWY"
+              class="d-inline-block"
+              (onChoosed)="onChoosed($event)"
+            ></app-office>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label></label>
+          <dx-check-box
+            formControlName="isVatPayer"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            text="{{ 'company.isVatPayer' | translate }}"
+          ></dx-check-box>
+        </div>
+
+        <div class="form-group">
+          <label></label>
+          <dx-check-box
+            formControlName="isFPPayer"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            text="{{ 'company.isFPPayer' | translate }}"
+          ></dx-check-box>
+        </div>
+
+        <div class="form-group">
+          <label></label>
+          <dx-check-box
+            formControlName="isHealthInsurance"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            text="{{ 'company.isHealthInsurance' | translate }}"
+          ></dx-check-box>
+        </div>
+
+        <div class="form-group">
+          <label></label>
+          <dx-check-box
+            formControlName="isSocialInsurance"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            text="{{ 'company.isSocialInsurance' | translate }}"
+          ></dx-check-box>
+        </div>
+
+        <div class="form-group">
+          <label></label>
+          <dx-check-box
+            formControlName="isSicknessInsurance"
+            width="276"
+            [readOnly]="!event.sessionData.isActive"
+            text="{{ 'company.isSicknessInsurance' | translate }}"
+          ></dx-check-box>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</dx-popup>
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="!isVisible()"
+></qumi-keyboard-shortcuts>

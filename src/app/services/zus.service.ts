@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Zus, OpenCloseZusRequest, ZusStatusResponse, ContributionsZUS } from '../interface/zus';
-
-const token = localStorage.getItem('app-ryczalt-token');
+import {
+  Zus,
+  OpenCloseZusRequest,
+  ZusStatusResponse,
+  ContributionsZUS,
+} from '../interface/zus';
 
 @Injectable({
   providedIn: 'root',
@@ -19,43 +26,27 @@ export class ZusService {
    * Pobiera wpisy ZUS dla danego miesiąca i roku
    */
   getByMonthAndYear(year: number): Observable<ContributionsZUS[]> {
-    const params = new HttpParams()
-      .set('year', year);
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
+    const params = new HttpParams().set('year', year);
 
     return this.http
-      .get<ContributionsZUS[]>(this.apiUrl + '/contributions', { params, headers })
+      .get<ContributionsZUS[]>(this.apiUrl + '/contributions', { params })
       .pipe(catchError(this.handleError));
   }
 
   getZus(month: number, year: number): Observable<any> {
-    const params = new HttpParams()
-      .set('month', month)
-      .set('year', year);
+    const params = new HttpParams().set('month', month).set('year', year);
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
-    return this.http.get<Zus[]>(this.apiUrl, { params, headers }).pipe(catchError(this.handleError));
+    return this.http
+      .get<Zus[]>(this.apiUrl, { params })
+      .pipe(catchError(this.handleError));
   }
 
   /**
    * Dodaje nowy wpis ZUS
    */
   post(data: ContributionsZUS): Observable<number> {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
     return this.http
-      .post<number>(this.apiUrl + '/contributions', data, { headers })
+      .post<number>(this.apiUrl + '/contributions', data)
       .pipe(catchError(this.handleError));
   }
 
@@ -64,13 +55,9 @@ export class ZusService {
    */
   put(data: ContributionsZUS): Observable<number> {
     const params = new HttpParams().set('id', data.contributionsZUSId);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
 
     return this.http
-      .put<number>(this.apiUrl + '/contributions', data, { params, headers })
+      .put<number>(this.apiUrl + '/contributions', data, { params })
       .pipe(catchError(this.handleError));
   }
 
@@ -79,13 +66,9 @@ export class ZusService {
    */
   delete(id: number): Observable<void> {
     const params = new HttpParams().set('id', id);
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
 
     return this.http
-      .delete<void>(this.apiUrl + '/contributions', { params, headers })
+      .delete<void>(this.apiUrl + '/contributions', { params })
       .pipe(catchError(this.handleError));
   }
 

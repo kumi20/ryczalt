@@ -255,10 +255,12 @@
           {{ "flateRate.remarks" | translate }}
         </div>
 
-        <dx-text-area
+        <app-notes
+          [dropDownMode]="true"
           formControlName="remarks"
-          style="max-width: 100%; height: 100px !important"
-        ></dx-text-area>
+          (onChoosed)="onChoosed($event)"
+          [isIncome]="true"
+        ></app-notes>
       </div>
     </div>
   </form>

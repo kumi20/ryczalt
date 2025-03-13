@@ -1,0 +1,21 @@
+.tooltip-btn:hover::after {
+  content: attr(data-title);
+  white-space: pre-line;
+  position: absolute;
+  left: 50%;
+  top: 120%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 200px;
+  text-align: center;
+  display: block;
+}
+
+.tooltip-btn {
+  position: relative;
+  cursor: pointer;
+}

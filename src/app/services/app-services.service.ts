@@ -47,32 +47,17 @@ export class AppServices {
   }
 
   getAuth(uri: string): Observable<any> {
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    authHeaders = authHeaders.set(
-      'Authorization',
-      'Bearer ' + localStorage.getItem('app-ryczalt-token')
-    );
     if (this.isTokenValid()) {
       return this.http
-        .get<any>(this.baseUrl + uri, {
-          headers: authHeaders,
-        })
+        .get<any>(this.baseUrl + uri)
         .pipe(retry(0), catchError(this.errorHandl));
     } else return this.throwError();
   }
 
   postAuth(uri: string, date: any): Observable<any> {
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    authHeaders = authHeaders.set(
-      'Authorization',
-      'Bearer ' + localStorage.getItem('app-ryczalt-token')
-    );
-
     if (this.isTokenValid()) {
       return this.http
-        .post<any>(this.baseUrl + uri, date, {
-          headers: authHeaders,
-        })
+        .post<any>(this.baseUrl + uri, date)
         .pipe(retry(0), catchError(this.errorHandl));
     } else return this.throwError();
   }
@@ -86,17 +71,9 @@ export class AppServices {
   };
 
   putAuth(uri: string, date: any): Observable<any> {
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    authHeaders = authHeaders.set(
-      'Authorization',
-      'Bearer ' + localStorage.getItem('app-ryczalt-token')
-    );
-
     if (this.isTokenValid()) {
       return this.http
-        .put<any>(this.baseUrl + uri, date, {
-          headers: authHeaders,
-        })
+        .put<any>(this.baseUrl + uri, date)
         .pipe(retry(0), catchError(this.errorHandl));
     } else return this.throwError();
   }
@@ -108,16 +85,9 @@ export class AppServices {
   }
 
   deleteAuth(uri: string): Observable<any> {
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    authHeaders = authHeaders.set(
-      'Authorization',
-      'Bearer ' + localStorage.getItem('app-ryczalt-token')
-    );
     if (this.isTokenValid()) {
       return this.http
-        .delete<any>(this.baseUrl + uri, {
-          headers: authHeaders,
-        })
+        .delete<any>(this.baseUrl + uri)
         .pipe(retry(0), catchError(this.errorHandl));
     } else return this.throwError();
   }

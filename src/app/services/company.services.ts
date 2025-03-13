@@ -12,14 +12,14 @@ import { Country } from '../interface/country'
 @Injectable({
   providedIn: 'root',
 })
-export class CountryService {
+export class CompanyService {
   private apiUrl = `${environment.domain}`; // zakładam, że masz zdefiniowany baseUrl w environment
 
   constructor(private http: HttpClient) {}
 
-  getCountries(): Observable<any> {
+  getCompany(): Observable<any> {
     return this.http
-      .get<Country[]>(`${this.apiUrl}country`)
+      .get<Country[]>(`${this.apiUrl}company`)
       .pipe(catchError(this.handleError));
   }
 
@@ -35,5 +35,9 @@ export class CountryService {
           : '',
     });
     return throwError(errorMessage);
+  }
+
+  updateCompany(company: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}company`, company).pipe(catchError(this.handleError));
   }
 }

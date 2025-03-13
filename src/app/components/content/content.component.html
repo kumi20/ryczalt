@@ -13,14 +13,14 @@
     </p>
     @if (!isdataPortal) {
     <div class="left-btn-header-panel">
-      <dx-button
+      <!-- <dx-button
         class="btn-dx-top-menu-folder"
         icon="icon absui-icon--book-open"
         (onClick)="runGuide()"
         style="margin-right: 6px"
         [id]="'btn-user-guide'"
       >
-      </dx-button>
+      </dx-button> -->
       <dx-button
         (click)="onUserPanelClick()"
         id="userPanelHeader"
@@ -30,27 +30,10 @@
         }"
       >
         <i
-          class="icon absui-icon--account-circle"
+          class="dx-icon-user"
           style="position: relative"
           tabIndex="-1"
         ></i>
-      </dx-button>
-      <dx-button
-        id="notifications"
-        [ngClass]="{
-          'btn-header-active': isShowQueue,
-          'btn-header': !isShowQueue
-        }"
-        (onClick)="isShowQueue = !isShowQueue"
-      >
-        <i
-          class="icon absui-icon--notifications"
-          tabIndex="-1"
-          style="top: -2px; position: relative"
-        ></i>
-        @if(event.showDotQueueTask){ @if (event.showDotQueueTask) {
-        <span class="showDotQueueTask"></span>
-        } }
       </dx-button>
     </div>
     }
@@ -417,7 +400,7 @@
 </div>
 } } @if(isHideUserPanel){
 
-<div class="user-info-panel" [ngStyle]="{ 'right.px': 40 }">
+<div class="user-info-panel" [ngStyle]="{ 'right.px': 5 }">
   <div class="row" style="width: 100%; padding: 6px; margin-left: 0px">
     <div class="col-md-12 text-center box-user">
       <div class="circle_user">
@@ -504,4 +487,10 @@
   (onClosing)="isShowInfoAboutVersion = false"
 >
 </app-confirm-dialog>
+}
+@if(isCompanyVisible()){
+<app-company
+  [isVisible]="isCompanyVisible()"
+  (onClosing)="isCompanyVisible.set(false)"
+></app-company>
 }

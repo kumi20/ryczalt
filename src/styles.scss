@@ -2962,6 +2962,16 @@ ng-keyboard-shortcuts-help-item .item {
   max-width: 66%;
 }
 
+.dx-icon-user:before {
+  content: "\f02d";
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.user-panel-header-active .dx-icon-user:before {
+  color: #111111;
+}
+
 .form-column__header {
   text-align: left;
   border-bottom: 1px solid $neutral-60;

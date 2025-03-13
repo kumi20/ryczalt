@@ -14,7 +14,6 @@ import {
   SummaryMonth,
 } from '../interface/flateRate';
 
-const token = localStorage.getItem('app-ryczalt-token');
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +26,6 @@ export class FlateRateService {
   put(data: FlateRate) {
     const params = new HttpParams().set('id', data.ryczaltId);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -38,7 +36,6 @@ export class FlateRateService {
 
   post(data: FlateRate) {
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -50,7 +47,6 @@ export class FlateRateService {
   delete(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -61,7 +57,6 @@ export class FlateRateService {
 
   openMonth(object: OpenCloseRequest): Observable<any> {
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -74,7 +69,6 @@ export class FlateRateService {
 
   closeMonth(object: OpenCloseRequest): Observable<any> {
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -91,7 +85,6 @@ export class FlateRateService {
 
   summaryMonth(month: number, year: number) {
     const headers = {
-      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
     let params = new HttpParams().set('month', month).set('year', year);
@@ -107,17 +100,11 @@ export class FlateRateService {
     month: number,
     year: number
   ): Observable<CheckIfMonthIsClosed> {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-
     let params = new HttpParams().set('month', month).set('year', year);
 
     return this.http
       .get<CheckIfMonthIsClosed>(`${this.apiUrl}statusMonth`, {
         params,
-        headers,
       })
       .pipe(catchError(this.handleError));
   }

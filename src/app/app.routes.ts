@@ -81,6 +81,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'dictionaries/notes',
+        loadComponent: () =>
+          import('./components/notes/notes.component').then(
+            (m) => m.NotesComponent
+          ),
+      },
+      {
         path: 'zus',
         loadComponent: () =>
           import('./components/zus/zus.component').then(
@@ -93,7 +100,14 @@ export const routes: Routes = [
           import('./components/flat-rate-tax/flat-rate-tax.component').then(
             (m) => m.FlatRateTaxComponent
           ),
-      }
+      },
+      {
+        path: 'vat-tax',
+        loadComponent: () =>
+          import('./components/tax-vat/tax-vat.component').then(
+            (m) => m.TaxVatComponent
+          ),
+      },
     ],
   },
   {

@@ -26,12 +26,17 @@
       "languageApplications": "Language applications",
       "polishLanguage": "Polish",
       "englishLanguage": "English",
-      "versionInformation": "Version information"
+      "germanLanguage": "German",
+      "ukrainianLanguage": "Ukrainian",
+      "versionInformation": "Version information",
+      "company": "Company"
     },
     "tax": "Taxes",
     "flatRateTax": "Flat rate tax",
+    "taxVat": "VAT tax",
     "zus": "ZUS",
-    "taxOffices": "Tax offices"
+    "taxOffices": "Tax offices",
+    "notes": "Notes"
   },
   "toolbar": {
     "adding": "Add",
@@ -195,5 +200,32 @@
     "address": "Address",
     "phone": "Phone",
     "email": "Email"
+  },
+  "notes": {
+    "text": "Content",
+    "forIncome": "For income",
+    "forexpenses": "For expenses"
+  },
+  "taxVat": {
+    "taxAmount": "Tax amount",
+    "taxExcess": "Tax excess"
+  },
+  "company": {
+    "name": "Name",
+    "nip": "NIP",
+    "address": "Address",
+    "street": "Street, building number, apartment number",
+    "city": "City",
+    "postalCode": "Postal code",
+    "phone": "Phone",
+    "email": "Email",
+    "isVatPayer": "VAT payer",
+    "isFPPayer": "FP payer",
+    "isHealthInsurance": "Health insurance payer",
+    "isSocialInsurance": "Social insurance payer",
+    "isSicknessInsurance": "Sickness insurance payer",
+    "licenseNumber": "License number",
+    "licenseEndDate": "License end date",
+    "taxOffice": "Tax office"
   }
 }

@@ -1,0 +1,111 @@
+<dx-popup
+  [width]="event.setWidthPopUp()"
+  [height]="event.setHeightPopUp()"
+  position="bottom"
+  [showCloseButton]="false"
+  [animation]="{
+    show: { type: 'slideIn', direction: 'bottom' },
+    hide: { type: 'slideOut', direction: 'bottom' }
+  }"
+  maxWidth="100vw"
+  maxHeight="100vh"
+  [showTitle]="true"
+  [title]="title"
+  [visible]="isVisible()"
+  (onShown)="event.onShownPopUp(); setFocus()"
+  (onHidden)="event.onHiddenPopUp()"
+  (visibleChange)="onVisibleChange($event)"
+  (onInitialized)="onInit($event)"
+  [resizeEnabled]="false"
+>
+  <div class="text-right title-pop-up">
+    @if(this.mode() !== 'show'){
+    <dx-button
+      text="{{ 'buttons.save' | translate }}"
+      style="margin-right: 6px"
+      type="success"
+      (onClick)="onSave()"
+      [id]="'add_customer'"
+    ></dx-button>
+    }
+
+    <dx-button
+      text="{{ 'buttons.cancel' | translate }}"
+      type="danger"
+      (onClick)="closeWindow()"
+      [id]="'cancel_customer'"
+    ></dx-button>
+
+    <dx-tooltip
+      [target]="'#add_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.save" | translate }} (ctrl + s)
+      </div>
+    </dx-tooltip>
+
+    <dx-tooltip
+      [target]="'#cancel_customer'"
+      hideEvent="dxhoverend"
+      [hideOnOutsideClick]="false"
+      [showEvent]="event.tooltipShowEvent"
+    >
+      <div *dxTemplate="let data of 'content'">
+        {{ "buttons.cancel" | translate }} (Esc)
+      </div>
+    </dx-tooltip>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-column__header">
+          {{ "notes.text" | translate }}
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <dx-text-area
+            formControlName="TRESC"
+            width="100%"
+            height="500px!important;"
+            style="max-width: 100%!important; height: 500px!important;"
+            [readOnly]="mode() === 'show' || !event.sessionData.isActive"
+            [ngClass]="{
+              'input-required':
+                form.get('TRESC')?.invalid &&
+                form.get('TRESC')?.touched
+            }"
+            #firstFocus
+          ></dx-text-area>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <label for="customerVat" class="d-inline-block"></label>
+        <dx-check-box
+          formControlName="DLAPRZYCHODU"
+          text="{{ 'notes.forIncome' | translate }}"
+          [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+        ></dx-check-box>
+      </div>
+
+      <div class="col-md-12">
+        <label for="customerVat" class="d-inline-block"></label>
+        <dx-check-box
+          formControlName="DLAROZCHODU"
+          text="{{ 'notes.forexpenses' | translate }}"
+          [readOnly]="!event.sessionData.isActive || this.mode() === 'show'"
+        ></dx-check-box>
+      </div>
+    </div>
+  </form>
+</dx-popup>
+
+<qumi-keyboard-shortcuts
+  [shortcuts]="shortcuts"
+  [disabled]="!isVisible()"
+></qumi-keyboard-shortcuts>

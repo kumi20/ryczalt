@@ -1,11 +1,18 @@
-<div class="top-menu-panel">
-  <ng-container *ngTemplateOutlet="topButtons"></ng-container>
-</div>
-<div class="center-panel-scroll-verticall">
-  <div>
-    <ng-container *ngTemplateOutlet="grid"></ng-container>
+<ng-container>
+  @if(!dropDownBoxMode()){
+  <div class="top-menu-panel">
+    <ng-container *ngTemplateOutlet="topButtons"></ng-container>
   </div>
-</div>
+
+  <div class="center-panel-scroll-verticall">
+    <div>
+      <ng-container *ngTemplateOutlet="grid"></ng-container>
+    </div>
+  </div>
+  } @else {
+  <ng-container *ngTemplateOutlet="dropDownMode"></ng-container>
+  }
+</ng-container>
 
 <ng-template #topButtons></ng-template>
 
@@ -89,4 +96,75 @@
       [allowSorting]="false"
     ></dxi-column>
   </dx-data-grid>
+</ng-template>
+
+
+<ng-template #dropDownMode>
+  <dx-drop-down-box
+    [value]="chossingRecord"
+    valueExpr="taxOfficeId"
+    [deferRendering]="false"
+    displayExpr="name"
+    [(opened)]="isGridBoxOpened"
+    [dataSource]="dataSourceDropDown"
+    [showClearButton]="false"
+    style="width: 276px; display: inline-block;"
+    (onValueChanged)="onValueChanged($event)"
+    class="contractors-form-step-2"
+    (openedChange)="onOpenedChanged($event)"
+    (keydown.space)="isGridBoxOpened = true"
+    [ngClass]="{ 'input-required': className() === true }"
+    [readOnly]="!event.sessionData.isActive || readOnly"
+    [acceptCustomValue]="true"
+    (onInput)="grid_onInput()"
+    [openOnFieldClick]="false"
+    (keydown.space)="isGridBoxOpened = true"
+    #contractorsBox
+  >
+    <div *dxTemplate="let data of 'content'" style="height: 280px">
+      <div class="row">
+        <div class="col-md-12" class="no-padding" *ngIf="isGridBoxOpened">
+          <dx-data-grid
+            #gridDropDown
+            [dataSource]="dataSource"
+            [wordWrapEnabled]="true"
+            [showBorders]="true"
+            shortcut
+            [height]="295"
+            [ngClass]="{ dropDownBoxClassGrid: dropDownBoxMode }"
+            [columnResizingMode]="'widget'"
+            [(focusedRowIndex)]="focusedRowIndex"
+            [remoteOperations]="true"
+            (onRowClick)="onRowDblClick($event)"
+            [columnAutoWidth]="true"
+            [allowColumnResizing]="true"
+            [focusedRowEnabled]="true"
+            [hoverStateEnabled]="true"
+            (onKeyDown)="onKeyDown($event)"
+            [remoteOperations]="true"
+
+          >
+            <dxo-load-panel [enabled]="false"></dxo-load-panel>
+            <dxo-paging [pageSize]="500"></dxo-paging>
+            <dxo-selection [mode]="'single'" showCheckBoxesMode="always">
+            </dxo-selection>
+            <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
+
+            <dxi-column
+              caption="{{ 'country.code' | translate }}"
+              dataField="code"
+              [allowSorting]="false"
+              width="100"
+            ></dxi-column>
+
+            <dxi-column
+              caption="{{ 'customers.name' | translate }}"
+              dataField="name"
+              [allowSorting]="false"
+            ></dxi-column>
+          </dx-data-grid>
+        </div>
+      </div>
+    </div>
+  </dx-drop-down-box>
 </ng-template>

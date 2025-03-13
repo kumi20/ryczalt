@@ -5,6 +5,7 @@ import {
   OnInit,
   ChangeDetectorRef,
   HostListener,
+  signal,
 } from '@angular/core';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import {
@@ -36,7 +37,7 @@ import { DatePipe } from '@angular/common';
 import { AppServices } from '../../services/app-services.service';
 
 import { environment } from '../../../environments/environment';
-
+import { CompanyComponent } from '../company/company.component';
 const helper = new JwtHelperService();
 
 @Component({
@@ -59,6 +60,7 @@ const helper = new JwtHelperService();
     DxPopupModule,
     MobileListComponent,
     MobileMainSubmenuComponent,
+    CompanyComponent,
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
@@ -107,6 +109,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   itemChosed: any[] = [];
   isMobileSettings: boolean = false;
   isTap: any = null;
+  isCompanyVisible = signal<boolean>(false);
 
   constructor() {
     this.location = location.pathname;
@@ -267,6 +270,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
         code: null,
         signature: 'R',
         classCss: 'redHeader',
+        visible: this.event.sessionData.isVatPayer,
       },
       {
         id: '4',
@@ -278,6 +282,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
         code: null,
         signature: 'R',
         classCss: 'redHeader',
+        visible: this.event.sessionData.isVatPayer,
       },
       {
         id: '5',
@@ -323,6 +328,13 @@ export class ContentComponent implements OnInit, AfterViewInit {
             icon: '',
             url: 'content/zus',
           },
+          {
+            id: '73',
+            name: this.translate.instant('menu.taxVat'),
+            icon: '',
+            url: 'content/vat-tax',
+            visible: this.event.sessionData.isVatPayer,
+          },
         ],
       },
       {
@@ -348,6 +360,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
             name: this.translate.instant('menu.taxOffices'),
             icon: '',
             url: 'content/dictionaries/tax-offices',
+          },
+          {
+            id: '85',
+            name: this.translate.instant('menu.notes'),
+            icon: '',
+            url: 'content/dictionaries/notes',
           },
         ],
         tooltip: false,
@@ -380,12 +398,33 @@ export class ContentComponent implements OnInit, AfterViewInit {
             icon: '',
             url: 'start',
           },
+          {
+            id: '1.3',
+            name: 'menu.navigationPanelUser.germanLanguage',
+            icon: '',
+            url: 'start',
+          },
+
+          {
+            id: '1.4',
+            name: 'menu.navigationPanelUser.ukrainianLanguage',
+            icon: '',
+            url: 'start',
+          },
+
         ],
       },
       {
         id: '3',
         name: 'menu.navigationPanelUser.versionInformation',
         icon: 'icon absui-icon--info',
+        url: null,
+        items: [],
+      },
+      {
+        id: '4',
+        name: 'menu.navigationPanelUser.company',
+        icon: '',
         url: null,
         items: [],
       },
@@ -476,8 +515,11 @@ export class ContentComponent implements OnInit, AfterViewInit {
   itemClick(data: any): void {
     if (data.itemData.id === '1.1') this.event.useLanguage('pl');
     else if (data.itemData.id === '1.2') this.event.useLanguage('en');
+    else if (data.itemData.id === '1.3') this.event.useLanguage('de');
+    else if (data.itemData.id === '1.4') this.event.useLanguage('ua');
     else if (data.itemData.id === '2') this.logOut();
     else if (data.itemData.id === '3') this.isShowInfoAboutVersion = true;
+    else if (data.itemData.id === '4') this.isCompanyVisible.set(true);
   }
 
   onItemClickMobile = (e: any) => {
