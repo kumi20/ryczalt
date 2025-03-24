@@ -47,7 +47,7 @@ html {
 
 body {
   background-color: #f1f1f1;
-  font-size: 10px;
+  font-size: px-to-rem(10px);
   overflow-x: hidden;
   margin: 0 0;
   @include custom-scrollbar;
@@ -198,7 +198,7 @@ a.confirme-info-message-link {
   font-family: "Roboto";
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 12px !important;
+  font-size: px-to-rem(12px) !important;
   line-height: 16px !important;
 
   &:hover {
@@ -223,12 +223,10 @@ a {
 .dx-submenu {
   background: $neutral-100;
   margin-right: 5px;
-  // width: 252px !important;
   border: 1px solid $neutral-80 !important;
   box-shadow:
     0px 2px 1px rgb(0 0 0 / 6%),
     0px 4px 20px rgb(0 0 0 / 10%) !important;
-  // border-radius: 0px !important;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   min-width: 210px;
@@ -493,7 +491,7 @@ app-custom-dropdown-box {
   position: relative;
   display: none;
   margin-bottom: -39px;
-  font-size: 0.625rem;
+  font-size: px-to-rem(10px);
   width: auto;
   z-index: 10000;
 }
@@ -524,7 +522,7 @@ app-custom-dropdown-box {
     font-family: "Roboto";
     font-style: normal !important;
     font-weight: 500 !important;
-    font-size: 12px !important;
+    font-size: px-to-rem(12px) !important;
     line-height: 16px !important;
     text-align: right !important;
     color: $brand-10 !important;
@@ -539,7 +537,7 @@ app-custom-dropdown-box {
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
+    font-size: px-to-rem(12px);
     line-height: 14px;
     color: $text-light-gray !important;
     margin-right: 7px;
@@ -551,7 +549,7 @@ app-custom-dropdown-box {
   font-family: "Roboto";
   font-style: normal !important;
   font-weight: 400 !important;
-  font-size: 12px !important;
+  font-size: px-to-rem(12px) !important;
   line-height: 16px !important;
   text-align: right !important;
   color: $neutral-30 !important;
@@ -560,7 +558,7 @@ app-custom-dropdown-box {
     font-family: "Roboto";
     font-style: normal !important;
     font-weight: 500 !important;
-    font-size: 12px !important;
+    font-size: px-to-rem(12px) !important;
     line-height: 16px !important;
     text-align: right !important;
     color: $neutral-10 !important;
@@ -571,7 +569,7 @@ app-custom-dropdown-box {
   font-family: "Roboto" !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 12px !important;
+  font-size: px-to-rem(12px) !important;
   line-height: 14px !important;
   color: $text-light-gray !important;
 }
@@ -786,7 +784,7 @@ mwlResizable {
   font-family: "Roboto";
   color: $neutral-30;
   font-weight: 500;
-  font-size: 0.625rem;
+  font-size: px-to-rem(10px);
   line-height: 0.75rem;
 }
 
@@ -826,19 +824,7 @@ td.dx-command-select {
     top: 0px;
     left: 115px;
     width: 320px;
-    // position: absolute;
-    // top: 10px;
-    // position: absolute;
-    // top: 15px;
-    // right: 20px;
-    // //width: calc(100% - 35px);
-    // width: 320px;
-    // max-width: none;
   }
-
-  // .dx-scrollable.dx-visibility-change-handler.dx-scrollable-vertical.dx-scrollable-simulated {
-  //   margin-top: 25px;
-  // }
 }
 
 dx-tree-view {
@@ -880,21 +866,15 @@ dx-tree-view {
     }
   }
 
-  // .dx-treeview-node-container.dx-treeview-node-container-opened{
-  //   li.dx-treeview-node{
-  //     height: 28px;
-  //   }
-  // }
-
   .dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened::before {
-    font-size: 16px;
+    font-size: px-to-rem(16px);
     width: 18px;
     height: 18px;
     padding-right: 2px;
   }
 
   .dx-treeview-toggle-item-visibility::before {
-    font-size: 16px;
+    font-size: px-to-rem(16px);
     width: 18px;
     height: 18px;
     padding-right: 2px;
@@ -962,12 +942,6 @@ dx-tree-view {
         //border-radius: 14px !important;
       }
     }
-
-    // &.dx-state-selected{
-    //   > .dx-item{
-    //     border-radius: 14px;
-    //   }
-    // }
   }
 }
 
@@ -1010,7 +984,7 @@ dx-tab-panel {
       width: 16px;
       height: 16px;
       font-family: Lumen;
-      font-size: 16px;
+      font-size: px-to-rem(16px);
       line-height: 16px;
       content: "\e317";
     }
@@ -1024,7 +998,7 @@ dx-tab-panel {
       width: 16px;
       height: 16px;
       font-family: Lumen;
-      font-size: 16px;
+      font-size: px-to-rem(16px);
       line-height: 16px;
       content: "\e318";
     }
@@ -1073,7 +1047,7 @@ dx-tab-panel {
   }
 
   i::before {
-    font-size: 18px !important;
+    font-size: px-to-rem(18px) !important;
   }
 }
 
@@ -1110,7 +1084,7 @@ dx-tab-panel {
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: px-to-rem(12px);
   line-height: 14px;
   padding: 0 3em;
   padding-left: 0px;
@@ -1135,7 +1109,7 @@ dx-tab-panel {
 .btn-header-active .icon:before {
   font-style: normal;
   color: $neutral-30;
-  font-size: 18px !important;
+  font-size: px-to-rem(18px) !important;
 }
 
 .btn-header-active.icon:hover::before {
@@ -1151,7 +1125,7 @@ dx-tab-panel {
 .btn-header.icon:before,
 .btn-header .icon:before {
   font-style: normal;
-  font-size: 18px !important;
+  font-size: px-to-rem(18px) !important;
 }
 
 .btn-header.icon:hover::before {
@@ -1211,13 +1185,12 @@ dx-tab-panel {
 .close-grid {
   &::before {
     font-size: 1rem !important;
-    color: $neutral-60;
   }
 }
 
 .close-grid-mobile {
   &::before {
-    font-size: 20px !important;
+    font-size: px-to-rem(20px) !important;
     color: $neutral-60;
     margin-right: 6px;
     position: relative;
@@ -1254,7 +1227,7 @@ dx-tab-panel {
 
 .check-grid-mobile {
   &::before {
-    font-size: 20px !important;
+    font-size: px-to-rem(20px) !important;
     color: $neutral-10;
     margin-right: 6px;
     position: relative;
@@ -1303,7 +1276,7 @@ app-custom-dropdown-box {
     flex: 0 0 30px;
 
     .icon:before {
-      font-size: 18px;
+      font-size: px-to-rem(18px);
     }
     &.dx-state-focused,
     &:focus {
@@ -1320,13 +1293,6 @@ app-custom-dropdown-box {
   .dx-checkbox-container {
     width: 16px;
   }
-
-  // &.no-padding{
-  //   padding-left: 0 !important;
-  //   .dx-field-item-label-content{
-  //     max-width: 118px;
-  //   }
-  // }
 }
 
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs {
@@ -1449,7 +1415,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
     cursor: pointer;
 
     &::before {
-      font-size: 18px;
+      font-size: px-to-rem(18px);
       margin-left: 9px;
       margin-top: 26px;
       position: relative;
@@ -1537,18 +1503,6 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
   line-height: 14px;
 }
 
-// ::before {
-//   content: "";
-//   background-image: url('https://placekitten.com/1200/800');
-//   background-size: cover;
-//   position: absolute;
-//   top: 0px;
-//   right: 0px;
-//   bottom: 0px;
-//   left: 0px;
-//   opacity: 0.75;
-// }
-
 .box-bg-none-even {
   position: relative;
 
@@ -1564,8 +1518,6 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
     bottom: 25px;
     left: 0px;
   }
-
-  // background-size: 100% 100%;
 }
 
 .opacity-bg::before {
@@ -1579,7 +1531,6 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
     z-index: 0;
     background-image: url("./assets/images/empty-box-2.svg");
     content: "";
-    //background-image: url('https://placekitten.com/1200/800');
     background-size: 100% 100%;
     position: absolute;
     top: 0px;
@@ -1593,11 +1544,8 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 
 .dx-progressbar-range {
   position: relative;
-  // border: 1px solid $brand-10;
   border: none;
-  //background-color: $brand-10;
   margin-top: -1px;
-  //margin-left: -1px;
   box-sizing: content-box;
   border-radius: 20px;
   border-radius: 20px;
@@ -1698,7 +1646,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
     position: absolute;
     top: 5px;
     left: 6px;
-    font-size: 14px !important;
+    font-size: px-to-rem(14px) !important;
   }
 
   .chips-close {
@@ -1770,6 +1718,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
   top: -14px;
   color: $neutral-30;
   margin-right: 10px;
+  font-size: px-to-rem(18px);
 }
 
 .box-body {
@@ -1826,11 +1775,11 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .p-emptyState {
-  @include text-style("Inter", 11px, 300, 13px, $text-light-gray);
+  @include text-style("Inter", px-to-rem(11px), 300, 13px, $text-light-gray);
   text-align: center;
 
   strong {
-    @include text-style("Inter", 11px, bold, 22px, $text-light-gray);
+    @include text-style("Inter", px-to-rem(11px), bold, 22px, $text-light-gray);
     text-align: center;
   }
 }
@@ -2095,7 +2044,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 ng-keyboard-shortcuts-help-item .item {
-  font-size: 12px;
+  font-size: px-to-rem(12px);
   font-family: Roboto;
 }
 
@@ -2121,7 +2070,7 @@ ng-keyboard-shortcuts-help-item .item {
 }
 
 .dx-datagrid-checkbox-size.dx-checkbox-checked .dx-checkbox-icon:before {
-  font-size: 15px;
+  font-size: px-to-rem(15px);
 }
 
 .dx-row-focused .p-company-name,
@@ -2309,7 +2258,7 @@ ng-keyboard-shortcuts-help-item .item {
 .dx-icon-user:before {
   content: "\f02d";
   color: #ffffff;
-  font-size: 18px;
+  font-size: px-to-rem(18px);
 }
 
 .user-panel-header-active .dx-icon-user:before {

@@ -1,6 +1,6 @@
 @import "./mixins";
 
-$main-font-size: 16px;
+$main-font-size: px-to-rem(16px);
 
 /* headers */
 h1 {
@@ -53,12 +53,12 @@ h5 {
 
 .legal-1 {
     font-size: 0.688 * $main-font-size;
-    line-height: 24px;
+    line-height: px-to-rem(24px);
     font-weight: 400;
 }
 
 .legal-2 {
     font-size: 0.563 * $main-font-size;
-    line-height: 12px;
+    line-height: px-to-rem(12px);
     font-weight: 400;
 }
