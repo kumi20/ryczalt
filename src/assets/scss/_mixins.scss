@@ -609,7 +609,7 @@ $focus-border-width: 2px;
 }
 
 // Mixiny dla statusów
-@mixin status-badge($bg-color, $text-color: $neutral-100) {
+@mixin status-badge($background-color, $text-color: $neutral-100) {
   padding: 2px 3px;
   height: 18px;
   min-width: 18px;
@@ -617,7 +617,7 @@ $focus-border-width: 2px;
   border-radius: 4px;
   display: inline-block;
   text-align: center;
-  background-color: $bg-color !important;
+  background-color: $background-color !important;
   color: $text-color;
   margin: 0 auto;
   margin-right: 2px;
@@ -742,5 +742,177 @@ $focus-border-width: 2px;
 
   label {
     margin-bottom: 4px;
+  }
+}
+
+// Mixiny dla kolorowych sygnatur
+@mixin colored-signature($bg-color, $text-color) {
+  background: var(--#{$bg-color}, #{$bg-color}) !important;
+
+  p {
+    color: var(--#{$text-color}, #{$text-color}) !important;
+  }
+
+  .p_document_name {
+    margin-bottom: 0px !important;
+    font-family: Roboto !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 18px !important;
+    color: var(--text-light-gray, $text-light-gray) !important;
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    text-align: left;
+    left: 54px;
+  }
+}
+
+// Mixiny dla count-container
+@mixin count-container($background-color: $neutral-100, $border-color: $neutral-80) {
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  padding: 10px;
+  height: 59px;
+  border-radius: 6px;
+
+  p {
+    font-family: $Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 14px;
+    color: $text-dark-gray;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+// Mixin dla przycisku ikony
+@mixin icon-button($bg-color: $brand-neutral-10, $size: 32px) {
+  display: inline-block;
+  width: $size;
+  height: $size;
+  background-color: $bg-color;
+  box-shadow:
+    0px 2px 1px rgba(0, 0, 0, 0.06),
+    0px 4px 20px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $neutral-10;
+  }
+
+  &.icon:before,
+  .icon:before {
+    font-style: normal;
+    font-size: 18px !important;
+  }
+
+  &.icon:hover::before {
+    background-color: transparent;
+  }
+}
+
+// Mixin dla paska przewijania
+@mixin custom-scrollbar($width: 10px, $height: 4px, $thumb-color: $neutral-60, $track-color: $neutral-100) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    height: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $thumb-color;
+    height: 10px;
+  }
+
+  // Firefox
+  scrollbar-width: thin;
+}
+
+// Mixin dla nagłówka dokumentu
+@mixin document-header {
+  background: $neutral-95;
+  border: 1px solid $neutral-80;
+  box-sizing: border-box;
+  border-radius: 6px;
+  margin: 16px 0px;
+  padding: 10px 10px;
+  transition-duration: 250ms;
+}
+
+// Mixin dla aktywnych elementów menu
+@mixin active-menu-item($color) {
+  span, .icon {
+    color: var(--#{$color}, #{$color}) !important;
+  }
+}
+
+// Mixin dla filter-box
+@mixin filter-box {
+  display: inline-block;
+  height: 26px;
+  box-sizing: border-box;
+  border-radius: 29px;
+  background: rgba(0, 0, 0, 0.04);
+  padding-left: 7px;
+  padding-right: 7px;
+  font-size: 0.75rem;
+  line-height: 14px;
+  padding-top: 5px;
+  margin-right: 5px;
+}
+
+// Mixin dla linków
+@mixin link-style($color: $neutral-40, $font-size: 0.81rem) {
+  color: $color;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size;
+  line-height: 22px;
+  text-decoration-line: underline;
+
+  &:hover {
+    color: $neutral-30;
+  }
+}
+
+// Mixin dla input-required
+@mixin input-required {
+  border: 1px solid #dc3545 !important;
+  background: $brand-90 !important;
+
+  .dx-texteditor-input-container::after {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    font-size: 1rem;
+    border-color: #dc3545;
+    color: $brand-10;
+    left: calc(100% - 25px);
+  }
+
+  .dx-clear-button-area {
+    display: none;
+  }
+
+  .dx-dropdowneditor-icon::before {
+    color: $brand-10 !important;
   }
 }

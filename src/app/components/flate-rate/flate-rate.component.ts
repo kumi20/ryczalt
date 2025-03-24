@@ -69,7 +69,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
   isClosed = signal<boolean>(false);
   mode: 'add' | 'edit' | 'show' = 'add';
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 235px)';
+  heightGrid: number | string = 'calc(100vh - 245px)';
   selectedRows: FlateRate[] = [];
   focusedRowIndex: number = 0;
   focusedElement = signal<FlateRate | null>(null);

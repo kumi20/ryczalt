@@ -45,10 +45,11 @@ html {
 }
 
 body {
-  background-color: $neutral-100;
+  background-color: #f1f1f1;
   font-size: 10px;
   overflow-x: hidden;
   margin: 0 0;
+  @include custom-scrollbar;
 }
 
 ::-webkit-scrollbar {
@@ -2989,4 +2990,33 @@ ng-keyboard-shortcuts-help-item .item {
   margin-top: -9px;
   left: 50%;
   margin-left: 0px;
+}
+
+
+.summary {
+  padding: 20px 10px;
+  background-color: #ffffff;
+  border-radius: 20px 20px 0px 0px;
+  margin-top: 15px;
+  text-align: right;
+  label {
+    width: 350px;
+    display: inline-block;
+    text-align: left !important;
+  }
+  p {
+    margin-bottom: 0px;
+    display: inline-block;
+    width: 100px;
+  }
+}
+
+.dx-datagrid .dx-row.dx-column-lines.dx-header-row {
+  background: #fafafa;
+  height: 50px;
+}
+
+.dx-datagrid-headers .dx-datagrid-content {
+  margin-bottom: -1px;
+  border-radius: 20px 20px 0px 0px;
 }

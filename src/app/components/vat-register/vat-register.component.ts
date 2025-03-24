@@ -71,7 +71,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
   isClosed = signal<boolean>(false);
   mode: 'add' | 'edit' | 'show' = 'add';
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 280px)';
+  heightGrid: number | string = 'calc(100vh - 290px)';
   selectedRows: VatRegister[] = [];
   focusedRowIndex: number = 0;
   focusedElement = signal<VatRegister | null>(null);

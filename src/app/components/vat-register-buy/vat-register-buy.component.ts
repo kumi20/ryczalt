@@ -68,7 +68,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
   isClosed = signal<boolean>(false);
   mode: 'add' | 'edit' | 'show' = 'add';
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 280px)';
+  heightGrid: number | string = 'calc(100vh - 290px)';
   uri: string = 'registeVat/buy';
   pageSize: number = 50;
   focusedElement = signal<VatRegisterBuy | null>(null);
