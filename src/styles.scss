@@ -29,6 +29,7 @@
 @import "./assets/scss/tabs.scss";
 @import "./assets/scss/typography.scss";
 @import "./assets/scss/custom-icons";
+@import "./assets/scss/_mixins.scss";
 
 *:focus {
   outline: none;
@@ -75,13 +76,8 @@ body {
 }
 
 h2 {
-  font-family: $GeomanistBook;
-  font-size: 3rem;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 22px;
+  @include text-style($GeomanistBook, 3rem, normal, 22px, $neutral-10);
   margin-bottom: 9px;
-  color: $neutral-10;
 
   strong {
     color: $brand-20;
@@ -134,12 +130,7 @@ h6 {
 }
 
 .p-warning-text-box {
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  color: $text-gray;
+  @include text-style($Roboto, 12px, 400, 18px, $text-gray);
   margin-bottom: 0px;
   display: inline-block;
 }
@@ -153,36 +144,19 @@ h6 {
 }
 
 .p-info-text-box {
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  color: $text-gray;
+  @include text-style($Roboto, 12px, 400, 18px, $text-gray);
   margin-bottom: 0px;
   display: inline-block;
 }
 
 .a-link {
-  text-decoration-line: none;
-  font-family: "Roboto";
-  font-style: normal;
-  font-size: 0.75rem;
-  line-height: 14px;
+  @include link-style($neutral-40, 0.75rem);
   font-weight: normal;
-
-  &:hover {
-    text-decoration-line: none;
-  }
+  line-height: 14px;
 }
 
 h1 {
-  font-family: $Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 3.75rem;
-  line-height: 72px;
-  color: $text-gray;
+  @include text-style($Inter, 3.75rem, normal, 72px, $text-gray);
 
   strong {
     font-family: $InterBold;
@@ -608,22 +582,8 @@ app-custom-dropdown-box {
 }
 
 .count-container {
-  border: 1px solid $neutral-80;
-  background-color: $neutral-100;
-  padding: 10px;
-  height: 59px;
-  border-radius: 6px;
+  @include count-container($neutral-100, $neutral-80);
 
-  p {
-    font-family: $Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.75rem;
-    line-height: 14px;
-    color: $text-dark-gray;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
   p.total {
     margin-bottom: 0px;
     font-family: "Roboto";
@@ -671,22 +631,7 @@ app-custom-dropdown-box {
 }
 
 .count-container-correction {
-  border: 1px solid $neutral-80;
-  background-color: $neutral-95;
-  padding: 10px;
-  height: 59px;
-  border-radius: 6px;
-
-  p {
-    font-family: $Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.75rem;
-    line-height: 14px;
-    color: $text-dark-gray;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+  @include count-container($neutral-95, $neutral-80);
 }
 
 .full-width,
@@ -1306,31 +1251,13 @@ dx-tab-panel {
 }
 
 .btn-header {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  background-color: $brand-neutral-10;
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    cursor: pointer;
-    background-color: $neutral-10;
-  }
+  @include icon-button($brand-neutral-10, 32px);
 }
 
 .btn-header-active {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  background-color: $neutral-100;
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
+  @include icon-button($neutral-100, 32px);
 
   &:hover {
-    cursor: pointer;
     background-color: $neutral-100 !important;
   }
 }
@@ -1455,23 +1382,13 @@ dx-tab-panel {
 }
 
 .p-toPay-net {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500 !important;
-  font-size: 18px !important;
-  line-height: 21px !important;
+  @include text-style("Roboto", 18px, 500, 21px, $neutral-10);
   text-align: right !important;
-  color: $neutral-10 !important;
 }
 
 .des-toPay {
-  font-family: "Roboto";
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: 12px !important;
-  line-height: 14px !important;
+  @include text-style("Roboto", 12px, 400, 14px, $text-light-gray);
   text-align: right !important;
-  color: $text-light-gray !important;
 }
 
 .ok-grid {
@@ -1481,17 +1398,7 @@ dx-tab-panel {
 }
 
 .filter-box {
-  display: inline-block;
-  height: 26px;
-  box-sizing: border-box;
-  border-radius: 29px;
-  background: rgba(0, 0, 0, 0.04);
-  padding-left: 7px;
-  padding-right: 7px;
-  font-size: 0.75rem;
-  line-height: 14px;
-  padding-top: 5px;
-  margin-right: 5px;
+  @include filter-box;
 }
 
 .check-grid {
@@ -1512,101 +1419,31 @@ dx-tab-panel {
 }
 
 .statusN {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: inline-block;
-  text-align: center;
-  background-color: $accent-blue-grey !important;
-  color: $neutral-100;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-blue-grey);
 }
 
 .statusZ {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  background-color: $accent-teal !important;
-  color: $neutral-100;
-  display: inline-block;
-  text-align: center;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-teal);
 }
 
 .statusR {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  background-color: $accent-light-green !important;
-  color: $neutral-100;
-  display: inline-block;
-  text-align: center;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-light-green);
 }
 
 .statusO {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  background-color: $accent-blue-grey !important;
-  color: $neutral-100;
-  display: inline-block;
-  text-align: center;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-blue-grey);
 }
 
 .statusY {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: inline-block;
-  text-align: center;
-  background-color: $accent-red !important;
-  color: $neutral-100;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-red);
 }
 
 .statusW {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: inline-block;
-  text-align: center;
-  background-color: $accent-blue-intrastate !important;
-  color: $neutral-10;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-blue-intrastate, $neutral-10);
 }
 
 .statusP {
-  padding: 2px 3px;
-  height: 18px;
-  min-width: 18px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: inline-block;
-  text-align: center;
-  background-color: $accent-green-intrastate !important;
-  color: $neutral-10;
-  margin: 0 auto;
-  margin-right: 2px;
+  @include status-badge($accent-green-intrastate, $neutral-10);
 }
 
 .statusNull {
@@ -1756,7 +1593,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 
   /* HIDE RADIO */
   [type="checkbox"] {
-    position: absolute;
+    @include absolute-position(auto, auto, auto, auto);
     opacity: 0;
     width: 0;
     height: 0;
@@ -1784,7 +1621,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 
 /* HIDE RADIO */
 [type="radio"] {
-  position: absolute;
+  @include absolute-position(auto, auto, auto, auto);
   opacity: 0;
   width: 0;
   height: 0;
@@ -2050,13 +1887,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .header-document {
-  background: $neutral-95;
-  border: 1px solid $neutral-80;
-  box-sizing: border-box;
-  border-radius: 6px;
-  margin: 16px 0px;
-  padding: 10px 10px;
-  transition-duration: 250ms;
+  @include document-header;
 }
 
 .p-header-document {
@@ -2135,23 +1966,13 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .p-toPay {
-  font-family: "Roboto" !important;
-  font-style: normal !important;
-  font-weight: 500 !important;
-  font-size: 18px !important;
-  line-height: 21px !important;
+  @include text-style("Roboto", 18px, 500, 21px, $brand-10);
   text-align: right !important;
-  color: $brand-10 !important;
 }
 
 .p-toPayDesc {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 14px;
+  @include text-style("Roboto", 0.75rem, 400, 14px, $text-light-gray);
   text-align: right;
-  color: $text-light-gray;
 }
 
 .emptyState {
@@ -2161,32 +1982,17 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .p-emptyState {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 300;
-  font-size: 11px;
-  line-height: 13px;
+  @include text-style("Inter", 11px, 300, 13px, $text-light-gray);
   text-align: center;
-  color: $text-light-gray;
 
   strong {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: bold;
-    font-size: 11px;
-    line-height: 22px;
+    @include text-style("Inter", 11px, bold, 22px, $text-light-gray);
     text-align: center;
-    color: $text-light-gray;
   }
 }
 
 .p-header-info {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 14px;
-  color: $text-light-gray;
+  @include text-style("Roboto", 0.75rem, 400, 14px, $text-light-gray);
   margin-bottom: 0px;
 }
 
@@ -2424,9 +2230,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .editRowByMe {
-  position: absolute;
-  left: 1px;
-  top: 3px;
+  @include absolute-position(1px, auto, auto, 3px);
   border-radius: 3px;
   width: 4px;
   height: 25px;
@@ -2434,9 +2238,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .editRowByAnotherUser {
-  position: absolute;
-  left: 1px;
-  top: 3px;
+  @include absolute-position(1px, auto, auto, 3px);
   border-radius: 3px;
   width: 4px;
   height: calc(100% - 4px);
@@ -2444,9 +2246,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .greenStatus {
-  position: absolute;
-  left: 1px;
-  top: 3px;
+  @include absolute-position(1px, auto, auto, 3px);
   border-radius: 3px;
   width: 4px;
   height: calc(100% - 4px);
@@ -2454,9 +2254,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 }
 
 .yellowStatus {
-  position: absolute;
-  left: 1px;
-  top: 3px;
+  @include absolute-position(1px, auto, auto, 3px);
   border-radius: 3px;
   width: 4px;
   height: calc(100% - 4px);
@@ -2664,268 +2462,104 @@ ng-keyboard-shortcuts-help-item .item {
 }
 
 .pinkSignature {
-  background: var(--tagfill-pink, $tagfill-pink) !important;
-
-  p {
-    color: var(--globals-dedicated-font-for-tags-pink, $globals-dedicated-font-for-tags-pink) !important;
-  }
-
-  .p_document_name {
-    margin-bottom: 0px !important;
-    font-family: Roboto !important;
-    font-size: 12px !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    line-height: 18px !important;
-    color: var(--text-light-gray, $text-light-gray) !important;
-    width: 200px;
-    position: absolute;
-    top: 10px;
-    text-align: left;
-    left: 54px;
-  }
+  @include colored-signature('tagfill-pink', 'globals-dedicated-font-for-tags-pink');
 }
 
 .redHeader {
-  background: var(--globals-tags-100-md-red, $globals-tags-100-md-red) !important;
-
-  p {
-    color: var(--globals-dedicated-font-for-tags-red, $globals-dedicated-font-for-tags-red) !important;
-  }
-
-  .p_document_name {
-    margin-bottom: 0px !important;
-    font-family: Roboto !important;
-    font-size: 12px !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    line-height: 18px !important;
-    color: var(--text-light-gray, $text-light-gray) !important;
-    width: 200px;
-    position: absolute;
-    top: 10px;
-    text-align: left;
-    left: 54px;
-  }
+  @include colored-signature('globals-tags-100-md-red', 'globals-dedicated-font-for-tags-red');
 }
 
 .purpleSignature {
-  background: var(--globals-tags-100-md-purple, $globals-tags-100-md-purple) !important;
-
-  p {
-    color: var(--globals-dedicated-font-for-tags-purple, $globals-dedicated-font-for-tags-purple) !important;
-  }
-
-  .p_document_name {
-    margin-bottom: 0px !important;
-    font-family: Roboto !important;
-    font-size: 12px !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    line-height: 18px !important;
-    color: var(--text-light-gray, $text-light-gray) !important;
-    width: 200px;
-    position: absolute;
-    top: 10px;
-    text-align: left;
-    left: 54px;
-  }
+  @include colored-signature('globals-tags-100-md-purple', 'globals-dedicated-font-for-tags-purple');
 }
 
 .lightBlueSignature {
-  background: var(--globals-tags-100-md-light-blue, $globals-tags-100-md-light-blue) !important;
-
-  p {
-    color: var(--globals-dedicated-font-for-tags-light-blue, $globals-dedicated-font-for-tags-light-blue) !important;
-  }
-
-  .p_document_name {
-    margin-bottom: 0px !important;
-    font-family: Roboto !important;
-    font-size: 12px !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    line-height: 18px !important;
-    color: var(--text-light-gray, $text-light-gray) !important;
-    width: 200px;
-    position: absolute;
-    top: 10px;
-    text-align: left;
-    left: 54px;
-  }
+  @include colored-signature('globals-tags-100-md-light-blue', 'globals-dedicated-font-for-tags-light-blue');
 }
 
 .deepPurple {
-  background: var(--globals-tags-100-md-deep-purple, $globals-tags-100-md-deep-purple) !important;
-
-  p {
-    color: var(--globals-dedicated-font-for-tags-deep-purple, $globals-dedicated-font-for-tags-deep-purple) !important;
-  }
-
-  .p_document_name {
-    margin-bottom: 0px !important;
-    font-family: Roboto !important;
-    font-size: 12px !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    line-height: 18px !important;
-    color: var(--text-light-gray, $text-light-gray) !important;
-    width: 200px;
-    position: absolute;
-    top: 10px;
-    text-align: left;
-    left: 54px;
-  }
+  @include colored-signature('globals-tags-100-md-deep-purple', 'globals-dedicated-font-for-tags-deep-purple');
 }
 
 .active {
   .BusinesslinkHeader {
-    span,
-    .icon {
-      color: var(--tagtxt-teal, $tagtxt-teal) !important;
-    }
+    @include active-menu-item('tagtxt-teal');
   }
 
   .BufferHeader {
-    span,
-    .icon {
-      color: var(--tagtxt-blue-grey, $tagtxt-blue-grey) !important;
-    }
+    @include active-menu-item('tagtxt-blue-grey');
   }
 
   .redHeader {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-red, $globals-dedicated-font-for-tags-red) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-red');
   }
 
   .blueGreyHeader {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-blue, $globals-dedicated-font-for-tags-blue) -grey !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-blue');
   }
 
   .amberSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-amber, $globals-dedicated-font-for-tags-amber) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-amber');
   }
 
   .deepOrangeSignature {
-    span,
-    .icon {
-      color: var(
-        --globals-dedicated-font-for-tags-deep-orange,
-        $globals-dedicated-font-for-tags-deep-orange
-      ) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-deep-orange');
   }
 
   .limeSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-lime, $globals-dedicated-font-for-tags-lime) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-lime');
   }
 
   .orangeSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-orange, $globals-dedicated-font-for-tags-orange) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-orange');
   }
 
   .brownSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-brown, $globals-dedicated-font-for-tags-brown) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-brown');
   }
 
   .indigoSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-indigo, $globals-dedicated-font-for-tags-indigo) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-indigo');
   }
 
   .blueSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-blue, $globals-dedicated-font-for-tags-blue) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-blue');
   }
 
   .cyanSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-cyan, $globals-dedicated-font-for-tags-cyan) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-cyan');
   }
 
   .tealSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-teal, $globals-dedicated-font-for-tags-teal) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-teal');
   }
 
   .lightGreen {
-    span,
-    .icon {
-      color: var(
-        --globals-dedicated-font-for-tags-light-green,
-        $globals-dedicated-font-for-tags-light-green
-      ) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-light-green');
   }
 
   .yellowSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-yellow, $globals-dedicated-font-for-tags-yellow) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-yellow');
   }
 
   .greenSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-green, $globals-dedicated-font-for-tags-green) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-green');
   }
 
   .pinkSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-pink, $globals-dedicated-font-for-tags-pink) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-pink');
   }
 
   .purpleSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-purple, $globals-dedicated-font-for-tags-purple) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-purple');
   }
 
   .lightBlueSignature {
-    span,
-    .icon {
-      color: var(--globals-dedicated-font-for-tags-light-blue, $globals-dedicated-font-for-tags-light-blue) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-light-blue');
   }
 
   .deepPurple {
-    span,
-    .icon {
-      color: var(
-        --globals-dedicated-font-for-tags-deep-purple,
-        $globals-dedicated-font-for-tags-deep-purple
-      ) !important;
-    }
+    @include active-menu-item('globals-dedicated-font-for-tags-deep-purple');
   }
 }
 
@@ -3019,4 +2653,8 @@ ng-keyboard-shortcuts-help-item .item {
 .dx-datagrid-headers .dx-datagrid-content {
   margin-bottom: -1px;
   border-radius: 20px 20px 0px 0px;
+}
+
+.col-md-3 {
+  max-width: 25%;
 }
