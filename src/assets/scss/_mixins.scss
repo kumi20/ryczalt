@@ -1,3 +1,17 @@
+/**
+ * Główny plik mixinów SCSS
+ *
+ * Ten plik zawiera wszystkie mixiny używane w projekcie.
+ * Każdy mixin powinien być dobrze udokumentowany i mieć jasno określony cel.
+ *
+ * Kategorie mixinów:
+ * - Typografia
+ * - Układy i siatki
+ * - Komponenty UI
+ * - Stany elementów
+ * - Narzędzia i pomocnicze
+ */
+
 @import "./colors";
 @import "./fonts";
 
@@ -914,5 +928,264 @@ $focus-border-width: 2px;
 
   .dx-dropdowneditor-icon::before {
     color: $brand-10 !important;
+  }
+}
+
+// Mixin dla dropdownbutton-popup-wrapper
+@mixin dropdown-popup-wrapper($min-width: 502px, $padding: 15px 10px) {
+  background: $neutral-100;
+  box-sizing: border-box;
+  border: 1px solid $neutral-80;
+  box-shadow:
+    0px 2px 1px rgb(0 0 0 / 6%),
+    0px 4px 20px rgb(0 0 0 / 10%);
+  border-radius: 8px;
+  min-width: $min-width;
+  padding: $padding;
+}
+
+// Mixin dla scrollbar-hover-state
+@mixin scrollbar-hover-state($width-height: width, $size: 12px) {
+  #{$width-height}: $size;
+
+  .dx-scrollable-scroll-content {
+    background-color: $neutral-60 !important;
+  }
+}
+
+// Mixin dla treeview-node
+@mixin treeview-node-styling($item-height: 28px) {
+  .dx-treeview-node-container {
+    padding-left: 20px;
+  }
+
+  padding-left: 0;
+
+  .dx-item {
+    height: $item-height !important;
+  }
+
+  li.dx-treeview-node .dx-item {
+    height: $item-height;
+
+    > .dx-item-content.dx-treeview-item-content {
+      height: auto;
+      margin-left: 5px;
+    }
+  }
+
+  .dx-treeview-toggle-item-visibility {
+    position: absolute;
+    left: 8px;
+    top: 9px;
+    height: 18px;
+    width: 18px;
+    margin-right: 2px;
+  }
+
+  .dx-treeview-item {
+    padding: 5px 10px;
+    min-height: $item-height;
+    height: 100% !important;
+    position: relative;
+    left: 0px;
+    padding-left: 28px;
+    top: 1px;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100vw;
+  }
+
+  .dx-item.dx-state-hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  &.dx-state-focused {
+    > .dx-item {
+      border: none !important;
+    }
+  }
+}
+
+// Mixin dla bottom-side-panel
+@mixin bottom-side-panel {
+  position: relative;
+  background: $neutral-100;
+  bottom: 0px;
+  left: 0px;
+  width: calc(100% + 5px);
+  border-top: 1px solid $neutral-80;
+  min-height: 38px;
+  margin-top: 4px;
+  margin-left: -5px;
+  padding-left: 6px;
+}
+
+// Mixin dla resize-icon
+@mixin resize-icon($position: up) {
+  width: 50px;
+  height: 15px;
+  background: $neutral-90;
+  border: 1px solid $neutral-80;
+  box-sizing: border-box;
+  border-radius: 6px;
+
+  &:hover {
+    background: $neutral-85;
+  }
+
+  top: -15px;
+  position: absolute;
+  right: calc(50% - 10px);
+  z-index: if($position == up, 30000, 3);
+
+  &:active {
+    cursor: row-resize;
+  }
+}
+
+// Mixin dla form-popup
+@mixin form-popup {
+  .flex-box-wrapper {
+    gap: 6px 60px;
+  }
+
+  .flex-box-column {
+    display: grid;
+    gap: 24px 0;
+    height: 100%;
+  }
+
+  .flex-box-column-content {
+    gap: 6px 0;
+    display: grid;
+
+    .box-row {
+      position: relative;
+      min-height: 28px;
+    }
+  }
+
+  // Usunięcie marginesów z dołu dla kontrolek i buttonów
+  .form-group-inline-left,
+  .form-group-inline-right {
+    dx-select-box,
+    dx-text-box,
+    dx-number-box,
+    dx-drop-down-box,
+    dx-date-box,
+    dx-text-area,
+    dx-check-box {
+      margin-bottom: 0 !important;
+    }
+
+    label {
+      margin-bottom: 4px;
+    }
+  }
+
+  .form-group-inline-right .btn-dx-secondary {
+    margin-bottom: 0 !important;
+  }
+
+  .grid-row-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px 0px;
+  }
+
+  .grid-column-container {
+    display: flex;
+    gap: 0 60px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .flex-gap-element {
+    gap: 6px 0;
+  }
+}
+
+// Mixin dla summary-container
+@mixin summary-container($padding: 20px 10px, $margin-top: 15px) {
+  padding: $padding;
+  background-color: #ffffff;
+  border-radius: 20px 20px 0px 0px;
+  margin-top: $margin-top;
+  text-align: right;
+
+  label {
+    width: 350px;
+    display: inline-block;
+    text-align: left !important;
+  }
+
+  p {
+    margin-bottom: 0px;
+    display: inline-block;
+    width: 100px;
+  }
+}
+
+// Mixin dla obsługi stylów tabulacji (tabs)
+@mixin tab-reset-borders {
+  -webkit-border-before: none !important;
+  border-block-start: none !important;
+  -webkit-border-end: none !important;
+  border-inline-end: none !important;
+  -webkit-border-after: none !important;
+  border-block-end: none !important;
+  -webkit-border-start: none !important;
+  border-inline-start: none !important;
+}
+
+// Mixin dla stylów zakładek (tabs)
+@mixin tabpanel-styles {
+  .dx-tabs-wrapper {
+    position: relative;
+    display: -webkit-inline-box;
+    @include tab-reset-borders;
+
+    &::after {
+      @include tab-reset-borders;
+    }
+
+    background-color: transparent;
+  }
+
+  .dx-tabpanel-tabs-position-top.dx-state-focused {
+    .dx-tabs-nav-button,
+    .dx-tabs-wrapper {
+      -webkit-border-after: none;
+      border-block-end: none;
+    }
+  }
+
+  .dx-tab {
+    &.dx-state-hover {
+      background-color: transparent;
+
+      &::after {
+        @include tab-reset-borders;
+      }
+    }
+
+    &.dx-state-active {
+      background-color: transparent;
+
+      &::after {
+        @include tab-reset-borders;
+      }
+    }
+
+    &.dx-tab-selected,
+    &.dx-state-focused:not(.dx-state-disabled) {
+      border-block-end: 2px solid $text-brand !important;
+
+      &::after {
+        @include tab-reset-borders;
+      }
+    }
   }
 }

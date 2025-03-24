@@ -53,28 +53,6 @@ body {
   @include custom-scrollbar;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 4px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: $neutral-100;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: $neutral-60;
-  height: 2px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: $neutral-60;
-  height: 10px;
-}
-
 h2 {
   @include text-style($GeomanistBook, 3rem, normal, 22px, $neutral-10);
   margin-bottom: 9px;
@@ -173,54 +151,28 @@ h1 {
 }
 
 .addition-operation-content.dx-dropdownbutton-popup-wrapper.dx-dropdowneditor-overlay > .dx-overlay-content {
-  background: $neutral-100;
-  box-sizing: border-box;
-  border: 1px solid $neutral-80;
-  box-shadow:
-    0px 2px 1px rgb(0 0 0 / 6%),
-    0px 4px 20px rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  min-width: 502px;
-  padding: 15px 10px;
+  @include dropdown-popup-wrapper;
 }
 
 .dx-scrollbar-vertical.dx-scrollbar-hoverable {
   width: 4px;
   padding-top: 2px;
   transition: none;
-  /* transition: width .2s linear .15s,background-color .2s linear .15s; */
-}
-
-.dx-menu-item-has-submenu {
-  .dx-scrollable-container {
-    -webkit-tap-highlight-color: transparent;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    max-height: 500px;
-  }
+  /* transition: width .2s linear .15s; */
 }
 
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable.dx-scrollable-scrollbar-active,
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable.dx-scrollable-scrollbar-active .dx-scrollable-scroll,
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable.dx-state-hover,
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable.dx-state-hover .dx-scrollable-scroll {
-  height: 12px;
-
-  .dx-scrollable-scroll-content {
-    background-color: $neutral-60 !important;
-  }
+  @include scrollbar-hover-state(height);
 }
 
 .dx-scrollbar-vertical.dx-scrollbar-hoverable.dx-scrollable-scrollbar-active,
 .dx-scrollbar-vertical.dx-scrollbar-hoverable.dx-scrollable-scrollbar-active .dx-scrollable-scroll,
 .dx-scrollbar-vertical.dx-scrollbar-hoverable.dx-state-hover,
 .dx-scrollbar-vertical.dx-scrollbar-hoverable.dx-state-hover .dx-scrollable-scroll {
-  width: 12px;
-
-  .dx-scrollable-scroll-content {
-    background-color: $neutral-60 !important;
-  }
+  @include scrollbar-hover-state(width);
 }
 
 .payment-form-currency {
@@ -547,13 +499,11 @@ app-custom-dropdown-box {
 }
 
 .input-warning {
-  border: 1px solid $theme-warning-20 !important;
-  background: $theme-warning-70 !important;
+  @include input-validation(warning);
 }
 
 .input-required {
-  border: 1px solid #dc3545 !important;
-  background: $brand-90 !important;
+  @include input-required;
 }
 
 .input-required .dx-clear-button-area {
@@ -726,64 +676,19 @@ app-custom-dropdown-box {
 }
 
 .bottom-side-panel {
-  position: relative;
-  background: $neutral-100;
-  bottom: 0px;
-  left: 0px;
-  width: calc(100% + 5px);
-  border-top: 1px solid $neutral-80;
-  min-height: 38px;
-  margin-top: 4px;
-  margin-left: -5px;
-  padding-left: 6px;
-  //box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+  @include bottom-side-panel;
+
   &_ingredientsDelivery {
     width: 100%;
   }
 }
 
 .bottom-icon-resize-up {
-  width: 50px;
-  height: 15px;
-  background: $neutral-90;
-  border: 1px solid $neutral-80;
-  box-sizing: border-box;
-  border-radius: 6px;
-
-  &:hover {
-    background: $neutral-85;
-  }
-
-  top: -15px;
-  position: absolute;
-  right: calc(50% - 10px);
-  z-index: 30000;
-
-  &:active {
-    cursor: row-resize;
-  }
+  @include resize-icon(up);
 }
 
 .bottom-icon-resize-down {
-  width: 50px;
-  height: 15px;
-  background: $neutral-90;
-  border: 1px solid $neutral-80;
-  box-sizing: border-box;
-  border-radius: 6px;
-
-  &:hover {
-    background: $neutral-85;
-  }
-
-  top: -15px;
-  position: absolute;
-  right: calc(50% - 10px);
-  z-index: 3;
-
-  &:active {
-    cursor: row-resize;
-  }
+  @include resize-icon(down);
 }
 
 .views input:checked ~ .checkmark {
@@ -1067,68 +972,7 @@ dx-tree-view {
 }
 
 .dx-treeview-node {
-  .dx-treeview-node-container {
-    padding-left: 20px;
-  }
-
-  padding-left: 0;
-
-  .dx-item {
-    height: 28px !important;
-  }
-
-  li.dx-treeview-node .dx-item {
-    height: 28px;
-
-    > .dx-item-content.dx-treeview-item-content {
-      height: auto;
-      margin-left: 5px;
-    }
-  }
-
-  .dx-treeview-toggle-item-visibility {
-    position: absolute;
-    left: 8px;
-    top: 9px;
-    height: 18px;
-    width: 18px;
-    margin-right: 2px;
-  }
-
-  .dx-treeview-item {
-    padding: 5px 10px;
-  }
-
-  .dx-treeview-item {
-    min-height: 28px;
-    height: 100% !important;
-    position: relative;
-    left: 0px;
-    padding-left: 28px;
-    top: 1px;
-    width: 100%;
-    display: table-cell;
-    vertical-align: middle;
-    width: 100vw;
-  }
-
-  .dx-item.dx-state-hover {
-    background-color: rgba(0, 0, 0, 0.04);
-    // border-radius: 14px;
-  }
-
-  &.dx-state-focused {
-    > .dx-item {
-      border: none !important;
-      //border-radius: 14px !important;
-    }
-  }
-
-  // &.dx-state-selected{
-  //   > .dx-item{
-  //     border-radius: 14px;
-  //   }
-  // }
+  @include treeview-node-styling;
 }
 
 .left-side-panel dx-tab-panel {
@@ -2070,71 +1914,7 @@ dx-tab-panel.form-tab .dx-tabpanel-container {
 // formularz - odstepy miedzy boxami
 
 .popup-form {
-  .flex-box-wrapper {
-    gap: 6px 60px;
-  }
-
-  .flex-box-column {
-    display: grid;
-    gap: 24px 0;
-    height: 100%;
-  }
-
-  .flex-box-column-content {
-    gap: 6px 0;
-    display: grid;
-
-    .box-row {
-      position: relative;
-      min-height: 28px;
-      // do testow
-      // dx-check-box{
-      //   height: 28px;
-      // }
-      // dx-drop-down-box{
-      //   position: absolute;
-      // }
-    }
-  }
-
-  //usunięcie marginesów z dołu dla kontrolek i buttonów
-  .form-group-inline-left,
-  .form-group-inline-right {
-    dx-select-box,
-    dx-text-box,
-    dx-number-box,
-    dx-drop-down-box,
-    dx-date-box,
-    dx-text-area,
-    dx-check-box {
-      margin-bottom: 0 !important;
-    }
-
-    label {
-      margin-bottom: 4px;
-    }
-  }
-
-  .form-group-inline-right .btn-dx-secondary {
-    margin-bottom: 0 !important;
-  }
-
-  .grid-row-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px 0px;
-  }
-
-  .grid-column-container {
-    display: flex;
-    gap: 0 60px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .flex-gap-element {
-    gap: 6px 0;
-  }
+  @include form-popup;
 }
 
 .dx-popover-arrow {
@@ -2320,15 +2100,7 @@ ng-keyboard-shortcuts-help-item .item {
 }
 
 .correctionInvoices.dx-dropdownbutton-popup-wrapper.dx-dropdowneditor-overlay > .dx-overlay-content {
-  background: $neutral-100;
-  box-sizing: border-box;
-  border: 1px solid $neutral-80;
-  box-shadow:
-    0px 2px 1px rgb(0 0 0 / 6%),
-    0px 4px 20px rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  min-width: 260px;
-  padding: 5px 5px;
+  @include dropdown-popup-wrapper(260px, 5px 5px);
 }
 
 .dx-button.highlighted,
@@ -2374,10 +2146,10 @@ ng-keyboard-shortcuts-help-item .item {
 }
 
 .dx-tabpanel-tabs-position-top .dx-tabs-wrapper {
-  -webkit-border-before: none;
-  border-block-start: none;
-  -webkit-border-after: none;
-  border-block-end: none;
+  -webkit-border-before: none !important;
+  border-block-start: none !important;
+  -webkit-border-after: none !important;
+  border-block-end: none !important;
 }
 
 .dx-tabs-wrapper {
@@ -2385,76 +2157,12 @@ ng-keyboard-shortcuts-help-item .item {
 }
 
 .dx-tab.dx-tab-selected::after {
-  -webkit-border-before: none !important;
-  border-block-start: none !important;
-  -webkit-border-end: none !important;
-  border-inline-end: none !important;
-  -webkit-border-after: none !important;
-  border-block-end: none !important;
-  -webkit-border-start: none !important;
-  border-inline-start: none !important;
-}
-
-.dx-tabpanel-tabs-position-top .dx-tabs-wrapper::after {
-  -webkit-border-before: none;
-  border-block-start: none;
-  -webkit-border-end: none;
-  border-inline-end: none;
-  -webkit-border-after: none;
-  border-block-end: none;
-  -webkit-border-start: none;
-  border-inline-start: none;
-}
-
-.dx-tabpanel-tabs-position-top.dx-state-focused .dx-tabs-nav-button,
-.dx-tabpanel-tabs-position-top.dx-state-focused .dx-tabs-wrapper {
-  -webkit-border-after: none;
-  border-block-end: none;
-}
-
-.dx-tab.dx-state-hover::after {
-  -webkit-border-before: none;
-  border-block-start: none;
-  -webkit-border-end: none;
-  border-inline-end: none;
-  -webkit-border-after: none;
-  border-block-end: none;
-  -webkit-border-start: none;
-  border-inline-start: none;
-}
-
-.dx-tab.dx-state-active {
-  background-color: transparent;
-  /* color: #333; */
-}
-
-.dx-tab.dx-state-active::after {
-  -webkit-border-before: none;
-  border-block-start: none;
-  -webkit-border-end: none;
-  border-inline-end: none;
-  -webkit-border-after: none;
-  border-block-end: none;
-  -webkit-border-start: none;
-  border-inline-start: none;
+  @include tab-reset-borders;
 }
 
 .dx-tabpanel-tabs-position-top .dx-tabpanel-tab.dx-state-active::after {
-  -webkit-border-after: none;
-  border-block-end: none;
-}
-
-.dx-tabs-wrapper {
-  position: relative;
-  display: -webkit-inline-box;
-}
-
-.dx-tabpanel-tabs-position-top .dx-tabpanel-tab.dx-tab-selected {
-  border-block-end: 2px solid $text-brand;
-}
-
-.dx-tabpanel-tabs-position-top .dx-tabpanel-tab.dx-tab-selected {
-  border-block-end: 2px solid $text-brand;
+  -webkit-border-after: none !important;
+  border-block-end: none !important;
 }
 
 .dx-tabpanel-tabs-position-top .dx-tabpanel-tab.dx-state-focused:not(.dx-state-disabled) {
@@ -2628,21 +2336,7 @@ ng-keyboard-shortcuts-help-item .item {
 
 
 .summary {
-  padding: 20px 10px;
-  background-color: #ffffff;
-  border-radius: 20px 20px 0px 0px;
-  margin-top: 15px;
-  text-align: right;
-  label {
-    width: 350px;
-    display: inline-block;
-    text-align: left !important;
-  }
-  p {
-    margin-bottom: 0px;
-    display: inline-block;
-    width: 100px;
-  }
+  @include summary-container;
 }
 
 .dx-datagrid .dx-row.dx-column-lines.dx-header-row {
@@ -2658,3 +2352,6 @@ ng-keyboard-shortcuts-help-item .item {
 .col-md-3 {
   max-width: 25%;
 }
+
+// Zastosowanie mixinu dla stylów zakładek
+@include tabpanel-styles;
