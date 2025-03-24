@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przykład użycia Ryczalt-Icons</title>
+    <link rel="stylesheet" href="../../scss/_custom-icons.scss">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .icon-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .icon-display {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .icon-name {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+        .sample-usage {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            padding: 15px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+        .tabs {
+            display: flex;
+            margin-top: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #fff;
+            border-color: #ddd;
+            margin-bottom: -1px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Styl demonstracyjny z wykorzystaniem plików SVG bezpośrednio */
+        .demo-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .demo-home { background-image: url('./home.svg'); }
+        .demo-user { background-image: url('./user.svg'); }
+        .demo-settings { background-image: url('./settings.svg'); }
+        .demo-mail { background-image: url('./mail.svg'); }
+        .demo-calendar { background-image: url('./calendar.svg'); }
+        .demo-search { background-image: url('./search.svg'); }
+    </style>
+</head>
+<body>
+    <h1>Ryczalt-Icons Demo</h1>
+
+    <div class="note">
+        <p><strong>Uwaga:</strong> Ten plik demonstracyjny pokazuje ikony w dwóch wariantach:</p>
+        <ul>
+            <li>Jako bezpośrednie pliki SVG (widoczne od razu)</li>
+            <li>Jako font ikon (widoczne tylko po wygenerowaniu fontu)</li>
+        </ul>
+        <p>Aby zobaczyć właściwe ikony jako font, należy wygenerować plik fontu <code>Ryczalt-Icons.ttf</code> zgodnie z instrukcjami w pliku README.md i umieścić go w katalogu <code>src/assets/fonts/</code>.</p>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" id="tab-svg">Widok z użyciem SVG</div>
+        <div class="tab" id="tab-font">Widok z użyciem fontu</div>
+    </div>
+
+    <p>Poniżej znajduje się prezentacja wszystkich ikon dostępnych w zestawie Ryczalt-Icons.</p>
+
+    <div class="icon-grid" id="svg-view">
+        <div class="icon-item">
+            <div class="icon-display">
+                <span class="demo-icon demo-home"></span>
+            </div>
+            <div class="icon-name">ri-home</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <span class="demo-icon demo-user"></span>
+            </div>
+            <div class="icon-name">ri-user</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <span class="demo-icon demo-settings"></span>
+            </div>
+            <div class="icon-name">ri-settings</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <span class="demo-icon demo-mail"></span>
+            </div>
+            <div class="icon-name">ri-mail</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <span class="demo-icon demo-calendar"></span>
+            </div>
+            <div class="icon-name">ri-calendar</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <span class="demo-icon demo-search"></span>
+            </div>
+            <div class="icon-name">ri-search</div>
+        </div>
+    </div>
+
+    <div class="icon-grid" id="font-view" style="display: none;">
+        <div class="icon-item">
+            <div class="icon-display">
+                <i class="ryczalt-icon ri-home"></i>
+            </div>
+            <div class="icon-name">ri-home</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <i class="ryczalt-icon ri-user"></i>
+            </div>
+            <div class="icon-name">ri-user</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <i class="ryczalt-icon ri-settings"></i>
+            </div>
+            <div class="icon-name">ri-settings</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <i class="ryczalt-icon ri-mail"></i>
+            </div>
+            <div class="icon-name">ri-mail</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <i class="ryczalt-icon ri-calendar"></i>
+            </div>
+            <div class="icon-name">ri-calendar</div>
+        </div>
+        <div class="icon-item">
+            <div class="icon-display">
+                <i class="ryczalt-icon ri-search"></i>
+            </div>
+            <div class="icon-name">ri-search</div>
+        </div>
+    </div>
+
+    <div class="sample-usage">
+        <h2>Przykład użycia w HTML</h2>
+        <pre><code>&lt;i class="ryczalt-icon ri-home"&gt;&lt;/i&gt;
+&lt;i class="ryczalt-icon ri-user"&gt;&lt;/i&gt;
+&lt;i class="ryczalt-icon ri-settings"&gt;&lt;/i&gt;</code></pre>
+
+        <h2>Przykład użycia w Angular</h2>
+        <pre><code>&lt;span class="ryczalt-icon ri-mail"&gt;&lt;/span&gt;</code></pre>
+    </div>
+
+    <script>
+        // Prosty skrypt do przełączania między widokami
+        document.getElementById('tab-svg').addEventListener('click', function() {
+            document.getElementById('svg-view').style.display = 'grid';
+            document.getElementById('font-view').style.display = 'none';
+            document.getElementById('tab-svg').classList.add('active');
+            document.getElementById('tab-font').classList.remove('active');
+        });
+
+        document.getElementById('tab-font').addEventListener('click', function() {
+            document.getElementById('svg-view').style.display = 'none';
+            document.getElementById('font-view').style.display = 'grid';
+            document.getElementById('tab-svg').classList.remove('active');
+            document.getElementById('tab-font').classList.add('active');
+        });
+
+        // Sprawdzanie, czy font jest załadowany
+        function checkFontLoaded() {
+            const testElement = document.createElement('span');
+            testElement.style.fontFamily = 'Ryczalt-Icons';
+            testElement.style.visibility = 'hidden';
+            testElement.innerHTML = 'test';
+            document.body.appendChild(testElement);
+
+            const fontAvailable = testElement.offsetWidth > 0;
+            document.body.removeChild(testElement);
+
+            if (!fontAvailable) {
+                document.querySelector('.note').innerHTML += '<p><strong>Wykryto:</strong> Font "Ryczalt-Icons" nie jest jeszcze dostępny. Zakładka "Widok z użyciem fontu" nie będzie działać poprawnie.</p>';
+            } else {
+                document.querySelector('.note').innerHTML += '<p><strong>Wykryto:</strong> Font "Ryczalt-Icons" został poprawnie załadowany!</p>';
+            }
+        }
+
+        // Uruchom sprawdzenie po załadowaniu strony
+        window.addEventListener('load', checkFontLoaded);
+    </script>
+</body>
+</html>

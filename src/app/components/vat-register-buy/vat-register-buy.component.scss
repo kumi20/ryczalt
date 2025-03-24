@@ -56,21 +56,3 @@
     cursor: pointer;
   }
 }
-
-.summary {
-  padding: 20px 10px;
-  background-color: $neutral-90;
-  border-top: 1px solid $neutral-60;
-
-  text-align: right;
-  label {
-    width: 350px;
-    display: inline-block;
-    text-align: left !important;
-  }
-  p {
-    margin-bottom: 0px;
-    display: inline-block;
-    width: 100px;
-  }
-}

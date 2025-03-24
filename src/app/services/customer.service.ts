@@ -71,6 +71,16 @@ export class CustomerService {
       );
   }
 
+  checkAccountNumber(accountNumber: string, vatNumber: string): Observable<any> {
+    const params = new HttpParams().set('accountNumber', accountNumber).set('nip', vatNumber);
+
+    return this.http
+      .get<any>(`${this.apiUrl}customers/bank-account`, { params })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private mapToCustomer(data: any): Gus {
     return {
       customerName: data.customerName || '',

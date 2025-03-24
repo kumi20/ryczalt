@@ -40,7 +40,7 @@ import { NgShortcutsComponent } from '../../core/ng-keyboard-shortcuts/ng-keyboa
 import { Customer } from '../../../interface/customers';
 import { CountryComponent } from '../../country/country.component';
 import { Country } from '../../../interface/country';
-
+import { CountryService } from '../../../services/country-service';
 @Component({
   selector: 'app-new-customer',
   standalone: true,
@@ -86,6 +86,7 @@ export class NewCustomerComponent
   form: FormGroup = new FormGroup({});
   isValidVatNumber = signal<boolean>(false);
   shortcuts: ShortcutInput[] = [];
+  countryService = inject(CountryService);
 
   constructor() {
     this.form = this.initForm();
@@ -210,7 +211,11 @@ export class NewCustomerComponent
       .subscribe(
         (data) => {
           this.form.patchValue(data);
-
+          this.countryService.getCountryByName(data.country).subscribe((res) => {
+            if(res.length > 0){
+              this.form.controls['countryId'].setValue(res[0].id);
+            }
+          });
           const index = this.countryBox
             .countryList()
             .find((country: Country) => country.name === data.country);
@@ -319,6 +324,21 @@ export class NewCustomerComponent
         ?.setValue(e.id);
       console.log(this.form.value);
     }
+  }
+
+  checkAccountNumber(){
+    this.customerService.checkAccountNumber(this.form.value.accountNumber, this.form.value.customerVat).subscribe({
+      next: (res) => {
+        if(res.accountAssigned){
+          this.event.showNotification('success', this.translate.instant('customers.accountNumberIsWhiteList'));
+        }else{
+          this.event.showNotification('error', this.translate.instant('customers.accountNumberIsNotWhiteList'));
+        }
+      },
+      error: (err) => {
+        this.event.httpErrorNotification(err);
+      }
+    });
   }
 
   @HostListener('document:keydown.escape', ['$event'])

@@ -1,5 +1,6 @@
 @import "./fonts";
 @import "./colors";
+@import "./mixins";
 
 dx-tab-panel {
     &.no-padding-tab-panel .dx-multiview-wrapper {
@@ -7,15 +8,14 @@ dx-tab-panel {
         padding-right: 0 !important;
     }
     .dx-multiview-wrapper {
-        //padding-left: 6px;
         padding-right: 6px;
     }
     .dx-tabs-nav-button-left,
     .dx-tabs-nav-button-right {
         margin-top: 6px !important;
         &.dx-state-hover {
-            background-color: $neutral-90 !important;
-            border-radius: 12px !important;
+            @include tab-hover;
+            @include small-corners;
         }
     }
 }
@@ -25,15 +25,13 @@ dx-tab-panel {
         .dx-multiview-wrapper {
             padding-left: 0px;
             padding-right: 0px;
-            // margin-top: -6px;
         }
         .dx-tabs-nav-button-left,
         .dx-tabs-nav-button-right {
             margin-top: 6px !important;
             &.dx-state-hover {
-                background-color: $neutral-90 !important;
-                border-radius: 12px !important;
-                color: $neutral-30 !important;
+                @include tab-hover;
+                @include small-corners;
             }
         }
     }
@@ -48,23 +46,14 @@ dx-tab-panel {
 }
 
 .dx-tab {
-    // padding: 9px;
-    background-color: transparent;
-    // padding-left: 11px;
-    // padding-right: 11px;
-    color: $neutral-30;
-    padding: 8px 10px !important;
+    @include tab-base;
     .dx-state-active {
         border: none !important;
     }
     &.dx-state-focused:not(.dx-tab-selected),
     &:focus:not(.dx-tab-selected) {
-        border: 1px solid $neutral-40;
+        @include border(1px, solid, $neutral-40);
     }
-    //&:focus-visible {
-    //background-color: $neutral-10;
-    //border: 1px solid $neutral-40;
-    //}
 }
 
 .dx-tabs {
@@ -74,29 +63,22 @@ dx-tab-panel {
 }
 
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs {
-    box-shadow: none;
+    @include no-shadow;
     border-bottom: 1px solid $neutral-80;
 }
 
 .dx-tab-text {
-    vertical-align: middle;
-    font-family: $Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.75rem;
-    line-height: 14px;
+    @include tab-text;
 }
 
 .dx-rtl .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-stretched .dx-tab:not(.dx-tab-selected):last-of-type,
 .dx-rtl.dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-stretched .dx-tab:not(.dx-tab-selected):last-of-type,
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-nav-button-left {
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    @include no-shadow;
 }
 
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tabs-expanded .dx-tab:not(.dx-tab-selected):first-of-type {
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    @include no-shadow;
 }
 
 .dx-rtl .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tabs-expanded .dx-tab:not(.dx-tab-selected):first-of-type,

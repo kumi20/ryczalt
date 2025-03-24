@@ -1,8 +1,8 @@
 @import "./colors";
+@import "./mixins";
 
 .dx-form-group-caption {
-  font-size: 0.875rem;
-  line-height: 16px;
+  @include subheader-short;
   font-weight: 700;
   color: $neutral-20;
 }

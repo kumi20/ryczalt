@@ -96,6 +96,7 @@
                 form.get('documentNumber')?.invalid &&
                 form.get('documentNumber')?.touched
             }"
+            #inputDate
           ></dx-text-box>
         </div>
 
@@ -224,28 +225,28 @@
                 "
               >
                 <div class="row" style="width: 940px; margin: 0 auto;">
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-6" style="text-align: right;">
                     <div class="form-group">
                       <label for="customerVat" class="d-inline-block">
                         {{ 'vatRegister.shoppingByRate' | translate }} 23%
                       </label>
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
                         formControlName="sell23Net"
                         (onValueChanged)="
-                          countGross('sell23gross', 'sell23vat', $event, 23)
+                          countGross('sell23Gross', 'sell23Vat', $event, 23)
                         "
                       ></dx-number-box>
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                         <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -254,10 +255,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -271,13 +272,13 @@
                 </div>
 
                 <div class="row" style="width: 940px; margin: 0 auto;">
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-6" style="text-align: right;">
                     <div class="form-group">
                       <label for="customerVat" class="d-inline-block">
                         {{ 'vatRegister.shoppingByRate' | translate }} 8%
                       </label>
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -289,10 +290,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -301,10 +302,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -318,13 +319,13 @@
                 </div>
 
                 <div class="row" style="width: 940px; margin: 0 auto;">
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-6" style="text-align: right;">
                     <div class="form-group">
                       <label for="customerVat" class="d-inline-block">
                         {{ 'vatRegister.shoppingByRate' | translate }} 5%
                       </label>
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -336,10 +337,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -348,10 +349,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -371,13 +372,13 @@
                 "
               >
                 <div class="row" style="width: 940px; margin: 0 auto;">
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-6" style="text-align: right;">
                     <div class="form-group">
                       <label for="customerVat" class="d-inline-block">
                         {{ 'vatRegister.shoppingByRate' | translate }} 23%
                       </label>
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -389,10 +390,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -401,10 +402,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -418,13 +419,13 @@
                 </div>
 
                 <div class="row" style="width: 940px; margin: 0 auto;">
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-6" style="text-align: right;">
                     <div class="form-group">
                       <label for="customerVat" class="d-inline-block">
                         {{ 'vatRegister.shoppingByRate' | translate }} 8%
                       </label>
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -436,10 +437,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -448,10 +449,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -465,13 +466,13 @@
                 </div>
 
                 <div class="row" style="width: 940px; margin: 0 auto;">
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-6" style="text-align: right;">
                     <div class="form-group">
                       <label for="customerVat" class="d-inline-block">
                         {{ 'vatRegister.shoppingByRate' | translate }} 5%
                       </label>
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -483,10 +484,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"
@@ -495,10 +496,10 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4" style="text-align: right;">
+                  <div class="col-md-3" style="text-align: right;">
                     <div class="form-group">
                       <dx-number-box
-                        width="140"
+                        width="210"
                         class="d-inline-block"
                         [format]="event.formatPLN"
                         [readOnly]="!event.sessionData.isActive"

@@ -44,6 +44,9 @@
     "preview": "Preview"
   },
   "customers": {
+    "accountNumberIsWhiteList": "Account number is on white list",
+    "accountNumberIsNotWhiteList": "Account number is not on white list",
+    "checkAccountNumber": "Check account number on white list",
     "contactPerson": "Contact person",
     "companyData": "Company data",
     "addressesData": "Address data",

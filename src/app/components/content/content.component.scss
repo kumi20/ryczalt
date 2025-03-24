@@ -1,6 +1,58 @@
 @import "../../../assets/scss/colors";
 @import "../../../assets/scss/fonts";
 
+// Mixiny dla często używanych stylów
+@mixin font-roboto($size, $weight, $line-height, $color) {
+  font-family: Roboto;
+  font-style: normal;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin circle($size, $bg-color) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: $bg-color;
+}
+
+@mixin box-shadow() {
+  box-shadow:
+    0px 2px 1px rgba(0, 0, 0, 0.06),
+    0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+@mixin transition($duration: 0.2s) {
+  -ms-transition: all $duration;
+  -webkit-transition: all $duration;
+  -moz-transition: all $duration;
+  -o-transition: all $duration;
+  transition: all $duration;
+}
+
+@mixin panel-container() {
+  background: $neutral-100;
+  border: 1px solid $neutral-80;
+  box-sizing: border-box;
+  border-radius: 0px 0px 8px 8px;
+  @include box-shadow();
+}
+
+@mixin hover-bg($bg-color: $neutral-90) {
+  &:hover {
+    background-color: $bg-color;
+    cursor: pointer;
+  }
+}
+
+@mixin focus-style() {
+  &:focus-visible {
+    border: 2px solid $neutral-40;
+  }
+}
+
 header {
   height: 32px;
   width: 100%;
@@ -22,32 +74,20 @@ header {
 }
 
 .p_user_name {
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 18px;
-  color: $neutral-10;
+  @include font-roboto(12px, 500, 18px, $neutral-10);
   margin-bottom: 0px;
 }
 
 .circle_user {
-  width: 48px;
-  height: 48px;
-  background-color: $teal900Round;
+  @include circle(48px, $teal900Round);
   margin-bottom: 6px !important;
-  border-radius: 50%;
   padding-top: 13px;
   margin: 0 auto;
   p {
     margin-bottom: 0px;
     color: $teal900;
     text-align: center;
-    font-family: Roboto;
-    font-size: 19px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    @include font-roboto(19px, 400, normal, $teal900);
     text-transform: uppercase;
   }
 }
@@ -75,14 +115,11 @@ header {
 }
 
 .dot-queue {
-  width: 9px;
-  height: 9px;
-  background-color: $brand-10 !important;
+  @include circle(9px, $brand-10);
   position: absolute;
   top: 6px;
   right: 70px;
   z-index: 1;
-  border-radius: 9px;
 }
 
 .apps-panel {
@@ -92,30 +129,19 @@ header {
   height: calc(100vh - 32px);
   box-sizing: border-box;
   background: $neutral-100;
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
+  @include box-shadow();
   position: absolute;
   z-index: 0;
   display: none;
   top: 32px;
   left: 81px;
   padding: 0px 31px;
-  -ms-transition: all 400ms;
-  -webkit-transition: all 400ms;
-  -moz-transition: all 400ms;
-  -o-transition: all 400ms;
-  transition: all 400ms;
+  @include transition(400ms);
 }
 
 .p-shorcut {
-  color: $neutral-50;
+  @include font-roboto(12px, 400, 18px, $neutral-50);
   text-align: right;
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
   width: 250px;
   position: relative;
   top: -17px;
@@ -147,12 +173,7 @@ header {
 }
 
 .p_fast_steps {
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 18px;
-  color: $text-gray;
+  @include font-roboto(12px, 500, 18px, $text-gray);
 }
 
 .apps-panel-open {
@@ -160,18 +181,12 @@ header {
   box-sizing: border-box;
   background: $neutral-100;
   display: block;
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
+  @include box-shadow();
   position: absolute;
   z-index: 2;
   top: 32px;
   left: 81px;
-  -ms-transition: all 400ms;
-  -webkit-transition: all 400ms;
-  -moz-transition: all 400ms;
-  -o-transition: all 400ms;
-  transition: all 400ms;
+  @include transition(400ms);
   width: 112px;
   border-radius: 8px;
   padding: 0px 15px;
@@ -456,7 +471,7 @@ h5 {
 :host ::ng-deep .dx-menu-item.dx-state-hover {
   // color: $brand-10;
   // width: 70px;
-  background-color: transparent;
+  background-color: transparent!important;
   border-radius: 4px;
 }
 
@@ -517,23 +532,8 @@ h5 {
   border: 1px solid transparent;
   box-sizing: border-box;
   // margin-bottom: -5px;
-  &:hover {
-    cursor: pointer;
-    width: 70px;
-    margin-left: -4px;
-    height: 70px !important;
-    border: 1px solid transparent;
-    // border-left: 3px solid $brand-10;
-    padding-left: 2px;
-    background-color: $brand-90;
-  }
-  &:focus-visible {
-    //background-color: $neutral-10;
-    border: 2px solid $neutral-40;
-    .submenu-icon-show {
-      display: block;
-    }
-  }
+  @include hover-bg($brand-90);
+  @include focus-style();
   .change-color-text {
     padding-top: 10px;
     margin-left: -1px;
@@ -555,20 +555,8 @@ h5 {
   border: 1px solid transparent;
   box-sizing: border-box;
   // margin-bottom: -5px;
-  &:hover {
-    cursor: pointer;
-    width: 70px;
-    margin-left: -4px;
-    height: 70px !important;
-    border: 1px solid transparent;
-    // border-left: 3px solid $brand-10;
-    padding-left: 2px;
-    background-color: $neutral-90;
-  }
-  &:focus-visible {
-    //background-color: $neutral-10;
-    border: 2px solid $neutral-40;
-  }
+  @include hover-bg($neutral-90);
+  @include focus-style();
   .change-color-text {
     padding-top: 10px;
     margin-left: -1px;
@@ -584,21 +572,12 @@ h5 {
   border: 1px solid $neutral-40;
 }
 .dx-menu-item-text-span {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.625rem;
-  line-height: 0.75rem;
-  color: $text-gray;
+  @include font-roboto(0.625rem, 500, 0.75rem, $text-gray);
   text-wrap: wrap;
 }
 
 .active .dx-menu-item-text-span {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 0.75rem;
-  color: $brand-10;
+  @include font-roboto(0.625rem, 500, 0.75rem, $brand-10);
 }
 
 .active .dx-icon::before {
@@ -624,12 +603,7 @@ h5 {
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 4px !important;
   //padding-left: 1px !important;
-  &:focus-visible {
-    border: 1px solid transparent !important;
-    background-image: url("../../../assets/images/active-focus.svg");
-    background-position-x: -1px;
-    background-position-y: -1px;
-  }
+  @include focus-style();
 }
 
 :host ::ng-deep .dx-menu-item-text {
@@ -697,25 +671,13 @@ h5 {
 }
 
 .p-no-found {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 11px;
-  line-height: 13px;
+  @include font-roboto(11px, normal, 13px, $text-light-gray);
   text-align: center;
-  color: $text-light-gray;
   margin-top: 14px;
 }
 
 ::ng-deep .company-chose {
-  border: 1px solid $neutral-80;
-  background: $neutral-100;
-  border: 1px solid $neutral-80;
-  box-sizing: border-box;
-  box-shadow:
-    0px 2px 1px rgb(0 0 0 / 6%),
-    0px 4px 20px rgb(0 0 0 / 10%);
-  border-radius: 0px 0px 8px 8px;
+  @include panel-container();
   position: absolute;
   width: 320px;
   max-height: 712px;
@@ -743,9 +705,7 @@ h5 {
       align-items: center;
       flex: 1 0 100%;
       padding: 0 6px;
-      &:hover {
-        background-color: $neutral-90;
-      }
+      @include hover-bg();
     }
 
     &.dx-state-hover {
@@ -769,30 +729,18 @@ h5 {
 }
 
 .box-color-warehouse {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
+  @include circle(13px, inherit);
   margin: 0 auto;
 }
 
 .p-company-chose {
-  font-family: "Roboto";
-  font-style: normal;
-  font-size: 0.75rem;
-  line-height: 14.06px;
+  @include font-roboto(0.75rem, normal, 14.06px, inherit);
   margin-bottom: 0px;
   display: flex;
 }
 
 .warehouse-choice {
-  border: 1px solid $neutral-80;
-  background: $neutral-100;
-  border: 1px solid $neutral-80;
-  box-sizing: border-box;
-  box-shadow:
-    0px 2px 1px rgb(0 0 0 / 6%),
-    0px 4px 20px rgb(0 0 0 / 10%);
-  border-radius: 0px 0px 8px 8px;
+  @include panel-container();
   position: absolute;
   width: 320px;
   max-height: 712px;
@@ -806,10 +754,7 @@ h5 {
 }
 
 .p-warehouse-choice {
-  font-family: "Roboto";
-  font-style: normal;
-  font-size: 0.75rem;
-  line-height: 14.06px;
+  @include font-roboto(0.75rem, normal, 14.06px, inherit);
   margin-bottom: 0px;
 }
 
@@ -817,9 +762,7 @@ h5 {
   min-width: 300px;
   height: auto;
   background: $neutral-100;
-  box-shadow:
-    0px 2px 1px rgb(0 0 0 / 6%),
-    0px 4px 20px rgb(0 0 0 / 10%);
+  @include box-shadow();
   border-radius: 4px;
   position: absolute;
   z-index: 2;
@@ -827,11 +770,7 @@ h5 {
   right: 0px;
   border: 1px solid $neutral-80;
   // right: -216px;
-  -ms-transition: all 400ms;
-  -webkit-transition: all 400ms;
-  -moz-transition: all 400ms;
-  -o-transition: all 400ms;
-  transition: all 400ms;
+  @include transition(400ms);
   box-sizing: border-box;
 }
 
@@ -850,22 +789,12 @@ h5 {
 }
 
 .p_copyright {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 0.75rem;
-  line-height: 16px;
-  color: $text-light-gray;
+  @include font-roboto(0.75rem, normal, 16px, $text-light-gray);
   margin-bottom: 6px;
 }
 
 .allRightsReserved {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.75rem;
-  line-height: 16px;
-  color: $text-dark-gray;
+  @include font-roboto(0.75rem, 500, 16px, $text-dark-gray);
   margin-bottom: 6px;
 }
 
@@ -883,12 +812,7 @@ h5 {
 .p-user-info-panel {
   margin-top: 6px;
   margin-bottom: 26px;
-  font-family: $Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.8125rem;
-  line-height: 15px;
-  color: $neutral-30;
+  @include font-roboto(0.8125rem, 500, 15px, $neutral-30);
 }
 
 :host ::ng-deep .menu-panel-user {
@@ -1065,11 +989,7 @@ h5 {
 }
 
 .search-result-panel {
-  background: $neutral-100;
-  border: 1px solid $neutral-80;
-  box-sizing: border-box;
-  box-shadow: 0px 6px 16px rgba(35, 38, 42, 0.1);
-  border-radius: 0px 0px 8px 8px;
+  @include panel-container();
   position: absolute;
   padding: 24px 15px 24px 15px;
   width: 350px;
@@ -1080,10 +1000,9 @@ h5 {
 }
 
 .p-menu-header {
+  @include font-roboto(11px, normal, 13px, inherit);
   display: inline-block;
   margin-left: 7px;
-  font-size: 11px;
-  line-height: 13px;
   position: relative;
   top: -5px;
 }
@@ -1097,24 +1016,14 @@ h5 {
 }
 
 .header-menu-name {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.75rem;
-  line-height: 14px;
-  color: $brand-10 !important;
+  @include font-roboto(0.75rem, 500, 14px, $brand-10);
   margin-bottom: 0px;
   margin-top: 3px;
 }
 
 .patch-menu {
+  @include font-roboto(11px, normal, 13px, $text-light-gray);
   display: inline-block;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 11px;
-  line-height: 13px;
-  color: $text-light-gray;
   margin-bottom: 0px;
 }
 
@@ -1134,14 +1043,9 @@ h5 {
   font-weight: 500;
 }
 .dx-submenu-top-span {
-  font-family: "Roboto";
-  font-style: normal;
-  font-size: 0.75rem;
-  line-height: 14px;
-  font-weight: normal;
+  @include font-roboto(0.75rem, normal, 14px, $neutral-30);
   position: relative;
   top: -17px;
-  color: $neutral-30;
 }
 
 .submenu-icon-show {
@@ -1149,14 +1053,9 @@ h5 {
 }
 
 .dx-submenu-top-span-sub {
-  font-family: "Roboto";
-  font-style: normal;
-  font-size: 0.75rem;
-  line-height: 14px;
-  font-weight: normal;
+  @include font-roboto(0.75rem, normal, 14px, $neutral-30);
   position: relative;
   top: 0px;
-  color: $neutral-30;
 }
 
 @media (max-width: 1000px) {
@@ -1205,12 +1104,7 @@ h5 {
 }
 
 .p-title-search-mobile {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  color: $neutral-30;
+  @include font-roboto(16px, 600, 20px, $neutral-30);
   margin-bottom: 0px;
 }
 
@@ -1251,10 +1145,7 @@ h5 {
 }
 
 .switch-desc {
-  font-family: Roboto;
-  font-size: 0.75rem;
-  line-height: 18px;
-  color: $neutral-50;
+  @include font-roboto(0.75rem, normal, 18px, $neutral-50);
 }
 
 ::ng-deep .mobile-header {
@@ -1287,11 +1178,8 @@ h5 {
 }
 
 .app-name {
+  @include font-roboto(16px, 600, 22px, inherit);
   font-family: Inter;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 22px;
   margin-top: -6px;
   margin-bottom: 0;
 }
@@ -1303,10 +1191,7 @@ h5 {
 }
 
 .section-header {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 14px;
-  color: #666666;
+  @include font-roboto(12px, 500, 14px, #666666);
   margin-bottom: 6px;
   margin-top: 20px;
 }
@@ -1409,18 +1294,11 @@ h5 {
 
   p {
     display: inline-block;
-    font-size: 0.75rem;
-    line-height: 14px;
-    font-family: Roboto;
-    position: relative;
-    color: $neutral-100;
+    @include font-roboto(0.75rem, normal, 14px, $neutral-100);
     margin: 0 6px;
   }
 
-  &:hover {
-    cursor: pointer;
-    background-color: $neutral-10;
-  }
+  @include hover-bg($neutral-10);
 
   .dx-icon-spindown::before {
     font-size: 18px !important;
@@ -1442,18 +1320,13 @@ h5 {
 
   p {
     display: inline-block;
-    font-size: 0.75rem;
-    line-height: 14px;
-    font-family: Roboto;
-    position: relative;
+    @include font-roboto(0.75rem, normal, 14px, $neutral-30);
     margin: 0 6px;
-    color: $neutral-30 !important;
   }
 
-  &:hover {
-    cursor: pointer;
-    background-color: $neutral-30;
+  @include hover-bg($neutral-30);
 
+  &:hover {
     p {
       color: $neutral-100;
     }
@@ -1601,12 +1474,7 @@ h5 {
 .company-change-button-mobile,
 .warehouse-change-button-mobile {
   margin: 0;
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 18px;
-  color: $text-white;
+  @include font-roboto(12px, 500, 18px, $text-white);
 }
 
 .bottomNavigationBar {
@@ -1619,28 +1487,20 @@ h5 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  transition: all 0.2s ease-in-out;
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
+  @include transition();
+  @include box-shadow();
   &.show {
     bottom: 0;
   }
 }
 
 .circle-yellow {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: $accent-blue;
+  @include circle(15px, $accent-blue);
   margin-left: 5px;
   margin-right: 5px;
 }
 .circle-red {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: $accent-orange;
+  @include circle(15px, $accent-orange);
   margin-left: 5px;
   margin-right: 5px;
 }

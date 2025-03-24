@@ -16,6 +16,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./components/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
+  },
+  {
     path: 'content',
     canActivate: [AuthGuard],
 
@@ -24,6 +31,13 @@ export const routes: Routes = [
         (m) => m.ContentComponent
       ),
     children: [
+      {
+        path: 'start',
+        loadComponent: () =>
+          import('./components/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
+          ),
+      },
       {
         path: 'flate-rate',
         loadComponent: () =>

@@ -42,7 +42,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
   shortcuts: ShortcutInput[] = [];
 
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 220px)';
+  heightGrid: number | string = 'calc(100vh - 105px)';
   focusedElement = signal<FlatRateTax | null>(null);
   year = signal<number>(this.event.globalDate.year);
   focusedRowIndex: number = 0;

@@ -237,6 +237,7 @@ export class NewVatRegisterComponent
 
     if (this.form.invalid || this.mode() === 'show') return;
 
+    this.inputDate.instance.focus();
     if (this.mode() === 'add') {
       this.vatRegisterService.post(this.form.value).subscribe({
         next: (data) => {

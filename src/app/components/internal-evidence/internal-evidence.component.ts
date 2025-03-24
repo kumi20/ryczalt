@@ -46,7 +46,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   event = inject(EventService);
 
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 220px)';
+  heightGrid: number | string = 'calc(100vh - 105px)';
   selectedRows: InternalEvidence[] = [];
   focusedRowIndex: number = 0;
   pageSize: number = 200;

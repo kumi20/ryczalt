@@ -271,7 +271,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
       const index = data.findIndex(
-        (x: any) => x.customerId === Number(event.customerId)
+        (x: any) => x.customerId == Number(event.customerId)
       );
 
       if (index !== -1) {

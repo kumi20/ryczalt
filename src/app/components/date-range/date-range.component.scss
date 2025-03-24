@@ -5,7 +5,7 @@
   background-color: #fef8eb !important;
   border: 2px solid #fef1d7 !important;
   border-radius: 30px;
-  padding: 0px 8px;
+  padding: 5px 8px;
   width: auto;
   height: 26px;
   align-items: center;
@@ -20,6 +20,7 @@
   display: inline-block;
   position: relative;
   white-space: nowrap;
+  margin-top: 7px;
 
   strong {
     font-family: Roboto;
@@ -43,7 +44,7 @@
   background-color: $theme-warning-80;
   width: 26px;
   position: relative;
-  top: -2px;
+  top: -7px;
   left: -10px;
   box-sizing: border-box;
   text-align: center;

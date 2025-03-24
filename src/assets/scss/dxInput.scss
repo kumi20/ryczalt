@@ -1,5 +1,6 @@
 @import "./fonts";
 @import "./colors";
+@import "./mixins";
 
 @mixin container-mobile {
   display: block !important;
@@ -18,19 +19,16 @@
 }
 
 .dx-texteditor.dx-state-readonly {
-  background: $neutral-95 !important;
-  border: 1px solid $neutral-80 !important;
+  @include state-readonly;
+  @include border(1px, solid, $neutral-80, true);
 }
 
 .dx-texteditor.dx-state-disabled {
-  background: $neutral-80;
-  border: 1px solid $neutral-80;
-  color: $neutral-80;
+  @include input-disabled;
 }
 
 .position-check.dx-checkbox.dx-state-readonly .dx-checkbox-icon {
   position: relative;
-  // top: -5px;
 }
 
 .dx-datebox-calendar .dx-dropdowneditor-icon {
@@ -38,7 +36,7 @@
   width: 22px;
   height: 100%;
   text-align: center;
-  border-radius: 3px;
+  @include border-radius(3px);
 }
 
 .dx-button-content .icon {
@@ -50,10 +48,10 @@
   max-width: 290px;
   width: 70px;
   background: $neutral-100;
-  border: 1px solid $neutral-50;
+  @include border(1px, solid, $neutral-50);
   box-sizing: border-box;
-  border-radius: 6px;
-  height: 28px;
+  @include border-radius($border-radius-large);
+  height: 40px;
 }
 
 .dx-checkbox-has-text .dx-checkbox-icon,
@@ -63,10 +61,7 @@
 
 .dx-texteditor.dx-state-readonly.dx-widget input,
 .dx-widget textarea {
-  font-family: $Roboto;
-  font-size: 0.75rem;
-  line-height: 16px;
-  color: $neutral-30;
+  @include input-text;
 }
 
 .dx-checkbox.dx-state-readonly .dx-checkbox-icon {
@@ -297,8 +292,8 @@ label {
   // background: $neutral-100;
   border: 1px solid $neutral-50;
   box-sizing: border-box;
-  border-radius: 6px;
-  height: 28px;
+  border-radius: 10px;
+  height: 40px;
 }
 
 .dx-dropdowneditor.dx-state-active .dx-dropdowneditor-icon,
@@ -520,7 +515,7 @@ dx-text-area.remarks-textarea.dx-texteditor.dx-editor-outlined {
   background: $neutral-100;
   border: 1px solid $neutral-50;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 10px;
   height: auto !important;
 }
 
@@ -530,7 +525,7 @@ dx-text-area.dx-texteditor.dx-editor-outlined {
   background: $neutral-100;
   border: 1px solid $neutral-50;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 10px;
   height: auto !important;
 }
 
@@ -603,7 +598,7 @@ dx-text-area.dictionary .dx-texteditor-container {
 .dx-texteditor.dx-editor-outlined {
   background: $neutral-100;
   border: 1px solid $neutral-50;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
 .dx-texteditor.dx-editor-outlined.dx-state-disabled {
@@ -628,7 +623,7 @@ dx-text-area.dictionary .dx-texteditor-container {
 .dx-texteditor.dx-state-focused.dx-editor-underlined {
   border: 1px solid $neutral-40;
   box-shadow: 0px 0px 8px rgba(88, 99, 106, 0.3);
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 /* checkbox */
@@ -705,7 +700,7 @@ dx-text-area.dictionary .dx-texteditor-container {
   .dx-texteditor.dx-state-focused.dx-editor-underlined {
     border: transparent;
     box-shadow: none;
-    border-radius: 4px;
+    border-radius: 10px;
   }
 
   .dx-widget input,
@@ -899,11 +894,11 @@ dx-drop-down-box {
 
 .dx-texteditor-input {
   margin: 0;
-  padding: 8px 9px 8px;
+  padding: 15px;
   background: rgba(0, 0, 0, 0);
   color: $neutral-30;
   font-size: 1em;
-  border-radius: 4px;
+  border-radius: 10px;
   min-height: 25px;
 }
 
@@ -941,6 +936,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 

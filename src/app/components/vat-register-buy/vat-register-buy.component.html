@@ -11,7 +11,7 @@
   <dx-scroll-view width="95%" height="100%" direction="horizontal">
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-add"
+      icon="ryczalt-icon ri-plus"
       stylingMode="text"
       type="default"
       [disabled]="!event.sessionData.isActive || isClosed()"
@@ -23,7 +23,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-edit"
+      icon="ryczalt-icon ri-edit"
       stylingMode="text"
       type="default"
       [disabled]="
@@ -47,7 +47,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-trash"
+      icon="ryczalt-icon ri-trash"
       stylingMode="text"
       type="default"
       [disabled]="
@@ -62,7 +62,7 @@
     <dx-button
       class="btn-dx-top-menu"
       [icon]="
-        isClosed() ? 'dx-icon dx-icon-imgarlock' : 'dx-icon dx-icon-imgarunlock'
+        isClosed() ? 'ryczalt-icon ri-lock' : 'ryczalt-icon ri-unlock'
       "
       stylingMode="text"
       type="default"
@@ -124,6 +124,7 @@
 
 <ng-template #grid>
   <dx-scroll-view width="100%" height="100%" direction="vertical">
+    <div class="center-panel-scroll-verticall-content">
     <dx-data-grid
       [dataSource]="dataSource"
       [wordWrapEnabled]="false"
@@ -161,29 +162,28 @@
         dataField="documentNumber"
         [allowSorting]="false"
         hidingPriority="6"
+        width="200"
       ></dxi-column>
 
       <dxi-column
         caption="{{ 'vatRegister.recivedDate' | translate }}"
         dataField="dateOfSell"
-        [width]="110"
         [allowSorting]="false"
         hidingPriority="7"
         dataType="date"
         [format]="{ type: event.dateFormat }"
-        width="110"
+        [width]="200"
         alignment="left"
       ></dxi-column>
 
       <dxi-column
         caption="{{ 'vatRegister.dateOfIssue' | translate }}"
         dataField="documentDate"
-        [width]="110"
         [allowSorting]="false"
         hidingPriority="7"
         dataType="date"
         [format]="{ type: event.dateFormat }"
-        width="110"
+        [width]="200"
         alignment="left"
       ></dxi-column>
 
@@ -216,6 +216,7 @@
         {{ cell.value | priceFormat }}
       </div>
     </dx-data-grid>
+    </div>
 
     <div class="summary">
       <div class="row">

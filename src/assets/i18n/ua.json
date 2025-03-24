@@ -39,6 +39,9 @@
     "taxVat": "Податок на додану вартість"
   },
   "customers": {
+    "accountNumberIsWhiteList": "Номер рахунку є на білій списку",
+    "accountNumberIsNotWhiteList": "Номер рахунку не є на білій списку",
+    "checkAccountNumber": "Перевірити номер на білій списку",
     "contactPerson": "Контактна особа",
     "companyData": "Дані компанії",
     "addressesData": "Адресні дані",

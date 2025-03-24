@@ -60,7 +60,7 @@ import { DateRangeComponent } from '../date-range/date-range.component';
 })
 export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
   @ViewChild('dxGrid') dxGrid: any;
-  
+
   event = inject(EventService);
   cdr = inject(ChangeDetectorRef);
   vatRegisterService = inject(VatRegisterService);
@@ -68,7 +68,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
   isClosed = signal<boolean>(false);
   mode: 'add' | 'edit' | 'show' = 'add';
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 260px)';
+  heightGrid: number | string = 'calc(100vh - 280px)';
   uri: string = 'registeVat/buy';
   pageSize: number = 50;
   focusedElement = signal<VatRegisterBuy | null>(null);
@@ -79,7 +79,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
   shortcuts: ShortcutInput[] = [];
   month = signal<number>(this.event.globalDate.month);
   year = signal<number>(this.event.globalDate.year);
-  
+
   summaryMonthData: VatPurchaseSummary = {
     total_net_23: 0,
     total_vat_23: 0,
@@ -99,7 +99,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     total_net_deductible: 0,
     total_vat_deductible: 0,
   };
-  
+
   constructor() {}
 
   ngOnInit(): void {
@@ -243,7 +243,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
+
   onEdit() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
@@ -269,7 +269,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(true);
   }
-  
+
   onRowDblClick(e: any) {
     this.onEdit();
   }

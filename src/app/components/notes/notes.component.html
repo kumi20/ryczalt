@@ -16,7 +16,7 @@
   <dx-scroll-view width="95%" height="100%" direction="horizontal">
     <dx-button
       class="btn-dx-top-menu"
-      icon="plus"
+      icon="ryczalt-icon ri-plus"
       stylingMode="text"
       type="default"
       [disabled]="!event.sessionData.isActive"
@@ -28,7 +28,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="edit"
+      icon="ryczalt-icon ri-edit"
       stylingMode="text"
       type="default"
       [disabled]="!event.sessionData.isActive || !focusedElement()"
@@ -52,7 +52,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-trash"
+      icon="ryczalt-icon ri-trash"
       stylingMode="text"
       type="default"
       [disabled]="!event.sessionData.isActive || !focusedElement()"
@@ -166,7 +166,7 @@
             <div *dxTemplate="let data of 'editTemplate'" tabindex="-1">
               <dx-button
                 class="btn-dx-top-menu-folder-grid"
-                icon="edit"
+                icon="ryczalt-icon ri-edit"
                 [disabled]="!event.sessionData.isActive"
                 (onClick)="onDropdownEditClick()"
               >
@@ -181,7 +181,7 @@
       >
         <dx-button
           class="btn-dx-top-menu-folder"
-          icon="dx-icon dx-icon-add"
+          icon="ryczalt-icon ri-plus"
           type="normal"
           stylingMode="text"
           id="btn-add-contractors"

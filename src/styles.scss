@@ -28,6 +28,7 @@
 @import "./assets/scss/switch.scss";
 @import "./assets/scss/tabs.scss";
 @import "./assets/scss/typography.scss";
+@import "./assets/scss/custom-icons";
 
 *:focus {
   outline: none;
@@ -434,7 +435,7 @@ a {
 }
 
 .top-menu-panel {
-  height: 36px;
+  height: 50px;
   width: calc(100%);
   margin-bottom: 12px;
   background: $neutral-100;

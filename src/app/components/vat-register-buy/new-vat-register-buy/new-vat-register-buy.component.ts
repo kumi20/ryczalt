@@ -233,6 +233,7 @@ export class NewVatRegisterBuyComponent implements OnInit, OnChanges, OnDestroy,
 
     if (this.form.invalid || this.mode() === 'show') return;
 
+    this.inputDate.instance.focus();
     if (this.mode() === 'add') {
       this.vatRegisterService.postBuy(this.form.value).subscribe({
         next: (data) => {

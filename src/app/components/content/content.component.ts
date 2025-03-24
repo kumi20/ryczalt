@@ -241,7 +241,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '1',
         name: this.translate.instant('menu.start'),
-        icon: 'dx-icon-home',
+        icon: 'ryczalt-icon ri-home',
         url: 'content/start',
         items: [],
         tooltip: false,
@@ -252,7 +252,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '2',
         name: this.translate.instant('menu.flateRate'),
-        icon: 'dx-icon-doc',
+        icon: 'ryczalt-icon ri-file',
         url: 'content/flate-rate',
         items: [],
         tooltip: false,
@@ -298,7 +298,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '6',
         name: this.translate.instant('menu.customers'),
-        icon: 'dx-icon-accountbox',
+        icon: 'dx-icon-user',
         url: 'content/customers',
         items: [],
         tooltip: false,
@@ -340,7 +340,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '8',
         name: this.translate.instant('menu.dictionaries'),
-        icon: 'dx-icon-inactivefolder',
+        icon: 'ryczalt-icon ri-file',
         url: 'content/dictionaries/countries',
         items: [
           {

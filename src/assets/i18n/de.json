@@ -39,6 +39,9 @@
     "taxVat": "Податок на додану вартість"
   },
   "customers": {
+    "checkAccountNumber": "Kontonummer auf weiße Liste prüfen",
+    "accountNumberIsWhiteList": "Kontonummer ist auf weiße Liste",
+    "accountNumberIsNotWhiteList": "Kontonummer ist nicht auf weiße Liste",
     "contactPerson": "Kontaktperson",
     "companyData": "Unternehmensdaten",
     "addressesData": "Adressdaten",

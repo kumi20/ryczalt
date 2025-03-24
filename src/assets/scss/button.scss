@@ -512,7 +512,7 @@ dx-tab-panel {
 
 .btn-dx-top-menu {
   width: auto;
-  height: 26px !important;
+  height: 40px !important;
   background-color: transparent !important;
   border: 2px solid transparent !important;
   border-color: transparent;
@@ -536,7 +536,7 @@ dx-tab-panel {
     }
   }
   &:hover {
-    height: 26px !important;
+    height: 40px !important;
     background-color: $neutral-90 !important;
     border-radius: $border-radius !important;
     border: 2px solid $neutral-90 !important;

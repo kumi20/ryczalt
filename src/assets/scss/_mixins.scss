@@ -1,0 +1,746 @@
+@import "./colors";
+@import "./fonts";
+
+// Zmienne globalne
+$main-font-size: 16px;
+$border-radius-default: 4px;
+$border-radius-small: 2px;
+$border-radius-medium: 6px;
+$border-radius-large: 10px;
+$border-radius-round: 32px;
+$focus-border-width: 2px;
+
+// Mixiny dla stylów tekstu
+@mixin font-base($size: 0.75rem, $weight: normal, $family: $Roboto) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  font-style: normal;
+}
+
+@mixin line-height($height: 15px) {
+  line-height: $height;
+}
+
+// Mixiny dla nagłówków
+@mixin heading-1 {
+  font-size: 1.625 * $main-font-size;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+@mixin heading-2 {
+  font-size: 1.375 * $main-font-size;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+@mixin heading-3 {
+  font-size: 1.125 * $main-font-size;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+@mixin heading-4 {
+  font-size: $main-font-size;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+@mixin heading-5 {
+  font-size: 0.875 * $main-font-size;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+@mixin subheader-short {
+  font-size: 0.875 * $main-font-size;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+@mixin subheader-long {
+  font-size: 0.875 * $main-font-size;
+  line-height: 22px;
+  font-weight: 500;
+}
+
+@mixin body-text-short {
+  font-size: 0.875 * $main-font-size;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+@mixin body-text-long {
+  font-size: 0.875 * $main-font-size;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+@mixin caption-short {
+  font-size: 0.75 * $main-font-size;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+@mixin caption-long {
+  font-size: 0.75 * $main-font-size;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+@mixin label-text {
+  font-size: 0.75 * $main-font-size;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+// Mixiny dla rozmiarów i ramek
+@mixin border-radius($radius: $border-radius-default) {
+  border-radius: $radius;
+}
+
+@mixin border($width: 1px, $style: solid, $color: $neutral-50, $important: false) {
+  @if $important {
+    border: $width $style $color !important;
+  } @else {
+    border: $width $style $color;
+  }
+}
+
+@mixin border-bottom($width: 1px, $style: solid, $color: $neutral-50, $important: false) {
+  @if $important {
+    border-bottom: $width $style $color !important;
+  } @else {
+    border-bottom: $width $style $color;
+  }
+}
+
+@mixin border-top($width: 1px, $style: solid, $color: $neutral-50, $important: false) {
+  @if $important {
+    border-top: $width $style $color !important;
+  } @else {
+    border-top: $width $style $color;
+  }
+}
+
+// Mixiny dla cieni
+@mixin big-shadow {
+  box-shadow: 0px 10px 30px rgba(67, 63, 75, 0.13);
+}
+
+@mixin small-shadow {
+  box-shadow: 0px 5px 15px rgba(67, 63, 75, 0.1);
+}
+
+@mixin mobile-shadow {
+  box-shadow: 0px 2.5px 4px rgba(67, 63, 75, 0.1);
+}
+
+@mixin focus-shadow {
+  box-shadow: 0px 0px 8px rgba(88, 99, 106, 0.3);
+}
+
+@mixin no-shadow {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+// Mixiny dla elastycznych kontenerów
+@mixin flex-container($direction: row, $justify: flex-start, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Mixiny dla stanów elementów
+@mixin state-hover($bg-color: transparent, $color: $brand-10) {
+  background-color: $bg-color;
+  color: $color !important;
+}
+
+@mixin state-active($bg-color: transparent, $color: $brand-10) {
+  background-color: $bg-color;
+  color: $color !important;
+}
+
+@mixin state-disabled($bg-color: $neutral-90, $color: $neutral-50) {
+  background-color: $bg-color;
+  color: $color !important;
+}
+
+@mixin state-readonly($bg-color: $neutral-95, $color: $neutral-30) {
+  background-color: $bg-color;
+  color: $color !important;
+}
+
+// Mixiny dla przycisków
+@mixin button-base {
+  border-width: $focus-border-width;
+  background-color: transparent;
+  @include border-radius($border-radius-default);
+}
+
+@mixin button-hover {
+  background-color: $neutral-90 !important;
+  cursor: pointer;
+}
+
+@mixin button-focus {
+  border: $focus-border-width inset $brand-neutral-10 !important;
+}
+
+@mixin button-disabled {
+  border-color: transparent !important;
+  color: $neutral-50 !important;
+  cursor: not-allowed;
+}
+
+// Mixiny dla zakładek (tabs)
+@mixin tab-base {
+  background-color: transparent;
+  color: $neutral-30;
+  padding: 8px 10px !important;
+}
+
+@mixin tab-text {
+  vertical-align: middle;
+  @include font-base(0.75rem, 500, $Roboto);
+  line-height: 14px;
+}
+
+@mixin tab-selected {
+  border-bottom: 2px solid $brand-10;
+  color: $brand-10;
+}
+
+@mixin tab-hover {
+  background-color: $neutral-90 !important;
+  color: $brand-10 !important;
+}
+
+// Mixiny z accordion.scss
+@mixin accordion-hover {
+  background-color: transparent;
+  color: $brand-10 !important;
+  border-bottom: 1px solid $brand-10 !important;
+  &::before {
+    color: $brand-10 !important;
+  }
+}
+
+@mixin accordion-icon-before {
+  font-weight: 400;
+  content: "\e313";
+  font-family: Lumen;
+  font-size: 16px;
+  margin-left: 9px;
+  margin-right: 0;
+  line-height: 16px;
+}
+
+@mixin accordion-title-base {
+  font-family: Roboto-Medium;
+  font-style: normal;
+  font-size: 0.75rem;
+  line-height: 15px;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+@mixin accordion-opened-title {
+  border-bottom: 1px solid $brand-10;
+  color: $brand-10;
+  font-size: 0.75rem;
+  line-height: 15px;
+}
+
+// Mixiny z dxInput.scss
+@mixin container-mobile {
+  display: block !important;
+  text-align: left !important;
+  margin-left: 0px !important;
+  top: 0px !important;
+  width: 100% !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: $neutral-10 !important;
+}
+
+@mixin container {
+  display: inline-block;
+  text-align: right;
+}
+
+@mixin input-base {
+  max-width: 290px;
+  width: 100%;
+  background: $neutral-100;
+  @include border(1px, solid, $neutral-50);
+  box-sizing: border-box;
+  @include border-radius($border-radius-large);
+  height: 40px;
+}
+
+@mixin input-focus {
+  @include border(1px, solid, $neutral-40);
+  @include focus-shadow;
+  @include border-radius($border-radius-large);
+}
+
+@mixin input-hover {
+  @include border(1px, solid, $neutral-30, true);
+  cursor: pointer !important;
+}
+
+@mixin input-disabled {
+  background: $neutral-95;
+  @include border(1px, solid, $neutral-80);
+  color: $neutral-50;
+}
+
+@mixin input-text {
+  @include font-base(0.75rem, normal, $Roboto);
+  line-height: 16px;
+  color: $neutral-30;
+}
+
+// Mixiny z corners.scss
+@mixin small-corners {
+  border-radius: $border-radius-medium;
+}
+
+@mixin big-corners {
+  border-radius: $border-radius-large;
+}
+
+@mixin full-corners {
+  border-radius: $border-radius-round;
+}
+
+// Breakpointy
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+// Menu item mixins
+@mixin menu-item-base($width: 70px, $height: 70px) {
+  height: $height;
+  width: $width !important;
+  padding-left: 2px;
+  padding-top: 15px;
+  margin-left: -4px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+@mixin menu-item-hover($bg-color: $neutral-90) {
+  cursor: pointer;
+  width: 70px;
+  margin-left: -4px;
+  height: 70px !important;
+  border: 1px solid transparent;
+  padding-left: 2px;
+  background-color: $bg-color;
+}
+
+@mixin menu-item-active($bg-color: $neutral-100) {
+  width: 105%;
+  background-color: $bg-color;
+  background-image: url("../images/border-active.svg");
+  background-position-x: -1px;
+  background-position-y: -1px;
+  background-repeat: no-repeat;
+  border-radius: 2px !important;
+  border-top-right-radius: 4px !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+// Transition mixin
+@mixin transition($properties...) {
+  -ms-transition: $properties;
+  -webkit-transition: $properties;
+  -moz-transition: $properties;
+  -o-transition: $properties;
+  transition: $properties;
+}
+
+// Box shadow mixin
+@mixin box-shadow($shadows...) {
+  box-shadow: $shadows;
+}
+
+// Panel mixin
+@mixin panel-base($bg-color: $neutral-100, $border-radius: 0) {
+  background: $bg-color;
+  border: 1px solid $neutral-80;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.06), 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: $border-radius;
+}
+
+// Text style mixins
+@mixin text-style($family: $Roboto, $size: 0.75rem, $weight: normal, $line-height: 14px, $color: $neutral-30) {
+  font-family: $family;
+  font-style: normal;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+  color: $color;
+}
+
+// Icon style mixin
+@mixin icon-style($size: 18px, $color: $neutral-30) {
+  font-size: $size !important;
+  &::before {
+    font-size: $size !important;
+    color: $color;
+  }
+}
+
+// Mixin dla ikony menu z konkretnym stanem
+@mixin menu-icon-state($color: $neutral-30) {
+  &::before {
+    color: $color !important;
+  }
+}
+
+// Mixin dla przycisku panelu użytkownika
+@mixin user-panel-button($bg-color: $brand-neutral-10, $text-color: $neutral-100) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $bg-color;
+  min-width: 32px;
+  height: 32px;
+  padding-right: 2px;
+  position: relative;
+
+  p {
+    display: inline-block;
+    @include text-style($Roboto, 0.75rem, normal, 14px, $text-color);
+    margin: 0 6px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Mixin dla ikon użytkownika ze stanem
+@mixin user-icon-state($color: $neutral-30) {
+  &::before {
+    color: $color;
+  }
+}
+
+// Mixin dla panelu
+@mixin floating-panel($width: 320px, $max-height: 712px, $z-index: 10000) {
+  position: absolute;
+  width: $width;
+  max-height: $max-height;
+  top: 32px;
+  z-index: $z-index;
+  @include panel-base;
+  padding: 5px;
+}
+
+// Mixin dla elementów listy
+@mixin list-item-hover {
+  &:hover {
+    background-color: $neutral-90;
+    cursor: pointer;
+  }
+
+  &.dx-state-hover {
+    background-color: transparent;
+  }
+}
+
+// Mixin dla górnego panelu
+@mixin header-panel($height: 32px) {
+  height: $height;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+// Mixin dla przycisku DX
+@mixin dx-button-state($bg-color: transparent, $border-color: transparent, $important: true) {
+  @if $important {
+    background-color: $bg-color !important;
+    border: 2px inset $border-color !important;
+  } @else {
+    background-color: $bg-color;
+    border: 2px inset $border-color;
+  }
+}
+
+// Circle mixin
+@mixin circle($size: 48px, $bg-color: $teal900Round) {
+  width: $size;
+  height: $size;
+  background-color: $bg-color;
+  border-radius: 50%;
+}
+
+// Media query mixins
+@mixin for-mobile {
+  @media (max-width: 1000px) {
+    @content;
+  }
+}
+
+@mixin for-tablet {
+  @media (max-width: 1535px) {
+    @content;
+  }
+}
+
+// Mixin dla konfiguracji search box
+@mixin search-box-base($width: 266px, $height: 26px) {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid transparent !important;
+  width: $width;
+  max-width: $width;
+  height: $height;
+  border-radius: 8px;
+  padding-left: 25px;
+  margin-top: 3px;
+
+  &:hover {
+    background: $neutral-10;
+  }
+
+  &.dx-state-focused {
+    box-shadow: none;
+    border: none;
+  }
+
+  &.dx-state-focused-active {
+    background: $neutral-100;
+    border-radius: 8px;
+    color: $neutral-30 !important;
+  }
+
+  .dx-clear-button-area {
+    display: none;
+  }
+}
+
+// Mixin dla elementów panelu
+@mixin panel-element($padding: 5px) {
+  padding: $padding;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $neutral-90;
+    cursor: pointer;
+  }
+}
+
+// Submenu item mixin
+@mixin submenu-item($height: 34px, $padding-top: 8px) {
+  height: $height !important;
+  padding-top: $padding-top;
+  width: 100% !important;
+  margin-left: 0;
+  border-radius: 0;
+}
+
+// Mixiny dla scrollbara
+@mixin scrollbar-styling($width: 10px, $track-bg: $neutral-100, $thumb-bg: $neutral-60) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-bg;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-bg;
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $thumb-bg;
+  }
+
+  // Firefox
+  scrollbar-width: thin;
+}
+
+// Mixiny dla statusów
+@mixin status-badge($bg-color, $text-color: $neutral-100) {
+  padding: 2px 3px;
+  height: 18px;
+  min-width: 18px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: inline-block;
+  text-align: center;
+  background-color: $bg-color !important;
+  color: $text-color;
+  margin: 0 auto;
+  margin-right: 2px;
+}
+
+// Mixin dla positon absolute
+@mixin absolute-position($top: auto, $right: auto, $bottom: auto, $left: auto, $z-index: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  @if $z-index != auto {
+    z-index: $z-index;
+  }
+}
+
+// Mixin dla bocznych paneli
+@mixin side-panel($position: left, $top: 0, $width: auto, $height: 100%) {
+  position: relative;
+  top: $top;
+  @if $position == left {
+    left: -15px;
+    border-right: 1px solid $neutral-80;
+  } @else if $position == right {
+    right: 0px;
+    left: 15px;
+    border-left: 1px solid $neutral-80;
+  }
+  background: if($position == right, $neutral-95, $neutral-100);
+  @if $height != auto {
+    height: $height;
+  }
+  @if $width != auto {
+    width: $width;
+  }
+}
+
+// Mixin dla inputów z walidacją
+@mixin input-validation($type: required) {
+  @if $type == required {
+    border: 1px solid #dc3545 !important;
+    background: $brand-90 !important;
+
+    .dx-clear-button-area {
+      display: none;
+    }
+
+    .dx-dropdowneditor-icon::before {
+      color: $brand-10 !important;
+    }
+  } @else if $type == warning {
+    border: 1px solid $theme-warning-20 !important;
+    background: $theme-warning-70 !important;
+  }
+}
+
+// Mixin dla headerów
+@mixin document-header($bg-color: $neutral-95) {
+  background: $bg-color;
+  border: 1px solid $neutral-80;
+  box-sizing: border-box;
+  border-radius: 6px;
+  margin: 16px 0px;
+  padding: 10px 10px;
+  transition-duration: 250ms;
+}
+
+// Mixin dla tagów kolorowych
+@mixin color-tag($background-var, $color-var) {
+  background: var(#{$background-var}) !important;
+
+  p {
+    color: var(#{$color-var}) !important;
+  }
+
+  .p_document_name {
+    margin-bottom: 0px !important;
+    font-family: Roboto !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 18px !important;
+    color: var(--text-light-gray, $text-light-gray) !important;
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    text-align: left;
+    left: 54px;
+  }
+}
+
+// Mixin dla przycisków z ikonami
+@mixin icon-button($size: 32px, $bg-color: $brand-neutral-10, $hover-color: $neutral-10) {
+  display: inline-block;
+  width: $size;
+  height: $size;
+  background-color: $bg-color;
+  box-shadow:
+    0px 2px 1px rgba(0, 0, 0, 0.06),
+    0px 4px 20px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $hover-color;
+  }
+
+  &.icon:before,
+  .icon:before {
+    font-style: normal;
+    font-size: 18px !important;
+  }
+
+  &.icon:hover::before {
+    background-color: transparent;
+  }
+}
+
+// Mixin dla formularzy
+@mixin form-group-spacing {
+  margin-bottom: 6px;
+
+  label {
+    margin-bottom: 4px;
+  }
+}

@@ -23,6 +23,12 @@ export class CountryService {
       .pipe(catchError(this.handleError));
   }
 
+  getCountryByName(name: string): Observable<any> {
+    return this.http
+      .get<Country>(`${this.apiUrl}country?name=${name}`)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     errorMessage = JSON.stringify({

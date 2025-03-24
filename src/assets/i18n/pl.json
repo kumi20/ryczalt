@@ -43,6 +43,9 @@
     "preview": "Podgląd"
   },
   "customers": {
+    "checkAccountNumber": "Sprawdź numer na białej liście",
+    "accountNumberIsWhiteList": "Numer jest na białej liście",
+    "accountNumberIsNotWhiteList": "Numer nie jest na białej liście",
     "contactPerson": "Osoba kontaktowa",
     "companyData": "Dane firmy",
     "addressesData": "Dane adresowe",
@@ -85,7 +88,8 @@
     "remarks": "Uwagi",
     "theAmountOfIncomeTaxedAtTheRate": "Kwota przychodu opodatkowana wg stawki",
     "doYouWantToAdd": "Czy chcesz dodać dokument {{number}} do rejestry vat sprzedaży?",
-    "doYouWantToRemoveTheRelatedEntryFromTheVATRegister": "Czy chcesz usunąc powiązany wpis z rejestru vat?"
+    "doYouWantToRemoveTheRelatedEntryFromTheVATRegister": "Czy chcesz usunąc powiązany wpis z rejestru vat?",
+    "summarySectionTitle": "Podsumowanie miesięczne"
   },
   "vatRegister": {
     "documentDate": "Data dokumentu",

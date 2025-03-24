@@ -11,7 +11,7 @@
   <dx-scroll-view width="95%" height="100%" direction="horizontal">
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-add"
+      icon="ryczalt-icon ri-plus"
       stylingMode="text"
       type="default"
       [disabled]="!event.sessionData.isActive || isClosed()"
@@ -23,7 +23,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-edit"
+      icon="ryczalt-icon ri-edit"
       stylingMode="text"
       type="default"
       [disabled]="
@@ -47,7 +47,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-trash"
+      icon="ryczalt-icon ri-trash"
       stylingMode="text"
       type="default"
       [disabled]="
@@ -62,7 +62,7 @@
     <dx-button
       class="btn-dx-top-menu"
       [icon]="
-        isClosed() ? 'dx-icon dx-icon-imgarlock' : 'dx-icon dx-icon-imgarunlock'
+        isClosed() ? 'ryczalt-icon ri-lock' : 'ryczalt-icon ri-unlock'
       "
       stylingMode="text"
       type="default"
@@ -117,7 +117,7 @@
       <dxi-column
         caption="{{ 'internalEvidence.kindOfInternalEvidence' | translate }}"
         dataField="isCoast"
-        [width]="200"
+        [width]="230"
         [allowSorting]="false"
         cellTemplate="isCoast"
       ></dxi-column>
@@ -132,7 +132,7 @@
       <dxi-column
         caption="{{ 'internalEvidence.numberOfInternalEvidence' | translate }}"
         dataField="documentNumber"
-        [width]="200"
+        [width]="230"
         [allowSorting]="false"
       ></dxi-column>
 

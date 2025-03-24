@@ -1,0 +1,83 @@
+<ng-container>
+  <div class="top-menu-panel">
+    <dx-scroll-view width="100%" height="60px">
+      <app-date-range
+        (dateRangeChange)="onDateRangeChange($event)"
+        [hideMonth]="true"
+      ></app-date-range>
+    </dx-scroll-view>
+  </div>
+</ng-container>
+
+<div class="flex-container">
+  <div class="flex-item-3">
+    <h3>Przychód wg rejestru VAT {{ year() }}</h3>
+    <p class="price-format-sales">{{ yearSummary.total.allNetSales | priceFormat }}</p>
+  </div>
+
+  <div class="flex-item-3">
+    <h3>Rozchód wg rejestru VAT{{ year() }}</h3>
+    <p class="price-format-purchase">{{ yearSummary.total.allNetPurchase | priceFormat }}</p>
+  </div>
+
+  <div class="flex-item-3">
+    <h3>Dochód wg rejestru VAT {{ year() }}</h3>
+    <p class="price-format">{{ (yearSummary.total.allNetSales - yearSummary.total.allNetPurchase) | priceFormat }}</p>
+  </div>
+</div>
+
+<div class="flex-container">
+  <div class="flex-item">
+    <h3>Przychody vs Zakupy - wartości netto {{ year() }}</h3>
+    <dx-chart
+      id="chart"
+      [dataSource]="dataSource"
+    >
+      <dxi-series valueField="allNetSales" name="Przychody netto"></dxi-series>
+      <dxi-series valueField="allNetPurchase" name="Zakupy netto"></dxi-series>
+
+      <dxo-common-series-settings
+        argumentField="month"
+        type="bar"
+        hoverMode="allArgumentPoints"
+        selectionMode="allArgumentPoints"
+      ></dxo-common-series-settings>
+      <dxo-legend
+        verticalAlignment="bottom"
+        horizontalAlignment="center"
+      ></dxo-legend>
+
+      <dxo-tooltip
+        [enabled]="true"
+        [customizeTooltip]="customizeTooltip"
+      ></dxo-tooltip>
+    </dx-chart>
+  </div>
+  <div class="flex-item">
+    <h3>VAT przychody vs zakupy {{ year() }}</h3>
+    <dx-chart
+    id="chart"
+    [dataSource]="dataSource"
+  >
+    <dxi-series valueField="allVatSales" name="VAT przychody"></dxi-series>
+    <dxi-series valueField="allVatPurchase" name="VAT zakupy"></dxi-series>
+
+    <dxo-common-series-settings
+      argumentField="month"
+      type="bar"
+      hoverMode="allArgumentPoints"
+      selectionMode="allArgumentPoints"
+    ></dxo-common-series-settings>
+    <dxo-legend
+      verticalAlignment="bottom"
+      horizontalAlignment="center"
+    ></dxo-legend>
+
+    <dxo-tooltip
+      [enabled]="true"
+      [customizeTooltip]="customizeTooltip"
+    ></dxo-tooltip>
+  </dx-chart>
+
+  </div>
+</div>

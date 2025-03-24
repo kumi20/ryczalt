@@ -96,6 +96,7 @@
                 form.get('documentNumber')?.invalid &&
                 form.get('documentNumber')?.touched
             }"
+            #inputDate
           ></dx-text-box>
         </div>
 
@@ -199,14 +200,14 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block">
             {{ "vatRegister.saleByRate" | translate }} 23%
           </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             [readOnly]="!event.sessionData.isActive"
@@ -218,10 +219,10 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate23Vat"
@@ -229,10 +230,10 @@
           ></dx-number-box>
         </div>
       </div>
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate23Gross"
@@ -244,14 +245,14 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block">
             {{ "vatRegister.saleByRate" | translate }} 8%
           </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate8Net"
@@ -261,10 +262,10 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate8Vat"
@@ -273,10 +274,10 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate8Gross"
@@ -288,14 +289,14 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block">
             {{ "vatRegister.saleByRate" | translate }} 5%
           </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate5Net"
@@ -305,10 +306,10 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate5Vat"
@@ -317,10 +318,10 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate5Gross"
@@ -332,14 +333,14 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block">
             {{ "vatRegister.domesticSales" | translate }} 0%
           </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="rate0"
@@ -349,12 +350,12 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block"> Eksport 0% </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="export0"
@@ -365,12 +366,12 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block"> WDT 0% </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="wdt0"
@@ -379,13 +380,13 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="text-align: right"></div>
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right"></div>
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block"> WŚU </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="wsu"
@@ -396,14 +397,14 @@
     </div>
 
     <div class="row" style="width: 940px; margin: 0 auto">
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-6" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block">
             {{ "vatRegister.exemptSales" | translate }}
           </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="exemptSales"
@@ -411,15 +412,15 @@
           ></dx-number-box>
         </div>
       </div>
-      <div class="col-md-4" style="text-align: right"></div>
-      <div class="col-md-4" style="text-align: right">
+      <div class="col-md-3" style="text-align: right"></div>
+      <div class="col-md-3" style="text-align: right">
         <div class="form-group">
           <label for="customerVat" class="d-inline-block">
             {{ "vatRegister.reverseCharge" | translate }}
           </label>
 
           <dx-number-box
-            width="140"
+            width="210"
             class="d-inline-block"
             [format]="event.formatPLN"
             formControlName="reverseCharge"
@@ -440,7 +441,7 @@
         <div class="form-group">
           <dx-check-box
             [text]="'vatRegister.deliveryOfGoods' | translate"
-            width="150"
+            width="210"
             formControlName="isDelivery"
             [readOnly]="!event.sessionData.isActive"
           ></dx-check-box>
@@ -449,7 +450,7 @@
         <div class="form-group">
           <dx-check-box
             [text]="'vatRegister.provisionOfServices' | translate"
-            width="150"
+            width="210"
             formControlName="isServices"
             [readOnly]="!event.sessionData.isActive"
           ></dx-check-box>

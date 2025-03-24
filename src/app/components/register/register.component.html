@@ -1,0 +1,247 @@
+<div class="page-register">
+  <div class="registration-container">
+    @if(!isRegister()) {
+    <div class="registration-header">
+      <div class="brand-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+          />
+        </svg>
+      </div>
+      <h1>Rejestracja nowego konta</h1>
+      <p>Wprowadź swoje dane, aby utworzyć nowe konto</p>
+    </div>
+    <form [formGroup]="form">
+      <div class="registration-form">
+        <div class="form-group">
+          <label for="nip">NIP</label>
+          <input
+            type="text"
+            id="nip"
+            class="form-control"
+            placeholder="Wprowadź NIP (10 cyfr)"
+            maxlength="10"
+            formControlName="nip"
+            [ngClass]="{
+              'input-required':
+                form.get('nip')?.invalid && form.get('nip')?.touched
+            }"
+          />
+          <div class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+              <path d="M7 15h0M12 15h0M17 15h0"></path>
+            </svg>
+          </div>
+          <div class="nip-info">Wprowadź NIP bez myślników i spacji.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstname">Imię</label>
+            <input
+              type="text"
+              id="firstname"
+              class="form-control"
+              placeholder="Wprowadź imię"
+              formControlName="firstName"
+              [ngClass]="{
+                'input-required':
+                  form.get('firstName')?.invalid &&
+                  form.get('firstName')?.touched
+              }"
+            />
+            <div class="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastname">Nazwisko</label>
+            <input
+              type="text"
+              id="lastname"
+              class="form-control"
+              placeholder="Wprowadź nazwisko"
+              formControlName="lastName"
+              [ngClass]="{
+                'input-required':
+                  form.get('lastName')?.invalid && form.get('lastName')?.touched
+              }"
+            />
+            <div class="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Adres e-mail</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Wprowadź adres e-mail"
+            formControlName="email"
+            [ngClass]="{
+              'input-required':
+                form.get('email')?.invalid && form.get('email')?.touched
+            }"
+          />
+          <div class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              ></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Hasło</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="Wprowadź hasło"
+            formControlName="psw"
+            [ngClass]="{
+              'input-required':
+                form.get('psw')?.invalid && form.get('psw')?.touched
+            }"
+          />
+          <div class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="password-requirements">
+            Hasło musi zawierać minimum 8 znaków, w tym dużą literę, cyfrę i
+            znak specjalny.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordRepeat">Powtórz hasło</label>
+          <input
+            type="password"
+            id="passwordRepeat"
+            class="form-control"
+            placeholder="Wprowadź hasło"
+            formControlName="pswRepeat"
+            [ngClass]="{
+              'input-required':
+                form.get('pswRepeat')?.invalid && form.get('pswRepeat')?.touched
+            }"
+          />
+        </div>
+
+        <div class="terms-checkbox">
+          <input
+            type="checkbox"
+            id="terms"
+            formControlName="isAgree"
+            [ngClass]="{
+              'input-required':
+                form.get('isAgree')?.invalid && form.get('isAgree')?.touched
+            }"
+          />
+          <label for="terms"
+            >Akceptuję <a href="#">regulamin</a> oraz
+            <a href="#">politykę prywatności</a></label
+          >
+        </div>
+
+        <p
+          class="error-message"
+          *ngIf="form.get('isAgree')?.invalid && form.get('isAgree')?.touched"
+        >
+          Musisz zaakceptować regulamin i politykę prywatności.
+        </p>
+
+        <button class="register-btn" (click)="onRegister()">
+          Utwórz konto
+        </button>
+      </div>
+    </form>
+    <div class="registration-footer">
+      <p>Masz już konto? <a routerLink="/login">Zaloguj się</a></p>
+    </div>
+  } @else {
+    <div class="registration-header">
+      <img src="assets/images/green-check.png" alt="register-image" />
+
+      <h1>Twoje konto zostało utworzone</h1>
+      <p>Możesz teraz <a routerLink="/login">zalogować</a> się do swojego konta i korzystać z naszych usług</p>
+
+      <button class="register-btn" (click)="onLogin()">
+        Przejdź do strony głównej
+      </button>
+    </div>
+  }
+  </div>
+
+</div>
+
+
+
+

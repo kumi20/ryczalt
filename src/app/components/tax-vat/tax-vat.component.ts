@@ -52,7 +52,7 @@ export class TaxVatComponent implements OnInit, AfterViewInit {
   mode: 'add' | 'edit' | 'show' = 'add';
   focusedElement = signal<any>(null);
   dataSource: any;
-  heightGrid = 'calc(100vh - 150px)';
+  heightGrid = 'calc(100vh - 105px)';
   focusedRowIndex: number = 0;
   pageSize = 20;
   shortcuts: ShortcutInput[] = [];

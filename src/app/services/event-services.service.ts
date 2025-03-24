@@ -152,6 +152,35 @@ export class EventService {
     } catch {}
   };
 
+  /**
+   * Hashuje hasło przed zapisem do bazy danych
+   * @param password - Hasło do zahashowania
+   * @param additionalSalt - Dodatkowa sól do hashowania (opcjonalnie)
+   * @returns Zahashowane hasło
+   */
+  hashPassword = (password: string, additionalSalt: string = ''): string => {
+    // Łączymy hasło z solą aplikacji i ewentualną dodatkową solą (np. identyfikatorem użytkownika)
+    const saltedPassword = password + SALT + additionalSalt;
+
+    // Używamy SHA-256 do hashowania hasła
+    const hashedPassword = CryptoJS.SHA256(saltedPassword).toString();
+
+    // Aby zwiększyć bezpieczeństwo, możemy użyć wielokrotnego hashowania
+    return CryptoJS.SHA256(hashedPassword + SALT).toString();
+  };
+
+  /**
+   * Weryfikuje hasło z hashem
+   * @param password - Hasło do weryfikacji
+   * @param hashedPassword - Zahashowane hasło z bazy danych
+   * @param additionalSalt - Dodatkowa sól użyta przy hashowaniu (opcjonalnie)
+   * @returns Czy hasło jest poprawne
+   */
+  verifyPassword = (password: string, hashedPassword: string, additionalSalt: string = ''): boolean => {
+    const hash = this.hashPassword(password, additionalSalt);
+    return hash === hashedPassword;
+  };
+
   public showNotification(type: string, message: string): void {
     notify(
       {

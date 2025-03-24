@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Prostych Ikon Ryczalt</title>
+    <style>
+        @font-face {
+            font-family: 'Ryczalt-Icons';
+            src: url('../../fonts/Ryczalt-Icons.ttf?v=20240320') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+
+        .icon {
+            font-family: 'Ryczalt-Icons';
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 24px;
+            margin: 10px;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .icon-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .icon-name {
+            margin-left: 10px;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        /* Definicje ikon */
+        .home:before { content: '\e001'; }
+        .user:before { content: '\e002'; }
+        .settings:before { content: '\e003'; }
+        .plus:before { content: '\e01e'; }
+        .edit:before { content: '\e01b'; }
+        .eye:before { content: '\e07f'; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test ikon Ryczalt</h1>
+
+        <div class="icon-row">
+            <span class="icon home"></span>
+            <span class="icon-name">Home (e001)</span>
+        </div>
+
+        <div class="icon-row">
+            <span class="icon user"></span>
+            <span class="icon-name">User (e002)</span>
+        </div>
+
+        <div class="icon-row">
+            <span class="icon settings"></span>
+            <span class="icon-name">Settings (e003)</span>
+        </div>
+
+        <div class="icon-row">
+            <span class="icon plus"></span>
+            <span class="icon-name">Plus (e01e)</span>
+        </div>
+
+        <div class="icon-row">
+            <span class="icon edit"></span>
+            <span class="icon-name">Edit (e01b)</span>
+        </div>
+
+        <div class="icon-row">
+            <span class="icon eye"></span>
+            <span class="icon-name">Eye (e07f) - Nowa ikona</span>
+        </div>
+    </div>
+</body>
+</html>

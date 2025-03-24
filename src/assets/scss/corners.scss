@@ -1,12 +1,16 @@
+@import "./mixins";
+
 /* small containers, dropdows, popovers, buttons */
-.small-corners{
-    border-radius: 6px;
+.small-corners {
+  @include small-corners;
 }
+
 /* big cotainers */
-.big-corners{
-    border-radius: 12px;
+.big-corners {
+  @include big-corners;
 }
+
 /* form controls */
-.full-corners{
-    border-radius: 32px; /* 50 % ? */
+.full-corners {
+  @include full-corners;
 }

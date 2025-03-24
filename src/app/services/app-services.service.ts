@@ -79,6 +79,7 @@ export class AppServices {
   }
 
   post(uri: string, date: string): Observable<any> {
+    console.log(this.baseUrl + uri);
     return this.http
       .post<any>(this.baseUrl + uri, date)
       .pipe(retry(0), catchError(this.errorHandl));

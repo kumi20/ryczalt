@@ -197,6 +197,8 @@ export class NewFlateRateComponent
 
     if (this.form.invalid || this.mode() === 'show') return;
 
+    this.inputDate.instance.focus();
+
     if (this.mode() === 'add') {
       this.flateRateService.post(this.form.value).subscribe({
         next: (data) => {

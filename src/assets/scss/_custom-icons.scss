@@ -1,0 +1,154 @@
+/*
+ * Ryczalt Icons - Definicje ikon
+ * Zaktualizowano: 20.03.2024
+ */
+
+@font-face {
+  font-family: 'Ryczalt-Icons';
+  src: url('../fonts/Ryczalt-Icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+/* Klasa bazowa do używania ikon */
+.ryczalt-icon {
+  font-family: 'Ryczalt-Icons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Definicje poszczególnych ikon */
+.ri-clients:before { content: '\e02f'; }
+.ri-home:before { content: '\e001'; }
+.ri-user:before { content: '\e002'; }
+.ri-settings:before { content: '\e003'; }
+.ri-mail:before { content: '\e004'; }
+.ri-calendar:before { content: '\e005'; }
+.ri-search:before { content: '\e006'; }
+.ri-bell:before { content: '\e007'; }
+.ri-heart:before { content: '\e008'; }
+.ri-star:before { content: '\e009'; }
+.ri-bookmark:before { content: '\e00a'; }
+.ri-folder:before { content: '\e00b'; }
+.ri-file:before { content: '\e00c'; }
+.ri-image:before { content: '\e00d'; }
+.ri-video:before { content: '\e00e'; }
+.ri-music:before { content: '\e00f'; }
+.ri-chart:before { content: '\e010'; }
+.ri-globe:before { content: '\e011'; }
+.ri-location:before { content: '\e012'; }
+.ri-phone:before { content: '\e013'; }
+.ri-message:before { content: '\e014'; }
+.ri-chat:before { content: '\e015'; }
+.ri-share:before { content: '\e016'; }
+.ri-send:before { content: '\e017'; }
+.ri-download:before { content: '\e018'; }
+.ri-upload:before { content: '\e019'; }
+.ri-trash:before { content: '\e01a'; }
+.ri-edit:before { content: '\e01b'; }
+.ri-check:before { content: '\e01c'; }
+.ri-close:before { content: '\e01d'; }
+.ri-plus:before { content: '\e01e'; }
+.ri-minus:before { content: '\e01f'; }
+.ri-info:before { content: '\e020'; }
+.ri-warning:before { content: '\e021'; }
+.ri-error:before { content: '\e022'; }
+.ri-lock:before { content: '\e023'; }
+.ri-unlock:before { content: '\e024'; }
+.ri-key:before { content: '\e025'; }
+.ri-shield:before { content: '\e026'; }
+.ri-flag:before { content: '\e027'; }
+.ri-tag:before { content: '\e028'; }
+.ri-cart:before { content: '\e029'; }
+.ri-credit-card:before { content: '\e02a'; }
+.ri-gift:before { content: '\e02b'; }
+.ri-wallet:before { content: '\e02c'; }
+.ri-truck:before { content: '\e02d'; }
+.ri-box:before { content: '\e02e'; }
+.ri-store:before { content: '\e02f'; }
+.ri-clock:before { content: '\e030'; }
+.ri-timer:before { content: '\e031'; }
+.ri-stopwatch:before { content: '\e032'; }
+.ri-calendar-add:before { content: '\e033'; }
+.ri-calendar-remove:before { content: '\e034'; }
+.ri-calendar-check:before { content: '\e035'; }
+.ri-document:before { content: '\e036'; }
+.ri-document-add:before { content: '\e037'; }
+.ri-document-remove:before { content: '\e038'; }
+.ri-document-check:before { content: '\e039'; }
+.ri-attach:before { content: '\e03a'; }
+.ri-link:before { content: '\e03b'; }
+.ri-unlink:before { content: '\e03c'; }
+.ri-filter:before { content: '\e03d'; }
+.ri-sort:before { content: '\e03e'; }
+.ri-arrow-up:before { content: '\e03f'; }
+.ri-arrow-down:before { content: '\e040'; }
+.ri-arrow-left:before { content: '\e041'; }
+.ri-arrow-right:before { content: '\e042'; }
+.ri-refresh:before { content: '\e043'; }
+.ri-sync:before { content: '\e044'; }
+.ri-undo:before { content: '\e045'; }
+.ri-redo:before { content: '\e046'; }
+.ri-zoom-in:before { content: '\e047'; }
+.ri-zoom-out:before { content: '\e048'; }
+.ri-expand:before { content: '\e049'; }
+.ri-collapse:before { content: '\e04a'; }
+.ri-desktop:before { content: '\e04b'; }
+.ri-laptop:before { content: '\e04c'; }
+.ri-tablet:before { content: '\e04d'; }
+.ri-mobile:before { content: '\e04e'; }
+.ri-camera:before { content: '\e04f'; }
+.ri-printer:before { content: '\e050'; }
+.ri-bluetooth:before { content: '\e051'; }
+.ri-wifi:before { content: '\e052'; }
+.ri-cloud:before { content: '\e053'; }
+.ri-cloud-upload:before { content: '\e054'; }
+.ri-cloud-download:before { content: '\e055'; }
+.ri-database:before { content: '\e056'; }
+.ri-server:before { content: '\e057'; }
+.ri-code:before { content: '\e058'; }
+.ri-terminal:before { content: '\e059'; }
+.ri-dashboard:before { content: '\e05a'; }
+.ri-chart-bar:before { content: '\e05b'; }
+.ri-chart-line:before { content: '\e05c'; }
+.ri-chart-pie:before { content: '\e05d'; }
+.ri-play:before { content: '\e05e'; }
+.ri-pause:before { content: '\e05f'; }
+.ri-stop:before { content: '\e060'; }
+.ri-fast-forward:before { content: '\e061'; }
+.ri-rewind:before { content: '\e062'; }
+.ri-volume-up:before { content: '\e063'; }
+.ri-volume-down:before { content: '\e064'; }
+.ri-volume-mute:before { content: '\e065'; }
+.ri-microphone:before { content: '\e066'; }
+.ri-headphones:before { content: '\e067'; }
+.ri-power:before { content: '\e068'; }
+.ri-menu:before { content: '\e069'; }
+.ri-more:before { content: '\e06a'; }
+.ri-more-vertical:before { content: '\e06b'; }
+.ri-grid:before { content: '\e06c'; }
+.ri-list:before { content: '\e06d'; }
+.ri-layout:before { content: '\e06e'; }
+.ri-sidebar:before { content: '\e06f'; }
+.ri-view:before { content: '\e070'; }
+.ri-hide:before { content: '\e071'; }
+.ri-lightbulb:before { content: '\e072'; }
+.ri-palette:before { content: '\e073'; }
+.ri-brush:before { content: '\e074'; }
+.ri-color:before { content: '\e075'; }
+.ri-puzzle:before { content: '\e076'; }
+.ri-plugin:before { content: '\e077'; }
+.ri-extension:before { content: '\e078'; }
+.ri-compass:before { content: '\e079'; }
+.ri-map:before { content: '\e07a'; }
+.ri-directions:before { content: '\e07b'; }
+.ri-pin:before { content: '\e07c'; }
+.ri-target:before { content: '\e07d'; }
+.ri-aim:before { content: '\e07e'; }
+.ri-eye:before { content: '\e07f'; }

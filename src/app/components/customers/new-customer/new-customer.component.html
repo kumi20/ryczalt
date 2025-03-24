@@ -210,6 +210,16 @@
         </div>
 
         <div class="form-group">
+          <dx-button
+            class="btn-dx-secondary"
+            text="{{ 'customers.checkAccountNumber' | translate }}"
+            width="276"
+            (onClick)="checkAccountNumber()"
+            [disabled]="!event.sessionData.isActive"
+          ></dx-button>
+        </div>
+
+        <div class="form-group">
           <dx-check-box
             text="{{ 'customers.isRecipient' | translate }}"
             width="276"

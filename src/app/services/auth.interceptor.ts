@@ -12,13 +12,15 @@ import { environment } from '../../environments/environment';
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'app-ryczalt-token';
 const LOGIN_ENDPOINT = 'login';
+const REGISTER_ENDPOINT = 'company/register';
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const url = req.url;
   const isExternalRequest = !url.includes(environment.domain);
   const isLoginRequest = url.endsWith(LOGIN_ENDPOINT);
+  const isRegisterRequest = url.endsWith(REGISTER_ENDPOINT);
 
-  if (isExternalRequest || isLoginRequest) {
+  if (isExternalRequest || isLoginRequest || isRegisterRequest) {
     return next(req);
   }
 

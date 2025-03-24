@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DxButtonModule, DxTextBoxModule } from 'devextreme-angular';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { WaproLoaderComponent } from '../core/wapro-loader/wapro-loader.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,6 +20,7 @@ import { License } from '../../interface/license';
     ReactiveFormsModule,
     DxButtonModule,
     WaproLoaderComponent,
+    RouterModule,
     TranslateModule,
     CommonModule
 ],
@@ -89,6 +90,8 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.form.value.password = this.event.hashPassword(this.form.value.password);
+
     this.authService.login(this.form.value).subscribe({
       next: () => {
         this.checkLicenseValidity().then((isValid: License) => {
@@ -99,7 +102,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('dataRange', JSON.stringify(this.event.globalDate));
           this.event.sessionData = isValid;
           localStorage.setItem('sessionData', this.event.encryptString(this.event.sessionData));
-          this.router.navigate(['/content/customers']);
+          this.router.navigate(['/content/start']);
         });
       },
       error: (error) => {

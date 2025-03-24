@@ -51,7 +51,7 @@ export class ZusComponent implements OnInit {
   dataSource: any;
   focusedRowIndex = 0;
   pageSize = 20;
-  heightGrid = 'calc(100vh - 150px)';
+  heightGrid = 'calc(100vh - 105px)';
   shortcuts: ShortcutInput[] = [];
 
   isDelete = signal<boolean>(false);

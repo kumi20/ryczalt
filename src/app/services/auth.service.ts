@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 interface LoginResponse {
@@ -15,23 +15,32 @@ interface LoginCredentials {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'app-ryczalt-token';
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(
+    this.hasToken()
+  );
 
   constructor(private http: HttpClient) {}
 
   login(credentials: LoginCredentials): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.domain}login`, credentials)
+    return this.http
+      .post<LoginResponse>(`${environment.domain}login`, credentials)
       .pipe(
-        tap(response => {
+        tap((response) => {
           if (response.token) {
             localStorage.setItem(this.TOKEN_KEY, response.token);
           }
         })
       );
+  }
+
+  register(credentials: any): Observable<any> {
+    return this.http
+      .post<any>(`${environment.domain}company/register`, credentials)
+      .pipe(catchError(this.handleError));
   }
 
   logout(): void {
@@ -45,5 +54,19 @@ export class AuthService {
 
   private hasToken(): boolean {
     return !!this.getToken();
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = '';
+    errorMessage = JSON.stringify({
+      error: error.status,
+      message: error.error !== null ? error.error.title : 'Brak dostępu',
+      detail: error.error !== null ? error.error.details : '',
+      errors:
+        error.error !== null && error.error.errors !== null
+          ? error.error.errors
+          : '',
+    });
+    return throwError(errorMessage);
   }
 }

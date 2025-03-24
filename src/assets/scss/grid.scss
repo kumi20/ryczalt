@@ -47,7 +47,7 @@ $grid-btn-color: $neutral-20;
 
 
 .dx-data-row.dx-selection {
-  background-color: $brand-90;
+  background-color: transparent;
 }
 
 .dx-selection.dx-data-row:hover {
@@ -82,6 +82,8 @@ $grid-btn-color: $neutral-20;
   line-height: 20px;
   color: $neutral-30;
 }
+
+
 
 .dx-datagrid .dx-datagrid-headers .dx-row td.dx-pointer-events-none,
 .dx-datagrid .dx-datagrid-rowsview .dx-data-row td.dx-pointer-events-none,
@@ -124,6 +126,7 @@ $grid-btn-color: $neutral-20;
 .dx-datagrid-borders > .dx-datagrid-total-footer {
   border-left: none;
   border-right: none;
+  border-radius: 0px 0px 20px 20px;
 }
 
 .dx-scrollbar-vertical .dx-scrollable-scroll {
@@ -248,7 +251,7 @@ dx-data-grid {
   font-family: $grid-font;
   font-weight: $grid-font-weight;
   font-style: $grid-font-style;
-  font-size: $grid-font-size;
+  font-size: 14px;
   color: $grid-main-text;
   line-height: $grid-line-height;
   .dx-datagrid-table.dx-datagrid-table-fixed {
@@ -261,6 +264,7 @@ dx-data-grid {
     // border-top: 1px solid $neutral-80;
     color: $header-grid !important;
     border-top: none;
+    border-radius: 20px 20px 0px 0px;
   }
 
   /* links */
@@ -308,7 +312,7 @@ dx-data-grid {
       padding-top: 2px;
     }
     & > td:not(:last-child) {
-      border-right: $border;
+      border-right: none;
     }
   }
 
@@ -406,7 +410,7 @@ dx-data-grid {
   /* data-rows */
   .dx-row.dx-data-row.dx-column-lines {
     border-bottom: $border;
-    height: 30px;
+    height: 50px;
     i::before {
       font-size: $grid-font-size;
     }
@@ -557,8 +561,8 @@ dx-data-grid {
 
 .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > td,
 .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines) > tr:last-child > td {
-  background-color: $selected-grid-bg !important;
-  color: $selected-grid-main-text !important;
+  background-color: #f1f1f1f1 !important;
+  color: #222222 !important;
   .dx-checkbox-icon {
     width: 14px;
     margin-left: 1px;
@@ -721,6 +725,8 @@ dx-data-grid {
   color: $neutral-10;
   background-color: $neutral-100;
   line-height: inherit;
+  border-radius: 20px;
+
 }
 
 .black-txt {
@@ -797,7 +803,7 @@ dx-data-grid {
 
   .dx-datagrid .dx-row.dx-data-row.dx-column-lines {
     border-bottom: 0.5px solid $neutral-100;
-    height: 30px;
+    height: 50px;
   }
 
   .dx-datagrid {
