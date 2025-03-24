@@ -1,9 +1,11 @@
 @import "../../../assets/scss/colors";
 @import "../../../assets/scss/fonts";
 
-// Mixiny dla często używanych stylów
+/* =========================================
+   Mixiny - optymalizacja i standaryzacja
+   ========================================= */
 @mixin font-roboto($size, $weight, $line-height, $color) {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif; // dodanie fallback font
   font-style: normal;
   font-size: $size;
   font-weight: $weight;
@@ -19,17 +21,11 @@
 }
 
 @mixin box-shadow() {
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.06), 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 @mixin transition($duration: 0.2s) {
-  -ms-transition: all $duration;
-  -webkit-transition: all $duration;
-  -moz-transition: all $duration;
-  -o-transition: all $duration;
-  transition: all $duration;
+  transition: all $duration; // usunięcie przestarzałych prefiksów vendor
 }
 
 @mixin panel-container() {
@@ -53,6 +49,9 @@
   }
 }
 
+/* =========================================
+   Podstawowe style układu
+   ========================================= */
 header {
   height: 32px;
   width: 100%;
@@ -60,16 +59,17 @@ header {
   position: sticky;
   top: 0;
   z-index: 1;
-  // margin-bottom: 55px;
+
   @media (max-width: 1000px) {
     top: -36px;
-  }
-  @media (max-width: 1000px) {
     transition: all 0.2s ease-in-out;
   }
 }
 
-.a-link{
+/* =========================================
+   Elementy użytkownika
+   ========================================= */
+.a-link {
   text-decoration: none!important;
 }
 
@@ -79,7 +79,7 @@ header {
 
 .p_user_name {
   @include font-roboto(12px, 500, 18px, $neutral-10);
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .circle_user {
@@ -87,8 +87,9 @@ header {
   margin-bottom: 6px !important;
   padding-top: 13px;
   margin: 0 auto;
+
   p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     color: $teal900;
     text-align: center;
     @include font-roboto(19px, 400, normal, $teal900);
@@ -127,7 +128,6 @@ header {
 }
 
 .apps-panel {
-  //width: 144px;
   width: 112px;
   opacity: 0;
   height: calc(100vh - 32px);
@@ -139,7 +139,7 @@ header {
   display: none;
   top: 32px;
   left: 81px;
-  padding: 0px 31px;
+  padding: 0 31px;
   @include transition(400ms);
 }
 
@@ -157,10 +157,8 @@ header {
   border-bottom: 1px solid $neutral-80;
   height: 36px !important;
   width: calc(100% + 29px);
-  margin-left: -15px;
-  margin-bottom: -8px;
-  margin-top: -8px;
-  border-radius: 0px;
+  margin: -8px 0 -8px -15px;
+  border-radius: 0;
   padding: 14px 7px 4px !important;
   &:hover {
     cursor: default !important;
@@ -193,7 +191,7 @@ header {
   @include transition(400ms);
   width: 112px;
   border-radius: 8px;
-  padding: 0px 15px;
+  padding: 0 15px;
 }
 
 .apps-css {
@@ -209,8 +207,7 @@ header {
     background-color: $neutral-80;
     border-radius: 16px;
     height: 1px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px 0;
   }
 }
 
@@ -221,10 +218,12 @@ header {
   margin-right: 20px;
 }
 
+/* =========================================
+   Nagłówek i komponenty menu
+   ========================================= */
 ::ng-deep .title-menu {
   height: 32px;
-  margin: 0 auto;
-  margin-top: -32px;
+  margin: 0 auto -32px;
   color: $neutral-100;
   position: relative;
   z-index: 1;
@@ -237,9 +236,11 @@ header {
         border: 2px inset transparent;
       }
 
-      &.dx-state-focused-active.dx-state-focused,
-      &.dx-state-focused-active.dx-state-hover {
-        border: 1px solid transparent !important;
+      &.dx-state-focused-active {
+        &.dx-state-focused,
+        &.dx-state-hover {
+          border: 1px solid transparent !important;
+        }
       }
 
       & + i.icon-search {
@@ -249,6 +250,7 @@ header {
       }
     }
 
+    /* Zoptymalizowane style przycisków */
     .dx-button {
       border: 2px inset transparent;
       border-radius: 0;
@@ -259,6 +261,7 @@ header {
       .dx-button-content {
         padding: 8px 0;
       }
+
       i.icon:before {
         color: $neutral-100;
       }
@@ -271,6 +274,7 @@ header {
         border: 2px inset $neutral-100 !important;
       }
 
+      /* Połączone selektory stanów */
       &.dx-state-hover,
       &:hover {
         background-color: $brand-00Hover !important;
@@ -279,9 +283,11 @@ header {
 
       &.dx-state-active {
         background-color: transparent !important;
+
         &:focus {
           border: 2px inset transparent !important;
         }
+
         &.dx-state-hover,
         &:hover {
           background-color: $brand-00Hover !important;
@@ -289,18 +295,20 @@ header {
         }
       }
 
+      /* Zgrupowane selektory dla aktywnych elementów */
       &.btn-header-active,
       &.user-panel-header-active {
+        background-color: $neutral-100 !important;
+
+        i.icon:before {
+          color: $neutral-30 !important;
+        }
+
         &.dx-state-hover,
         &.dx-state-focused-active,
         &.dx-state-active {
           border: 2px inset transparent !important;
           background-color: $neutral-100 !important;
-        }
-
-        background-color: $neutral-100 !important;
-        i.icon:before {
-          color: $neutral-30 !important;
         }
       }
     }
@@ -316,131 +324,151 @@ header {
   font-size: 0.875rem;
   line-height: 16px;
   color: $neutral-100;
+
   strong {
     color: $brand-10 !important;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 }
 
-:host ::ng-deep .dx-toolbar .dx-toolbar-items-container {
-  height: 32px;
-  overflow: visible;
-  background: #337ab7;
-}
-
-:host ::ng-deep .menu-toggle-btn {
-  .dx-button-mode-contained.dx-button-has-icon {
-    padding: 0;
-    border-radius: 0px;
-    width: 82px;
+/* =========================================
+   DevExtreme komponenty - zoptymalizowane
+   ========================================= */
+:host ::ng-deep {
+  .dx-toolbar .dx-toolbar-items-container {
     height: 32px;
+    overflow: visible;
     background: #337ab7;
-    border: hidden;
+  }
 
-    &.dx-state-hover {
-      background-color: $neutral-100 !important;
-      .dx-icon:before {
+  /* Menu toggle przyciski */
+  .menu-toggle-btn {
+    .dx-button-mode-contained.dx-button-has-icon {
+      padding: 0;
+      border-radius: 0;
+      width: 82px;
+      height: 32px;
+      background: #337ab7;
+      border: hidden;
+
+      /* Stany przycisków - zgrupowane */
+      &.dx-state-hover {
+        background-color: $neutral-100 !important;
+        .dx-icon:before {
+          color: $text-gray !important;
+          top: -1px;
+        }
+      }
+
+      &.dx-state-active {
+        background-color: $brand-neutral-10 !important;
+      }
+
+      &.dx-state-focused,
+      &.dx-state-focused-active {
+        background-color: $neutral-100 !important;
         color: $text-gray !important;
-        top: -1px;
+        border: 2px inset transparent !important;
+      }
+
+      &:focus {
+        background-color: $neutral-100 !important;
+        color: $text-gray !important;
+        border: 2px inset $neutral-100 !important;
+      }
+
+      &.dx-state-active.dx-state-focused,
+      &.dx-state-active:focus {
+        border: 2px inset transparent !important;
+        color: $text-gray !important;
       }
     }
-    &.dx-state-active {
-      background-color: $brand-neutral-10 !important;
-    }
-    &.dx-state-focused,
-    &.dx-state-focused-active {
-      background-color: $neutral-100 !important;
-      color: $text-gray !important;
-      border: 2px inset transparent !important;
-    }
-    &:focus {
-      background-color: $neutral-100 !important;
-      color: $text-gray !important;
-      border: 2px inset $neutral-100 !important;
-    }
 
-    &.dx-state-active.dx-state-focused,
-    &.dx-state-active:focus {
-      border: 2px inset transparent !important;
-      color: $text-gray !important;
+    /* Menu otwarte */
+    .isopen .dx-button-mode-contained.dx-button-has-icon {
+      &.dx-state-hover {
+        background-color: $neutral-100 !important;
+        border-bottom: 1px solid $neutral-80 !important;
+        .dx-icon:before {
+          color: $neutral-30 !important;
+        }
+      }
+
+      &.dx-state-focused {
+        background-color: $neutral-100 !important;
+        border-color: transparent !important;
+        .dx-icon:before {
+          color: $text-gray !important;
+          border-bottom: 1px solid $neutral-80;
+        }
+      }
+
+      &.dx-state-active {
+        background-color: $neutral-100 !important;
+        .dx-icon:before {
+          color: $text-gray !important;
+        }
+      }
     }
+  }
+
+  /* Wspólne styles dla przycisków */
+  .dx-button-mode-contained.dx-button-has-icon {
+    padding: 0;
+    height: 32px;
+    border: hidden;
+  }
+
+  .dx-toolbar-items-container .dx-button-mode-contained.dx-state-hover {
+    background-color: $neutral-10;
   }
 
   .isopen .dx-button-mode-contained.dx-button-has-icon {
-    &.dx-state-hover {
-      background-color: $neutral-100 !important;
-      border-bottom: 1px solid $neutral-80 !important;
-      .dx-icon:before {
-        color: $neutral-30 !important;
-      }
+    background: $neutral-100 !important;
+    border-radius: 0;
+    border-bottom: 1px solid $neutral-80;
+    min-width: 82px;
+
+    .dx-icon-menu::before {
+      color: $neutral-30;
+      font-size: 1.3125rem;
+      position: relative;
+      top: 0;
     }
-    &.dx-state-focused {
-      background-color: $neutral-100 !important;
-      border-color: transparent !important;
-      .dx-icon:before {
-        color: $text-gray !important;
-        border-bottom: 1px solid $neutral-80;
-      }
-    }
-    &.dx-state-active {
-      background-color: $neutral-100 !important;
-      .dx-icon:before {
-        color: $text-gray !important;
-      }
-    }
+  }
+
+  /* Elementy strukturalne */
+  .dx-toolbar .dx-toolbar-before {
+    z-index: 2 !important;
+  }
+
+  .dx-drawer-shrink .dx-drawer-panel-content {
+    width: 82px;
+    min-height: calc(100vh - 32px);
+    background: transparent;
+  }
+
+  .dx-menu-base .dx-menu-items-container {
+    width: 100%;
   }
 }
 
-:host ::ng-deep .dx-button-mode-contained.dx-button-has-icon {
-  padding: 0;
-  height: 32px;
-  border: hidden;
-}
-
-:host ::ng-deep .dx-toolbar-items-container .dx-button-mode-contained.dx-state-hover {
-  background-color: $neutral-10;
-}
-
-:host ::ng-deep .isopen .dx-button-mode-contained.dx-button-has-icon {
-  background: $neutral-100 !important;
-  border-radius: 0px 0px 0px 0px;
-  border-bottom: 1px solid $neutral-80;
-  min-width: 82px;
-  .dx-icon-menu::before {
-    color: $neutral-30;
-    font-size: 1.3125rem;
-    position: relative;
-    top: 0px;
-  }
-}
-
-:host ::ng-deep .dx-toolbar .dx-toolbar-before {
-  z-index: 2 !important;
-}
-
-:host ::ng-deep .dx-drawer-shrink .dx-drawer-panel-content {
-  width: 82px;
-  min-height: calc(100vh - 32px);
-  background: transparent;
-}
-
-:host ::ng-deep .dx-menu-base .dx-menu-items-container {
-  width: 100%;
-}
-
+/* Logo i menu */
 .logo-dashboard-wapro-erp {
   position: fixed;
   top: 20px;
 }
 
 ::ng-deep .dx-context-menu .dx-menu-items-container {
-  padding: 0px;
+  padding: 0;
   width: 100%;
 }
 
-:host ::ng-deep {
-  .container {
-    margin-bottom: 300px;
-  }
+:host ::ng-deep .container {
+  margin-bottom: 300px;
 }
 
 h5 {
@@ -450,131 +478,102 @@ h5 {
   cursor: pointer;
   margin-left: 10px;
 }
-:host ::ng-deep .dx-icon {
-  margin-top: 0px;
-  margin-left: 0px;
-  font-size: 16px;
-}
 
-:host ::ng-deep .search-box .dx-icon {
-  margin-top: 11px !important;
-  margin-left: -3px;
-  &::before {
-    position: relative;
-    top: -5px;
-    left: -3px;
+/* =========================================
+   Style ikon i elementów menu
+   ========================================= */
+:host ::ng-deep {
+  .dx-icon {
+    margin-top: 0;
+    margin-left: 0;
+    font-size: 16px;
   }
-}
 
-:host ::ng-deep .search-box .dx-icon:hover {
-  &::before {
-    color: $brand-10 !important;
+  .search-box .dx-icon {
+    margin-top: 11px !important;
+    margin-left: -3px;
+
+    &::before {
+      position: relative;
+      top: -5px;
+      left: -3px;
+    }
+
+    &:hover::before {
+      color: $brand-10 !important;
+    }
   }
-}
 
-:host ::ng-deep .main-menu .dx-menu-item.dx-state-hover {
-  // color: $brand-10;
-  // width: 70px;
-  background-color: transparent!important;
-  border-radius: 4px;
-}
-
-.dx-menu-item-wrapper {
-  border: 10px $neutral-10 solid;
-}
-
-:host ::ng-deep .dx-menu-item.dx-state-active {
-  color: $brand-10;
-  // background-color: $neutral-100;
-}
-
-.dx-item-content .dx-menu-item-content:focus {
-  outline: 0;
-}
-
-:host ::ng-deep .dx-menu-base .dx-menu-item-content {
-  padding: 3px 4px 0px;
-}
-
-:host ::ng-deep.dx-menu-base .dx-menu-item-content {
-  padding: 1.5px 4px 1.5px;
-  box-sizing: border-box;
-  width: 70px;
-}
-
-.dx-menu-base .dx-icon {
-  width: 21px;
-  height: 21px;
-  background-position: 0 0;
-  background-size: 21px 21px;
-  padding: 0;
-  margin-left: 0.5px;
-  font-size: 21px;
-  text-align: center;
-  line-height: 21px;
-  color: $text-gray;
-}
-
-:host ::ng-deep .dx-menu-item-expanded .dx-item-content .dx-menu-item-content {
-  background-color: $neutral-90;
-}
-
-:host ::ng-deep .main-menu .dx-menu-item-expanded .dx-item-content .dx-menu-item-content {
-  background-color: $brand-90;
-  .submenu-icon-show {
-    display: block;
+  /* Uproszczone selektory menu */
+  .main-menu .dx-menu-item.dx-state-hover {
+    background-color: transparent !important;
+    border-radius: 4px;
   }
-}
 
-:host ::ng-deep .main-menu .dx-item-content .dx-menu-item-content {
-  height: 70px;
-  width: 70px !important;
-  padding-left: 2px;
-  padding-top: 15px;
-  margin-left: -4px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  box-sizing: border-box;
-  // margin-bottom: -5px;
-  @include hover-bg($brand-90);
-  @include focus-style();
-  .change-color-text {
-    padding-top: 10px;
-    margin-left: -1px;
-    background: $text-light-gray;
+  .dx-menu-item.dx-state-active {
+    color: $brand-10;
+  }
 
-    &:hover {
-      background-position: 0 100%;
+  /* Wspólny styl dla elementów menu */
+  .dx-menu-base .dx-menu-item-content {
+    padding: 3px 4px 0;
+  }
+
+  /* Naprawione powtarzające się selektory */
+  &.dx-menu-base .dx-menu-item-content {
+    padding: 1.5px 4px 1.5px;
+    box-sizing: border-box;
+    width: 70px;
+  }
+
+  /* Współdzielony styl dla elementów menu */
+  .dx-item-content .dx-menu-item-content,
+  .main-menu .dx-item-content .dx-menu-item-content {
+    height: 70px;
+    width: 70px !important;
+    padding-left: 2px;
+    padding-top: 15px;
+    margin-left: -4px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    @include focus-style();
+
+    .change-color-text {
+      padding-top: 10px;
+      margin-left: -1px;
+      background: $text-light-gray;
+
+      &:hover {
+        background-position: 0 100%;
+      }
+    }
+  }
+
+  /* Różne style dla różnych typów menu */
+  .main-menu .dx-item-content .dx-menu-item-content {
+    @include hover-bg($brand-90);
+  }
+
+  .dx-item-content .dx-menu-item-content {
+    @include hover-bg($neutral-90);
+  }
+
+  /* Styl aktywnych elementów */
+  .dx-menu-item-expanded .dx-item-content .dx-menu-item-content {
+    background-color: $neutral-90;
+  }
+
+  .main-menu .dx-menu-item-expanded .dx-item-content .dx-menu-item-content {
+    background-color: $brand-90;
+
+    .submenu-icon-show {
+      display: block;
     }
   }
 }
 
-:host ::ng-deep .dx-item-content .dx-menu-item-content {
-  height: 70px;
-  width: 70px !important;
-  padding-left: 2px;
-  padding-top: 15px;
-  margin-left: -4px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  box-sizing: border-box;
-  // margin-bottom: -5px;
-  @include hover-bg($neutral-90);
-  @include focus-style();
-  .change-color-text {
-    padding-top: 10px;
-    margin-left: -1px;
-    background: $text-light-gray;
-
-    &:hover {
-      background-position: 0 100%;
-    }
-  }
-}
-
-.a-link:focus-visible {
-  border: 1px solid $neutral-40;
-}
+/* Style tekstu elementów menu */
 .dx-menu-item-text-span {
   @include font-roboto(0.625rem, 500, 0.75rem, $text-gray);
   text-wrap: wrap;
@@ -589,10 +588,12 @@ h5 {
 }
 
 :host ::ng-deep .dx-menu-base .dx-menu-item .dx-menu-item-content .dx-icon {
-  // margin-left: 15px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
+/* =========================================
+   Style aktywnych elementów
+   ========================================= */
 .active {
   width: 105%;
   background-color: $neutral-100;
@@ -600,86 +601,102 @@ h5 {
   background-position-x: -1px;
   background-position-y: -1px;
   background-repeat: no-repeat;
-  //border-left: 2px solid $brand-10 !important;
   border-radius: 2px !important;
   border-top-right-radius: 4px !important;
-  border-top-left-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 4px !important;
-  //padding-left: 1px !important;
   @include focus-style();
+
+  @media (max-width: 1080px) {
+    width: 100%;
+    background-image: none;
+    border-radius: 4px !important;
+    color: $brand-10 !important;
+  }
 }
 
-:host ::ng-deep .dx-menu-item-text {
-  font-family: $Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 0.625rem;
-  line-height: 0.75rem;
-  text-align: left;
+/* =========================================
+   Style elementów menu i nawigacji
+   ========================================= */
+:host ::ng-deep {
+  .dx-menu-item-text {
+    font-family: $Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.625rem;
+    line-height: 0.75rem;
+    text-align: left;
+  }
+
+  /* Style scrolowania */
+  .dx-menu-vertical {
+    max-height: 800px;
+    margin-bottom: 10px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+
+  .menu-panel-user .dx-menu-vertical {
+    margin-bottom: 0;
+  }
+
+  /* Ikony w menu */
+  .dx-menu .dx-menu-item-has-text.dx-menu-item-has-icon .dx-icon {
+    margin: 0 3px;
+    margin-right: 10px;
+  }
+
+  .dx-icon-menu::before {
+    color: $neutral-100;
+    font-size: 1.3125rem;
+    position: relative;
+    top: -1px;
+  }
+
+  .dx-state-focused .dx-icon-menu::before,
+  .dx-state-hover .dx-icon-menu::before {
+    color: $neutral-30 !important;
+  }
+
+  /* Panel drawer */
+  .dx-drawer-panel-content {
+    width: 82px;
+    background: $neutral-100;
+    box-shadow:
+      0px 2px 1px rgba(0, 0, 0, 0.06),
+      0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 0 8px;
+    z-index: 4;
+    overflow-x: hidden;
+  }
+
+  .dx-menu-base .dx-menu-item .dx-menu-item-content .dx-menu-item-popout-container .dx-menu-item-popout {
+    display: none;
+  }
+
+  /* Tło tematyczne */
+  .dx-theme-background-color {
+    padding: 20px;
+    background-color: $neutral-85 !important;
+    fill: $neutral-85 !important;
+  }
 }
 
-:host ::ng-deep .dx-menu-vertical {
-  max-height: 800px;
-  margin-bottom: 10px;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
-:host ::ng-deep .menu-panel-user .dx-menu-vertical {
-  max-height: 800px;
-  margin-bottom: 0px;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
-:host ::ng-deep .dx-menu .dx-menu-item-has-text.dx-menu-item-has-icon .dx-icon {
-  margin: 0 3px;
-  margin-right: 10px;
-}
-
-:host ::ng-deep .dx-icon-menu::before {
-  color: $neutral-100;
-  font-size: 1.3125rem;
-  position: relative;
-  top: -1px;
-}
-
-:host ::ng-deep .dx-state-focused .dx-icon-menu::before {
-  color: $neutral-30 !important;
-}
-
-:host ::ng-deep .dx-state-hover .dx-icon-menu::before {
-  color: $neutral-30 !important;
-}
-
-:host ::ng-deep .dx-drawer-panel-content {
-  width: 82px;
-  background: $neutral-100;
-  box-shadow:
-    0px 2px 1px rgba(0, 0, 0, 0.06),
-    0px 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 0px 0px 0px 8px;
-  z-index: 4;
-  overflow-x: hidden;
-}
-
-:host ::ng-deep .dx-menu-base .dx-menu-item .dx-menu-item-content .dx-menu-item-popout-container .dx-menu-item-popout {
-  display: none;
-}
-
-:host ::ng-deep .dx-theme-background-color {
-  padding: 20px 20px 20px 20px;
-  background-color: $neutral-85 !important;
-  fill: $neutral-85 !important;
-}
-
+/* Pozostałe style UI */
 .p-no-found {
   @include font-roboto(11px, normal, 13px, $text-light-gray);
   text-align: center;
   margin-top: 14px;
 }
 
+.a-link:focus-visible {
+  border: 1px solid $neutral-40;
+}
+
+/* =========================================
+   Panele wyboru i elementy UI
+   ========================================= */
 ::ng-deep .company-chose {
   @include panel-container();
   position: absolute;
@@ -687,7 +704,8 @@ h5 {
   max-height: 712px;
   top: 32px;
   z-index: 10000;
-  padding: 5px 5px;
+  padding: 5px;
+
   @media (max-width: 1000px) {
     right: 0 !important;
   }
@@ -725,13 +743,14 @@ h5 {
 
 :host ::ng-deep .dropDownBoxClassGrid .dx-datagrid {
   width: calc(100% + 5px);
-  font-family: "roboto";
+  font-family: "roboto", sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 0.75rem;
   line-height: 14px;
 }
 
+/* Elementy kolorów i wyboru */
 .box-color-warehouse {
   @include circle(13px, inherit);
   margin: 0 auto;
@@ -739,7 +758,7 @@ h5 {
 
 .p-company-chose {
   @include font-roboto(0.75rem, normal, 14.06px, inherit);
-  margin-bottom: 0px;
+  margin-bottom: 0;
   display: flex;
 }
 
@@ -750,8 +769,9 @@ h5 {
   max-height: 712px;
   top: 32px;
   z-index: 10000;
-  padding: 5px 5px;
-  padding-bottom: 0px;
+  padding: 5px;
+  padding-bottom: 0;
+
   @media (max-width: 1000px) {
     left: 0 !important;
   }
@@ -759,9 +779,12 @@ h5 {
 
 .p-warehouse-choice {
   @include font-roboto(0.75rem, normal, 14.06px, inherit);
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
+/* =========================================
+   Panel informacji o użytkowniku
+   ========================================= */
 .user-info-panel {
   min-width: 300px;
   height: auto;
@@ -771,9 +794,8 @@ h5 {
   position: absolute;
   z-index: 2;
   top: 32px;
-  right: 0px;
+  right: 0;
   border: 1px solid $neutral-80;
-  // right: -216px;
   @include transition(400ms);
   box-sizing: border-box;
 }
@@ -786,6 +808,7 @@ h5 {
   font-weight: 400;
   color: $brand-neutral-10;
   margin-bottom: 20px;
+
   strong {
     font-weight: 400;
     color: $brand-20 !important;
@@ -802,23 +825,15 @@ h5 {
   margin-bottom: 6px;
 }
 
-:host ::ng-deep .dx-context-menu-container-border {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-}
-
 .p-user-info-panel {
   margin-top: 6px;
   margin-bottom: 26px;
   @include font-roboto(0.8125rem, 500, 15px, $neutral-30);
 }
 
+/* =========================================
+   Menu panelu użytkownika
+   ========================================= */
 :host ::ng-deep .menu-panel-user {
   .dx-item-content .dx-menu-item-content {
     height: auto !important;
@@ -827,18 +842,22 @@ h5 {
   }
 
   .dx-menu-item.dx-state-hover {
-    // color: $brand-10;
     background-color: $neutral-90;
     height: auto !important;
     border-radius: 4px;
   }
+
+  /* Style dla rozszerzonych elementów menu */
   .dx-menu-item-expanded {
-    background-color: $neutral-90!important;
+    background-color: $neutral-90 !important;
     border: none !important;
     border-radius: 4px;
   }
 
   .dx-menu .dx-menu-item-expanded {
+    background-color: $neutral-90;
+    border: none !important;
+
     &::after {
       font-size: 1.1875rem;
       line-height: 19px;
@@ -847,8 +866,6 @@ h5 {
       top: 20px;
       right: 10px;
     }
-    background-color: $neutral-90;
-    border: none !important;
   }
 
   .dx-menu-item-text {
@@ -859,6 +876,9 @@ h5 {
   }
 }
 
+/* =========================================
+   Style interfejsu użytkownika
+   ========================================= */
 .p-url-header {
   display: inline-block;
   position: absolute;
@@ -875,22 +895,20 @@ h5 {
   color: $brand-10 !important;
   margin-top: 16px;
   margin-left: 75px;
+
   &::before {
     font-size: 4rem;
     line-height: 64px;
   }
 }
 
-@media (max-width: 575.98px) {
-  // :host ::ng-deep .dx-drawer-panel-content {
-  //   width: 200px;
-  // }
-}
-
 .hide-scroll {
   overflow-y: hidden !important;
 }
 
+/* =========================================
+   Style wyszukiwania
+   ========================================= */
 .search-box {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid transparent !important;
@@ -899,21 +917,20 @@ h5 {
   height: 26px;
   border-radius: 8px;
   padding-left: 25px;
-
   margin-top: 3px;
 
   &:hover {
     background: $neutral-10;
   }
-}
 
-.search-box .dx-clear-button-area {
-  display: none;
-}
+  &.dx-state-focused {
+    box-shadow: none;
+    border: none;
+  }
 
-.search-box.dx-state-focused {
-  box-shadow: none;
-  border: none;
+  .dx-clear-button-area {
+    display: none;
+  }
 }
 
 .box-search {
@@ -921,86 +938,25 @@ h5 {
   height: 28px;
   position: absolute;
   left: calc(50vw - 215px);
-}
 
-:host ::ng-deep {
-  .search-box.dx-widget input,
-  .dx-widget textarea {
-    font-family: "Roboto";
-    font-size: 0.75rem;
-    line-height: 16px;
-    color: $neutral-100;
-  }
-
-  .search-box.dx-show-clear-button .dx-clear-button-area {
-    display: none;
-  }
-  .dx-state-focused-active.dx-show-clear-button .dx-clear-button-area {
-    display: block;
-  }
-  .dx-show-clear-button .dx-clear-button-area {
-    width: 26px;
-
-    min-width: 26px;
-    height: 22px;
-    right: 0;
-    :hover {
-      background-color: transparent;
-    }
-  }
-
-  .dx-state-focused-active.dx-widget input,
-  .dx-widget textarea {
-    font-family: "Roboto";
-    font-size: 0.75rem;
-    line-height: 16px;
-    color: $neutral-30 !important;
-  }
-
-  .btn-search-icon {
-    &::before {
-      font-size: 18px;
-    }
-    position: relative;
-    top: -22px;
-    left: -116px;
-    font-size: 18px;
-    line-height: 18px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .btn-search-icon-active {
-    color: $neutral-30 !important;
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    font-size: 18px;
-    line-height: 18px;
-    &::before {
-      font-size: 18px;
-    }
-  }
-
-  .search-box.dx-state-focused-active {
-    background: $neutral-100;
-    // box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.06);
-    border: none;
-    border-radius: 8px;
-    color: $neutral-30 !important;
+  @media (max-width: 1535px) {
+    left: 155px;
   }
 }
 
 .search-result-panel {
   @include panel-container();
   position: absolute;
-  padding: 24px 15px 24px 15px;
+  padding: 24px 15px;
   width: 350px;
   max-height: calc(100vh - 40px);
   left: calc(50vw - 134px);
   top: 32px;
   z-index: 10000;
+
+  @media (max-width: 1535px) {
+    left: 234px !important;
+  }
 }
 
 .p-menu-header {
@@ -1076,25 +1032,12 @@ h5 {
     background-position-x: -1px;
     background-position-y: -1px;
     background-repeat: no-repeat;
-    //border-left: 2px solid $brand-10 !important;
     border-radius: 4px !important;
     border-top-right-radius: 4px !important;
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
     border-bottom-right-radius: 4px !important;
-    //padding-left: 1px !important;
     color: $brand-10 !important;
-    // .dx-menu-base .dx-menu-item .dx-menu-item-content .dx-icon {
-    //   &:before {
-    //     color: $brand-10 !important;
-    //   }
-    // }
-    // &:focus-visible {
-    //   border: 1px solid transparent !important;
-    //   background-image: url("../../../assets/images/active-focus.svg");
-    //   background-position-x: -1px;
-    //   background-position-y: -1px;
-    // }
   }
 }
 
@@ -1507,4 +1450,96 @@ h5 {
   @include circle(15px, $accent-orange);
   margin-left: 5px;
   margin-right: 5px;
+}
+
+:host ::ng-deep .dx-context-menu-container-border {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* =========================================
+   Zaawansowane style wyszukiwarki
+   ========================================= */
+:host ::ng-deep {
+  /* Style dla pól tekstowych */
+  .search-box.dx-widget input,
+  .dx-widget textarea {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.75rem;
+    line-height: 16px;
+    color: $neutral-100;
+  }
+
+  /* Style przycisku czyszczenia */
+  .search-box.dx-show-clear-button .dx-clear-button-area {
+    display: none;
+  }
+
+  .dx-state-focused-active.dx-show-clear-button .dx-clear-button-area {
+    display: block;
+  }
+
+  .dx-show-clear-button .dx-clear-button-area {
+    width: 26px;
+    min-width: 26px;
+    height: 22px;
+    right: 0;
+
+    :hover {
+      background-color: transparent;
+    }
+  }
+
+  /* Style stanu aktywnego */
+  .dx-state-focused-active.dx-widget input,
+  .dx-widget textarea {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.75rem;
+    line-height: 16px;
+    color: $neutral-30 !important;
+  }
+
+  /* Ikony wyszukiwania */
+  .btn-search-icon {
+    position: relative;
+    top: -22px;
+    left: -116px;
+    font-size: 18px;
+    line-height: 18px;
+
+    &::before {
+      font-size: 18px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .btn-search-icon-active {
+    color: $neutral-30 !important;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    font-size: 18px;
+    line-height: 18px;
+
+    &::before {
+      font-size: 18px;
+    }
+  }
+
+  /* Stan aktywny pola wyszukiwania */
+  .search-box.dx-state-focused-active {
+    background: $neutral-100;
+    border: none;
+    border-radius: 8px;
+    color: $neutral-30 !important;
+  }
 }

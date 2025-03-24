@@ -3,7 +3,7 @@
   <dx-toolbar [items]="toolbarContent"></dx-toolbar>
   <div
     class="title-menu text-center"
-    style="display: flex; justify-content: space-between"
+    style="display: flex; justify-content: space-between; position: relative; top: -32px;"
   >
     <p
       class="header-name-application"
@@ -13,14 +13,6 @@
     </p>
     @if (!isdataPortal) {
     <div class="left-btn-header-panel">
-      <!-- <dx-button
-        class="btn-dx-top-menu-folder"
-        icon="icon absui-icon--book-open"
-        (onClick)="runGuide()"
-        style="margin-right: 6px"
-        [id]="'btn-user-guide'"
-      >
-      </dx-button> -->
       <dx-button
         (click)="onUserPanelClick()"
         id="userPanelHeader"
