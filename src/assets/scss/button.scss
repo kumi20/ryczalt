@@ -1,7 +1,7 @@
 @import "./fonts";
 @import "./colors";
 
-$border-radius: 4px;
+$border-radius: 10px;
 $button-height: 26px;
 $focus-border-width: 2px;
 
@@ -205,7 +205,8 @@ $focus-border-width: 2px;
   font-weight: 500;
   font-size: 0.81rem;
   line-height: 15px;
-  height: 26px !important;
+  height: 40px !important;
+  min-width: 130px;
   width: auto;
   &:hover {
     background-color: $brand-00;
@@ -244,7 +245,8 @@ dx-list .dx-button-mode-contained {
   font-weight: 500;
   font-size: 0.81rem;
   line-height: 15px;
-  height: 26px;
+  height: 40px!important;
+  min-width: 130px;
   width: auto;
   position: relative;
   z-index: 2;

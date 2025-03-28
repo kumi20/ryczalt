@@ -589,6 +589,8 @@ h5 {
 
 :host ::ng-deep .dx-menu-base .dx-menu-item .dx-menu-item-content .dx-icon {
   margin-top: 0;
+  font-size: 1.3125rem!important;
+  color: var(--neutral-30, $neutral-30) !important;
 }
 
 /* =========================================

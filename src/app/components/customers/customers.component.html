@@ -42,7 +42,7 @@
 
     <dx-button
       class="btn-dx-top-menu"
-      icon="dx-icon dx-icon-eyeopen"
+      icon="ryczalt-icon ri-show"
       stylingMode="text"
       type="default"
       [disabled]="!focusedElement()"
@@ -372,6 +372,7 @@
             (onKeyDown)="onKeyDown($event)"
             [allowColumnResizing]="event.deviceType !== 'mobile'"
             (onRowClick)="onRowDblClick($event)"
+            style="width: calc(100% + 10px)"
             #dxGrid
           >
             <dxo-load-panel [enabled]="false"></dxo-load-panel>

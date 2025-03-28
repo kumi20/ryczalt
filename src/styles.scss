@@ -2273,14 +2273,19 @@ ng-keyboard-shortcuts-help-item .item {
 }
 
 .dx-datebox-date .dx-dropdowneditor-icon::before {
-  content: "\f026";
+  font-family: 'Ryczalt-Icons'!important;
+  content: "\eb0d";
   position: absolute;
   display: block;
   width: 18px;
   top: 50%;
   margin-top: -9px;
   left: 50%;
-  margin-left: 0px;
+  margin-left: -7px;
+}
+
+.dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>td.dx-focused, .dx-datagrid-rowsview .dx-row-focused.dx-data-row:not(.dx-row-lines)>tr:last-child>td.dx-focused {
+  background-color: #f1f1f1 !important;
 }
 
 

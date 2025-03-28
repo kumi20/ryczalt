@@ -263,7 +263,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '3',
         name: this.translate.instant('menu.vatSell'),
-        icon: 'dx-icon-verticalalignbottom',
+        icon: 'ryczalt-icon ri-taxnote',
         url: 'content/vat-register-sell',
         items: [],
         tooltip: false,
@@ -275,7 +275,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '4',
         name: this.translate.instant('menu.vatBuy'),
-        icon: 'dx-icon-verticalalignbottom',
+        icon: 'ryczalt-icon ri-taxnote',
         url: 'content/vat-register-buy',
         items: [],
         tooltip: false,
@@ -287,7 +287,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '5',
         name: this.translate.instant('menu.internalEvidence'),
-        icon: 'dx-icon-accountbox',
+        icon: 'ryczalt-icon ri-document',
         url: 'content/internal-evidence',
         items: [],
         tooltip: false,
@@ -298,7 +298,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '6',
         name: this.translate.instant('menu.customers'),
-        icon: 'dx-icon-user',
+        icon: 'ryczalt-icon ri-clients',
         url: 'content/customers',
         items: [],
         tooltip: false,
@@ -309,7 +309,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       {
         id: '7',
         name: this.translate.instant('menu.tax'),
-        icon: 'dx-icon-taskinprogress',
+        icon: 'ryczalt-icon ri-document-sum',
         url: 'content/zus',
         tooltip: false,
         code: null,

@@ -717,7 +717,7 @@ dx-data-grid {
   .black-txt,
   .grey-txt,
   .hov-underline {
-    color: $neutral-100 !important;
+    color: var(--neutral-30, $neutral-30) !important;
   }
 }
 

@@ -33,10 +33,12 @@
 
 .dx-datebox-calendar .dx-dropdowneditor-icon {
   font: 18px/18px DXIcons;
-  width: 22px;
+  width: 34px;
   height: 100%;
   text-align: center;
-  @include border-radius(3px);
+  @include border-radius(10px);
+  position: relative;
+  right: 11px;
 }
 
 .dx-button-content .icon {
@@ -374,7 +376,7 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   top: 50%;
   margin-top: -9px;
   left: 50%;
-  margin-left: -2px;
+  margin-left: -7px;
 }
 
 .dx-show-clear-button .dx-icon-clear {
@@ -454,9 +456,9 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
 .dx-dropdowneditor-button.dx-button-mode-outlined,
 .dx-dropdowneditor-button.dx-button-mode-text {
   background: 0 0;
-  width: 22px;
+  width: 34px;
   height: 22px;
-  min-width: 22px;
+  min-width: 34px;
   padding: 0px;
   :hover {
     background-color: $neutral-85;
@@ -472,7 +474,7 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
 .dx-dropdowneditor-button.dx-button-mode-outlined,
 .dx-dropdowneditor-button.dx-button-mode-text {
   background: 0 0;
-  width: 22px;
+  width: 34px;
   height: 22px;
   min-width: 22px;
   padding: 0px;
@@ -487,11 +489,13 @@ dx-select-box.dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
   background-repeat: no-repeat;
   border: none;
   color: $neutral-30;
-  width: 22px;
+  width: 34px;
   height: 100%;
   text-align: center;
   border-radius: 3px;
   margin-left: 12px;
+  position: relative;
+  right: 11px;
 }
 
 .dx-placeholder {
@@ -827,7 +831,7 @@ dx-drop-down-box {
   .dx-dropdowneditor-icon {
     border: 1px solid transparent;
     color: $neutral-30;
-    width: 22px;
+    width: 34px;
     height: 100%;
     text-align: center;
     border-radius: 3px;
