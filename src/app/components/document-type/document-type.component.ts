@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   Component,
   input,
@@ -12,47 +12,76 @@ import {
   OnChanges,
   SimpleChanges,
   ChangeDetectorRef,
-  Input
-} from '@angular/core';
-import { DocumentTypeService } from '../../services/document-type.services';
-import { DocumentType } from '../../interface/documentType';
-import { EventService } from '../../services/event-services.service';
-import { DxDataGridModule, DxDropDownBoxModule } from 'devextreme-angular';
-import { TranslateModule } from '@ngx-translate/core';
+  Input,
+  computed,
+} from "@angular/core";
+import { DocumentTypeService } from "../../services/document-type.services";
+import { DocumentType } from "../../interface/documentType";
+import { EventService } from "../../services/event-services.service";
+import { DxDataGridModule, DxDropDownBoxModule } from "devextreme-angular";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {
+  GenericGridColumn,
+  GenericGridOptions,
+} from "../core/generic-data-grid/generic-data-grid.model";
+import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data-grid.component";
 
 @Component({
-  selector: 'app-document-type',
+  selector: "app-document-type",
   standalone: true,
   imports: [
     CommonModule,
     DxDataGridModule,
     TranslateModule,
     DxDropDownBoxModule,
+    GenericDataGridComponent,
   ],
-  templateUrl: './document-type.component.html',
-  styleUrl: './document-type.component.scss',
+  templateUrl: "./document-type.component.html",
+  styleUrl: "./document-type.component.scss",
 })
 export class DocumentTypeComponent implements OnInit, OnChanges {
   @Output() onChoosed = new EventEmitter();
   @Output() setPLId = new EventEmitter();
   @Input() readOnly: boolean = false;
-  @ViewChild('gridDropDown') gridDropDown: any;
+  @ViewChild("gridDropDown") gridDropDown: any;
 
   dropDownBoxMode = input<boolean>(false);
   className = input<boolean>(false);
-  controlNameForm = input<string>('');
+  controlNameForm = input<string>("");
 
   documentTypeService = inject(DocumentTypeService);
   event = inject(EventService);
 
   documentList = signal<DocumentType[]>([]);
-  heightGrid: number | string = 'calc(100vh - 100px)';
+  heightGrid: number | string = "calc(100vh - 100px)";
   focusedRowIndex: number = 0;
   pageSize: number = 300;
   isGridBoxOpened: boolean = false;
-  cdr = inject(ChangeDetectorRef)
+  cdr = inject(ChangeDetectorRef);
 
   chossingRecord: null | string = null;
+
+  translate = inject(TranslateService);
+
+  /** Opcje siatki klientów */
+  options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 100px)",
+      } as GenericGridOptions)
+  );
+
+  columns = computed(
+    () =>
+      [
+        {
+          caption: this.translate.instant("customers.name"),
+          dataField: "name",
+          minWidth: 100,
+          allowSorting: false,
+        },
+      ] as GenericGridColumn[]
+  );
 
   constructor() {}
 
@@ -68,14 +97,14 @@ export class DocumentTypeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['controlNameForm'] && this.dropDownBoxMode()) {
-      this.chossingRecord = changes['controlNameForm'].currentValue;
-      this.cdr.detectChanges(); 
+    if (changes["controlNameForm"] && this.dropDownBoxMode()) {
+      this.chossingRecord = changes["controlNameForm"].currentValue;
+      this.cdr.detectChanges();
     }
   }
 
   onKeyDown(event: any) {
-    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
+    const BLOCKED_KEYS = ["F2", "Escape", "Delete", "Enter"];
 
     if (BLOCKED_KEYS.includes(event.event.key)) {
       event.event.preventDefault();

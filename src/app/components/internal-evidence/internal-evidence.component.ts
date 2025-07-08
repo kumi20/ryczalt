@@ -1,30 +1,45 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ViewChild,
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import {
   DxButtonModule,
   DxDataGridModule,
   DxScrollViewModule,
   DxTooltipModule,
-} from 'devextreme-angular';
+} from "devextreme-angular";
 
-import { EventService } from '../../services/event-services.service';
-import { DateRangeComponent } from '../date-range/date-range.component';
-import DataSource from 'devextreme/data/data_source';
-import { InternalEvidence } from '../../interface/internalEvidence';
-import { FlateRateService } from '../../services/flateRate.services';
-import { CheckIfMonthIsClosed, OpenCloseRequest } from '../../interface/flateRate';
-import * as AspNetData from 'devextreme-aspnet-data-nojquery';
-import { environment } from '../../../environments/environment';
-import { LoadOptions } from 'devextreme/data';
-import { NewInternalEvidenceComponent } from './new-internal-evidence/new-internal-evidence.component';
-import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
-import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
-import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component';
-import { InternalEvidenceService } from '../../services/internal-evidence.service';
+import { EventService } from "../../services/event-services.service";
+import { DateRangeComponent } from "../date-range/date-range.component";
+import DataSource from "devextreme/data/data_source";
+import { InternalEvidence } from "../../interface/internalEvidence";
+import { FlateRateService } from "../../services/flateRate.services";
+import {
+  CheckIfMonthIsClosed,
+  OpenCloseRequest,
+} from "../../interface/flateRate";
+import * as AspNetData from "devextreme-aspnet-data-nojquery";
+import { environment } from "../../../environments/environment";
+import { LoadOptions } from "devextreme/data";
+import { NewInternalEvidenceComponent } from "./new-internal-evidence/new-internal-evidence.component";
+import { NgShortcutsComponent } from "../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component";
+import { AllowIn, ShortcutInput } from "ng-keyboard-shortcuts";
+import { ConfirmDialogComponent } from "../core/confirm-dialog/confirm-dialog.component";
+import { InternalEvidenceService } from "../../services/internal-evidence.service";
+import { GenericGridColumn } from "../core/generic-data-grid/generic-data-grid.model";
+import { GenericGridOptions } from "../core/generic-data-grid/generic-data-grid.model";
+import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data-grid.component";
 
 @Component({
-  selector: 'app-internal-evidence',
+  selector: "app-internal-evidence",
   imports: [
     CommonModule,
     TranslateModule,
@@ -35,23 +50,24 @@ import { InternalEvidenceService } from '../../services/internal-evidence.servic
     DateRangeComponent,
     NewInternalEvidenceComponent,
     NgShortcutsComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    GenericDataGridComponent,
   ],
-  templateUrl: './internal-evidence.component.html',
-  styleUrls: ['./internal-evidence.component.scss']
+  templateUrl: "./internal-evidence.component.html",
+  styleUrls: ["./internal-evidence.component.scss"],
 })
 export class InternalEvidenceComponent implements OnInit, AfterViewInit {
-  @ViewChild('dxGrid') dxGrid: any;
+  @ViewChild("genericDataGrid") genericDataGrid: any;
 
   event = inject(EventService);
 
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 105px)';
+  heightGrid: number | string = "calc(100vh - 105px)";
   selectedRows: InternalEvidence[] = [];
   focusedRowIndex: number = 0;
   pageSize: number = 200;
   focusedElement = signal<InternalEvidence | null>(null);
-  mode: 'add' | 'edit' | 'show' = 'add';
+  mode: "add" | "edit" | "show" = "add";
   isClosed = signal<boolean>(false);
   isAdd = signal<boolean>(false);
 
@@ -64,14 +80,82 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   flateRateService = inject(FlateRateService);
   internalEvidenceService = inject(InternalEvidenceService);
 
+  private readonly translate = inject(TranslateService);
+
+  /** Opcje siatki klientów */
+  options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 105px)",
+      } as GenericGridOptions)
+  );
+
+  columns = computed(
+    () =>
+      [
+        {
+          caption: this.translate.instant(
+            "internalEvidence.kindOfInternalEvidence"
+          ),
+          dataField: "isCoast",
+          width: 230,
+          allowSorting: false,
+          hidingPriority: 6,
+          dataType: "string",
+          customizeText: (e: any) => {
+            return e.value
+              ? this.translate.instant("internalEvidence.expense")
+              : this.translate.instant("internalEvidence.income");
+          },
+        },
+        {
+          caption: this.translate.instant(
+            "internalEvidence.numberOfInternalEvidence"
+          ),
+          dataField: "documentNumber",
+          width: 230,
+          allowSorting: false,
+        },
+        {
+          caption: this.translate.instant("internalEvidence.dateOfIssue"),
+          dataField: "documentDate",
+          width: 150,
+          dataType: "date",
+          format: { type: this.event.dateFormat },
+          alignment: "left",
+        },
+        {
+          caption: this.translate.instant("internalEvidence.value"),
+          dataField: "amount",
+          width: 100,
+          allowSorting: false,
+        },
+        {
+          caption: this.translate.instant("internalEvidence.personIssuing"),
+          dataField: "personIssuing",
+          width: 200,
+          allowSorting: false,
+        },
+        {
+          caption: this.translate.instant(
+            "internalEvidence.purposeOfExpenditure"
+          ),
+          dataField: "description",
+          minWidth: 200,
+          allowSorting: false,
+        },
+      ] as GenericGridColumn[]
+  );
+
   ngOnInit() {
-    this.getData();1
+    this.getData();
+    1;
   }
 
   ngAfterViewInit() {
     this.shortcuts = [
       {
-        key: 'alt + n',
+        key: "alt + n",
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: () => {
@@ -79,7 +163,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
         },
       },
       {
-        key: 'F2',
+        key: "F2",
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: (data) => {
@@ -89,7 +173,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
       },
 
       {
-        key: 'del',
+        key: "del",
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: () => {
@@ -104,7 +188,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     this.checkIfMonthIsClosed();
     this.dataSource = new DataSource({
       store: AspNetData.createStore({
-        key: 'internalEvidenceId',
+        key: "internalEvidenceId",
         onBeforeSend: this.event.onBeforeSendDataSource,
         loadUrl: `${environment.domain}internalEvidence`,
         loadParams: this.getLoadParams(),
@@ -116,7 +200,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
           if (data.length > 0) this.focusedElement.set(data[0]);
           else this.focusedElement.set(null);
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid);
+            this.genericDataGrid.focus();
           }, 0);
         },
       }),
@@ -130,10 +214,9 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     return obj;
   }
 
-
   closeConfirm() {
     this.isDelete.set(false);
-    this.event.setFocus(this.dxGrid);
+    this.genericDataGrid.focus();
   }
 
   checkIfMonthIsClosed() {
@@ -160,7 +243,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   }
 
   onKeyDown(event: any) {
-    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
+    const BLOCKED_KEYS = ["F2", "Escape", "Delete", "Enter"];
 
     if (BLOCKED_KEYS.includes(event.event.key)) {
       event.event.preventDefault();
@@ -174,16 +257,13 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   onEdit() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
-    this.mode = 'edit';
+    this.mode = "edit";
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);
   }
 
   getFocusedElement() {
-    return this.dxGrid.instance
-      .getDataSource()
-      .items()
-      .find((_el: any, i: any) => this.focusedRowIndex === i);
+    return this.genericDataGrid.getFocusedRowData();
   }
 
   onOpenClose() {
@@ -214,7 +294,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   }
 
   addNewRecord() {
-    this.mode = 'add';
+    this.mode = "add";
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
     this.isAdd.set(true);
@@ -226,17 +306,18 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
   }
 
   onShow() {
-    this.mode = 'show';
+    this.mode = "show";
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);
   }
-
 
   onSaving(event: any) {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
       const index = data.findIndex(
-        (x: any) => x.internalEvidenceId === Number(event.internalEvidenceId.internalEvidenceId)
+        (x: any) =>
+          x.internalEvidenceId ===
+          Number(event.internalEvidenceId.internalEvidenceId)
       );
 
       if (index !== -1) {
@@ -248,7 +329,6 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
       this.cdr.detectChanges();
     });
   }
-
 
   delete() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;

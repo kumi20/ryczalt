@@ -28,6 +28,12 @@ const MONTHS_PL = [
   'Grudzień',
 ];
 
+interface MonthlyBreakdown {
+  entries: number;
+  isClosed: boolean;
+  month: number;
+  revenue: number;
+}
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -100,6 +106,10 @@ export class DashboardComponent implements OnInit {
     },
   };
 
+  yearSummaryFlateRate: number = 0;
+
+  monthlyBreakdown: MonthlyBreakdown[] = [];
+
   customizeTooltip = (arg: any) => {
     return {
       text: `${arg.seriesName}: ${arg.valueText} zł`,
@@ -108,6 +118,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMonthlyReport();
+    this.getYearlySummaryFlateRate();
   }
 
   onDateRangeChange(event: { month: number; year: number }) {
@@ -123,7 +134,6 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         (res) => {
           this.yearSummary = res.yearSummary;
-          console.log(this.yearSummary);
           for (let i = 1; i <= 12; i++) {
             if (res.monthlyData[i]) {
               this.dataSource.push({
@@ -165,5 +175,21 @@ export class DashboardComponent implements OnInit {
   // Metoda obliczająca bilans (różnicę między przychodami a zakupami)
   getBalance(): number {
     return this.getTotalNetSales() - this.getTotalNetPurchase();
+  }
+
+  //pobiera podsumowanie roczne na podstawie tabeli ryczaltu
+  getYearlySummaryFlateRate() {
+    this.appService
+      .getAuth(`flat-rate-summary/yearly?year=${this.year()}`)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.yearSummaryFlateRate = res.summary.totalRevenue;
+          this.monthlyBreakdown = res.monthlyBreakdown;
+        },
+        error: (error) => {
+          this.event.httpErrorNotification(error);
+        },
+      });
   }
 }

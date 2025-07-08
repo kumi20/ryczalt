@@ -11,13 +11,16 @@ import {
   ViewChild,
   OnChanges,
   SimpleChanges,
-  Input
+  Input,
+  computed
 } from '@angular/core';
 import { CountryService } from '../../services/country-service';
 import { Country } from '../../interface/country';
 import { EventService } from '../../services/event-services.service';
 import { DxDataGridModule, DxDropDownBoxModule } from 'devextreme-angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { GenericGridColumn, GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
+import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
 
 @Component({
   selector: 'app-country',
@@ -27,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
     DxDataGridModule,
     TranslateModule,
     DxDropDownBoxModule,
+    GenericDataGridComponent
   ],
   templateUrl: './country.component.html',
   styleUrl: './country.component.scss',
@@ -52,6 +56,46 @@ export class CountryComponent implements OnInit, OnChanges {
   isGridBoxOpened: boolean = false;
 
   chossingRecord: null | string = null;
+
+  translate = inject(TranslateService);
+
+   /** Opcje siatki klientów */
+   options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 100px)",
+      } as GenericGridOptions)
+  );
+
+  columns = computed(
+    () =>
+      [ 
+        {
+          caption: this.translate.instant("country.isSystem"),
+          dataField: "isSystem",
+          width: 100,
+          allowSorting: false,
+          alignment: "center",
+          hidingPriority: 1,
+          dataType: 'string',
+          cellTemplate: (e: any) => {
+            return e.value ? '<img src="../../../assets/images/check-solid.svg" alt="" width="14" />' : '';
+          }
+        },
+        {
+          caption: this.translate.instant("country.code"),
+          dataField: "code",
+          width: 100,
+          allowSorting: false,
+        },
+        {
+          caption: this.translate.instant("country.name"),
+          dataField: "name",
+          minWidthwidth: 100,
+          allowSorting: false,
+        }
+      ] as GenericGridColumn[]
+  );
 
   constructor() {}
 

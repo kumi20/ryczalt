@@ -1,28 +1,40 @@
-import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import {
   DxButtonModule,
   DxDataGridModule,
   DxScrollViewModule,
   DxTooltipModule,
-} from 'devextreme-angular';
-import { EventService } from '../../services/event-services.service';
-import { ZusService } from '../../services/zus.service';
-import DataSource from 'devextreme/data/data_source';
-import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component';
-import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
-import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
-import { PriceFormatPipe } from '../../pipes/price-format.pipe';
-import { ContributionsZUS } from '../../interface/zus';
-import { AddZusComponent } from './add-zus/add-zus.component';
-import { DateRangeComponent } from '../date-range/date-range.component';
-import * as AspNetData from 'devextreme-aspnet-data-nojquery';
-import { environment } from '../../../environments/environment';
-import { LoadOptions } from 'devextreme/data';
+} from "devextreme-angular";
+import { EventService } from "../../services/event-services.service";
+import { ZusService } from "../../services/zus.service";
+import DataSource from "devextreme/data/data_source";
+import { ConfirmDialogComponent } from "../core/confirm-dialog/confirm-dialog.component";
+import { NgShortcutsComponent } from "../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component";
+import { AllowIn, ShortcutInput } from "ng-keyboard-shortcuts";
+import { PriceFormatPipe } from "../../pipes/price-format.pipe";
+import { ContributionsZUS } from "../../interface/zus";
+import { AddZusComponent } from "./add-zus/add-zus.component";
+import { DateRangeComponent } from "../date-range/date-range.component";
+import * as AspNetData from "devextreme-aspnet-data-nojquery";
+import { environment } from "../../../environments/environment";
+import { LoadOptions } from "devextreme/data";
+import {
+  GenericGridColumn,
+  GenericGridOptions,
+} from "../core/generic-data-grid/generic-data-grid.model";
+import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data-grid.component";
 
 @Component({
-  selector: 'app-zus',
+  selector: "app-zus",
   standalone: true,
   imports: [
     CommonModule,
@@ -35,13 +47,14 @@ import { LoadOptions } from 'devextreme/data';
     NgShortcutsComponent,
     PriceFormatPipe,
     AddZusComponent,
-    DateRangeComponent
+    DateRangeComponent,
+    GenericDataGridComponent,
   ],
-  templateUrl: './zus.component.html',
-  styleUrls: ['./zus.component.scss'],
+  templateUrl: "./zus.component.html",
+  styleUrls: ["./zus.component.scss"],
 })
 export class ZusComponent implements OnInit {
-  @ViewChild('dxGrid') dxGrid: any;
+  @ViewChild("genericDataGrid") genericDataGrid: any;
 
   event = inject(EventService);
   translate = inject(TranslateService);
@@ -51,16 +64,88 @@ export class ZusComponent implements OnInit {
   dataSource: any;
   focusedRowIndex = 0;
   pageSize = 20;
-  heightGrid = 'calc(100vh - 105px)';
+  heightGrid = "calc(100vh - 105px)";
   shortcuts: ShortcutInput[] = [];
 
   isDelete = signal<boolean>(false);
   isAdd = signal<boolean>(false);
-  mode: 'add' | 'edit' | 'show' = 'add';
+  mode: "add" | "edit" | "show" = "add";
   focusedElement = signal<any>(null);
   month = signal<number>(new Date().getMonth() + 1);
   year = signal<number>(new Date().getFullYear());
   isClosed = signal<boolean>(false);
+
+  /** Opcje siatki klientów */
+  options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 105px)",
+      } as GenericGridOptions)
+  );
+
+  columns = computed(
+    () =>
+      [
+        {
+          caption: this.translate.instant("zus.periodFrom"),
+          dataField: "month",
+          width: 110,
+          cellTemplate: (e: any) => {
+            return (
+              e.data.year +
+              "-" +
+              e.data.month.toString().padStart(2, "0") +
+              "-01"
+            );
+          },
+        },
+        {
+          caption: this.translate.instant("zus.periodTo"),
+          dataField: "year",
+          width: 110,
+          cellTemplate: (e: any) => {
+            return (
+              e.data.year +
+              "-" +
+              e.data.month.toString().padStart(2, "0") +
+              "-" +
+              this.getLastDayOfMonth(e.data.year, e.data.month)
+            );
+          },
+        },
+        {
+          caption: this.translate.instant("zus.healthInsurance"),
+          dataField: "contributionHealth",
+          width: 250,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant("zus.socialInsurance"),
+          dataField: "social",
+          width: 250,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant("zus.laborFund"),
+          dataField: "fpfgsw",
+          width: 250,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant("zus.totalZus"),
+          dataField: "isContributionHolidays",
+          width: 250,
+          cellTemplate: (e: any) => {
+            return this.event.formatKwota({
+              value:
+                Number(e.data.contributionHealth || 0) +
+                Number(e.data.social || 0) +
+                Number(e.data.fpfgsw || 0),
+            });
+          },
+        },
+      ] as GenericGridColumn[]
+  );
 
   ngOnInit(): void {
     this.initShortcuts();
@@ -70,33 +155,33 @@ export class ZusComponent implements OnInit {
   initShortcuts() {
     this.shortcuts.push(
       {
-        key: ['alt + n'],
-        label: 'Add',
-        description: 'Add new ZUS entry',
+        key: ["alt + n"],
+        label: "Add",
+        description: "Add new ZUS entry",
         command: () => this.addNewRecord(),
         preventDefault: true,
         allowIn: [AllowIn.Textarea, AllowIn.Input],
       },
       {
-        key: ['f2'],
-        label: 'Edit',
-        description: 'Edit ZUS entry',
+        key: ["f2"],
+        label: "Edit",
+        description: "Edit ZUS entry",
         command: () => this.onEdit(),
         preventDefault: true,
         allowIn: [AllowIn.Textarea, AllowIn.Input],
       },
       {
-        key: ['shift + f2'],
-        label: 'Show',
-        description: 'Show ZUS entry',
+        key: ["shift + f2"],
+        label: "Show",
+        description: "Show ZUS entry",
         command: () => this.onShow(),
         preventDefault: true,
         allowIn: [AllowIn.Textarea, AllowIn.Input],
       },
       {
-        key: ['del'],
-        label: 'Delete',
-        description: 'Delete ZUS entry',
+        key: ["del"],
+        label: "Delete",
+        description: "Delete ZUS entry",
         command: () => this.onDeleteConfirm(),
         preventDefault: true,
         allowIn: [AllowIn.Textarea, AllowIn.Input],
@@ -107,7 +192,7 @@ export class ZusComponent implements OnInit {
   getData() {
     this.dataSource = new DataSource({
       store: AspNetData.createStore({
-        key: 'contributionsZUSId',
+        key: "contributionsZUSId",
         onBeforeSend: this.event.onBeforeSendDataSource,
         loadUrl: `${environment.domain}zus/contributions`,
         loadParams: this.getLoadParams(),
@@ -119,7 +204,7 @@ export class ZusComponent implements OnInit {
           if (data.length > 0) this.focusedElement.set(data[0]);
           else this.focusedElement.set(null);
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid);
+            this.genericDataGrid.focus();
           }, 0);
         },
       }),
@@ -144,18 +229,18 @@ export class ZusComponent implements OnInit {
 
   addNewRecord() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
-    this.mode = 'add';
+    this.mode = "add";
     this.isAdd.set(true);
   }
 
   onEdit() {
     if (!this.event.sessionData.isActive) return;
-    this.mode = 'edit';
+    this.mode = "edit";
     this.isAdd.set(true);
   }
 
   onShow() {
-    this.mode = 'show';
+    this.mode = "show";
     this.isAdd.set(true);
   }
 
@@ -177,13 +262,13 @@ export class ZusComponent implements OnInit {
       },
       error: (err) => {
         this.event.httpErrorNotification(err);
-      }
+      },
     });
   }
 
   closeConfirm() {
     this.isDelete.set(false);
-    this.event.setFocus(this.dxGrid);
+    this.genericDataGrid.focus();
   }
 
   onSaving(event: any) {
@@ -192,10 +277,9 @@ export class ZusComponent implements OnInit {
         (x: any) => x.contributionsZUSId == event.id
       );
 
-      if(index !== -1){
+      if (index !== -1) {
         this.focusedRowIndex = index;
-      }
-      else{
+      } else {
         this.focusedRowIndex = 0;
       }
     });
@@ -210,8 +294,8 @@ export class ZusComponent implements OnInit {
     this.onEdit();
   }
 
-  onClosing(){
+  onClosing() {
     this.isAdd.set(false);
-    this.event.setFocus(this.dxGrid);
+    this.genericDataGrid.focus();
   }
 }

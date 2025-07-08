@@ -1,0 +1,466 @@
+<dx-data-grid
+  #dataGrid
+  [dataSource]="dataSource()"
+  [showBorders]="options()?.showBorders ?? true"
+  [wordWrapEnabled]="options()?.wordWrapEnabled ?? false"
+  [focusedRowEnabled]="options()?.focusedRowEnabled ?? true"
+  [allowColumnReordering]="options()?.allowColumnReordering ?? true"
+  [allowColumnResizing]="
+    (options()?.allowColumnResizing ?? event.deviceType != 'mobile') ? true : false
+  "
+  [selectedRowKeys]="selectedRowKeys()"
+  [columnResizingMode]="options()?.columnResizingMode ?? 'widget'"
+  [height]="options()?.height"
+  [width]="options()?.width"
+  [hoverStateEnabled]="hoverStateEnabled()"
+  [keyExpr]="options()?.keyExpr"
+  [focusedRowKey]="focusedRowKey()"
+  (onFocusedRowChanged)="onFocusedRowChangedEvent($event)"
+  (onRowDblClick)="onRowDblClickEvent($event)"
+  (onRowClick)="onRowClick.emit($event)"
+  (onCellPrepared)="onCellPrepared.emit($event)"
+  (onKeyDown)="onKeyDownEvent($event)"
+  (onRowExpanded)="onRowExpanded.emit($event)"
+  (onRowExpanding)="onRowExpanding.emit($event)"
+  (onOptionChanged)="handleOptionChanged($event)"
+  (onSelectionChanged)="onSelectionChangedEvent($event)"
+  [focusedRowIndex]="focusedRowIndex()"
+  (onContentReady)="onContentReadyEvent($event)"
+  (onInitialized)="onInitializedEvent($event)"
+  [remoteOperations]="options()?.remoteOperations ?? true"
+  style="min-width: 100%"
+  [id]="'dataGrid' + unicalGuid"
+  [ngClass]="classCss() || ''"
+  [attr.data-cy]="dataCy() || 'generic-data-grid'"
+  [autoNavigateToFocusedRow]="true"
+  (onEditorPreparing)="onEditorPreparing($event)"
+  (onCellClick)="onCellClick($event)"
+  (onContextMenuPreparing)="contextMenuPreparing($event)"
+  (onFocusedCellChanged)="onFocusedCellChanged.emit($event)"
+  [cacheEnabled]="false"
+  (onExporting)="onExporting($event)"
+>
+  <dxo-load-panel [enabled]="false"></dxo-load-panel>
+
+  @if(options().dxExport){
+    <dxo-export [enabled]="true" [allowExportSelectedData]="false"></dxo-export>
+  }
+  
+
+  <!-- Scrolling -->
+  @if (dataGrid.remoteOperations || scrolling()) {
+  <dxo-scrolling
+    [mode]="scrolling()?.mode ?? 'virtual'"
+    [columnRenderingMode]="scrolling()?.columnRenderingMode ?? 'standard'"
+    [rowRenderingMode]="scrolling()?.rowRenderingMode ?? 'virtual'"
+    [preloadEnabled]="scrolling()?.preloadEnabled ?? false"
+    [renderAsync]="scrolling()?.renderAsync ?? false"
+  ></dxo-scrolling>
+  }
+
+  <!-- Column fixing -->
+  @if (columnFixing()) {
+  <dxo-column-fixing
+    [enabled]="columnFixing()?.enabled ?? true"
+  ></dxo-column-fixing>
+  }
+
+  <dxo-editing
+    [allowAdding]="editing()?.allowAdding ?? false"
+    [allowDeleting]="editing()?.allowDeleting ?? false"
+    [allowUpdating]="editing()?.allowUpdating ?? false"
+    [confirmDelete]="editing()?.confirmDelete ?? false"
+    [mode]="editing()?.mode ?? 'row'"
+  ></dxo-editing>
+
+  <!-- Grouping -->
+  @if (grouping()) {
+  <dxo-grouping
+    [autoExpandAll]="grouping()?.autoExpandAll ?? true"
+  ></dxo-grouping>
+  }
+
+  <!-- Pager -->
+  @if (pager()) {
+  <dxo-pager
+    [showPageSizeSelector]="pager()?.showPageSizeSelector ?? true"
+    [allowedPageSizes]="pager()?.allowedPageSizes ?? [300, 500, 1000]"
+    [showInfo]="pager()?.showInfo ?? true"
+  ></dxo-pager>
+  }
+
+  <!-- Paging -->
+  <dxo-paging
+    [enabled]="paging()?.enabled ?? true"
+    [pageSize]="paging()?.pageSize ?? 500"
+  ></dxo-paging>
+
+
+  <!-- Selection -->
+  @if (selection()) {
+  <dxo-selection
+    [mode]="selection()?.mode ?? 'multiple'"
+    [selectAllMode]="selection()?.selectAllMode ?? 'page'"
+    [showCheckBoxesMode]="selection()?.showCheckBoxesMode ?? 'always'"
+  ></dxo-selection>
+  }
+
+  <!-- Dynamiczne kolumny -->
+  <ng-container *ngFor="let column of columns(); trackBy: trackByColumnName">
+    <dxi-column
+      [encodeHtml]="column.encodeHtml ?? true"
+      [caption]="column.caption"
+      [dataField]="column.dataField"
+      [width]="column.width"
+      [minWidth]="column.minWidth"
+      [allowReordering]="column.allowReordering ?? true"
+      [allowSorting]="column.allowSorting ?? false"
+      [allowEditing]="column.allowEditing ?? false"
+      [allowFiltering]="column.allowFiltering ?? false"
+      [allowExporting]="column.allowExporting ?? true"
+      [visible]="column.visible !== false"
+      [groupIndex]="column.groupIndex"
+      [alignment]="column.alignment"
+      [hidingPriority]="column.hidingPriority"
+      [name]="column.name"
+      [cssClass]="column.cssClass"
+      [cellTemplate]="
+        column.cellTemplate
+          ? 'dynamic_' + (column.name || column.dataField)
+          : column.templateName
+      "
+      [headerCellTemplate]="
+        column.isAllowSorting
+          ? column.dataField + 'headerCellTemplate'
+          : column.headerTooltip
+            ? column.dataField + 'tooltipHeaderTemplate'
+            : null
+      "
+      [groupCellTemplate]="column.groupTemplateName"
+      [editCellTemplate]="column.editTemplateName"
+      [format]="column.format"
+      [dataType]="column.dataType"
+      [headerFilter]="{ search: { enabled: true } }"
+      [allowHiding]="column.allowHiding"
+      [customizeText]="column.customizeText"
+    >
+      <!-- Zagnieżdżone kolumny -->
+      <ng-container *ngIf="column.columns && column.columns.length > 0">
+        <dxi-column
+          *ngFor="let nestedColumn of column.columns; let i = index"
+          [caption]="getNestedColumnProp(nestedColumn, 'caption')"
+          [dataField]="getNestedColumnProp(nestedColumn, 'dataField')"
+          [width]="getNestedColumnProp(nestedColumn, 'width')"
+          [minWidth]="getNestedColumnProp(nestedColumn, 'minWidth')"
+          [allowReordering]="
+            getNestedColumnProp(nestedColumn, 'allowReordering')
+          "
+          [allowSorting]="getNestedColumnProp(nestedColumn, 'allowSorting')"
+          [allowEditing]="getNestedColumnProp(nestedColumn, 'allowEditing')"
+          [allowFiltering]="getNestedColumnProp(nestedColumn, 'allowFiltering')"
+          [allowExporting]="getNestedColumnProp(nestedColumn, 'allowExporting')"
+          [visible]="getNestedColumnProp(nestedColumn, 'visible') !== false"
+          [groupIndex]="getNestedColumnProp(nestedColumn, 'groupIndex')"
+          [alignment]="getNestedColumnProp(nestedColumn, 'alignment')"
+          [hidingPriority]="getNestedColumnProp(nestedColumn, 'hidingPriority')"
+          [name]="getNestedColumnProp(nestedColumn, 'name')"
+          [cssClass]="getNestedColumnProp(nestedColumn, 'cssClass')"
+          [cellTemplate]="
+            getNestedColumnProp(nestedColumn, 'cellTemplate')
+              ? 'dynamic_' +
+                (getNestedColumnProp(nestedColumn, 'name') ||
+                  getNestedColumnProp(nestedColumn, 'dataField') ||
+                  (column.name || column.dataField) + '_' + i)
+              : getNestedColumnProp(nestedColumn, 'templateName')
+          "
+          [headerCellTemplate]="
+            getNestedColumnProp(nestedColumn, 'isAllowSorting')
+              ? getNestedColumnProp(nestedColumn, 'dataField') +
+                'headerCellTemplate'
+              : getNestedColumnProp(nestedColumn, 'headerTooltip')
+                ? getNestedColumnProp(nestedColumn, 'dataField') +
+                  'tooltipHeaderTemplate'
+                : null
+          "
+          [groupCellTemplate]="
+            getNestedColumnProp(nestedColumn, 'groupTemplateName')
+          "
+          [editCellTemplate]="
+            getNestedColumnProp(nestedColumn, 'editTemplateName')
+          "
+          [format]="getNestedColumnProp(nestedColumn, 'format')"
+          [dataType]="getNestedColumnProp(nestedColumn, 'dataType')"
+          [headerFilter]="{ search: { enabled: true } }"
+          [customizeText]="getNestedColumnProp(nestedColumn, 'customizeText')"
+        >
+          <!-- Add support for deeper nesting if needed -->
+          <ng-container
+            *ngIf="
+              getNestedColumnProp(nestedColumn, 'columns') &&
+              getNestedColumnProp(nestedColumn, 'columns').length > 0
+            "
+          >
+            <dxi-column
+              *ngFor="
+                let deepNestedColumn of getNestedColumnProp(
+                  nestedColumn,
+                  'columns'
+                );
+                let j = index
+              "
+              [caption]="getNestedColumnProp(deepNestedColumn, 'caption')"
+              [dataField]="getNestedColumnProp(deepNestedColumn, 'dataField')"
+              [width]="getNestedColumnProp(deepNestedColumn, 'width')"
+              [minWidth]="getNestedColumnProp(deepNestedColumn, 'minWidth')"
+              [allowReordering]="
+                getNestedColumnProp(deepNestedColumn, 'allowReordering')
+              "
+              [allowSorting]="
+                getNestedColumnProp(deepNestedColumn, 'allowSorting')
+              "
+              [allowEditing]="
+                getNestedColumnProp(deepNestedColumn, 'allowEditing')
+              "
+              [allowFiltering]="
+                getNestedColumnProp(deepNestedColumn, 'allowFiltering')
+              "
+              [allowExporting]="
+                getNestedColumnProp(deepNestedColumn, 'allowExporting')
+              "
+              [visible]="
+                getNestedColumnProp(deepNestedColumn, 'visible') !== false
+              "
+              [groupIndex]="getNestedColumnProp(deepNestedColumn, 'groupIndex')"
+              [alignment]="getNestedColumnProp(deepNestedColumn, 'alignment')"
+              [hidingPriority]="
+                getNestedColumnProp(deepNestedColumn, 'hidingPriority')
+              "
+              [name]="getNestedColumnProp(deepNestedColumn, 'name')"
+              [cssClass]="getNestedColumnProp(deepNestedColumn, 'cssClass')"
+              [cellTemplate]="
+                getNestedColumnProp(deepNestedColumn, 'cellTemplate')
+                  ? 'dynamic_' +
+                    (getNestedColumnProp(nestedColumn, 'name') ||
+                      getNestedColumnProp(nestedColumn, 'dataField')) +
+                    '_' +
+                    (getNestedColumnProp(deepNestedColumn, 'name') ||
+                      getNestedColumnProp(deepNestedColumn, 'dataField') ||
+                      j)
+                  : getNestedColumnProp(deepNestedColumn, 'templateName')
+              "
+              [headerCellTemplate]="
+                getNestedColumnProp(deepNestedColumn, 'isAllowSorting')
+                  ? getNestedColumnProp(deepNestedColumn, 'dataField') +
+                    'headerCellTemplate'
+                  : getNestedColumnProp(deepNestedColumn, 'headerTooltip')
+                    ? getNestedColumnProp(deepNestedColumn, 'dataField') +
+                      'tooltipHeaderTemplate'
+                    : null
+              "
+              [groupCellTemplate]="
+                getNestedColumnProp(deepNestedColumn, 'groupTemplateName')
+              "
+              [editCellTemplate]="
+                getNestedColumnProp(deepNestedColumn, 'editTemplateName')
+              "
+              [format]="getNestedColumnProp(deepNestedColumn, 'format')"
+              [dataType]="getNestedColumnProp(deepNestedColumn, 'dataType')"
+              [headerFilter]="{ search: { enabled: true } }"
+            ></dxi-column>
+          </ng-container>
+        </dxi-column>
+      </ng-container>
+    </dxi-column>
+  </ng-container>
+
+  <!-- Dynamiczne szablony -->
+  <ng-container *ngFor="let templateItem of templates">
+    <div *dxTemplate="let data of templateItem.name">
+      <ng-container *ngIf="templateItem.template">
+        <ng-container
+          [ngTemplateOutlet]="templateItem.template"
+          [ngTemplateOutletContext]="{ $implicit: data, data: data }"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngIf="!templateItem.template">
+        <div [innerHTML]="renderDynamicTemplate(templateItem.name, data)"></div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- Procesowanie templateName dla kolumn zagnieżdżonych -->
+  <ng-container *ngFor="let column of columns()">
+    <ng-container *ngIf="column.columns && column.columns.length > 0">
+      <ng-container *ngFor="let nestedColumn of column.columns">
+        <div
+          *dxTemplate="
+            let data of getNestedColumnProp(nestedColumn, 'templateName')
+          "
+        >
+          <ng-container
+            *ngIf="
+              templateRefs()[getNestedColumnProp(nestedColumn, 'templateName')]
+            "
+          >
+            <ng-container
+              [ngTemplateOutlet]="
+                templateRefs()[
+                  getNestedColumnProp(nestedColumn, 'templateName')
+                ]
+              "
+              [ngTemplateOutletContext]="{ $implicit: data, data: data }"
+            ></ng-container>
+          </ng-container>
+          <ng-container
+            *ngIf="
+              !templateRefs()[
+                getNestedColumnProp(nestedColumn, 'templateName')
+              ] && getNestedColumnProp(nestedColumn, 'cellTemplate')
+            "
+          >
+            <div
+              [innerHTML]="
+                getNestedColumnProp(nestedColumn, 'cellTemplate')(data)
+              "
+            ></div>
+          </ng-container>
+        </div>
+
+        <!-- Process deeper nested columns -->
+        <ng-container
+          *ngIf="
+            getNestedColumnProp(nestedColumn, 'columns') &&
+            getNestedColumnProp(nestedColumn, 'columns').length > 0
+          "
+        >
+          <ng-container
+            *ngFor="
+              let deepNestedColumn of getNestedColumnProp(
+                nestedColumn,
+                'columns'
+              )
+            "
+          >
+            <div
+              *dxTemplate="
+                let data of getNestedColumnProp(
+                  deepNestedColumn,
+                  'templateName'
+                )
+              "
+            >
+              <ng-container
+                *ngIf="
+                  templateRefs()[
+                    getNestedColumnProp(deepNestedColumn, 'templateName')
+                  ]
+                "
+              >
+                <ng-container
+                  [ngTemplateOutlet]="
+                    templateRefs()[
+                      getNestedColumnProp(deepNestedColumn, 'templateName')
+                    ]
+                  "
+                  [ngTemplateOutletContext]="{ $implicit: data, data: data }"
+                ></ng-container>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  !templateRefs()[
+                    getNestedColumnProp(deepNestedColumn, 'templateName')
+                  ] && getNestedColumnProp(deepNestedColumn, 'cellTemplate')
+                "
+              >
+                <div
+                  [innerHTML]="
+                    getNestedColumnProp(deepNestedColumn, 'cellTemplate')(data)
+                  "
+                ></div>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngFor="let headerCellTemplate of columns()">
+    <div
+      *dxTemplate="
+        let data of headerCellTemplate.dataField + 'headerCellTemplate'
+      "
+    >
+      <div
+        class="grid-header-wrapper"
+        (click)="onColumnHeaderClickEvent(headerCellTemplate)"
+        [title]="headerCellTemplate.headerTooltip || headerCellTemplate.caption"
+      >
+        {{ headerCellTemplate.caption }}
+        <i
+          class="header-sort-icon"
+          [ngClass]="order() === 'DESC' ? 'arr-down' : 'arr-up'"
+          (click)="onOrderClickEvent()"
+        ></i>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Template for tooltips on standard headers -->
+  <ng-container *ngFor="let tooltipHeader of columns()">
+    <div
+      *dxTemplate="
+        let data of tooltipHeader.dataField + 'tooltipHeaderTemplate'
+      "
+    >
+      <div
+        class="grid-header-wrapper"
+        [title]="tooltipHeader.headerTooltip || tooltipHeader.caption"
+      >
+        {{ tooltipHeader.caption }}
+      </div>
+    </div>
+  </ng-container>
+
+  <div *dxTemplate="let data of 'dots'">
+    <dx-button
+      class="btn-dx-top-menu-folder"
+      icon="icon absui-icon--more-horiz"
+      style="float: left; position: relative; top: calc(50% - 0.8125rem)"
+      (onClick)="isContextMenuMobile.set(true)"
+    ></dx-button>
+  </div>
+
+  <!-- Main column template -->
+  <div
+    *dxTemplate="let data of 'mainColumn'"
+    [attr.data-cy]="data?.column?.dataField"
+  >
+    <span class="hov-underline" (click)="onRowDblClickEvent($event)">
+      {{ data.value }}
+    </span>
+  </div>
+</dx-data-grid>
+
+@if (contextMenu() && event.deviceType != "mobile") {
+<dx-context-menu
+  [dataSource]="contextMenu()"
+  [target]="'#dataGrid' + unicalGuid"
+  [width]="200"
+  (onItemClick)="onContextMenuClick.emit($event)"
+></dx-context-menu>
+} @if (contextMenu() && event.deviceType == "mobile") {
+<app-mobile-list
+  [dataSource]="contextMenu()"
+  [visible]="isContextMenuMobile()"
+  (onClosed)="isContextMenuMobile.set(false)"
+  (onItemClick)="onContextMenuClick.emit($event)"
+></app-mobile-list>
+}
+<app-column-chooser
+  [gridRef]="dataGrid"
+  [visible]="columnsChooserVisible()"
+  (columnsChanged)="onColumnsChanged()"
+  (visibleChange)="onColumnsChooserVisibleChangeEvent($event)"
+  (onColumnReset)="onColumnReset()"
+></app-column-chooser>

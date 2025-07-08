@@ -686,6 +686,9 @@ dx-data-grid {
 
 .dx-header-row .sort-column-bg {
   background-color: $neutral-85;
+  .header-sort-icon {
+    display: block;
+  }
 }
 .dx-data-row:hover {
   background-color: $neutral-95;
@@ -743,6 +746,7 @@ dx-data-grid {
   position: relative;
   white-space: nowrap;
   .header-sort-icon {
+    display: none;
     cursor: pointer;
     font-size: 0.875rem;
     line-height: 0.875rem;
@@ -759,6 +763,7 @@ dx-data-grid {
     &::before {
       font-size: 0.875rem;
       line-height: 0.875rem;
+      font-family: "Ryczalt-Icons";
     }
     &.arr-down::before {
       content: "\e5db";

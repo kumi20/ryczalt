@@ -17,63 +17,15 @@
 <ng-template #topButtons> </ng-template>
 
 <ng-template #grid>
-  <dx-data-grid
+  <app-generic-data-grid
     [dataSource]="countryList()"
-    [wordWrapEnabled]="false"
-    [showBorders]="true"
-    [height]="heightGrid"
-    [columnResizingMode]="'widget'"
-    [remoteOperations]="true"
-    [columnAutoWidth]="false"
-    [allowColumnResizing]="true"
-    [autoNavigateToFocusedRow]="true"
+    [columns]="columns()"
+    [options]="options()"
     [(focusedRowIndex)]="focusedRowIndex"
-    [allowColumnReordering]="true"
-    [focusedRowEnabled]="true"
-    (onKeyDown)="onKeyDown($event)"
-    [allowColumnResizing]="event.deviceType !== 'mobile'"
-    #dxGrid
-  >
-    <dxo-load-panel [enabled]="false"></dxo-load-panel>
-    <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
-    <dxo-selection
-      [mode]="'single'"
-      showCheckBoxesMode="always"
-      selectAllMode="page"
-    >
-    </dxo-selection>
-    <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-
-    <div *dxTemplate="let data of 'IsDefault'">
-      @if (data.value) {
-
-      <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
-      }
-    </div>
-
-    <dxi-column
-      caption="{{ 'country.isSystem' | translate }}"
-      dataField="isSystem"
-      [width]="100"
-      cellTemplate="IsDefault"
-      alignment="center"
-      [allowSorting]="false"
-      hidingPriority="1"
-    ></dxi-column>
-    <dxi-column
-      caption="{{ 'country.code' | translate }}"
-      dataField="code"
-      [allowSorting]="false"
-      width="100"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'customers.name' | translate }}"
-      dataField="name"
-      [allowSorting]="false"
-    ></dxi-column>
-  </dx-data-grid>
+    (onRowDblClick)="onRowDblClick($event)"
+    storageKey="countryGrid"
+    #genericDataGrid
+  ></app-generic-data-grid>
 </ng-template>
 
 <ng-template #dropDownMode>

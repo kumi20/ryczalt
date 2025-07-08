@@ -12,7 +12,8 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
-  Input
+  Input,
+  computed
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppServices } from '../../services/app-services.service';
@@ -38,6 +39,10 @@ import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardn
 import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component';
 import { CustomerService } from '../../services/customer.service';
+import { GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
+import { GenericGridColumn } from '../core/generic-data-grid/generic-data-grid.model';
+import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
+
 
 @Component({
   selector: 'app-customers',
@@ -55,14 +60,14 @@ import { CustomerService } from '../../services/customer.service';
     ConfirmDialogComponent,
     DxScrollViewModule,
     DxDropDownBoxModule,
+    GenericDataGridComponent
   ],
-
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
-  @ViewChild('dxGrid', { static: false }) dxGrid: any;
+  @ViewChild('genericDataGrid', { static: false }) genericDataGrid: any;
   @ViewChild('gridDropDown') gridDropDown: any;
   @ViewChild('contractorsBox') contractorsBox: any;
   @Output() onChoosed = new EventEmitter();
@@ -122,6 +127,108 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
   dataSourceDropDown: Customer[] = [];
   searchTimer: any;
   SearchKey: string = '';
+
+  /** Opcje siatki klientów */
+  options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 150px)",
+      } as GenericGridOptions)
+  );
+
+  columns = computed(
+    () =>
+      [
+        {
+          caption: this.translate.instant('customers.customerName'),
+          dataField: 'customerName',
+          width: 400,
+          allowSorting: false,
+          isAllowSorting: true,
+          hidingPriority: 6,
+        },
+        {
+          caption: 'NIP',
+          dataField: 'customerVat',
+          width: 150,
+          allowSorting: false,
+          isAllowSorting: true,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('customers.street'),
+          dataField: 'street',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('customers.city'),
+          dataField: 'city',
+          width: 150,
+          allowSorting: false,
+          isAllowSorting: true,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('customers.postalCode'),
+          dataField: 'postalCode',
+          width: 150,
+          allowSorting: false,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('customers.email'),
+          dataField: 'email',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('customers.phone'),
+          dataField: 'phone',
+          width: 150,
+          allowSorting: false,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('customers.isSupplier'),
+          dataField: 'isSupplier',
+          width: 100,
+          allowSorting: false,
+          hidingPriority: 6,
+          encodeHtml: false,
+          dataType: 'string',
+          customizeText: (e: any) => {
+            return e.value ? `<img src="../../../assets/images/check-solid.svg" alt="" width="14" />` : '';
+          }
+        },
+        {
+          caption: this.translate.instant('customers.isRecipient'),
+          dataField: 'isRecipient',
+          width: 100,
+          allowSorting: false,
+          hidingPriority: 6,
+          encodeHtml: false,
+          dataType: 'string',
+          customizeText: (e: any) => {
+            return e.value ? `<img src="../../../assets/images/check-solid.svg" alt="" width="14" />` : '';
+          }
+        },
+        {
+          caption: this.translate.instant('customers.isOffice'),
+          dataField: 'isOffice',
+          width: 100,
+          allowSorting: false,
+          hidingPriority: 6,
+          encodeHtml: false,
+          dataType: 'string',
+          customizeText: (e: any) => {
+            return e.value ? `<img src="../../../assets/images/check-solid.svg" alt="" width="14" />` : ''; 
+          }
+        }
+      ] as GenericGridColumn[]
+  );
 
   constructor() {}
 
@@ -188,7 +295,7 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
         },
         onLoaded: () => {
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid);
+            this.genericDataGrid.focus();
           }, 0);
         },
       }),
@@ -291,14 +398,11 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
 
   closeConfirm() {
     this.isDelete.set(false);
-    this.event.setFocus(this.dxGrid);
+    this.genericDataGrid.focus();
   }
 
   getFocusedElement() {
-    return this.dxGrid.instance
-      .getDataSource()
-      .items()
-      .find((_el: any, i: any) => this.focusedRowIndex === i);
+    return this.genericDataGrid.getFocusedRowData();
   }
 
   delete() {
@@ -389,5 +493,14 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
         this.contractorsBox?.instance?.focus();
       }, 500);
     }, 500);
+  }
+
+  onColumnHeaderClick(event: any) {
+    this.orderBy.set(event);
+  }
+
+  onOrderClick(event: any) {
+    this.order.set(event);
+    this.getData();
   }
 }

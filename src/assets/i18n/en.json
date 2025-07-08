@@ -229,6 +229,7 @@
     "isSicknessInsurance": "Sickness insurance payer",
     "licenseNumber": "License number",
     "licenseEndDate": "License end date",
-    "taxOffice": "Tax office"
+    "taxOffice": "Tax office",  
+    "voivodeship": "Voivodeship"
   }
 }

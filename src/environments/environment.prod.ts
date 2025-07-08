@@ -6,7 +6,7 @@ const windowEnv: WindowEnv = (window as any).env || {};
 
 env = {
   production: true,
-  domain: windowEnv.domain || 'default',
+  domain: 'https://kumi20.webd.pl/api_ryczalt/',
   authDomain: windowEnv.authDomain || 'default',
   AUTHAPI: windowEnv.AUTHAPI || 'default',
   APIGUS: windowEnv.APIGUS || 'default',

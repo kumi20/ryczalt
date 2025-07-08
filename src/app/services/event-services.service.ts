@@ -343,4 +343,16 @@ export class EventService {
     let netto = Number(brutto) - Number(brutto) * (tax / (tax + 100));
     return Number(netto.toFixed(2));
   };
+
+  formatKwota = (e: any) => {
+    const value = e.value;
+
+    if (value === null || value === undefined) return '';
+
+    // Formatowanie: liczba → 1 255,55
+    return Number(value)
+      .toFixed(2) // 1255.55 → "1255.55"
+      .replace('.', ',') // "1255.55" → "1255,55"
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // Dodaj spacje co 3 cyfry z końca
+  };
 }

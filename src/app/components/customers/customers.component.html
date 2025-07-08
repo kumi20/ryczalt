@@ -133,198 +133,21 @@
     </div>
 
     <div>
-      <dx-data-grid
+      <app-generic-data-grid
         [dataSource]="dataSource"
-        [wordWrapEnabled]="false"
-        [showBorders]="true"
-        [height]="heightGrid"
-        [(selectedRowKeys)]="selectedRows"
-        class=""
-        [columnResizingMode]="'widget'"
-        [remoteOperations]="true"
-        [columnAutoWidth]="false"
-        [allowColumnResizing]="true"
-        [autoNavigateToFocusedRow]="true"
+        [columns]="columns()"
+        [options]="options()"
         [(focusedRowIndex)]="focusedRowIndex"
-        [allowColumnReordering]="true"
-        [focusedRowEnabled]="true"
         (onFocusedRowChanged)="onFocusedRowChanged($event)"
-        (onKeyDown)="onKeyDown($event)"
-        [allowColumnResizing]="event.deviceType !== 'mobile'"
-        (onRowDblClick)="onRowDblClick($event)"
-        #dxGrid
-      >
-        <dxo-load-panel [enabled]="false"></dxo-load-panel>
-        <dxo-scrolling
-          mode="virtual"
-          columnRenderingMode="virtual"
-          [preloadEnabled]="true"
-        >
-        </dxo-scrolling>
-        <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
-        <dxo-selection
-          [mode]="'single'"
-          showCheckBoxesMode="always"
-          selectAllMode="page"
-        >
-        </dxo-selection>
-        <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-
-        <dxi-column
-          caption="{{ 'customers.customerName' | translate }}"
-          dataField="customerName"
-          [allowSorting]="false"
-          headerCellTemplate="customerName"
-          [cssClass]="
-            orderBy() == 'customerName' ? 'sort-column-bg' : 'sort-column-muted'
-          "
-          width="400"
-        ></dxi-column>
-        <div *dxTemplate="let data of 'customerName'">
-          <div
-            class="grid-header-wrapper"
-            (click)="setSearchCriteria('customerName')"
-          >
-            {{ "customers.customerName" | translate }}
-            @if(orderBy() == 'customerName'){
-            <i
-              class="header-sort-icon"
-              [ngClass]="
-                order() === event.sortingRule
-                  ? 'dx-icon  dx-icon-arrowdown'
-                  : 'dx-icon dx-icon-arrowup'
-              "
-            ></i>
-            }
-          </div>
-        </div>
-
-        <dxi-column
-          caption="NIP"
-          dataField="customerVat"
-          [width]="150"
-          [allowSorting]="false"
-          headerCellTemplate="customerVat"
-          [cssClass]="
-            orderBy() == 'customerVat' ? 'sort-column-bg' : 'sort-column-muted'
-          "
-          hidingPriority="8"
-        ></dxi-column>
-        <div *dxTemplate="let data of 'customerVat'">
-          <div
-            class="grid-header-wrapper"
-            (click)="setSearchCriteria('customerVat')"
-          >
-            NIP @if(orderBy() == 'customerVat'){
-            <i
-              class="header-sort-icon"
-              [ngClass]="
-                order() === event.sortingRule
-                  ? 'dx-icon  dx-icon-arrowdown'
-                  : 'dx-icon dx-icon-arrowup'
-              "
-            ></i>
-            }
-          </div>
-        </div>
-
-        <dxi-column
-          caption="{{ 'customers.street' | translate }}"
-          dataField="street"
-          [width]="200"
-          [allowSorting]="false"
-          hidingPriority="7"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'customers.city' | translate }}"
-          dataField="city"
-          [width]="150"
-          [allowSorting]="false"
-          headerCellTemplate="city"
-          [cssClass]="
-            orderBy() == 'city' ? 'sort-column-bg' : 'sort-column-muted'
-          "
-          hidingPriority="6"
-        ></dxi-column>
-        <div *dxTemplate="let data of 'city'">
-          <div class="grid-header-wrapper" (click)="setSearchCriteria('city')">
-            {{ "customers.city" | translate }}
-            @if(orderBy() == 'city'){
-            <i
-              class="header-sort-icon"
-              [ngClass]="
-                order() === event.sortingRule
-                  ? 'dx-icon  dx-icon-arrowdown'
-                  : 'dx-icon dx-icon-arrowup'
-              "
-            ></i>
-            }
-          </div>
-        </div>
-
-        <dxi-column
-          caption="{{ 'customers.postalCode' | translate }}"
-          dataField="postalCode"
-          [width]="150"
-          [allowSorting]="false"
-          hidingPriority="5"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'customers.email' | translate }}"
-          dataField="email"
-          [width]="200"
-          [allowSorting]="false"
-          hidingPriority="4"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'customers.phone' | translate }}"
-          dataField="phone"
-          [width]="150"
-          [allowSorting]="false"
-          hidingPriority="3"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'customers.isSupplier' | translate }}"
-          dataField="isSupplier"
-          [width]="100"
-          cellTemplate="IsDefault"
-          alignment="center"
-          [allowSorting]="false"
-          hidingPriority="2"
-        ></dxi-column>
-
-        <div *dxTemplate="let data of 'IsDefault'">
-          @if (data.value) {
-
-          <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
-          }
-        </div>
-
-        <dxi-column
-          caption="{{ 'customers.isRecipient' | translate }}"
-          dataField="isRecipient"
-          [width]="100"
-          cellTemplate="IsDefault"
-          alignment="center"
-          [allowSorting]="false"
-          hidingPriority="1"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'customers.isOffice' | translate }}"
-          dataField="isOffice"
-          [width]="100"
-          cellTemplate="IsDefault"
-          alignment="center"
-          [allowSorting]="false"
-          hidingPriority="0"
-        ></dxi-column>
-      </dx-data-grid>
+        (onRowDblClick)="onEdit()"
+        [(selectedRowKeys)]="selectedRows"
+        storageKey="customersGrid"
+        (onColumnHeaderClick)="onColumnHeaderClick($event)"
+        (onOrderClick)="onOrderClick($event)"
+        [orderBy]="orderBy()"
+        [order]="order()"
+        #genericDataGrid
+      ></app-generic-data-grid>
     </div>
   </div>
 </ng-template>
@@ -447,7 +270,7 @@
 @if(isAdd()){
 <app-new-customer
   [isVisible]="true"
-  (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
+  (onClosing)="isAdd.set(false); genericDataGrid.focus()"
   [mode]="mode"
   (onSaving)="onSaving($event)"
   [customer]="focusedElement()"

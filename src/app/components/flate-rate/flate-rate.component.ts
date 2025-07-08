@@ -8,8 +8,9 @@ import {
   ViewChild,
   AfterViewInit,
   ChangeDetectorRef,
+  computed,
 } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FlateRateService } from '../../services/flateRate.services';
 import { EventService } from '../../services/event-services.service';
 import { CheckIfMonthIsClosed } from '../../interface/flateRate';
@@ -37,11 +38,14 @@ import { NewFlateRateComponent } from './new-flate-rate/new-flate-rate.component
 import { NewVatRegisterComponent } from '../vat-register/new-vat-register/new-vat-register.component';
 import { VatRegisterService } from '../../services/vatRegister.service';
 import { DateRangeComponent } from '../date-range/date-range.component';
+import { GenericGridColumn, GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
+import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
 
 @Component({
   selector: 'app-flate-rate',
   standalone: true,
   imports: [
+    GenericDataGridComponent,
     CommonModule,
     TranslateModule,
     DxButtonModule,
@@ -60,16 +64,15 @@ import { DateRangeComponent } from '../date-range/date-range.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlateRateComponent implements OnInit, AfterViewInit {
-  @ViewChild('dxGrid') dxGrid: any;
-
+  @ViewChild("genericDataGrid") genericDataGrid: any;
   flateRateService = inject(FlateRateService);
   event = inject(EventService);
   cdr = inject(ChangeDetectorRef);
+  private readonly translate = inject(TranslateService)
 
   isClosed = signal<boolean>(false);
   mode: 'add' | 'edit' | 'show' = 'add';
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 245px)';
   selectedRows: FlateRate[] = [];
   focusedRowIndex: number = 0;
   focusedElement = signal<FlateRate | null>(null);
@@ -77,6 +80,14 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
   pageSize: number = 50;
   isDelete = signal<boolean>(false);
   shortcuts: ShortcutInput[] = [];
+
+   /** Opcje siatki klientów */
+   options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 245px)",
+      } as GenericGridOptions)
+  );  
 
   summaryMonthData: SummaryMonth = {
     sum_rate17: 0,
@@ -98,7 +109,108 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
   vatRegisterId: number | null = null;
   month = signal<number>(this.event.globalDate.month);
   year = signal<number>(this.event.globalDate.year);
-  vatRegisterService = inject(VatRegisterService)
+  vatRegisterService = inject(VatRegisterService);
+
+  columns = computed(
+    () =>
+      [
+        {
+          caption: 'Lp',
+          dataField: 'lp',
+          width: 50,
+          allowSorting: false,
+        },
+        {
+          caption: this.translate.instant('flateRate.dateOfEntry'),
+          dataField: 'dateOfEntry',
+          width: 110,
+          allowSorting: false,
+          hidingPriority: 7,
+          dataType: 'date',
+          format: { type: this.event.dateFormat },
+          alignment: 'left',
+        },
+        {
+          caption: this.translate.instant('flateRate.documentNumber'),
+          dataField: 'documentNumber',
+          allowSorting: false,
+          hidingPriority: 6,
+          width: 200
+        },
+        {
+          caption: this.translate.instant('flateRate.totalRevenue'),
+          dataField: 'totalRevenue',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 17%',
+          dataField: 'rate17',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 8,5%',
+          dataField: 'rate8_5',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 5,5%',
+          dataField: 'rate5_5',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 3%',
+          dataField: 'rate3',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 10%',
+          dataField: 'rate10',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 12%',
+          dataField: 'rate12',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 12,5%',
+          dataField: 'rate12_5',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 14%',
+          dataField: 'rate14',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('flateRate.rate') + ' 15%',
+          dataField: 'rate15',
+          width: 200,
+          allowSorting: false,
+          customizeText: this.event.formatKwota,
+        }
+      ] as GenericGridColumn []
+  )
 
   constructor() {}
 
@@ -179,7 +291,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
           if (data.length > 0) this.focusedElement.set(data[0]);
           else this.focusedElement.set(null);
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid);
+            this.genericDataGrid.focus();
           }, 0);
         },
       }),
@@ -258,7 +370,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
   }
 
   getFocusedElement() {
-    return this.dxGrid.instance
+    return this.genericDataGrid.dataGrid.instance
       .getDataSource()
       .items()
       .find((_el: any, i: any) => this.focusedRowIndex === i);
@@ -300,7 +412,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
 
   closeConfirm() {
     this.isDelete.set(false);
-    this.event.setFocus(this.dxGrid);
+    this.genericDataGrid.focus();
   }
 
   delete() {

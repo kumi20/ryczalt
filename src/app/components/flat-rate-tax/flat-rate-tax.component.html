@@ -64,104 +64,16 @@
 
 <ng-template #grid>
   <dx-scroll-view width="100%" height="calc(100% - 60px)">
-    <dx-data-grid
+    <app-generic-data-grid
       [dataSource]="dataSource"
-      [wordWrapEnabled]="false"
-      [showBorders]="true"
-      [height]="heightGrid"
-      class=""
-      [columnResizingMode]="'widget'"
-      [columnAutoWidth]="false"
-      [allowColumnResizing]="true"
-      [autoNavigateToFocusedRow]="true"
+      [columns]="columns()"
+      [options]="options()"
       [(focusedRowIndex)]="focusedRowIndex"
-      [allowColumnReordering]="true"
-      [focusedRowEnabled]="true"
       (onFocusedRowChanged)="onFocusedRowChanged($event)"
-      (onRowDblClick)="onRowDblClick($event)"
-      [allowColumnResizing]="event.deviceType !== 'mobile'"
-      #dxGrid
-    >
-      <dxo-load-panel [enabled]="false"></dxo-load-panel>
-      <dxo-scrolling mode="virtual"></dxo-scrolling>
-      <dxo-paging [pageSize]="pageSize"></dxo-paging>
-      <dxo-selection mode="single"></dxo-selection>
-
-      <dxi-column
-        caption="{{ 'zus.periodFrom' | translate }}"
-        dataField="month"
-        cellTemplate="PeriodFrom"
-        [width]="110"
-      ></dxi-column>
-      <div *dxTemplate="let cell of 'PeriodFrom'">
-        {{ cell.data.year }}-{{
-          cell.data.month.toString().padStart(2, "0")
-        }}-01
-      </div>
-
-      <dxi-column
-        caption="{{ 'zus.periodTo' | translate }}"
-        cellTemplate="PeriodTo"
-        dataField="year"
-        [width]="110"
-      ></dxi-column>
-      <div *dxTemplate="let cell of 'PeriodTo'">
-        {{ cell.data.year }}-{{
-          cell.data.month.toString().padStart(2, "0")
-        }}-{{ getLastDayOfMonth(cell.data.year, cell.data.month) }}
-      </div>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.income' | translate }}"
-        dataField="income"
-        [width]="110"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'zus.title' | translate }}"
-        dataField="socialInsurance"
-        [width]="200"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'flatRateTax.amountFlatRateTax' | translate }}"
-        dataField="amountFlatRateTax"
-        [width]="200"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'flatRateTax.healthInsurance' | translate }}"
-        dataField="reductionAmountHealt"
-        [width]="250"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'zus.paymentDate' | translate }}"
-        dataField="dataPayment"
-        [width]="110"
-        [allowSorting]="false"
-        hidingPriority="7"
-        dataType="date"
-        [format]="{ type: event.dateFormat }"
-        width="110"
-        alignment="left"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'zus.isPaid' | translate }}"
-        dataField="isPaid"
-        [allowSorting]="false"
-        hidingPriority="7"
-        alignment="left"
-        cellTemplate="isPaid"
-      ></dxi-column>
-      <div *dxTemplate="let data of 'isPaid'">
-        @if (data.value) {
-
-        <img src="../../../assets/images/check-solid.svg" alt="" width="14" />
-        }
-      </div>
-    </dx-data-grid>
+      (onRowDblClick)="onEdit()"
+      storageKey="flatRateTaxGrid"
+      #genericDataGrid
+    ></app-generic-data-grid>  
   </dx-scroll-view>
 </ng-template>
 

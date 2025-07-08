@@ -127,97 +127,17 @@
 <ng-template #grid>
   <dx-scroll-view width="100%" height="100%" direction="vertical">
     <div class="center-panel-scroll-verticall-content">
-      <dx-data-grid
+      <app-generic-data-grid
         [dataSource]="dataSource"
-        [wordWrapEnabled]="false"
-        [showBorders]="true"
-        [height]="heightGrid"
-        [(selectedRowKeys)]="selectedRows"
-        class=""
-        [columnResizingMode]="'widget'"
-        [remoteOperations]="true"
-        [columnAutoWidth]="false"
-        [allowColumnResizing]="true"
-        [autoNavigateToFocusedRow]="true"
+        [columns]="columns()"
+        [options]="options()"
         [(focusedRowIndex)]="focusedRowIndex"
-        [allowColumnReordering]="true"
-        [focusedRowEnabled]="true"
         (onFocusedRowChanged)="onFocusedRowChanged($event)"
-        (onKeyDown)="onKeyDown($event)"
-        [allowColumnResizing]="event.deviceType !== 'mobile'"
-        (onRowDblClick)="onRowDblClick($event)"
-        #dxGrid
-      >
-        <dxo-load-panel [enabled]="false"></dxo-load-panel>
-        <dxo-scrolling mode="virtual"></dxo-scrolling>
-        <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
-        <dxo-selection
-          [mode]="'single'"
-          showCheckBoxesMode="always"
-          selectAllMode="page"
-        ></dxo-selection>
-        <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-
-        <dxi-column
-          caption="{{ 'flateRate.documentNumber' | translate }}"
-          dataField="documentNumber"
-          [allowSorting]="false"
-          hidingPriority="6"
-          [width]="200"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'vatRegister.documentDate' | translate }}"
-          dataField="documentDate"
-          [allowSorting]="false"
-          hidingPriority="7"
-          dataType="date"
-          [format]="{ type: event.dateFormat }"
-          [width]="200"
-          alignment="left"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'vatRegister.datOFSell' | translate }}"
-          dataField="dateOfSell"
-          [allowSorting]="false"
-          hidingPriority="7"
-          dataType="date"
-          [format]="{ type: event.dateFormat }"
-          [width]="200"
-          alignment="left"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'vatRegister.customerName' | translate }}"
-          dataField="customerName"
-          [allowSorting]="false"
-          hidingPriority="6"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'vatRegister.grossSalesValue' | translate }}"
-          dataField="grossSum"
-          [width]="200"
-          [allowSorting]="false"
-          hidingPriority="6"
-          cellTemplate="TotalNetAmountCurrency"
-        ></dxi-column>
-
-        <dxi-column
-          caption="{{ 'vatRegister.taxDue' | translate }}"
-          dataField="vatSum"
-          [width]="200"
-          [allowSorting]="false"
-          hidingPriority="6"
-          cellTemplate="TotalNetAmountCurrency"
-        ></dxi-column>
-
-        <div *dxTemplate="let cell of 'TotalNetAmountCurrency'">
-          {{ cell.value | priceFormat }}
-        </div>
-      </dx-data-grid>
+        (onRowDblClick)="onEdit()"
+        [(selectedRowKeys)]="selectedRows"
+        storageKey="vatRegisterGrid"
+        #genericDataGrid
+      ></app-generic-data-grid> 
     </div>
 
     <div class="summary">
@@ -328,7 +248,7 @@
 @if(isAdd()){
 <app-new-vat-register
   [isVisible]="true"
-  (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
+  (onClosing)="isAdd.set(false); genericDataGrid.focus()"
   [mode]="mode"
   (onSaving)="onSaving($event)"
   [vatRegister]="focusedElement()"

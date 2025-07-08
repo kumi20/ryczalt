@@ -6,7 +6,7 @@ const windowEnv: WindowEnv = (window as any).env || {};
 
 env = {
   production: false,
-  domain: windowEnv.domain || 'default',
+  domain: 'http://127.0.0.1/api_ryczalt/',
   authDomain: windowEnv.authDomain || 'default',
   AUTHAPI: windowEnv.AUTHAPI || 'default',
   APIGUS: windowEnv.APIGUS || 'default',

@@ -28,13 +28,13 @@
 
 .flex-item{
   flex: 1 1 350px;
-  min-width: 400px;
+  min-width: 360px;
   @include flex-card-base;
 }
 
 .flex-item-3{
-  flex: 1 1 30%;
-  min-width: 200px;
+  flex: 1 1 24%;
+  min-width: 250px;
   @include flex-card-base;
   text-align: center;
 }

@@ -82,91 +82,17 @@
 
 <ng-template #grid>
   <dx-scroll-view width="100%" height="100%" direction="vertical">
-    <dx-data-grid
+    <app-generic-data-grid
       [dataSource]="dataSource"
-      [wordWrapEnabled]="false"
-      [showBorders]="true"
-      [height]="heightGrid"
-      [(selectedRowKeys)]="selectedRows"
-      class=""
-      [columnResizingMode]="'widget'"
-      [remoteOperations]="true"
-      [columnAutoWidth]="false"
-      [allowColumnResizing]="true"
-      [autoNavigateToFocusedRow]="true"
+      [columns]="columns()"
+      [options]="options()"
       [(focusedRowIndex)]="focusedRowIndex"
-      [allowColumnReordering]="true"
-      [focusedRowEnabled]="true"
       (onFocusedRowChanged)="onFocusedRowChanged($event)"
-      (onKeyDown)="onKeyDown($event)"
-      [allowColumnResizing]="event.deviceType !== 'mobile'"
-      (onRowDblClick)="onRowDblClick($event)"
-      #dxGrid
-    >
-      <dxo-load-panel [enabled]="false"></dxo-load-panel>
-      <dxo-scrolling mode="virtual"></dxo-scrolling>
-      <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
-      <dxo-selection
-        [mode]="'single'"
-        showCheckBoxesMode="always"
-        selectAllMode="page"
-      ></dxo-selection>
-      <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-      <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.kindOfInternalEvidence' | translate }}"
-        dataField="isCoast"
-        [width]="230"
-        [allowSorting]="false"
-        cellTemplate="isCoast"
-      ></dxi-column>
-      <div *dxTemplate="let data of 'isCoast'">
-        @if (!data.value) {
-        <p style="margin-bottom: 0px;">{{ "internalEvidence.income" | translate }}</p>
-        } @else {
-        <p style="margin-bottom: 0px;">{{ "internalEvidence.expense" | translate }}</p>
-        }
-      </div>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.numberOfInternalEvidence' | translate }}"
-        dataField="documentNumber"
-        [width]="230"
-        [allowSorting]="false"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.dateOfIssue' | translate }}"
-        dataField="documentDate"
-        [width]="150"
-        dataType="date"
-        [format]="{ type: event.dateFormat }"
-        width="110"
-        alignment="left"
-        [allowSorting]="false"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.value' | translate }}"
-        dataField="amount"
-        [width]="100"
-        [allowSorting]="false"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.personIssuing' | translate }}"
-        dataField="personIssuing"
-        [width]="200"
-        [allowSorting]="false"
-      ></dxi-column>
-
-      <dxi-column
-        caption="{{ 'internalEvidence.purposeOfExpenditure' | translate }}"
-        dataField="description"
-        [allowSorting]="false"
-      ></dxi-column>
-    </dx-data-grid>
+      (onRowDblClick)="onEdit()"
+      [(selectedRowKeys)]="selectedRows"
+      storageKey="internalEvidenceGrid"
+      #genericDataGrid
+    ></app-generic-data-grid>  
   </dx-scroll-view>
 </ng-template>
 
@@ -174,7 +100,7 @@
 <app-new-internal-evidence
   [isVisible]="isAdd()"
   [mode]="mode"
-  (onClosing)="isAdd.set(false); event.setFocus(this.dxGrid)"
+  (onClosing)="isAdd.set(false); genericDataGrid.focus()"
   (onSaving)="onSaving($event)"
   [internalEvidence]="focusedElement()"
 ></app-new-internal-evidence>

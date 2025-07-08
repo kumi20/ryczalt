@@ -261,6 +261,7 @@
           formControlName="remarks"
           (onChoosed)="onChoosed($event)"
           [isIncome]="true"
+          [readOnly]="!event.sessionData.isActive || mode() === 'show'"
         ></app-notes>
       </div>
     </div>

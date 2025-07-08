@@ -1,23 +1,41 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { DxButtonModule, DxDataGridModule, DxScrollViewModule } from 'devextreme-angular';
-import { EventService } from '../../services/event-services.service';
-import { AllowIn, KeyboardShortcutsComponent, ShortcutInput } from 'ng-keyboard-shortcuts';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  computed,
+  OnInit,
+  signal,
+  ViewChild,
+} from "@angular/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {
+  DxButtonModule,
+  DxDataGridModule,
+  DxScrollViewModule,
+} from "devextreme-angular";
+import { EventService } from "../../services/event-services.service";
+import {
+  AllowIn,
+  KeyboardShortcutsComponent,
+  ShortcutInput,
+} from "ng-keyboard-shortcuts";
 
-import DataSource from 'devextreme/data/data_source';
-import * as AspNetData from 'devextreme-aspnet-data-nojquery';
-import { environment } from '../../../environments/environment';
-import { LoadOptions } from 'devextreme/data';
-import { FlatRateTax } from '../../interface/flatRateTax';
-import { CommonModule } from '@angular/common';
-import { DateRangeComponent } from '../date-range/date-range.component';
-import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component';
-import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
-import { NewFlatRateTaxComponent } from './new-flat-rate-tax/new-flat-rate-tax.component';
-import { FlatRateTaxService } from '../../services/flat-rate-tax.service';
-
+import DataSource from "devextreme/data/data_source";
+import * as AspNetData from "devextreme-aspnet-data-nojquery";
+import { environment } from "../../../environments/environment";
+import { LoadOptions } from "devextreme/data";
+import { FlatRateTax } from "../../interface/flatRateTax";
+import { CommonModule } from "@angular/common";
+import { DateRangeComponent } from "../date-range/date-range.component";
+import { ConfirmDialogComponent } from "../core/confirm-dialog/confirm-dialog.component";
+import { NgShortcutsComponent } from "../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component";
+import { NewFlatRateTaxComponent } from "./new-flat-rate-tax/new-flat-rate-tax.component";
+import { FlatRateTaxService } from "../../services/flat-rate-tax.service";
+import { GenericGridOptions, GenericGridColumn } from "../core/generic-data-grid/generic-data-grid.model";
+import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data-grid.component";
 @Component({
-  selector: 'app-flat-rate-tax',
+  selector: "app-flat-rate-tax",
   imports: [
     DxDataGridModule,
     DxScrollViewModule,
@@ -28,12 +46,13 @@ import { FlatRateTaxService } from '../../services/flat-rate-tax.service';
     ConfirmDialogComponent,
     NgShortcutsComponent,
     NewFlatRateTaxComponent,
+    GenericDataGridComponent,
   ],
-  templateUrl: './flat-rate-tax.component.html',
-  styleUrl: './flat-rate-tax.component.scss',
+  templateUrl: "./flat-rate-tax.component.html",
+  styleUrl: "./flat-rate-tax.component.scss",
 })
 export class FlatRateTaxComponent implements OnInit, AfterViewInit {
-  @ViewChild('dxGrid') dxGrid: any;
+  @ViewChild("genericDataGrid") genericDataGrid: any;
   translate = inject(TranslateService);
   event = inject(EventService);
   flatRateTaxService = inject(FlatRateTaxService);
@@ -42,15 +61,86 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
   shortcuts: ShortcutInput[] = [];
 
   dataSource: DataSource = new DataSource({});
-  heightGrid: number | string = 'calc(100vh - 105px)';
+  heightGrid: number | string = "calc(100vh - 105px)";
   focusedElement = signal<FlatRateTax | null>(null);
   year = signal<number>(this.event.globalDate.year);
   focusedRowIndex: number = 0;
   pageSize: number = 30;
 
-  mode: 'add' | 'edit' | 'show' = 'add';
+  mode: "add" | "edit" | "show" = "add";
   isAdd = signal<boolean>(false);
   isDelete = signal<boolean>(false);
+  
+
+  /** Opcje siatki klientów */
+  options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 105px)",
+      } as GenericGridOptions)
+  );
+
+  columns = computed(() => [
+    {
+      caption: this.translate.instant("zus.periodFrom"),
+      dataField: "month",
+      width: 110,
+      cellTemplate: (e: any) => {
+        return e.data.year + "-" + e.data.month.toString().padStart(2, "0") + "-01";
+      },
+    },
+    {
+      caption: this.translate.instant("zus.periodTo"),
+      dataField: "year",
+      width: 110,
+      cellTemplate: (e: any) => {
+        return e.data.year + "-" + e.data.month.toString().padStart(2, "0") + "-" + this.getLastDayOfMonth(e.data.year, e.data.month);
+      },
+    },
+    {
+      caption: this.translate.instant("internalEvidence.income"),
+      dataField: "income",
+      width: 110,
+      customizeText: this.event.formatKwota
+    },
+    {
+      caption: this.translate.instant("zus.title"),
+      dataField: "socialInsurance",
+      width: 200,
+      customizeText: this.event.formatKwota
+    },
+    {
+      caption: this.translate.instant("flatRateTax.amountFlatRateTax"),
+      dataField: "amountFlatRateTax",
+      width: 200,
+      customizeText: this.event.formatKwota
+    },
+    {
+      caption: this.translate.instant("flatRateTax.healthInsurance"),
+      dataField: "reductionAmountHealt",
+      width: 200,
+      customizeText: this.event.formatKwota
+    },
+    {
+      caption: this.translate.instant("zus.paymentDate"),
+      dataField: "dataPayment",
+      width: 110,
+      dataType: "date",
+      format: { type: this.event.dateFormat },
+      alignment: "left"
+    },
+    {
+      caption: this.translate.instant("zus.isPaid"),
+      dataField: "isPaid",
+      width: 100,
+      dataType: "string",
+      alignment: "left",
+      encodeHtml: false,
+      customizeText: (e: any) => {
+        return e.value ? `<img src="../../../assets/images/check-solid.svg" alt="" width="14" />` : '';
+      }
+    }
+  ] as GenericGridColumn[]);
 
   constructor() {}
 
@@ -61,7 +151,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.shortcuts = [
       {
-        key: 'alt + n',
+        key: "alt + n",
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: () => {
@@ -69,7 +159,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
         },
       },
       {
-        key: 'F2',
+        key: "F2",
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: (data) => {
@@ -79,7 +169,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
       },
 
       {
-        key: 'del',
+        key: "del",
         preventDefault: true,
         allowIn: [AllowIn.Input, AllowIn.Textarea],
         command: () => {
@@ -91,12 +181,12 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
   }
 
   addNewRecord() {
-    this.mode = 'add';
+    this.mode = "add";
     this.isAdd.set(true);
   }
 
   onEdit() {
-    this.mode = 'edit';
+    this.mode = "edit";
     this.isAdd.set(true);
   }
 
@@ -105,12 +195,12 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
   }
 
   onShow() {
-    this.mode = 'show';
+    this.mode = "show";
     this.isAdd.set(true);
   }
 
   onKeyDown(event: any) {
-    const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
+    const BLOCKED_KEYS = ["F2", "Escape", "Delete", "Enter"];
 
     if (BLOCKED_KEYS.includes(event.event.key)) {
       event.event.preventDefault();
@@ -120,7 +210,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
   getData() {
     this.dataSource = new DataSource({
       store: AspNetData.createStore({
-        key: 'flatRateTaxId',
+        key: "flatRateTaxId",
         onBeforeSend: this.event.onBeforeSendDataSource,
         loadUrl: `${environment.domain}flat-rate-tax`,
         loadParams: this.getLoadParams(),
@@ -132,7 +222,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
           if (data.length > 0) this.focusedElement.set(data[0]);
           else this.focusedElement.set(null);
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid);
+            this.genericDataGrid.focus();
           }, 0);
         },
       }),
@@ -164,14 +254,11 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
 
   onSaving(event: any) {
     this.dataSource.reload().then((data: FlatRateTax[]) => {
-      const index = data.findIndex(
-        (x: any) => x.flatRateTaxId == event.id
-      );
+      const index = data.findIndex((x: any) => x.flatRateTaxId == event.id);
 
-      if(index !== -1){
+      if (index !== -1) {
         this.focusedRowIndex = index;
-      }
-      else{
+      } else {
         this.focusedRowIndex = 0;
       }
     });
@@ -191,7 +278,7 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         this.event.httpErrorNotification(err);
-      }
+      },
     });
   }
 }

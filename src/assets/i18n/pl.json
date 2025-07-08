@@ -236,6 +236,7 @@
     "isSicknessInsurance": "Płatnik opłaca ubezpieczenie chorobowe",
     "licenseNumber": "Numer licencji",
     "licenseEndDate": "Data końca licencji",
-    "taxOffice": "Urząd skarbowy"
+    "taxOffice": "Urząd skarbowy",
+    "voivodeship": "Województwo"
   }
 }

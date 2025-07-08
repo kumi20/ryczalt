@@ -226,6 +226,7 @@
     "isSicknessInsurance": "Платник страховки",
     "licenseNumber": "Номер ліцензії",
     "licenseEndDate": "Дата закінчення ліцензії",
-    "taxOffice": "Податковий офіс"
+    "taxOffice": "Податковий офіс",
+    "voivodeship": "Воблість"
   }
 }

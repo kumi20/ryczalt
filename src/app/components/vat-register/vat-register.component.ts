@@ -7,6 +7,7 @@ import {
   ChangeDetectorRef,
   OnInit,
   AfterViewInit,
+  computed,
 } from '@angular/core';
 import {
   DxButtonModule,
@@ -21,7 +22,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { environment } from '../../../environments/environment';
 import { LoadOptions } from 'devextreme/data';
 import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   VatRegister,
   SummaryMonthVatRegiser,
@@ -39,6 +40,8 @@ import {
 } from '../../interface/flateRate';
 import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardng-keyboard-shortcuts.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
+import { GenericGridColumn, GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
+import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
 
 @Component({
   selector: 'app-vat-register',
@@ -56,13 +59,14 @@ import { DateRangeComponent } from '../date-range/date-range.component';
     ConfirmDialogComponent,
     NgShortcutsComponent,
     NewFlateRateComponent,
-    DateRangeComponent
+    DateRangeComponent,
+    GenericDataGridComponent
   ],
   templateUrl: './vat-register.component.html',
   styleUrl: './vat-register.component.scss',
 })
 export class VatRegisterComponent implements OnInit, AfterViewInit {
-  @ViewChild('dxGrid') dxGrid: any;
+  @ViewChild('genericDataGrid') genericDataGrid: any;
 
   event = inject(EventService);
   cdr = inject(ChangeDetectorRef);
@@ -105,6 +109,72 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
     TotalNetSales: 0,
     TotalVat: 0,
   };
+
+  private readonly translate = inject(TranslateService)
+
+   /** Opcje siatki klientów */
+   options = computed(
+    () =>
+      ({
+        height: "calc(100vh - 290px)",
+      } as GenericGridOptions)
+  );  
+
+  columns = computed(
+    () =>
+      [
+        {
+          caption: this.translate.instant('flateRate.documentNumber'),
+          dataField: 'documentNumber',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('vatRegister.documentDate'),
+          dataField: 'documentDate',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 7,
+          dataType: 'date',
+          format: { type: this.event.dateFormat },
+          alignment: 'left',
+        },
+        {
+          caption: this.translate.instant('vatRegister.datOFSell'),
+          dataField: 'dateOfSell',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 7,
+          dataType: 'date',
+          format: { type: this.event.dateFormat },
+          alignment: 'left',
+        },
+        {
+          caption: this.translate.instant('vatRegister.customerName'),
+          dataField: 'customerName',
+          width: 300,
+          allowSorting: false,
+          hidingPriority: 6,
+        },
+        {
+          caption: this.translate.instant('vatRegister.grossSalesValue'),
+          dataField: 'grossSum',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+          customizeText: this.event.formatKwota,
+        },
+        {
+          caption: this.translate.instant('vatRegister.taxDue'),
+          dataField: 'vatSum',
+          width: 200,
+          allowSorting: false,
+          hidingPriority: 6,
+          customizeText: this.event.formatKwota,
+        },
+      ] as GenericGridColumn[]
+  )
 
   constructor() {}
 
@@ -174,7 +244,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
           if (data.length > 0) this.focusedElement.set(data[0]);
           else this.focusedElement.set(null);
           setTimeout(() => {
-            this.event.setFocus(this.dxGrid);
+            this.genericDataGrid.focus();
           }, 0);
         },
       }),
@@ -240,10 +310,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
   }
 
   getFocusedElement() {
-    return this.dxGrid.instance
-      .getDataSource()
-      .items()
-      .find((_el: any, i: any) => this.focusedRowIndex === i);
+    return this.genericDataGrid.getFocusedRowData();
   }
 
   addNewRecord() {
@@ -321,7 +388,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
 
   closeConfirm() {
     this.isDelete.set(false);
-    this.event.setFocus(this.dxGrid);
+    this.genericDataGrid.focus();
   }
 
   delete() {

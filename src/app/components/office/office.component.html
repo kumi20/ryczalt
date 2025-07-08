@@ -17,87 +17,27 @@
 <ng-template #topButtons></ng-template>
 
 <ng-template #grid>
-  <dx-data-grid
-    [dataSource]="dataSource"
-    [wordWrapEnabled]="false"
-    [showBorders]="true"
-    [height]="heightGrid"
-    class=""
-    [columnResizingMode]="'widget'"
-    [remoteOperations]="true"
-    [columnAutoWidth]="false"
-    [allowColumnResizing]="true"
-    [autoNavigateToFocusedRow]="true"
-    [(focusedRowIndex)]="focusedRowIndex"
-    [allowColumnReordering]="true"
-    [focusedRowEnabled]="true"
-    (onFocusedRowChanged)="onFocusedRowChanged($event)"
-    (onKeyDown)="onKeyDown($event)"
-    [allowColumnResizing]="event.deviceType !== 'mobile'"
-    (onRowDblClick)="onRowDblClick($event)"
-    #dxGrid
+  <app-custom-dropdown-box
+    [items]="filterCriteria"
+    [filterValue]="filterValue"
+    (onValueChanged)="onFilterDataChanged($event)"
+    style="margin-right: 10px"
+    [width]="320"
+    [selectedItem]="orderBy()"
   >
-    <dxo-load-panel [enabled]="false"></dxo-load-panel>
-    <dxo-scrolling mode="virtual"></dxo-scrolling>
-    <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
-    <dxo-selection
-      [mode]="'single'"
-      showCheckBoxesMode="always"
-      selectAllMode="page"
-    ></dxo-selection>
-    <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+  </app-custom-dropdown-box>
 
-    <dxi-column
-      caption="{{ 'taxOffices.code' | translate }}"
-      dataField="code"
-      [width]="200"
-      [allowSorting]="false"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'taxOffices.name' | translate }}"
-      dataField="name"
-      [allowSorting]="false"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'taxOffices.postalCode' | translate }}"
-      dataField="postalCode"
-      [width]="200"
-      [allowSorting]="false"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'taxOffices.city' | translate }}"
-      dataField="city"
-      [width]="200"
-      [allowSorting]="false"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'taxOffices.address' | translate }}"
-      dataField="address"
-      [width]="200"
-      [allowSorting]="false"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'taxOffices.phone' | translate }}"
-      dataField="phone"
-      [width]="200"
-      [allowSorting]="false"
-    ></dxi-column>
-
-    <dxi-column
-      caption="{{ 'taxOffices.email' | translate }}"
-      dataField="email"
-      [width]="200"
-      [allowSorting]="false"
-    ></dxi-column>
-  </dx-data-grid>
+  <app-generic-data-grid
+    [dataSource]="dataSource"
+    [columns]="columns()"
+    [options]="options()"
+    [(focusedRowIndex)]="focusedRowIndex"
+    (onFocusedRowChanged)="onFocusedRowChanged($event)"
+    (onRowDblClick)="onRowDblClick($event)"
+    storageKey="officeGrid"
+    #genericDataGrid
+  ></app-generic-data-grid>
 </ng-template>
-
 
 <ng-template #dropDownMode>
   <dx-drop-down-box
@@ -108,7 +48,7 @@
     [(opened)]="isGridBoxOpened"
     [dataSource]="dataSourceDropDown"
     [showClearButton]="false"
-    style="width: 276px; display: inline-block;"
+    style="width: 276px; display: inline-block"
     (onValueChanged)="onValueChanged($event)"
     class="contractors-form-step-2"
     (openedChange)="onOpenedChanged($event)"
@@ -142,7 +82,6 @@
             [hoverStateEnabled]="true"
             (onKeyDown)="onKeyDown($event)"
             [remoteOperations]="true"
-
           >
             <dxo-load-panel [enabled]="false"></dxo-load-panel>
             <dxo-paging [pageSize]="500"></dxo-paging>

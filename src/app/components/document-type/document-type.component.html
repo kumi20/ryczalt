@@ -17,40 +17,14 @@
 <ng-template #topButtons> </ng-template>
 
 <ng-template #grid>
-  <dx-data-grid
+  <app-generic-data-grid
     [dataSource]="documentList()"
-    [wordWrapEnabled]="false"
-    [showBorders]="true"
-    [height]="heightGrid"
-    [columnResizingMode]="'widget'"
-    [remoteOperations]="true"
-    [columnAutoWidth]="false"
-    [allowColumnResizing]="true"
-    [autoNavigateToFocusedRow]="true"
+    [columns]="columns()"
+    [options]="options()"
     [(focusedRowIndex)]="focusedRowIndex"
-    [allowColumnReordering]="true"
-    [focusedRowEnabled]="true"
-    (onKeyDown)="onKeyDown($event)"
-    [allowColumnResizing]="event.deviceType !== 'mobile'"
-    #dxGrid
-  >
-    <dxo-load-panel [enabled]="false"></dxo-load-panel>
-    <dxo-paging [pageSize]="pageSize" [enabled]="true"></dxo-paging>
-    <dxo-selection
-      [mode]="'single'"
-      showCheckBoxesMode="always"
-      selectAllMode="page"
-    >
-    </dxo-selection>
-    <dxo-editing mode="row" [confirmDelete]="false"></dxo-editing>
-    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
-
-    <dxi-column
-      caption="{{ 'customers.name' | translate }}"
-      dataField="name"
-      [allowSorting]="false"
-    ></dxi-column>
-  </dx-data-grid>
+    [storageKey]="'documentTypeGrid'"
+    #genericDataGrid
+  ></app-generic-data-grid>
 </ng-template>
 
 <ng-template #dropDownMode>
