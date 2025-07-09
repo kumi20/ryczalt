@@ -180,7 +180,7 @@
   display: inline-block;
 }
 
-//menu mobilen
+//menu mobilne - PRZESTARZAŁE (zastąpione nowoczesnym menu hamburger w content.component.scss)
 .top-header-mobile {
   height: 36px;
   background-color: $brand-neutral-00;
@@ -269,7 +269,8 @@
 
 .nav-mobile {
   height: 30px;
-  background-color: $brand-00;
+  background-color: transparent;
+  margin-left: 10px;
 }
 
 .navbar-toggler-mobile {

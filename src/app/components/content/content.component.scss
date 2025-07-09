@@ -1545,3 +1545,461 @@ h5 {
     color: $neutral-30 !important;
   }
 }
+
+/* =========================================
+   Nowoczesne menu hamburger - Mobile
+   ========================================= */
+
+/* Kontener menu hamburger */
+.hamburger-menu-container {
+  position: relative;
+}
+
+/* Przycisk hamburger */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Linie hamburger */
+.hamburger-line {
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+  
+  &:nth-child(1) {
+    transform: translateY(0);
+  }
+  
+  &:nth-child(2) {
+    opacity: 1;
+  }
+  
+  &:nth-child(3) {
+    transform: translateY(0);
+  }
+}
+
+/* Animacja aktywnego hamburger */
+.hamburger-menu.active {
+  .hamburger-line {
+    &:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    
+    &:nth-child(2) {
+      opacity: 0;
+    }
+    
+    &:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+/* Logo mobilne */
+.mobile-logo {
+  margin-top: -40px;
+  margin-left: calc(50vh - 315px);
+}
+
+/* Overlay menu */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Sidebar menu */
+.mobile-menu-sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 85%;
+  max-width: 400px;
+  height: 100%;
+  background: $neutral-100;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  
+  &.active {
+    left: 0;
+  }
+}
+
+/* Header menu mobilnego */
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid $neutral-80;
+  background: $neutral-100;
+}
+
+.mobile-menu-title {
+  @include font-roboto(20px, 600, 24px, $neutral-10);
+  margin: 0;
+}
+
+/* Przycisk zamknięcia */
+.mobile-menu-close {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  span {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: $neutral-30;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+    
+    &:first-child {
+      transform: rotate(45deg);
+    }
+    
+    &:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+/* Zawartość menu */
+.mobile-menu-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* Nawigacja menu */
+.mobile-menu-nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.mobile-menu-item {
+  border-bottom: 1px solid $neutral-80;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Linki menu */
+.mobile-menu-link,
+.mobile-menu-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 16px 24px;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  
+  &:hover {
+    background: $neutral-90;
+  }
+  
+  &.active {
+    background: $brand-90;
+    
+    .mobile-menu-text {
+      color: $brand-10;
+      font-weight: 600;
+    }
+    
+    i:not(.mobile-menu-arrow) {
+      color: $brand-10;
+    }
+  }
+}
+
+.mobile-menu-button {
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Ikony w menu */
+.mobile-menu-link i:not(.mobile-menu-arrow),
+.mobile-menu-button i:not(.mobile-menu-arrow) {
+  font-size: 20px;
+  color: $neutral-30;
+  margin-right: 16px;
+  width: 20px;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+/* Tekst menu */
+.mobile-menu-text {
+  @include font-roboto(16px, 500, 20px, $neutral-30);
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+/* Strzałka w menu */
+.mobile-menu-arrow {
+  font-size: 18px;
+  color: $neutral-50;
+  margin-left: auto;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-link:hover .mobile-menu-arrow,
+.mobile-menu-button:hover .mobile-menu-arrow {
+  color: $neutral-30;
+  transform: translateX(2px);
+}
+
+/* Kontener submenu */
+.mobile-submenu-container {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .mobile-menu-sidebar {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .mobile-menu-header {
+    padding: 16px 20px;
+  }
+  
+  .mobile-menu-link,
+  .mobile-menu-button {
+    padding: 14px 20px;
+  }
+  
+  .mobile-menu-title {
+    @include font-roboto(18px, 600, 22px, $neutral-10);
+  }
+}
+
+/* Animacje wejścia/wyjścia */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.mobile-menu-sidebar.active {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.mobile-menu-sidebar:not(.active) {
+  animation: slideOutLeft 0.3s ease-in;
+}
+
+/* Dostępność */
+@media (prefers-reduced-motion: reduce) {
+  .hamburger-menu,
+  .hamburger-line,
+  .mobile-menu-sidebar,
+  .mobile-menu-overlay,
+  .mobile-menu-link,
+  .mobile-menu-button,
+  .mobile-menu-arrow {
+    transition: none;
+  }
+  
+  .mobile-menu-sidebar.active,
+  .mobile-menu-sidebar:not(.active) {
+    animation: none;
+  }
+}
+
+/* Przycisk WRÓĆ w submenu mobilnym */
+.mobile-submenu-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: $brand-10;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 22px 10px 16px;
+  margin: 18px auto 18px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  width: fit-content;
+
+  i {
+    font-size: 20px;
+    margin-right: 6px;
+  }
+
+  &:hover {
+    background: darken($brand-10, 7%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+}
+
+/* Nowoczesny header mobilny - poprawiony układ */
+.top-menu-header-mobile {
+  height: 64px;
+  background: $brand-10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  padding: 0 8px 0 0;
+}
+
+.hamburger-menu-container {
+  height: 30px;
+  min-width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.hamburger-menu {
+  background: transparent;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+.mobile-header-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+}
+
+.header-name-application {
+  font-family: 'Geomanist', 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: $brand-10;
+  margin: 0;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 1;
+}
+
+.mobile-user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  width: 48px;
+  font-size: 28px;
+  color: $neutral-30;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.mobile-user-icon:hover {
+  color: $brand-10;
+}
+
+@media (max-width: 480px) {
+  .top-menu-header-mobile {
+    height: 56px;
+    padding: 0 2px 0 0;
+  }
+  .hamburger-menu-container {
+    height: 30px;
+    min-width: 30px;
+  }
+  .mobile-header-title, .mobile-user-icon {
+    height: 56px;
+  }
+  .header-name-application {
+    font-size: 19px;
+  }
+  .mobile-submenu-back {
+    font-size: 15px;
+    padding: 8px 16px 8px 12px;
+  }
+}

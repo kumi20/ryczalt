@@ -106,7 +106,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   ABS_BUILD_DATE: string = '';
   isMenuMobile: boolean = false;
   isSubmenuItemClick: boolean = false;
-  itemChosed: any[] = [];
+  itemChosed: MainMenu | null = null;
   isMobileSettings: boolean = false;
   isTap: any = null;
   isCompanyVisible = signal<boolean>(false);
@@ -523,15 +523,19 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   onItemClickMobile = (e: any) => {
-    if (e.itemData.items.length > 0) {
+    const itemData = e.itemData || e;
+    
+    if (itemData.items && itemData.items.length > 0) {
       this.isSubmenuItemClick = true;
-      this.itemChosed = e.itemData;
+      this.itemChosed = itemData;
       return;
     }
 
-    this.itemChosed = e.itemData;
-    this.route.navigate([e.itemData.url]);
-    this.isMenuMobile = false;
+    if (itemData.url) {
+      this.itemChosed = itemData;
+      this.route.navigate([itemData.url]);
+      this.isMenuMobile = false;
+    }
   };
 
   touchStart = (e: any) => {

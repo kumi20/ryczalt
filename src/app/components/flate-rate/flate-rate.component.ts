@@ -125,7 +125,6 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
           dataField: 'dateOfEntry',
           width: 110,
           allowSorting: false,
-          hidingPriority: 7,
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
@@ -134,7 +133,6 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
           caption: this.translate.instant('flateRate.documentNumber'),
           dataField: 'documentNumber',
           allowSorting: false,
-          hidingPriority: 6,
           width: 200
         },
         {
@@ -142,7 +140,6 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
           dataField: 'totalRevenue',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
           customizeText: this.event.formatKwota,
         },
         {
@@ -150,7 +147,6 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
           dataField: 'rate17',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
           customizeText: this.event.formatKwota,
         },
         {

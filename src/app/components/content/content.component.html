@@ -30,6 +30,8 @@
     </div>
     }
   </div>
+  
+  <!-- Tooltips -->
   <dx-tooltip
     [target]="'#btn-user-guide'"
     [hideEvent]="{ name: 'mouseleave' }"
@@ -42,6 +44,7 @@
       runGuideAgain
     </div>
   </dx-tooltip>
+  
   <dx-tooltip
     target="#logout"
     position="bottom"
@@ -56,6 +59,8 @@
       Wyloguj
     </div>
   </dx-tooltip>
+  
+  <!-- Drawer -->
   <dx-drawer
     [openedStateMode]="selectedOpenMode"
     [position]="selectedPosition"
@@ -78,7 +83,7 @@
         direction="vertical"
         showScrollbar="onHover"
       >
-      <i class="fa fa-brands fa-angular"></i>
+        <i class="fa fa-brands fa-angular"></i>
         <dx-menu
           #menu
           [dataSource]="navigation"
@@ -94,140 +99,107 @@
           tabindex="1"
         >
           <div *dxTemplate="let item of 'items'; let i = index">
-            @if (item.name !== 'menu.start') { @if (item.url != null && item.url
-            != 'help') {
-            <div
-              class="dx-item-content dx-menu-item-content"
-              [id]="'id-' + item.id"
-              routerLinkActive="active"
-              [ngClass]="{
-                'dx-submenu-top': item.id > 20,
-                'dashboard-step-3': item.url == 'content/users',
-                'dashboard-step-2': item.url == 'content/groups',
-                'dashboard-step-4': item.url == 'content/companies',
-                'dashboard-step-1': item.url == 'content/start'
-              }"
-              [routerLink]="['/' + item.url]"
-            >
-              <a [routerLink]="['/' + item.url]" tabindex="-1" class="a-link">
+            @if (item.name !== 'menu.start') { 
+              @if (item.url != null && item.url != 'help') {
                 <div
+                  class="dx-item-content dx-menu-item-content"
+                  [id]="'id-' + item.id"
+                  routerLinkActive="active"
                   [ngClass]="{
-                    'text-left': item.id > 20,
-                    'text-center': item.id < 21
+                    'dx-submenu-top': item.id > 20,
+                    'dashboard-step-3': item.url == 'content/users',
+                    'dashboard-step-2': item.url == 'content/groups',
+                    'dashboard-step-4': item.url == 'content/companies',
+                    'dashboard-step-1': item.url == 'content/start'
+                  }"
+                  [routerLink]="['/' + item.url]"
+                >
+                  <a [routerLink]="['/' + item.url]" tabindex="-1" class="a-link">
+                    <div
+                      [ngClass]="{
+                        'text-left': item.id > 20,
+                        'text-center': item.id < 21
+                      }"
+                    >
+                      <i
+                        class="dx-icon icon {{ item.icon }}"
+                        style="display: block; margin-left: 20px"
+                      ></i>
+                      <span
+                        class="dx-menu-item-text-span"
+                        [ngClass]="{ 'dx-submenu-top-span': item.id > 20 }"
+                      >
+                        {{ item.name | translate }}
+                      </span>
+                    </div>
+                  </a>
+                </div>
+              } 
+            } @else { 
+              @if (item.url != null && item.url != 'help') {
+                <div
+                  class="dx-item-content dx-menu-item-content"
+                  [id]="'id-' + item.id"
+                  routerLinkActive="active"
+                  [routerLink]="['/' + item.url]"
+                  [ngClass]="{
+                    'dashboard-step-1': item.url == 'content/start'
                   }"
                 >
-                  <!-- <i
-                        class="icon absui-icon--arrow-drop-right submenu-icon-show"
-                        style="position: absolute; top: 2px; right: 0px"
-                        *ngIf="item.id < 10 && item.items.length > 0"
-                      ></i> -->
-                  <i
-                    class="dx-icon icon {{ item.icon }}"
-                    style="display: block; margin-left: 20px"
-                  ></i>
-                  <span
-                    class="dx-menu-item-text-span"
-                    [ngClass]="{ 'dx-submenu-top-span': item.id > 20 }"
-                    >{{ item.name | translate }}</span
-                  >
+                  <div class="text-center">
+                    <i class="dx-icon icon {{ item.icon }}"></i><br />
+                    <span class="dx-menu-item-text-span">
+                      {{ item.name | translate }}
+                    </span>
+                  </div>
                 </div>
-              </a>
-            </div>
-            } } @else { @if (item.url != null && item.url != 'help') {
-            <div
-              class="dx-item-content dx-menu-item-content"
-              [id]="'id-' + item.id"
-              routerLinkActive="active"
-              [routerLink]="['/' + item.url]"
-              [ngClass]="{
-                'dashboard-step-1': item.url == 'content/start'
-              }"
-            >
-              <div class="text-center">
-                <i class="dx-icon icon {{ item.icon }}"></i><br />
-                <span class="dx-menu-item-text-span">{{
-                  item.name | translate
-                }}</span>
-              </div>
-            </div>
-            } }
-            <!-- [routerLink]="['/'+item.url]" -->
-            @if (item.url != null && item.url == 'help') {
-            <div
-              class="dx-item-content dx-menu-item-content"
-              [id]="'id-' + item.id"
-              [routerLink]=""
-              [ngClass]="{
-                'apps-css': item.id == 1,
-                active: item.id == 1
-              }"
-            >
-              <div class="text-center">
-                <a
-                  href="https://wapro.pl/dokumentacja-erp/mag/webframe.htm"
-                  target="_blank"
-                  style="text-decoration-line: none"
-                >
-                  <i
-                    class="dx-icon icon {{ item.icon }}"
-                    style="color: #333 !important"
-                  ></i
-                  ><br />
-                  <span
-                    class="dx-menu-item-text-span"
-                    style="
-                      color: #333 !important;
-                      font-family: Roboto, sans-serif;
-                      font-weight: 500;
-                      font-size: 0.625rem;
-                      line-height: 12px;
-                    "
-                    >{{ item.name | translate }}</span
-                  >
-                </a>
-              </div>
-            </div>
+              } 
             }
+            
             <div [ngClass]="{ 'dx-menu-items-container': item.id > 20 }">
               @if (item.url == null) {
-              <div
-                class="dx-item-content dx-menu-item-content text-center"
-                [id]="'id-' + item.id"
-                [ngClass]="{ 'apps-css': item.id == 1 }"
-                [routerLink]=""
-                [ngClass]="{ 'dx-submenu-top': item.id > 20 }"
-              >
                 <div
-                  [ngClass]="{
-                    'text-left': item.id > 20,
-                    'text-center': item.id < 21
+                  class="dx-item-content dx-menu-item-content text-center"
+                  [id]="'id-' + item.id"
+                  [ngClass]="{ 
+                    'apps-css': item.id == 1,
+                    'dx-submenu-top': item.id > 20 
                   }"
+                  [routerLink]=""
                 >
-                  @if (item.id == 1) {
-                  <i
-                    class="dx-icon icon {{ item.icon }}"
-                    style="margin-top: -2px; display: block; margin-left: 20px"
-                  ></i>
-                  }
-                  <span
-                    class="dx-menu-item-text-span"
-                    [ngClass]="{ 'dx-submenu-top-span-sub': item.id > 20 }"
-                    >{{ item.name | translate }}</span
+                  <div
+                    [ngClass]="{
+                      'text-left': item.id > 20,
+                      'text-center': item.id < 21
+                    }"
                   >
-                  @if (item.id > 20) {
-                  <i
-                    class="icon absui-icon--arrow-drop-right-user-panel"
-                    style="position: relative; top: -4px; float: right"
-                  ></i>
-                  }
+                    @if (item.id == 1) {
+                      <i
+                        class="dx-icon icon {{ item.icon }}"
+                        style="margin-top: -2px; display: block; margin-left: 20px"
+                      ></i>
+                    }
+                    <span
+                      class="dx-menu-item-text-span"
+                      [ngClass]="{ 'dx-submenu-top-span-sub': item.id > 20 }"
+                    >
+                      {{ item.name | translate }}
+                    </span>
+                    @if (item.id > 20) {
+                      <i
+                        class="icon absui-icon--arrow-drop-right-user-panel"
+                        style="position: relative; top: -4px; float: right"
+                      ></i>
+                    }
+                  </div>
                 </div>
-              </div>
               }
             </div>
           </div>
         </dx-menu>
       </dx-scroll-view>
     </div>
+    
     <div
       id="content"
       [ngClass]="{ 'hide-scroll': route.url === '/start' }"
@@ -253,28 +225,25 @@
   style="position: sticky !important; z-index: 12"
 >
   <nav class="nav-mobile">
-    <div
-      class="navbar-toggler-mobile"
-      (click)="isMenuMobile = !isMenuMobile; isSubmenuItemClick = false"
-      [ngClass]="{
-        'navbar-toggler-mobile': !isMenuMobile,
-        'navbar-toggler-mobile-active': isMenuMobile
-      }"
-    >
-      <i class="dx-icon dx-icon-menu"></i>
+    <!-- Nowoczesne menu hamburger -->
+    <div class="hamburger-menu-container">
+      <button 
+        class="hamburger-menu"
+        [class.active]="isMenuMobile"
+        (click)="isMenuMobile = !isMenuMobile; isSubmenuItemClick = false"
+        aria-label="Menu"
+        type="button"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
-    <img
-      src="../../../assets/images/text-header.svg"
-      style="margin-top: -40px; margin-left: calc(50vh - 315px)"
-    />
-    <!-- <wapro-logo
-              fillColorPrimary="neutral-100"
-              fillColorSecondary="neutral-100"
-              type="anywhere"
-              [width]="120"
-              [height]="16"
-              style="padding-left: 10px"
-            ></wapro-logo> -->
+    
+    <div class="mobile-header-title">
+      <p class="header-name-application">Ryczałt</p>
+    </div>
+    
     <div
       class="mobile-user-icon"
       (click)="isMenuMobile = false; isMobileSettings = true"
@@ -282,91 +251,96 @@
       <i
         class="icon absui-icon--account-circle"
         aria-hidden="true"
-        style="padding-top: 8px; position: relative"
         tabIndex="-1"
       ></i>
     </div>
-    <dx-popup
-      width="100%"
-      height="calc(100% - 30px)"
-      position="bottom"
-      [showCloseButton]="false"
-      [animation]="{
-        show: { type: 'slide', direction: 'left' },
-        hide: { type: 'slide', direction: 'left' }
-      }"
-      [showTitle]="false"
-      [visible]="isMenuMobile"
-      [shading]="false"
-      [wrapperAttr]="{ class: 'menu-mobile' }"
+    
+    <!-- Nowoczesne menu mobilne -->
+    <div 
+      class="mobile-menu-overlay"
+      [class.active]="isMenuMobile"
+      (click)="isMenuMobile = false"
+    ></div>
+    
+    <div 
+      class="mobile-menu-sidebar"
+      [class.active]="isMenuMobile"
     >
-      <div *dxTemplate="let content of 'content'">
-        @if (!isSubmenuItemClick) {
-        <dx-menu
-          [dataSource]="navigation"
-          displayExpr="name"
-          [focusStateEnabled]="true"
-          [showFirstSubmenuMode]="showFirstSubmenuModes"
-          orientation="vertical"
-          submenuDirection="auto"
-          [hideSubmenuOnMouseLeave]="true"
-          itemTemplate="items"
-          (onItemClick)="onItemClickMobile($event)"
-          tabindex="1"
-          cssClass="mobile-main-menu"
+      <div class="mobile-menu-header">
+        <h3 class="mobile-menu-title">Menu</h3>
+        <button 
+          class="mobile-menu-close"
+          (click)="isMenuMobile = false"
+          aria-label="Zamknij menu"
         >
-          <div *dxTemplate="let item of 'items'; let i = index">
-            <div>
-              <div
-                class="item-menu-mobile"
-                routerLinkActive="active"
-                [class.active]="route.isActive(item.url, false) && item.id != 1"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (touchstart)="touchStart(item)"
-                (touchend)="touchEnd()"
-                [ngClass]="{ 'tap-menu-mobile': isTap == item.id }"
-              >
-                <i class="dx-icon icon {{ item.icon }}"></i>
-                <span class="dx-menu-item-text-span-mobile">{{
-                  item.name | translate
-                }}</span>
-                @if (item.items && item.items.length >= 1) {
-                <i
-                  class="icon absui-icon--arrow-drop-right-user-panel"
-                  style="
-                    position: relative;
-                    left: 0px;
-                    top: -2px;
-                    margin-right: 10px;
-                    float: right;
-                    font-size: 20px !important;
-                  "
-                ></i>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      
+      <div class="mobile-menu-content">
+        @if (!isSubmenuItemClick) {
+          <nav class="mobile-menu-nav">
+            @for (item of navigation; track item.id) {
+              <div class="mobile-menu-item">
+                @if (item.url != null && item.url != 'help' && (!item.items || item.items.length === 0)) {
+                  <a 
+                    [routerLink]="['/' + item.url]"
+                    class="mobile-menu-link"
+                    [class.active]="item.url ? route.isActive(item.url, false) : false"
+                    (click)="isMenuMobile = false"
+                  >
+                    <i class="dx-icon icon {{ item.icon }}"></i>
+                    <span class="mobile-menu-text">{{ item.name | translate }}</span>
+                  </a>
+                } @else if (item.items && item.items.length > 0) {
+                  <button 
+                    class="mobile-menu-button has-submenu"
+                    (click)="isSubmenuItemClick = true; itemChosed = item"
+                  >
+                    <i class="dx-icon icon {{ item.icon }}"></i>
+                    <span class="mobile-menu-text">{{ item.name | translate }}</span>
+                    <i class="mobile-menu-arrow icon absui-icon--arrow-drop-right-user-panel"></i>
+                  </button>
                 }
               </div>
-            </div>
+            }
+          </nav>
+        } 
+        
+        @if (isSubmenuItemClick && itemChosed && itemChosed.items) {
+          <div class="mobile-submenu-container">
+            <button class="mobile-submenu-back" (click)="isSubmenuItemClick = false">
+              <i class="icon absui-icon--arrow-back-mobile-menu"></i> Wróć
+            </button>
+            <nav class="mobile-menu-nav">
+              @for (item of itemChosed.items; track item.id) {
+                <div class="mobile-menu-item">
+                  <a 
+                    [routerLink]="['/' + item.url]"
+                    class="mobile-menu-link"
+                    [class.active]="item.url ? route.isActive(item.url, false) : false"
+                    (click)="isMenuMobile = false"
+                  >
+                    <i class="dx-icon icon {{ item.icon }}"></i>
+                    <span class="mobile-menu-text">{{ item.name | translate }}</span>
+                  </a>
+                </div>
+              }
+            </nav>
           </div>
-        </dx-menu>
-        } @if (isSubmenuItemClick) {
-        <div>
-          <app-mobile-main-submenu
-            [items]="itemChosed"
-            (onClosingSubmenu)="isSubmenuItemClick = false; cdr.detectChanges()"
-            (onCloseMenu)="isMenuMobile = false; cdr.detectChanges()"
-            [parentLevel]="itemChosed"
-          >
-          </app-mobile-main-submenu>
-        </div>
         }
       </div>
-    </dx-popup>
+    </div>
   </nav>
 </header>
+
 <div id="content">
   <div>
     <router-outlet></router-outlet>
   </div>
 </div>
+
 <app-mobile-list
   [dataSource]="navigationPanelUser"
   [visible]="isMobileSettings"
@@ -375,23 +349,26 @@
   [title]="currentUserName"
   [titleIcon]="'absui-icon--account-circle'"
 ></app-mobile-list>
-@if (event.deviceType === 'mobile') {
-<div class="bottomNavigationBar" #bottomNavigationBar>
-  <dx-button
-    class="btn-dx-top-menu-folder btn-dynamic-state"
-    icon="icon absui-icon--arrow-downward"
-    (onClick)="scroll('down')"
-  >
-  </dx-button>
-  <dx-button
-    class="btn-dx-top-menu-folder btn-dynamic-state"
-    icon="icon absui-icon--arrow-upward"
-    (onClick)="scroll('up')"
-  >
-  </dx-button>
-</div>
-} } @if(isHideUserPanel){
 
+@if (event.deviceType === 'mobile') {
+  <div class="bottomNavigationBar" #bottomNavigationBar>
+    <dx-button
+      class="btn-dx-top-menu-folder btn-dynamic-state"
+      icon="icon absui-icon--arrow-downward"
+      (onClick)="scroll('down')"
+    >
+    </dx-button>
+    <dx-button
+      class="btn-dx-top-menu-folder btn-dynamic-state"
+      icon="icon absui-icon--arrow-upward"
+      (onClick)="scroll('up')"
+    >
+    </dx-button>
+  </div>
+} 
+} 
+
+@if(isHideUserPanel){
 <div class="user-info-panel" [ngStyle]="{ 'right.px': 5 }">
   <div class="row" style="width: 100%; padding: 6px; margin-left: 0px">
     <div class="col-md-12 text-center box-user">
@@ -454,10 +431,10 @@
             ></i>
             <span class="dx-menu-item-text">{{ item.name | translate }}</span>
             @if (item.id == 1) {
-            <i
-              class="icon absui-icon--arrow-drop-right-user-panel"
-              style="position: absolute; right: 20px"
-            ></i>
+              <i
+                class="icon absui-icon--arrow-drop-right-user-panel"
+                style="position: absolute; right: 20px"
+              ></i>
             }
           </div>
         </div>
@@ -465,12 +442,9 @@
     </div>
   </div>
 </div>
-} @if (isGuideActive) {
-<app-user-guide
-  (finished)="onGuideFinished($event)"
-  [view]="userGuideKey"
-></app-user-guide>
-} @if (isShowInfoAboutVersion) {
+} 
+
+@if (isShowInfoAboutVersion) {
 <app-confirm-dialog
   kindDialog="information"
   [confirmText]="infoAboutVersion"
@@ -480,6 +454,7 @@
 >
 </app-confirm-dialog>
 }
+
 @if(isCompanyVisible()){
 <app-company
   [isVisible]="isCompanyVisible()"
