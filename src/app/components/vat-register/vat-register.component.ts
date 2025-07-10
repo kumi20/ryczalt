@@ -7,6 +7,7 @@ import {
   ChangeDetectorRef,
   OnInit,
   AfterViewInit,
+  OnDestroy,
   computed,
 } from '@angular/core';
 import {
@@ -23,6 +24,7 @@ import { environment } from '../../../environments/environment';
 import { LoadOptions } from 'devextreme/data';
 import { AllowIn, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import {
   VatRegister,
   SummaryMonthVatRegiser,
@@ -65,7 +67,7 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   templateUrl: './vat-register.component.html',
   styleUrl: './vat-register.component.scss',
 })
-export class VatRegisterComponent implements OnInit, AfterViewInit {
+export class VatRegisterComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('genericDataGrid') genericDataGrid: any;
 
   event = inject(EventService);
@@ -111,6 +113,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
   };
 
   private readonly translate = inject(TranslateService)
+  private deviceTypeSubscription: Subscription | undefined;
 
    /** Opcje siatki klientów */
    options = computed(
@@ -128,14 +131,14 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
           dataField: 'documentNumber',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
         },
         {
           caption: this.translate.instant('vatRegister.documentDate'),
           dataField: 'documentDate',
           width: 200,
           allowSorting: false,
-          hidingPriority: 7,
+          hidingPriority: 4, // Średni priorytet
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
@@ -145,7 +148,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
           dataField: 'dateOfSell',
           width: 200,
           allowSorting: false,
-          hidingPriority: 7,
+          hidingPriority: 5, // Niski priorytet
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
@@ -155,14 +158,14 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
           dataField: 'customerName',
           width: 300,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 2, // Wysoki priorytet
         },
         {
           caption: this.translate.instant('vatRegister.grossSalesValue'),
           dataField: 'grossSum',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 3, // Średni priorytet
           customizeText: this.event.formatKwota,
         },
         {
@@ -170,7 +173,7 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
           dataField: 'vatSum',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 6, // Najniższy priorytet
           customizeText: this.event.formatKwota,
         },
       ] as GenericGridColumn[]
@@ -180,6 +183,10 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getData();
+    // Subskrybuj zmiany deviceType
+    this.deviceTypeSubscription = this.event.deviceTypeChange.subscribe(() => {
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -443,5 +450,25 @@ export class VatRegisterComponent implements OnInit, AfterViewInit {
     this.month.set(event.month);
     this.year.set(event.year);
     this.getData();
+  }
+
+  // Mobile-specific methods
+  getMobileDataItems(): any[] {
+    if (this.dataSource && this.dataSource.items) {
+      return this.dataSource.items() || [];
+    }
+    return [];
+  }
+
+  onMobileItemClick(item: any, index: number) {
+    this.focusedElement.set(item);
+    this.focusedRowIndex = index;
+    this.onFocusedRowChanged({row: {data: item}});
+  }
+
+  ngOnDestroy() {
+    if (this.deviceTypeSubscription) {
+      this.deviceTypeSubscription.unsubscribe();
+    }
   }
 }

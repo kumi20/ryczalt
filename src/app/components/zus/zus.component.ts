@@ -90,6 +90,8 @@ export class ZusComponent implements OnInit {
           caption: this.translate.instant("zus.periodFrom"),
           dataField: "month",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 2,
           cellTemplate: (e: any) => {
             return (
               e.data.year +
@@ -103,6 +105,8 @@ export class ZusComponent implements OnInit {
           caption: this.translate.instant("zus.periodTo"),
           dataField: "year",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 3,
           cellTemplate: (e: any) => {
             return (
               e.data.year +
@@ -117,24 +121,32 @@ export class ZusComponent implements OnInit {
           caption: this.translate.instant("zus.healthInsurance"),
           dataField: "contributionHealth",
           width: 250,
+          minWidth: 120,
+          hidingPriority: 4,
           customizeText: this.event.formatKwota,
         },
         {
           caption: this.translate.instant("zus.socialInsurance"),
           dataField: "social",
           width: 250,
+          minWidth: 120,
+          hidingPriority: 5,
           customizeText: this.event.formatKwota,
         },
         {
           caption: this.translate.instant("zus.laborFund"),
           dataField: "fpfgsw",
           width: 250,
+          minWidth: 120,
+          hidingPriority: 6,
           customizeText: this.event.formatKwota,
         },
         {
           caption: this.translate.instant("zus.totalZus"),
           dataField: "isContributionHolidays",
           width: 250,
+          minWidth: 120,
+          hidingPriority: 1,
           cellTemplate: (e: any) => {
             return this.event.formatKwota({
               value:

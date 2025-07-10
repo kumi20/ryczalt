@@ -90,6 +90,8 @@ export class TaxVatComponent implements OnInit, AfterViewInit {
           caption: this.translate.instant("zus.periodFrom"),
           dataField: "month",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 2,
           cellTemplate: (e: any) => {
             return (
               e.data.ROK +
@@ -103,6 +105,8 @@ export class TaxVatComponent implements OnInit, AfterViewInit {
           caption: this.translate.instant("zus.periodTo"),
           dataField: "year",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 3,
           cellTemplate: (e: any) => {
             return e.data.ROK + "-" + e.data.MIESIAC.toString().padStart(2, "0") + "-" + this.getLastDayOfMonth(e.data.ROK, e.data.MIESIAC);
           },
@@ -111,18 +115,24 @@ export class TaxVatComponent implements OnInit, AfterViewInit {
           caption: this.translate.instant("taxVat.taxAmount"),
           dataField: "KWOTA",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 1,
           customizeText: this.event.formatKwota,
         },
         {
           caption: this.translate.instant("taxVat.taxExcess"),
           dataField: "NADWYZKA",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 4,
           customizeText: this.event.formatKwota,
         },
         {
           caption: this.translate.instant("zus.paymentDate"),
           dataField: "DATA_WPLATY",
           width: 110,
+          minWidth: 90,
+          hidingPriority: 5,
           dataType: "date",
           format: { type: this.event.dateFormat },
           alignment: "left",
@@ -131,6 +141,8 @@ export class TaxVatComponent implements OnInit, AfterViewInit {
           caption: this.translate.instant("zus.isPaid"),
           dataField: "ZAPLACONY",
           width: 110,
+          minWidth: 80,
+          hidingPriority: 6,
           encodeHtml: false,
           dataType: "string",
           cellTemplate: (e: any) => {

@@ -10,6 +10,8 @@
   "
   [selectedRowKeys]="selectedRowKeys()"
   [columnResizingMode]="options()?.columnResizingMode ?? 'widget'"
+  [columnAutoWidth]="event.deviceType === 'mobile'"
+  [columnHidingEnabled]="true"
   [height]="options()?.height"
   [width]="options()?.width"
   [hoverStateEnabled]="hoverStateEnabled()"

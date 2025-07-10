@@ -99,8 +99,9 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
           ),
           dataField: "isCoast",
           width: 230,
+          minWidth: 150,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 3, // Średni priorytet
           dataType: "string",
           customizeText: (e: any) => {
             return e.value
@@ -114,27 +115,35 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
           ),
           dataField: "documentNumber",
           width: 230,
+          minWidth: 150,
           allowSorting: false,
+          hidingPriority: 1, // Najwyższy priorytet
         },
         {
           caption: this.translate.instant("internalEvidence.dateOfIssue"),
           dataField: "documentDate",
           width: 150,
+          minWidth: 120,
           dataType: "date",
           format: { type: this.event.dateFormat },
           alignment: "left",
+          hidingPriority: 4, // Średni priorytet
         },
         {
           caption: this.translate.instant("internalEvidence.value"),
           dataField: "amount",
           width: 100,
+          minWidth: 80,
           allowSorting: false,
+          hidingPriority: 2, // Wysoki priorytet
         },
         {
           caption: this.translate.instant("internalEvidence.personIssuing"),
           dataField: "personIssuing",
           width: 200,
+          minWidth: 120,
           allowSorting: false,
+          hidingPriority: 5, // Niski priorytet
         },
         {
           caption: this.translate.instant(
@@ -143,6 +152,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
           dataField: "description",
           minWidth: 200,
           allowSorting: false,
+          hidingPriority: 6, // Najniższy priorytet
         },
       ] as GenericGridColumn[]
   );
@@ -346,5 +356,25 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
         this.event.httpErrorNotification(error);
       },
     });
+  }
+
+  // Mobile-specific methods
+  getMobileDataItems(): any[] {
+    if (this.dataSource && this.dataSource.items) {
+      return this.dataSource.items();
+    }
+    return [];
+  }
+
+  onMobileItemClick(item: any, index: number) {
+    this.focusedElement.set(item);
+    this.focusedRowIndex = index;
+    this.onFocusedRowChanged({row: {data: item}});
+  }
+
+  getEvidenceTypeLabel(isCoast: boolean): string {
+    return isCoast 
+      ? this.translate.instant("internalEvidence.expense")
+      : this.translate.instant("internalEvidence.income");
   }
 }

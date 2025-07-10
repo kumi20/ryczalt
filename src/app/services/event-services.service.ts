@@ -24,6 +24,7 @@ export class EventService {
   languageSubscription: Subscription;
 
   deviceType: 'mobile' | 'desktop' = 'desktop';
+  deviceTypeChange = new Subject<'mobile' | 'desktop'>();
   isImportProcessing: boolean = false;
 
   loadingVisible: boolean = false;
@@ -355,4 +356,9 @@ export class EventService {
       .replace('.', ',') // "1255.55" → "1255,55"
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // Dodaj spacje co 3 cyfry z końca
   };
+
+  updateDeviceType(type: 'mobile' | 'desktop') {
+    this.deviceType = type;
+    this.deviceTypeChange.next(type);
+  }
 }

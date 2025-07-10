@@ -127,17 +127,22 @@
 <ng-template #grid>
   <dx-scroll-view width="100%" height="100%" direction="vertical">
     <div class="center-panel-scroll-verticall-content">
-      <app-generic-data-grid
-        [dataSource]="dataSource"
-        [columns]="columns()"
-        [options]="options()"
-        [(focusedRowIndex)]="focusedRowIndex"
-        (onFocusedRowChanged)="onFocusedRowChanged($event)"
-        (onRowDblClick)="onEdit()"
-        [(selectedRowKeys)]="selectedRows"
-        storageKey="vatRegisterGrid"
-        #genericDataGrid
-      ></app-generic-data-grid> 
+      <div *ngIf="event.deviceType === 'mobile'; else desktopGrid" class="mobile-grid-container">
+        <ng-container *ngTemplateOutlet="mobileVatRegisterList"></ng-container>
+      </div>
+      <ng-template #desktopGrid>
+        <app-generic-data-grid
+          [dataSource]="dataSource"
+          [columns]="columns()"
+          [options]="options()"
+          [(focusedRowIndex)]="focusedRowIndex"
+          (onFocusedRowChanged)="onFocusedRowChanged($event)"
+          (onRowDblClick)="onEdit()"
+          [(selectedRowKeys)]="selectedRows"
+          storageKey="vatRegisterGrid"
+          #genericDataGrid
+        ></app-generic-data-grid> 
+      </ng-template>
     </div>
 
     <div class="summary">
@@ -288,3 +293,64 @@
   [shortcuts]="shortcuts"
   [disabled]="isAdd()"
 ></qumi-keyboard-shortcuts>
+
+<!-- Mobile Template for VAT Register -->
+<ng-template #mobileVatRegisterList>
+  <div class="mobile-vat-register-list">
+    <div 
+      *ngFor="let item of getMobileDataItems(); let i = index" 
+      class="mobile-vat-register-item"
+      [class.mobile-item-focused]="focusedElement() === item"
+      (click)="onMobileItemClick(item, i)"
+      (dblclick)="onEdit()"
+      [class.mobile-item-selected]="selectedRows.includes(item)"
+    >
+      <div class="mobile-item-header">
+        <div class="mobile-item-title">
+          <span class="mobile-document-number">{{ item.documentNumber }}</span>
+          <span class="mobile-gross-amount">{{ item.grossSum | priceFormat }}</span>
+        </div>
+        <div class="mobile-item-actions">
+          <button 
+            class="mobile-action-btn mobile-edit-btn"
+            (click)="onEdit(); $event.stopPropagation()"
+            [disabled]="!event.sessionData.isActive || isClosed()"
+          >
+            <i class="ryczalt-icon ri-edit"></i>
+          </button>
+          <button 
+            class="mobile-action-btn mobile-delete-btn"
+            (click)="onDeleteConfirm(); $event.stopPropagation()"
+            [disabled]="!event.sessionData.isActive || isClosed()"
+          >
+            <i class="ryczalt-icon ri-trash"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="mobile-item-details">
+        <div class="mobile-detail-row">
+          <span class="mobile-detail-label">{{ 'vatRegister.customerName' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.customerName }}</span>
+        </div>
+        <div class="mobile-detail-row">
+          <span class="mobile-detail-label">{{ 'vatRegister.documentDate' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.documentDate | date:event.dateFormat }}</span>
+        </div>
+        <div class="mobile-detail-row">
+          <span class="mobile-detail-label">{{ 'vatRegister.datOFSell' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.dateOfSell | date:event.dateFormat }}</span>
+        </div>
+        <div class="mobile-detail-row">
+          <span class="mobile-detail-label">{{ 'vatRegister.taxDue' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.vatSum | priceFormat }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Empty state dla mobile -->
+    <div *ngIf="getMobileDataItems().length === 0" class="mobile-empty-state">
+      <p>Brak danych do wyświetlenia</p>
+    </div>
+  </div>
+</ng-template>

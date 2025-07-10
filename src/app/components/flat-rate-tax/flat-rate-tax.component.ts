@@ -85,6 +85,8 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
       caption: this.translate.instant("zus.periodFrom"),
       dataField: "month",
       width: 110,
+      minWidth: 90,
+      hidingPriority: 2,
       cellTemplate: (e: any) => {
         return e.data.year + "-" + e.data.month.toString().padStart(2, "0") + "-01";
       },
@@ -93,6 +95,8 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
       caption: this.translate.instant("zus.periodTo"),
       dataField: "year",
       width: 110,
+      minWidth: 90,
+      hidingPriority: 3,
       cellTemplate: (e: any) => {
         return e.data.year + "-" + e.data.month.toString().padStart(2, "0") + "-" + this.getLastDayOfMonth(e.data.year, e.data.month);
       },
@@ -101,30 +105,40 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
       caption: this.translate.instant("internalEvidence.income"),
       dataField: "income",
       width: 110,
+      minWidth: 90,
+      hidingPriority: 4,
       customizeText: this.event.formatKwota
     },
     {
       caption: this.translate.instant("zus.title"),
       dataField: "socialInsurance",
       width: 200,
+      minWidth: 120,
+      hidingPriority: 5,
       customizeText: this.event.formatKwota
     },
     {
       caption: this.translate.instant("flatRateTax.amountFlatRateTax"),
       dataField: "amountFlatRateTax",
       width: 200,
+      minWidth: 120,
+      hidingPriority: 1,
       customizeText: this.event.formatKwota
     },
     {
       caption: this.translate.instant("flatRateTax.healthInsurance"),
       dataField: "reductionAmountHealt",
       width: 200,
+      minWidth: 120,
+      hidingPriority: 6,
       customizeText: this.event.formatKwota
     },
     {
       caption: this.translate.instant("zus.paymentDate"),
       dataField: "dataPayment",
       width: 110,
+      minWidth: 90,
+      hidingPriority: 7,
       dataType: "date",
       format: { type: this.event.dateFormat },
       alignment: "left"
@@ -133,6 +147,8 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit {
       caption: this.translate.instant("zus.isPaid"),
       dataField: "isPaid",
       width: 100,
+      minWidth: 80,
+      hidingPriority: 8,
       dataType: "string",
       alignment: "left",
       encodeHtml: false,

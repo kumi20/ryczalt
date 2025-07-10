@@ -133,21 +133,26 @@
     </div>
 
     <div>
-      <app-generic-data-grid
-        [dataSource]="dataSource"
-        [columns]="columns()"
-        [options]="options()"
-        [(focusedRowIndex)]="focusedRowIndex"
-        (onFocusedRowChanged)="onFocusedRowChanged($event)"
-        (onRowDblClick)="onEdit()"
-        [(selectedRowKeys)]="selectedRows"
-        storageKey="customersGrid"
-        (onColumnHeaderClick)="onColumnHeaderClick($event)"
-        (onOrderClick)="onOrderClick($event)"
-        [orderBy]="orderBy()"
-        [order]="order()"
-        #genericDataGrid
-      ></app-generic-data-grid>
+      <div *ngIf="event.deviceType === 'mobile'; else desktopGrid" class="mobile-grid-container">
+        <ng-container *ngTemplateOutlet="mobileCustomersList"></ng-container>
+      </div>
+      <ng-template #desktopGrid>
+        <app-generic-data-grid
+          [dataSource]="dataSource"
+          [columns]="columns()"
+          [options]="options()"
+          [(focusedRowIndex)]="focusedRowIndex"
+          (onFocusedRowChanged)="onFocusedRowChanged($event)"
+          (onRowDblClick)="onEdit()"
+          [(selectedRowKeys)]="selectedRows"
+          storageKey="customersGrid"
+          (onColumnHeaderClick)="onColumnHeaderClick($event)"
+          (onOrderClick)="onOrderClick($event)"
+          [orderBy]="orderBy()"
+          [order]="order()"
+          #genericDataGrid
+        ></app-generic-data-grid>
+      </ng-template>
     </div>
   </div>
 </ng-template>
@@ -288,3 +293,69 @@
 >
 </app-confirm-dialog>
 }
+
+<!-- Mobile Template for Customers -->
+<ng-template #mobileCustomersList>
+  <div class="mobile-customers-list">
+    <div 
+      *ngFor="let item of getMobileDataItems(); let i = index" 
+      class="mobile-customer-item"
+      [class.mobile-item-focused]="focusedElement() === item"
+      (click)="onMobileItemClick(item, i)"
+      (dblclick)="onEdit()"
+      [class.mobile-item-selected]="selectedRows.includes(item)"
+    >
+      <div class="mobile-item-header">
+        <div class="mobile-item-title">
+          <span class="mobile-customer-name">{{ item.customerName }}</span>
+          <span class="mobile-customer-type" *ngIf="getCustomerTypeIcon(item)">
+            {{ getCustomerTypeIcon(item) }}
+          </span>
+        </div>
+        <div class="mobile-item-actions">
+          <button 
+            class="mobile-action-btn mobile-edit-btn"
+            (click)="onEdit(); $event.stopPropagation()"
+            [disabled]="!event.sessionData.isActive"
+          >
+            <i class="ryczalt-icon ri-edit"></i>
+          </button>
+          <button 
+            class="mobile-action-btn mobile-delete-btn"
+            (click)="onDeleteConfirm(); $event.stopPropagation()"
+            [disabled]="!event.sessionData.isActive"
+          >
+            <i class="ryczalt-icon ri-trash"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="mobile-item-details">
+        <div class="mobile-detail-row" *ngIf="item.customerVat">
+          <span class="mobile-detail-label">NIP:</span>
+          <span class="mobile-detail-value">{{ item.customerVat }}</span>
+        </div>
+        <div class="mobile-detail-row" *ngIf="item.city">
+          <span class="mobile-detail-label">{{ 'customers.city' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.city }}</span>
+        </div>
+        <div class="mobile-detail-row" *ngIf="item.street">
+          <span class="mobile-detail-label">{{ 'customers.street' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.street }}</span>
+        </div>
+        <div class="mobile-detail-row" *ngIf="item.postalCode">
+          <span class="mobile-detail-label">{{ 'customers.postalCode' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.postalCode }}</span>
+        </div>
+        <div class="mobile-detail-row" *ngIf="item.email">
+          <span class="mobile-detail-label">{{ 'customers.email' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.email }}</span>
+        </div>
+        <div class="mobile-detail-row" *ngIf="item.phone">
+          <span class="mobile-detail-label">{{ 'customers.phone' | translate }}:</span>
+          <span class="mobile-detail-value">{{ item.phone }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

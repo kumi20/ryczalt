@@ -122,14 +122,14 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
           dataField: 'documentNumber',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 1, // Najwyższy priorytet
         },
         {
           caption: this.translate.instant('vatRegister.recivedDate'),
           dataField: 'dateOfSell',
           width: 200,
           allowSorting: false,
-          hidingPriority: 7,
+          hidingPriority: 4, // Średni priorytet
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
@@ -139,7 +139,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
           dataField: 'documentDate',
           width: 300,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 5, // Niski priorytet
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
@@ -149,14 +149,14 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
           dataField: 'customerName',
           width: 300,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 2, // Wysoki priorytet
         },
         {
           caption: this.translate.instant('vatRegister.gorssBuyValue'),
           dataField: 'grossSum',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 3, // Średni priorytet
           customizeText: this.event.formatKwota,
         },
         {
@@ -164,7 +164,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
           dataField: 'vatSum',
           width: 200,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 6, // Najniższy priorytet
           customizeText: this.event.formatKwota,
         },
       ] as GenericGridColumn[]
@@ -405,5 +405,19 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     this.month.set(event.month);
     this.year.set(event.year);
     this.getData();
+  }
+
+  // Mobile-specific methods
+  getMobileDataItems(): any[] {
+    if (this.dataSource && this.dataSource.items) {
+      return this.dataSource.items();
+    }
+    return [];
+  }
+
+  onMobileItemClick(item: any, index: number) {
+    this.focusedElement.set(item);
+    this.focusedRowIndex = index;
+    this.onFocusedRowChanged({row: {data: item}});
   }
 }

@@ -57,6 +57,128 @@
   }
 }
 
+// Mobile Grid Optimizations
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  
+  @media (max-width: 1000px) {
+    .top-menu-panel {
+      padding: 0.5rem;
+      
+      .dx-scroll-view {
+        height: auto !important;
+        
+        .dx-scrollable-container {
+          height: auto !important;
+        }
+      }
+    }
+    
+    .center-panel-scroll-verticall {
+      height: calc(100vh - 180px) !important;
+      
+      .dx-scroll-view {
+        height: 100% !important;
+      }
+    }
+  }
+}
+
+// Generic Data Grid Mobile Styles
+::ng-deep {
+  @media (max-width: 1000px) {
+    .center-panel-scroll-verticall-content {
+      app-generic-data-grid {
+        .dx-datagrid {
+          .dx-datagrid-headers {
+            display: table-header-group !important;
+          }
+          
+          .dx-datagrid-rowsview {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            
+            .dx-scrollable-container {
+              overflow-x: auto !important;
+            }
+            
+            .dx-datagrid-content {
+              min-width: max-content;
+            }
+          }
+          
+          .dx-datagrid-table {
+            min-width: max-content;
+          }
+          
+          .dx-header-row {
+            min-width: max-content;
+          }
+          
+          .dx-row {
+            min-width: max-content;
+          }
+          
+          // Enhanced scrollbars for mobile
+          .dx-scrollbar-horizontal {
+            height: 8px !important;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            
+            .dx-scrollable-scroll {
+              background-color: rgba(0, 0, 0, 0.3);
+              border-radius: 4px;
+            }
+          }
+          
+          // Column header adjustments
+          .dx-datagrid-headers .dx-header-row > td {
+            padding: 8px 4px !important;
+            font-size: 0.8rem !important;
+            line-height: 1.2 !important;
+          }
+          
+          // Row cell adjustments
+          .dx-datagrid-rowsview .dx-row > td {
+            padding: 12px 4px !important;
+            font-size: 0.85rem !important;
+            line-height: 1.3 !important;
+          }
+          
+          // Touch-friendly row height
+          .dx-row.dx-data-row {
+            min-height: 44px;
+          }
+          
+          // Column chooser button
+          .dx-datagrid-column-chooser-button {
+            display: block !important;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
+            
+            .dx-button {
+              min-width: 32px;
+              height: 32px;
+              padding: 0;
+              
+              .dx-button-content {
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 
 
 .summary-container {
@@ -65,6 +187,21 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   margin: 25px 15px;
+  
+  @media (max-width: 1000px) {
+    padding: 1rem;
+    margin: 1rem 0.5rem;
+    
+    .row {
+      margin: 0;
+      
+      .col-md-6 {
+        width: 100% !important;
+        padding: 0;
+        margin-bottom: 1rem;
+      }
+    }
+  }
 }
 
 .summary-title {
@@ -97,6 +234,19 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
   }
+  
+  @media (max-width: 1000px) {
+    padding: 12px;
+    margin-bottom: 8px;
+    
+    &:hover {
+      transform: none;
+    }
+    
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 }
 
 .rate-label {
@@ -109,11 +259,21 @@
     color: #444;
     margin-right: 12px;
     min-width: 45px;
+    
+    @media (max-width: 1000px) {
+      font-size: 1rem;
+      margin-right: 8px;
+      min-width: 40px;
+    }
   }
 
   .rate-description {
     color: #666;
     font-size: 0.9rem;
+    
+    @media (max-width: 1000px) {
+      font-size: 0.8rem;
+    }
   }
 }
 
@@ -121,6 +281,10 @@
   font-weight: 600;
   color: #333;
   font-size: 1.1rem;
+  
+  @media (max-width: 1000px) {
+    font-size: 1rem;
+  }
 }
 
 .total-section {
@@ -137,11 +301,24 @@
     font-weight: 600;
     font-size: 1.2rem;
     color: #333;
+    
+    @media (max-width: 1000px) {
+      font-size: 1.1rem;
+    }
   }
 
   .total-value {
     font-weight: 700;
     font-size: 1.4rem;
     color: #222;
+    
+    @media (max-width: 1000px) {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 1000px) {
+    padding: 12px 16px;
+    margin-top: 16px;
   }
 }

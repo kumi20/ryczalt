@@ -76,8 +76,9 @@ export class CountryComponent implements OnInit, OnChanges {
           width: 100,
           allowSorting: false,
           alignment: "center",
-          hidingPriority: 1,
+          hidingPriority: 3,
           dataType: 'string',
+          encodeHtml: false,
           cellTemplate: (e: any) => {
             return e.value ? '<img src="../../../assets/images/check-solid.svg" alt="" width="14" />' : '';
           }
@@ -86,13 +87,16 @@ export class CountryComponent implements OnInit, OnChanges {
           caption: this.translate.instant("country.code"),
           dataField: "code",
           width: 100,
+          minWidth: 80,
           allowSorting: false,
+          hidingPriority: 2,
         },
         {
           caption: this.translate.instant("country.name"),
           dataField: "name",
-          minWidthwidth: 100,
+          minWidth: 150,
           allowSorting: false,
+          hidingPriority: 1,
         }
       ] as GenericGridColumn[]
   );

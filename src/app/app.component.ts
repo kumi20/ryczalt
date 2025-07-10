@@ -48,7 +48,7 @@ import enMessages from '../assets/devextreme/localization/messages/en.json';
 export class AppComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.event.deviceType = this.deviceType();
+    this.event.updateDeviceType(this.deviceType());
   }
 
   title = 'login';
@@ -89,7 +89,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.event.deviceType = this.deviceType();
+    this.event.updateDeviceType(this.deviceType());
     this.initMessages();
     this.initializeTranslation();
     this.checkSessionData();

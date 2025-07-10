@@ -119,15 +119,18 @@ export class NotesComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant("notes.text"),
           dataField: "TRESC",
-          minWidth: 100,
+          minWidth: 200,
           allowSorting: false,
+          hidingPriority: 1,
         },
         {
           caption: this.translate.instant("notes.forIncome"),
           dataField: "DLAPRZYCHODU",
           width: 150,
+          minWidth: 120,
           allowSorting: false,
           encodeHtml: false,
+          hidingPriority: 2,
           cellTemplate: (e: any) => {
             return e.value ? '<img src="../../../assets/images/check-solid.svg" alt="" width="14" />' : '';
           }
@@ -136,8 +139,10 @@ export class NotesComponent implements OnInit, AfterViewInit {
           caption: this.translate.instant("notes.forexpenses"),
           dataField: "DLAROZCHODU",
           width: 150,
+          minWidth: 120,
           allowSorting: false,
           encodeHtml: false,
+          hidingPriority: 3,
           cellTemplate: (e: any) => {
             return e.value ? '<img src="../../../assets/images/check-solid.svg" alt="" width="14" />' : '';
           }

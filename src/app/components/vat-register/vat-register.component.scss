@@ -56,3 +56,203 @@
     cursor: pointer;
   }
 }
+
+// Mobile styles for VAT Register
+.mobile-grid-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: block !important;
+}
+
+.mobile-vat-register-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.mobile-vat-register-item {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  &.mobile-item-focused {
+    border-color: $brand-10;
+    background-color: #f5f5f5;
+  }
+  
+  &.mobile-item-selected {
+    border-color: $brand-10;
+    background-color: #e3f2fd;
+  }
+}
+
+.mobile-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  
+  .mobile-item-title {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .mobile-document-number {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: $brand-10;
+    }
+    
+    .mobile-gross-amount {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: $theme-positive-10;
+    }
+  }
+  
+  .mobile-item-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+  }
+}
+
+.mobile-action-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  &.mobile-edit-btn {
+    color: $brand-10;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba($brand-10, 0.1);
+    }
+  }
+  
+  &.mobile-delete-btn {
+    color: $brand-20;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba($brand-20, 0.1);
+    }
+  }
+  
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.mobile-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  
+  .mobile-detail-label {
+    font-weight: 500;
+    color: #666666;
+    font-size: 0.9rem;
+    flex: 1;
+  }
+  
+  .mobile-detail-value {
+    font-weight: 400;
+    color: #333333;
+    font-size: 0.9rem;
+    text-align: right;
+    flex: 1;
+  }
+}
+
+.mobile-empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #666666;
+  
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .mobile-vat-register-list {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .mobile-vat-register-item {
+    padding: 0.75rem;
+  }
+  
+  .mobile-item-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    
+    .mobile-item-title {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.25rem;
+      
+      .mobile-document-number,
+      .mobile-gross-amount {
+        text-align: left;
+      }
+    }
+    
+    .mobile-item-actions {
+      margin-left: 0;
+      justify-content: flex-end;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-detail-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    
+    .mobile-detail-label {
+      font-size: 0.8rem;
+    }
+    
+    .mobile-detail-value {
+      font-size: 0.9rem;
+      text-align: left;
+      font-weight: 500;
+    }
+  }
+}

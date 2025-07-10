@@ -198,6 +198,7 @@ export class GenericDataGridComponent
   toSelect: any[] = [];
   isContextMenuMobile = signal(false);
   unicalGuid: number = new Date().getTime() + Math.round(Math.random() * 10000);
+  deviceTypeSubscription: any;
 
   constructor(private cdr: ChangeDetectorRef) {
     // Set up effect to handle focus changes
@@ -208,6 +209,16 @@ export class GenericDataGridComponent
           this.focus();
         }, 100);
       }
+    });
+
+    // Subscribe to device type changes
+    this.deviceTypeSubscription = this.event.deviceTypeChange.subscribe(() => {
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        if (this.dataGrid?.instance) {
+          this.dataGrid.instance.updateDimensions();
+        }
+      }, 100);
     });
   }
 
@@ -242,6 +253,11 @@ export class GenericDataGridComponent
   ngOnDestroy(): void {
     if (this.storageKey()) {
       this.saveColumnSettingsToStorage(this.storageKey() as string);
+    }
+    
+    // Clean up device type subscription
+    if (this.deviceTypeSubscription) {
+      this.deviceTypeSubscription.unsubscribe();
     }
   }
 

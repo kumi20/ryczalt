@@ -143,60 +143,68 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
           caption: this.translate.instant('customers.customerName'),
           dataField: 'customerName',
           width: 400,
+          minWidth: 200,
           allowSorting: false,
           isAllowSorting: true,
-          hidingPriority: 6,
+          hidingPriority: 1, // Najwyższy priorytet
         },
         {
           caption: 'NIP',
           dataField: 'customerVat',
           width: 150,
+          minWidth: 120,
           allowSorting: false,
           isAllowSorting: true,
-          hidingPriority: 6,
+          hidingPriority: 2, // Wysoki priorytet
         },
         {
           caption: this.translate.instant('customers.street'),
           dataField: 'street',
           width: 200,
+          minWidth: 150,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 5, // Niski priorytet
         },
         {
           caption: this.translate.instant('customers.city'),
           dataField: 'city',
           width: 150,
+          minWidth: 120,
           allowSorting: false,
           isAllowSorting: true,
-          hidingPriority: 6,
+          hidingPriority: 3, // Średni priorytet
         },
         {
           caption: this.translate.instant('customers.postalCode'),
           dataField: 'postalCode',
           width: 150,
+          minWidth: 100,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 6, // Najniższy priorytet
         },
         {
           caption: this.translate.instant('customers.email'),
           dataField: 'email',
           width: 200,
+          minWidth: 150,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 7, // Bardzo niski priorytet
         },
         {
           caption: this.translate.instant('customers.phone'),
           dataField: 'phone',
           width: 150,
+          minWidth: 120,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 8, // Bardzo niski priorytet
         },
         {
           caption: this.translate.instant('customers.isSupplier'),
           dataField: 'isSupplier',
           width: 100,
+          minWidth: 80,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 4, // Średni priorytet
           encodeHtml: false,
           dataType: 'string',
           customizeText: (e: any) => {
@@ -207,8 +215,9 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
           caption: this.translate.instant('customers.isRecipient'),
           dataField: 'isRecipient',
           width: 100,
+          minWidth: 80,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 9, // Niski priorytet
           encodeHtml: false,
           dataType: 'string',
           customizeText: (e: any) => {
@@ -219,8 +228,9 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
           caption: this.translate.instant('customers.isOffice'),
           dataField: 'isOffice',
           width: 100,
+          minWidth: 80,
           allowSorting: false,
-          hidingPriority: 6,
+          hidingPriority: 10, // Najniższy priorytet
           encodeHtml: false,
           dataType: 'string',
           customizeText: (e: any) => {
@@ -502,5 +512,27 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges {
   onOrderClick(event: any) {
     this.order.set(event);
     this.getData();
+  }
+
+  // Mobile-specific methods
+  getMobileDataItems(): any[] {
+    if (this.dataSource && this.dataSource.items) {
+      return this.dataSource.items();
+    }
+    return [];
+  }
+
+  onMobileItemClick(item: any, index: number) {
+    this.focusedElement.set(item);
+    this.focusedRowIndex = index;
+    this.onFocusedRowChanged({row: {data: item}});
+  }
+
+  getCustomerTypeIcon(customer: any): string {
+    const types = [];
+    if (customer.isSupplier) types.push('S');
+    if (customer.isRecipient) types.push('R');
+    if (customer.isOffice) types.push('O');
+    return types.join(', ');
   }
 }

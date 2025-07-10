@@ -77,8 +77,9 @@ export class DocumentTypeComponent implements OnInit, OnChanges {
         {
           caption: this.translate.instant("customers.name"),
           dataField: "name",
-          minWidth: 100,
+          minWidth: 150,
           allowSorting: false,
+          hidingPriority: 1,
         },
       ] as GenericGridColumn[]
   );
