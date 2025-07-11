@@ -28,6 +28,21 @@ import { NgShortcutsComponent } from '../core/ng-keyboard-shortcuts/ng-keyboardn
 import { OfficeComponent } from '../office/office.component';
 
 
+/**
+ * Company management component for editing company information.
+ * 
+ * This component provides a popup dialog for managing company details including
+ * basic information, tax settings, and office selection. It supports keyboard shortcuts
+ * for enhanced user experience and includes comprehensive form validation.
+ * 
+ * @example
+ * ```html
+ * <app-company [isVisible]="showCompanyDialog" (onClosing)="onCompanyDialogClose()" (onSaving)="onCompanySaved()"></app-company>
+ * ```
+ * 
+ * @author Generated documentation
+ * @since 1.0.0
+ */
 @Component({
   selector: 'app-company',
   imports: [
@@ -82,6 +97,16 @@ export class CompanyComponent implements AfterViewInit, OnDestroy{
 
   shortcuts: ShortcutInput[] = [];
 
+  /**
+   * Initializes keyboard shortcuts after view initialization.
+   * 
+   * Sets up keyboard shortcuts for common operations:
+   * - Escape: Close the dialog
+   * - Ctrl+S: Save the company information
+   * 
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   ngAfterViewInit(): void {
     this.shortcuts = [
       {
@@ -103,24 +128,67 @@ export class CompanyComponent implements AfterViewInit, OnDestroy{
     ];
   }
 
+  /**
+   * Cleanup method called when component is destroyed.
+   * 
+   * Notifies the event service that the popup is being hidden.
+   * 
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   ngOnDestroy(): void {
     this.event.onHiddenPopUp();
   }
 
+  /**
+   * Handles popup initialization.
+   * 
+   * Registers the escape key handler with the popup component.
+   * 
+   * @param {any} e - The popup initialization event
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   onInit(e: any) {
     e.component.registerKeyHandler('escape', function () {});
   }
 
+  /**
+   * Handles popup visibility changes.
+   * 
+   * Emits the closing event when popup visibility changes to false.
+   * 
+   * @param {any} e - The visibility change event
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   onVisibleChange(e: any) {
     if (!e) {
       this.onClosing.emit(true);
     }
   }
 
+  /**
+   * Closes the company dialog.
+   * 
+   * Emits the closing event to notify parent components.
+   * 
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   closeWindow() {
     this.onClosing.emit(true);
   }
 
+  /**
+   * Retrieves company data from the service.
+   * 
+   * Loads the current company information and populates the form.
+   * Shows error notification if the request fails.
+   * 
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   getCompanyData(){
     this.companyService.getCompany().subscribe((res) => {
       console.log(res);
@@ -131,6 +199,15 @@ export class CompanyComponent implements AfterViewInit, OnDestroy{
     });
   }
 
+  /**
+   * Handles tax office selection.
+   * 
+   * Updates the form with the selected tax office ID when a tax office is chosen.
+   * 
+   * @param {any} e - The selected tax office data
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   onChoosed(e: any){
     console.log(e);
     if(e.taxOfficeId){
@@ -140,6 +217,15 @@ export class CompanyComponent implements AfterViewInit, OnDestroy{
     }
   }
 
+  /**
+   * Saves the company information.
+   * 
+   * Validates the form and submits the company data to the service.
+   * Closes the dialog on successful save or shows error notification on failure.
+   * 
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   onSave(){
     if (this.form.invalid) return;
 
@@ -152,6 +238,15 @@ export class CompanyComponent implements AfterViewInit, OnDestroy{
     });
   }
 
+  /**
+   * Handles escape key press at the document level.
+   * 
+   * Provides an alternative way to close the dialog using the escape key.
+   * 
+   * @param {KeyboardEvent} event - The keyboard event
+   * @returns {void}
+   * @memberof CompanyComponent
+   */
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
     this.closeWindow();

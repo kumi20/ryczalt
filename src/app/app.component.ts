@@ -86,6 +86,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (dataRange) {
       this.event.globalDate = JSON.parse(dataRange);
     }
+    // Initialize device type immediately
+    this.event.updateDeviceType(this.deviceType());
   }
 
   ngAfterViewInit() {

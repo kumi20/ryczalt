@@ -1,0 +1,191 @@
+<div class="jpk-details-container">
+  <dx-load-panel
+    [visible]="isLoading()"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    message="{{ 'jpk.details.loading' | translate }}"
+  ></dx-load-panel>
+
+  <div class="jpk-details-header">
+    <div class="header-actions">
+      <dx-button
+        icon="back"
+        stylingMode="outlined"
+        type="default"
+        text="{{ 'jpk.details.back' | translate }}"
+        (onClick)="onBack()"
+        class="back-button"
+      ></dx-button>
+      
+      <dx-button
+        icon="download"
+        stylingMode="contained"
+        type="default"
+        text="{{ 'jpk.details.download' | translate }}"
+        (onClick)="onDownload()"
+        [disabled]="!jpkDetails()?.xmlFilePath"
+        class="download-button"
+      ></dx-button>
+    </div>
+  </div>
+
+  <div class="jpk-details-content" *ngIf="jpkDetails()">
+    <dx-tabs
+      [dataSource]="tabs()"
+      [selectedIndex]="selectedTabIndex()"
+      (onSelectionChanged)="onTabSelectionChanged($event)"
+      class="jpk-tabs"
+    ></dx-tabs>
+
+    <div class="tab-content">
+      <!-- Zakładka Przegląd -->
+      <div *ngIf="selectedTabIndex() === 0" class="overview-tab">
+        <div class="overview-grid">
+          <div class="overview-section">
+            <h3>{{ 'jpk.details.basicInfo' | translate }}</h3>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>{{ 'jpk.jpkType' | translate }}:</label>
+                <span>{{ jpkDetails()?.jpkType }}</span>
+              </div>
+              <div class="info-item">
+                <label>{{ 'jpk.dateFrom' | translate }}:</label>
+                <span>{{ jpkDetails()?.dateFrom | date: 'dd.MM.yyyy' }}</span>
+              </div>
+              <div class="info-item">
+                <label>{{ 'jpk.dateTo' | translate }}:</label>
+                <span>{{ jpkDetails()?.dateTo | date: 'dd.MM.yyyy' }}</span>
+              </div>
+              <div class="info-item">
+                <label>{{ 'jpk.details.createdAt' | translate }}:</label>
+                <span>{{ jpkDetails()?.createdAt | date: 'dd.MM.yyyy HH:mm' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="overview-section">
+            <h3>{{ 'jpk.details.statistics' | translate }}</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <label>{{ 'jpk.details.totalDocuments' | translate }}:</label>
+                <span class="stat-value">{{ jpkDetails()?.summary?.totalDocuments }}</span>
+              </div>
+              <div class="stat-item">
+                <label>{{ 'jpk.details.totalSales' | translate }}:</label>
+                <span class="stat-value">{{ jpkDetails()?.summary?.totalSales }}</span>
+              </div>
+              <div class="stat-item">
+                <label>{{ 'jpk.details.totalPurchases' | translate }}:</label>
+                <span class="stat-value">{{ jpkDetails()?.summary?.totalPurchases }}</span>
+              </div>
+              <div class="stat-item">
+                <label>{{ 'jpk.details.totalNetAmount' | translate }}:</label>
+                <span class="stat-value amount">{{ jpkDetails()?.summary?.totalNetAmount | number: '1.2-2' }} PLN</span>
+              </div>
+              <div class="stat-item">
+                <label>{{ 'jpk.details.totalVatAmount' | translate }}:</label>
+                <span class="stat-value amount">{{ jpkDetails()?.summary?.totalVatAmount | number: '1.2-2' }} PLN</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zakładka Dokumenty sprzedaży -->
+      <div *ngIf="selectedTabIndex() === 1" class="sales-tab">
+        <div class="tab-header">
+          <h3>{{ 'jpk.details.salesDocuments' | translate }}</h3>
+          <span class="document-count">{{ jpkDetails()?.salesDocuments?.length || 0 }} {{ 'jpk.details.documents' | translate }}</span>
+        </div>
+        
+        <app-generic-data-grid
+          [dataSource]="jpkDetails()?.salesDocuments || []"
+          [columns]="salesColumns()"
+          [options]="salesGridOptions()"
+          storageKey="jpkSalesDocumentsGrid"
+        ></app-generic-data-grid>
+      </div>
+
+      <!-- Zakładka Dokumenty zakupu -->
+      <div *ngIf="selectedTabIndex() === 2" class="purchases-tab">
+        <div class="tab-header">
+          <h3>{{ 'jpk.details.purchaseDocuments' | translate }}</h3>
+          <span class="document-count">{{ jpkDetails()?.purchaseDocuments?.length || 0 }} {{ 'jpk.details.documents' | translate }}</span>
+        </div>
+        
+        <app-generic-data-grid
+          [dataSource]="jpkDetails()?.purchaseDocuments || []"
+          [columns]="purchaseColumns()"
+          [options]="salesGridOptions()"
+          storageKey="jpkPurchaseDocumentsGrid"
+        ></app-generic-data-grid>
+      </div>
+
+      <!-- Zakładka Podsumowanie -->
+      <div *ngIf="selectedTabIndex() === 3" class="summary-tab">
+        <div class="summary-sections">
+          <div class="summary-section">
+            <h3>{{ 'jpk.details.salesSummary' | translate }}</h3>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <label>{{ 'jpk.details.totalNet' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.totalNet | number: '1.2-2' }} PLN</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.totalVat' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.totalVat | number: '1.2-2' }} PLN</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate23' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.rate23Net | number: '1.2-2' }} PLN ({{ jpkDetails()?.summary?.salesSummary?.rate23Vat | number: '1.2-2' }} PLN VAT)</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate8' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.rate8Net | number: '1.2-2' }} PLN ({{ jpkDetails()?.summary?.salesSummary?.rate8Vat | number: '1.2-2' }} PLN VAT)</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate5' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.rate5Net | number: '1.2-2' }} PLN ({{ jpkDetails()?.summary?.salesSummary?.rate5Vat | number: '1.2-2' }} PLN VAT)</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate0' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.rate0 | number: '1.2-2' }} PLN</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.exemptSales' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.salesSummary?.exemptSales | number: '1.2-2' }} PLN</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <h3>{{ 'jpk.details.purchasesSummary' | translate }}</h3>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <label>{{ 'jpk.details.totalNet' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.purchasesSummary?.totalNet | number: '1.2-2' }} PLN</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.totalVat' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.purchasesSummary?.totalVat | number: '1.2-2' }} PLN</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate23' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.purchasesSummary?.rate23Net | number: '1.2-2' }} PLN ({{ jpkDetails()?.summary?.purchasesSummary?.rate23Vat | number: '1.2-2' }} PLN VAT)</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate8' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.purchasesSummary?.rate8Net | number: '1.2-2' }} PLN ({{ jpkDetails()?.summary?.purchasesSummary?.rate8Vat | number: '1.2-2' }} PLN VAT)</span>
+              </div>
+              <div class="summary-item">
+                <label>{{ 'jpk.details.rate5' | translate }}:</label>
+                <span class="amount">{{ jpkDetails()?.summary?.purchasesSummary?.rate5Net | number: '1.2-2' }} PLN ({{ jpkDetails()?.summary?.purchasesSummary?.rate5Vat | number: '1.2-2' }} PLN VAT)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,8 +7,10 @@ import {
   ChangeDetectorRef,
   OnInit,
   AfterViewInit,
+  OnDestroy,
   computed,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   DxButtonModule,
   DxDataGridModule,
@@ -42,6 +44,38 @@ import { DateRangeComponent } from '../date-range/date-range.component';
 import { GenericGridColumn, GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
 import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
 
+/**
+ * @fileoverview VatRegisterBuyComponent manages VAT purchase register records.
+ * @description This component provides a comprehensive interface for managing VAT purchase register,
+ * including invoice tracking, VAT deduction calculations, monthly summaries, and month closure management.
+ * It supports detailed VAT analysis with different tax rates and deductible amounts.
+ *
+ * @component
+ * @example
+ * ```html
+ * <app-vat-register-buy></app-vat-register-buy>
+ * ```
+ *
+ * @dependencies
+ * - EventService: For global event handling and session management
+ * - VatRegisterService: For VAT register CRUD operations and summary calculations
+ * - FlateRateService: For month closure status management
+ * - TranslateService: For internationalization support
+ *
+ * @features
+ * - VAT purchase register management (CRUD operations)
+ * - Monthly VAT summaries with different tax rates (23%, 8%, 5%)
+ * - Deductible and non-deductible VAT tracking
+ * - Month closure status management
+ * - Generic data grid with responsive design
+ * - Keyboard shortcuts for efficient navigation
+ * - Date range filtering by month and year
+ * - Mobile-responsive interface
+ * - Detailed VAT analysis and reporting
+ *
+ * @author Angular Team
+ * @since 1.0.0
+ */
 @Component({
   selector: 'app-vat-register-buy',
   imports: [
@@ -62,7 +96,7 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   templateUrl: './vat-register-buy.component.html',
   styleUrl: './vat-register-buy.component.scss',
 })
-export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
+export class VatRegisterBuyComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('genericDataGrid') genericDataGrid: any;
 
   event = inject(EventService);
@@ -104,13 +138,20 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     total_vat_deductible: 0,
   };
 
-  private readonly translate = inject(TranslateService)
+  private readonly translate = inject(TranslateService);
 
   /** Opcje siatki klientów */
   options = computed(
     () =>
       ({
         height: "calc(100vh - 290px)",
+        columnHidingEnabled: true,
+        columnChooser: {
+          enabled: true,
+          mode: 'select',
+          searchEnabled: true,
+          sortOrder: 'asc',
+        },
       } as GenericGridOptions)
   );  
 
@@ -139,7 +180,7 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
           dataField: 'documentDate',
           width: 300,
           allowSorting: false,
-          hidingPriority: 5, // Niski priorytet
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
@@ -170,12 +211,27 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
       ] as GenericGridColumn[]
   )
 
+  /**
+   * Creates an instance of VatRegisterBuyComponent.
+   * Initializes the monthly VAT summary data structure.
+   * @constructor
+   */
   constructor() {}
 
+  /**
+   * Initializes the component by loading VAT purchase register data.
+   * Called once after component initialization.
+   * @lifecycle OnInit
+   */
   ngOnInit(): void {
     this.getData();
   }
 
+  /**
+   * Sets up keyboard shortcuts after view initialization.
+   * Defines shortcuts for adding (Alt+N), editing (F2), viewing (Shift+F2), and deleting (Del) records.
+   * @lifecycle AfterViewInit
+   */
   ngAfterViewInit(): void {
     this.shortcuts = [
       {
@@ -208,6 +264,11 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Checks if the current month is closed for editing.
+   * Updates the isClosed signal based on the server response.
+   * @private
+   */
   checkIfMonthIsClosed() {
     this.flateRateService
       .checkIfMonthIsClosed(this.month(), this.year())
@@ -221,6 +282,12 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /**
+   * Initializes and configures the data source for VAT purchase register records.
+   * Checks month closure status, loads monthly summary, and sets up the AspNetData store.
+   * Automatically focuses on the first row after data loading.
+   * @private
+   */
   getData() {
     this.checkIfMonthIsClosed();
     this.summaryMonth();
@@ -245,6 +312,12 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Constructs the load parameters for the VAT purchase register data source.
+   * Includes the selected month and year for filtering records.
+   * @returns An object containing the load parameters
+   * @private
+   */
   getLoadParams() {
     let obj: any = {};
     obj.month = this.month();
@@ -252,10 +325,22 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     return obj;
   }
 
+  /**
+   * Handles data grid row focus changes.
+   * Updates the focused element signal with the selected row data.
+   * @param event - The row focus change event containing row data
+   * @public
+   */
   onFocusedRowChanged(event: any) {
     this.focusedElement.set(event.row.data);
   }
 
+  /**
+   * Handles key down events on the data grid.
+   * Prevents default behavior for specific keys to avoid conflicts.
+   * @param event - The key down event
+   * @public
+   */
   onKeyDown(event: any) {
     const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
 
@@ -264,6 +349,11 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Decrements the current month by 1 if not already at minimum (January).
+   * Refreshes the data after month change.
+   * @public
+   */
   minusMonth() {
     if (this.month() > 1) {
       this.month.set(this.month() - 1);
@@ -271,6 +361,11 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
+  /**
+   * Increments the current month by 1 if not already at maximum (December).
+   * Refreshes the data after month change.
+   * @public
+   */
   plusMonth() {
     if (this.month() < 12) {
       this.month.set(this.month() + 1);
@@ -278,16 +373,31 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
+  /**
+   * Decrements the current year by 1.
+   * Refreshes the data after year change.
+   * @public
+   */
   minusYear() {
     this.year.set(this.year() - 1);
     this.getData();
   }
 
+  /**
+   * Increments the current year by 1.
+   * Refreshes the data after year change.
+   * @public
+   */
   plusYear() {
     this.year.set(this.year() + 1);
     this.getData();
   }
 
+  /**
+   * Initiates the process of adding a new VAT purchase register record.
+   * Validates session activity and month closure status before proceeding.
+   * @public
+   */
   addNewRecord() {
     this.mode = 'add';
     if (!this.event.sessionData.isActive || this.isClosed()) return;
@@ -295,6 +405,14 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     this.isAdd.set(true);
   }
 
+  /**
+   * Handles the saving event from the add/edit dialog.
+   * Reloads the data source, updates monthly summary, focuses on the saved record,
+   * and checks month closure status.
+   * @param event - The save event containing the record ID
+   * @param event.vatRegisterId - The VAT register ID object
+   * @public
+   */
   onSaving(event: any) {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
@@ -314,6 +432,11 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
   }
 
 
+  /**
+   * Initiates the process of editing the currently focused VAT purchase register record.
+   * Validates session activity and month closure status before proceeding.
+   * @public
+   */
   onEdit() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
@@ -322,30 +445,60 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     this.isAdd.set(true);
   }
 
+  /**
+   * Retrieves the currently focused row data from the data grid.
+   * @returns The focused row data
+   * @private
+   */
   getFocusedElement() {
     return this.genericDataGrid.getFocusedRowData();
   }
 
+  /**
+   * Initiates the process of viewing the currently focused VAT purchase register record in read-only mode.
+   * @public
+   */
   onShow() {
     this.mode = 'show';
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);
   }
 
+  /**
+   * Shows the delete confirmation dialog for the currently focused VAT purchase register record.
+   * Validates session activity and month closure status before proceeding.
+   * @public
+   */
   onDeleteConfirm() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(true);
   }
 
+  /**
+   * Handles double-click events on data grid rows.
+   * Triggers the edit action for the double-clicked row.
+   * @param e - The double-click event
+   * @public
+   */
   onRowDblClick(e: any) {
     this.onEdit();
   }
 
+  /**
+   * Closes the delete confirmation dialog and returns focus to the data grid.
+   * @public
+   */
   closeConfirm() {
     this.isDelete.set(false);
     this.genericDataGrid.focus();
   }
 
+  /**
+   * Deletes the currently focused VAT purchase register record.
+   * Validates session activity and month closure status before proceeding.
+   * Reloads the data source after successful deletion.
+   * @public
+   */
   delete() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(false);
@@ -363,6 +516,12 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Toggles the open/close status of the current month.
+   * If month is closed, opens it; if open, closes it.
+   * Refreshes data after successful operation.
+   * @public
+   */
   onOpenClose() {
     const object: OpenCloseRequest = {
       month: this.month(),
@@ -390,6 +549,12 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Loads the monthly VAT purchase summary for the current month and year.
+   * Updates the summaryMonthData with detailed VAT calculations including
+   * different tax rates, deductible amounts, and totals.
+   * @private
+   */
   summaryMonth() {
     this.vatRegisterService.summaryMonthBuy(this.month(), this.year()).subscribe({
       next: (data: VatPurchaseSummary) => {
@@ -401,23 +566,26 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Handles date range changes from the date range component.
+   * Updates the month and year signals and refreshes the data grid.
+   * @param event - The date range change event
+   * @param event.month - The selected month (1-12)
+   * @param event.year - The selected year
+   * @public
+   */
   onDateRangeChange(event: {month: number, year: number}) {
     this.month.set(event.month);
     this.year.set(event.year);
     this.getData();
   }
 
-  // Mobile-specific methods
-  getMobileDataItems(): any[] {
-    if (this.dataSource && this.dataSource.items) {
-      return this.dataSource.items();
-    }
-    return [];
-  }
 
-  onMobileItemClick(item: any, index: number) {
-    this.focusedElement.set(item);
-    this.focusedRowIndex = index;
-    this.onFocusedRowChanged({row: {data: item}});
-  }
+  /**
+   * Cleans up resources when the component is destroyed.
+   * Currently no cleanup is required but method is implemented for future use.
+   * @lifecycle OnDestroy
+   */
+  ngOnDestroy(): void {}
+
 }

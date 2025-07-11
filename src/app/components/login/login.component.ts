@@ -12,6 +12,21 @@ import { AuthService } from '../../services/auth.service';
 import { LicenseService } from '../../services/license.service';
 import { License } from '../../interface/license';
 
+/**
+ * Login component for user authentication.
+ * 
+ * This component provides user login functionality with form validation,
+ * session management, and license validation. It handles the authentication process
+ * and redirects users to the main application after successful login.
+ * 
+ * @example
+ * ```html
+ * <app-login></app-login>
+ * ```
+ * 
+ * @author Generated documentation
+ * @since 1.0.0
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -37,6 +52,13 @@ export class LoginComponent implements OnInit {
   licenseService = inject(LicenseService);
   authService = inject(AuthService);
 
+  /**
+   * Creates an instance of LoginComponent.
+   * 
+   * Initializes the loader configuration with custom styling options.
+   * 
+   * @memberof LoginComponent
+   */
   constructor() {
     this.configLoader = new LoaderConfig({
       maxWidth: '100%',
@@ -53,11 +75,28 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Initializes the component.
+   * 
+   * Sets up the login form and checks for existing session data.
+   * 
+   * @returns {void}
+   * @memberof LoginComponent
+   */
   ngOnInit(): void {
     this.initForm();
     this.checkSessionData();
   }
 
+  /**
+   * Initializes the login form with validation rules.
+   * 
+   * Creates a reactive form with login and password fields, both required.
+   * 
+   * @private
+   * @returns {void}
+   * @memberof LoginComponent
+   */
   private initForm() {
     this.form = this.formBuilder.group({
       login: ['', Validators.required],
@@ -65,6 +104,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Checks for existing session data in localStorage.
+   * 
+   * Retrieves and decrypts session data if it exists, setting it in the event service.
+   * 
+   * @private
+   * @returns {void}
+   * @memberof LoginComponent
+   */
   private checkSessionData(): void {
     const sessionData = localStorage.getItem('sessionData');
     if (sessionData) {
@@ -72,6 +120,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Validates the license after successful login.
+   * 
+   * Makes a request to the license service to verify the license is valid.
+   * Returns a promise that resolves with license information or rejects with error.
+   * 
+   * @returns {Promise<License>} Promise that resolves with license information
+   * @memberof LoginComponent
+   */
   checkLicenseValidity():Promise<License> {
     return new Promise((resolve, reject) => {
       this.licenseService.getLicenseInfo().subscribe({
@@ -85,6 +142,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles the login process.
+   * 
+   * Validates the form, hashes the password, and attempts to authenticate the user.
+   * On successful login, validates the license and sets up session data.
+   * Redirects to the start page on successful authentication.
+   * 
+   * @returns {void}
+   * @memberof LoginComponent
+   */
   onLog() {
     if (this.form.invalid) {
       return;

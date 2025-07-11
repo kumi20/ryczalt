@@ -205,11 +205,9 @@
       [(focusedRowIndex)]="focusedRowIndex"
       (onFocusedRowChanged)="onFocusedRowChanged($event)"
       (onRowDblClick)="onRowDblClick($event)"
-      [(selectedRowKeys)]="selectedRows"
-      [storageKey]="'notesGrid'"
+      storageKey="grid"
       #genericDataGrid
-    ></app-generic-data-grid>
-  </dx-scroll-view>
+    ></app-generic-data-grid>  </dx-scroll-view>
 </ng-template>
 
 <qumi-keyboard-shortcuts
@@ -232,3 +230,4 @@
   (onClosing)="isDelete.set(false)"
 ></app-confirm-dialog>
 }
+

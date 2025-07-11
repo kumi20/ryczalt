@@ -27,17 +27,16 @@
   >
   </app-custom-dropdown-box>
 
-  <app-generic-data-grid
-    [dataSource]="dataSource"
-    [columns]="columns()"
-    [options]="options()"
-    [(focusedRowIndex)]="focusedRowIndex"
-    (onFocusedRowChanged)="onFocusedRowChanged($event)"
-    (onRowDblClick)="onRowDblClick($event)"
-    storageKey="officeGrid"
-    #genericDataGrid
-  ></app-generic-data-grid>
-</ng-template>
+    <app-generic-data-grid
+      [dataSource]="dataSource"
+      [columns]="columns()"
+      [options]="options()"
+      [(focusedRowIndex)]="focusedRowIndex"
+      (onFocusedRowChanged)="onFocusedRowChanged($event)"
+      (onRowDblClick)="onRowDblClick($event)"
+      storageKey="grid"
+      #genericDataGrid
+    ></app-generic-data-grid></ng-template>
 
 <ng-template #dropDownMode>
   <dx-drop-down-box
@@ -107,3 +106,4 @@
     </div>
   </dx-drop-down-box>
 </ng-template>
+

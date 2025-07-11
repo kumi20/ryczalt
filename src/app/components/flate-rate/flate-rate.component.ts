@@ -5,11 +5,13 @@ import {
   signal,
   inject,
   OnInit,
+  OnDestroy,
   ViewChild,
   AfterViewInit,
   ChangeDetectorRef,
   computed,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FlateRateService } from '../../services/flateRate.services';
 import { EventService } from '../../services/event-services.service';
@@ -41,6 +43,22 @@ import { DateRangeComponent } from '../date-range/date-range.component';
 import { GenericGridColumn, GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
 import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
 
+/**
+ * Component for managing flat rate tax records in the tax application.
+ * 
+ * @description This component provides a comprehensive interface for managing flat rate tax records,
+ * including creating, editing, viewing, and deleting records. It supports various tax rates
+ * (3%, 5.5%, 8.5%, 10%, 12%, 12.5%, 14%, 15%, 17%) and provides monthly summaries.
+ * The component also handles VAT register integration and month closure functionality.
+ * 
+ * @example
+ * ```html
+ * <app-flate-rate></app-flate-rate>
+ * ```
+ * 
+ * @since 1.0.0
+ * @author Tax Application Team
+ */
 @Component({
   selector: 'app-flate-rate',
   standalone: true,
@@ -63,32 +81,60 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   styleUrl: './flate-rate.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FlateRateComponent implements OnInit, AfterViewInit {
+export class FlateRateComponent implements OnInit, AfterViewInit, OnDestroy {
+  /** Reference to the generic data grid component */
   @ViewChild("genericDataGrid") genericDataGrid: any;
+  
+  /** Injected flat rate service for data operations */
   flateRateService = inject(FlateRateService);
+  
+  /** Injected event service for global application events */
   event = inject(EventService);
+  
+  /** Injected change detector reference for manual change detection */
   cdr = inject(ChangeDetectorRef);
-  private readonly translate = inject(TranslateService)
+  
+  /** Injected translation service for internationalization */
+  private readonly translate = inject(TranslateService);
 
+  /** Signal indicating whether the current month is closed for editing */
   isClosed = signal<boolean>(false);
+  
+  /** Current mode of the component: 'add', 'edit', or 'show' */
   mode: 'add' | 'edit' | 'show' = 'add';
+  
+  /** Data source for the DevExtreme data grid */
   dataSource: DataSource = new DataSource({});
+  
+  /** Array of currently selected rows in the data grid */
   selectedRows: FlateRate[] = [];
+  
+  /** Index of the currently focused row in the data grid */
   focusedRowIndex: number = 0;
+  
+  /** Signal containing the currently focused flat rate element */
   focusedElement = signal<FlateRate | null>(null);
+  
+  /** Signal indicating whether the add/edit dialog is open */
   isAdd = signal<boolean>(false);
+  
+  /** Number of items per page in the data grid */
   pageSize: number = 50;
+  
+  /** Signal indicating whether the delete confirmation dialog is open */
   isDelete = signal<boolean>(false);
+  
+  /** Array of keyboard shortcuts for the component */
   shortcuts: ShortcutInput[] = [];
 
-   /** Opcje siatki klientów */
+   /** Computed options for the data grid configuration */
    options = computed(
     () =>
       ({
         height: "calc(100vh - 245px)",
         columnResizingMode: 'widget',
-        allowColumnResizing: this.event.deviceType !== 'mobile',
-        allowColumnReordering: this.event.deviceType !== 'mobile',
+        allowColumnResizing: true,
+        allowColumnReordering: true,
         columnAutoWidth: false,
         wordWrapEnabled: false,
         showBorders: true,
@@ -98,9 +144,9 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
           rowRenderingMode: 'standard',
           useNative: false,
         },
-        columnHidingEnabled: this.event.deviceType === 'mobile',
+        columnHidingEnabled: true,
         columnChooser: {
-          enabled: this.event.deviceType === 'mobile',
+          enabled: true,
           mode: 'select',
           searchEnabled: true,
           sortOrder: 'asc',
@@ -108,6 +154,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
       } as GenericGridOptions)
   );  
 
+  /** Monthly summary data containing totals for each tax rate */
   summaryMonthData: SummaryMonth = {
     sum_rate17: 0,
     sum_rate15: 0,
@@ -120,59 +167,78 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     sum_rate3: 0,
     total_sum: 0,
   };
+  
+  /** Signal indicating whether the VAT register addition dialog is open */
   isAddVatRegister = signal<boolean>(false);
+  
+  /** Parameters for document number used in VAT register creation */
   paramsNumber: any;
+  
+  /** Signal indicating whether the new VAT register form is open */
   isNewVatRegister = signal<boolean>(false);
+  
+  /** Flat rate data to be used for VAT register creation */
   vatRegisterFlate: FlateRate | null = null;
+  
+  /** Signal indicating whether the VAT register deletion confirmation dialog is open */
   isConfirmDeleteVatRegister = signal<boolean>(false);
+  
+  /** ID of the VAT register entry to be deleted */
   vatRegisterId: number | null = null;
+  
+  /** Signal containing the current month (1-12) */
   month = signal<number>(this.event.globalDate.month);
+  
+  /** Signal containing the current year */
   year = signal<number>(this.event.globalDate.year);
+  
+  /** Injected VAT register service for VAT-related operations */
   vatRegisterService = inject(VatRegisterService);
 
+  /** Computed columns configuration for the data grid */
   columns = computed(
     () =>
       [
         {
           caption: 'Lp',
           dataField: 'lp',
-          width: this.event.deviceType === 'mobile' ? 60 : 50,
+          width: 50,
           minWidth: 50,
           allowSorting: false,
-          hidingPriority: 0,
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
         },
         {
           caption: this.translate.instant('flateRate.dateOfEntry'),
           dataField: 'dateOfEntry',
-          width: this.event.deviceType === 'mobile' ? 120 : 110,
+          width: 110,
           minWidth: 100,
           allowSorting: false,
           dataType: 'date',
           format: { type: this.event.dateFormat },
           alignment: 'left',
-          hidingPriority: 1,
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
         },
         {
           caption: this.translate.instant('flateRate.documentNumber'),
           dataField: 'documentNumber',
           allowSorting: false,
-          width: this.event.deviceType === 'mobile' ? 150 : 200,
+          width: 200,
           minWidth: 120,
-          hidingPriority: 2,
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
         },
         {
           caption: this.translate.instant('flateRate.totalRevenue'),
           dataField: 'totalRevenue',
-          width: this.event.deviceType === 'mobile' ? 130 : 200,
+          width: 200,
           minWidth: 100,
           allowSorting: false,
           customizeText: this.event.formatKwota,
-          hidingPriority: 3,
+          hidingPriority: 2, // Wysoki priorytet
         },
         {
           caption: this.translate.instant('flateRate.rate') + ' 17%',
           dataField: 'rate17',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -181,7 +247,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 8,5%',
           dataField: 'rate8_5',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -190,7 +256,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 5,5%',
           dataField: 'rate5_5',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -199,7 +265,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 3%',
           dataField: 'rate3',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -208,7 +274,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 10%',
           dataField: 'rate10',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -217,7 +283,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 12%',
           dataField: 'rate12',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -226,7 +292,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 12,5%',
           dataField: 'rate12_5',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -235,7 +301,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 14%',
           dataField: 'rate14',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -244,7 +310,7 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
         {
           caption: this.translate.instant('flateRate.rate') + ' 15%',
           dataField: 'rate15',
-          width: this.event.deviceType === 'mobile' ? 110 : 200,
+          width: 200,
           minWidth: 80,
           allowSorting: false,
           customizeText: this.event.formatKwota,
@@ -253,12 +319,38 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
       ] as GenericGridColumn []
   )
 
+  /**
+   * Component constructor.
+   * 
+   * @description Initializes the FlateRateComponent with default values.
+   * @since 1.0.0
+   */
   constructor() {}
 
+  /**
+   * Angular lifecycle hook called after component initialization.
+   * 
+   * @description Initializes the component by loading flat rate data for the current month and year.
+   * This method is called once after the component's data-bound properties have been initialized.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   ngOnInit(): void {
     this.getData();
+    
   }
 
+  /**
+   * Angular lifecycle hook called after view initialization.
+   * 
+   * @description Sets up keyboard shortcuts for the component after the view has been initialized.
+   * Configures shortcuts for adding new records (Alt+N), editing/showing records (F2), 
+   * and deleting records (Delete key).
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   ngAfterViewInit(): void {
     this.shortcuts = [
       {
@@ -291,10 +383,41 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Angular lifecycle hook called before component destruction.
+   * 
+   * @description Cleans up resources and subscriptions before the component is destroyed.
+   * Currently empty but reserved for future cleanup operations.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
+  ngOnDestroy(): void {}
+
+  /**
+   * Handles data grid row focus change events.
+   * 
+   * @description Updates the focused element signal when a different row is focused in the data grid.
+   * This allows other parts of the component to react to the currently selected row.
+   * 
+   * @param {any} event - The focus change event containing row data
+   * @returns {void}
+   * @since 1.0.0
+   */
   onFocusedRowChanged(event: any) {
     this.focusedElement.set(event.row.data);
   }
 
+  /**
+   * Handles keyboard events for the data grid.
+   * 
+   * @description Prevents default behavior for specific keys (F2, Escape, Delete, Enter)
+   * to allow custom keyboard shortcuts to function properly.
+   * 
+   * @param {any} event - The keyboard event object
+   * @returns {void}
+   * @since 1.0.0
+   */
   onKeyDown(event: any) {
     const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
 
@@ -303,6 +426,16 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Retrieves and updates monthly summary data for flat rate taxes.
+   * 
+   * @description Calls the flat rate service to get summary data for the current month and year,
+   * including totals for each tax rate category. Updates the component's summary data and
+   * triggers change detection to refresh the UI.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   summaryMonth() {
     this.flateRateService.summaryMonth(this.month(), this.year()).subscribe({
       next: (data: SummaryMonth) => {
@@ -315,6 +448,21 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Loads flat rate data and initializes the data source.
+   * 
+   * @description Comprehensive method that checks if the current month is closed,
+   * retrieves monthly summary data, and sets up the data source for the data grid.
+   * Creates an ASP.NET data store with proper configuration for loading, error handling,
+   * and focus management.
+   * 
+   * @returns {void}
+   * @example
+   * ```typescript
+   * this.getData(); // Refreshes all data and updates the grid
+   * ```
+   * @since 1.0.0
+   */
   getData() {
     this.checkIfMonthIsClosed();
     this.summaryMonth();
@@ -339,6 +487,19 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Generates load parameters for the data source.
+   * 
+   * @description Creates an object containing the current month and year
+   * to be used as parameters when loading data from the server.
+   * 
+   * @returns {any} Object containing month and year parameters
+   * @example
+   * ```typescript
+   * const params = this.getLoadParams(); // { month: 12, year: 2024 }
+   * ```
+   * @since 1.0.0
+   */
   getLoadParams() {
     let obj: any = {};
     obj.month = this.month();
@@ -346,6 +507,15 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     return obj;
   }
 
+  /**
+   * Navigates to the previous month.
+   * 
+   * @description Decrements the current month by 1 if it's greater than 1 (January).
+   * After changing the month, refreshes the data to show records for the new month.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   minusMonth() {
     if (this.month() > 1) {
       this.month.set(this.month() - 1);
@@ -353,6 +523,15 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
+  /**
+   * Navigates to the next month.
+   * 
+   * @description Increments the current month by 1 if it's less than 12 (December).
+   * After changing the month, refreshes the data to show records for the new month.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   plusMonth() {
     if (this.month() < 12) {
       this.month.set(this.month() + 1);
@@ -360,16 +539,44 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
+  /**
+   * Navigates to the previous year.
+   * 
+   * @description Decrements the current year by 1 and refreshes the data
+   * to show records for the new year.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   minusYear() {
     this.year.set(this.year() - 1);
     this.getData();
   }
 
+  /**
+   * Navigates to the next year.
+   * 
+   * @description Increments the current year by 1 and refreshes the data
+   * to show records for the new year.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   plusYear() {
     this.year.set(this.year() + 1);
     this.getData();
   }
 
+  /**
+   * Checks if the current month is closed for editing.
+   * 
+   * @description Calls the flat rate service to determine if the current month
+   * is closed for editing. Updates the component's isClosed signal based on the response.
+   * This affects whether users can add, edit, or delete records.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   checkIfMonthIsClosed() {
     this.flateRateService
       .checkIfMonthIsClosed(this.month(), this.year())
@@ -383,6 +590,16 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /**
+   * Toggles the open/close status of the current month.
+   * 
+   * @description If the month is currently closed, it opens the month for editing.
+   * If the month is currently open, it closes the month to prevent further editing.
+   * After the operation, refreshes the data to reflect the new status.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   onOpenClose() {
     const object: OpenCloseRequest = {
       month: this.month(),
@@ -410,6 +627,15 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Retrieves the currently focused data grid element.
+   * 
+   * @description Gets the data item that corresponds to the currently focused row
+   * in the data grid by matching the focused row index with the data source items.
+   * 
+   * @returns {any} The focused data element or undefined if not found
+   * @since 1.0.0
+   */
   getFocusedElement() {
     return this.genericDataGrid.dataGrid.instance
       .getDataSource()
@@ -417,6 +643,16 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
       .find((_el: any, i: any) => this.focusedRowIndex === i);
   }
 
+  /**
+   * Initiates the process of adding a new flat rate record.
+   * 
+   * @description Sets the component mode to 'add' and opens the add record dialog.
+   * Checks if the user session is active and if the current month is open for editing
+   * before allowing the operation.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   addNewRecord() {
     this.mode = 'add';
     if (!this.event.sessionData.isActive || this.isClosed()) return;
@@ -424,6 +660,16 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.isAdd.set(true);
   }
 
+  /**
+   * Handles double-click events on data grid rows.
+   * 
+   * @description When a user double-clicks on a row, this method triggers the edit mode
+   * for the selected record. Currently includes commented code for potential dropdown mode handling.
+   * 
+   * @param {any} e - The double-click event object
+   * @returns {void}
+   * @since 1.0.0
+   */
   onRowDblClick(e: any) {
     // if (this.dropDownBoxMode()) {
     //   return;
@@ -432,6 +678,16 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.onEdit();
   }
 
+  /**
+   * Initiates the process of editing the currently focused record.
+   * 
+   * @description Sets the component mode to 'edit' and opens the edit record dialog.
+   * Updates the focused element and checks if the user session is active and
+   * if the current month is open for editing before allowing the operation.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   onEdit() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
@@ -440,22 +696,60 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     this.isAdd.set(true);
   }
 
+  /**
+   * Initiates the process of viewing the currently focused record.
+   * 
+   * @description Sets the component mode to 'show' and opens the view record dialog
+   * in read-only mode. Updates the focused element to display the selected record's details.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   onShow() {
     this.mode = 'show';
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);
   }
 
+  /**
+   * Shows the delete confirmation dialog.
+   * 
+   * @description Checks if the user session is active and if the current month is open
+   * for editing before showing the delete confirmation dialog for the focused record.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   onDeleteConfirm() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(true);
   }
 
+  /**
+   * Closes the delete confirmation dialog.
+   * 
+   * @description Hides the delete confirmation dialog and returns focus to the data grid.
+   * This method is called when the user cancels the delete operation.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   closeConfirm() {
     this.isDelete.set(false);
     this.genericDataGrid.focus();
   }
 
+  /**
+   * Deletes the currently focused flat rate record.
+   * 
+   * @description Performs the actual deletion of the focused record after confirmation.
+   * Checks if the user session is active and if the current month is open for editing.
+   * If the record has an associated VAT register entry, prompts for VAT register deletion.
+   * Reloads the data source and updates the monthly summary after successful deletion.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   delete() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(false);
@@ -480,20 +774,60 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Confirms the addition of a VAT register entry.
+   * 
+   * @description Closes the VAT register addition confirmation dialog and opens
+   * the new VAT register form. This method is called when the user confirms
+   * they want to add a VAT register entry for the flat rate record.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   yesAddVatRegister(){
     this.isAddVatRegister.set(false);
     this.isNewVatRegister.set(true);
   }
 
+  /**
+   * Handles the saving of a VAT register entry.
+   * 
+   * @description Closes the VAT register form and reloads the data source
+   * after a VAT register entry has been successfully saved.
+   * 
+   * @param {any} e - The save event object
+   * @returns {void}
+   * @since 1.0.0
+   */
   onSavingVatRegister(e: any){
     this.isNewVatRegister.set(false);
     this.dataSource.reload();
   }
 
+  /**
+   * Confirms the deletion of a VAT register entry.
+   * 
+   * @description Deletes the VAT register entry associated with the flat rate record.
+   * This method is called when the user confirms they want to delete the VAT register entry.
+   * 
+   * @returns {void}
+   * @since 1.0.0
+   */
   yesDeleteVatRegister(){
     this.vatRegisterService.delete(this.vatRegisterId as number).subscribe();
   }
 
+  /**
+   * Handles the saving of a flat rate record.
+   * 
+   * @description Processes the save event from the flat rate form. Closes the add/edit dialog,
+   * reloads the data source, updates the monthly summary, and manages focus on the saved record.
+   * If the operation is 'add' and the user is a VAT payer, prompts for VAT register creation.
+   * 
+   * @param {any} event - The save event object containing mode, data, and flateRateId
+   * @returns {void}
+   * @since 1.0.0
+   */
   onSaving(event: any) {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
@@ -523,9 +857,22 @@ export class FlateRateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Handles date range changes from the date range component.
+   * 
+   * @description Updates the current month and year based on the date range selection
+   * and refreshes the data to show records for the new time period.
+   * 
+   * @param {Object} event - The date range change event
+   * @param {number} event.month - The selected month (1-12)
+   * @param {number} event.year - The selected year
+   * @returns {void}
+   * @since 1.0.0
+   */
   onDateRangeChange(event: {month: number, year: number}) {
     this.month.set(event.month);
     this.year.set(event.year);
     this.getData();
   }
+
 }

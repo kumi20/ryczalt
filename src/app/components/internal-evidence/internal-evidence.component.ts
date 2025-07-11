@@ -4,10 +4,12 @@ import {
   Component,
   computed,
   inject,
+  OnDestroy,
   OnInit,
   signal,
   ViewChild,
 } from "@angular/core";
+import { Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import {
@@ -38,6 +40,37 @@ import { GenericGridColumn } from "../core/generic-data-grid/generic-data-grid.m
 import { GenericGridOptions } from "../core/generic-data-grid/generic-data-grid.model";
 import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data-grid.component";
 
+/**
+ * @fileoverview InternalEvidenceComponent manages internal evidence records (income and expense documents).
+ * @description This component provides a comprehensive interface for managing internal evidence records,
+ * including both income and expense documents. It supports month closure management, responsive design,
+ * and full CRUD operations with proper validation.
+ *
+ * @component
+ * @example
+ * ```html
+ * <app-internal-evidence></app-internal-evidence>
+ * ```
+ *
+ * @dependencies
+ * - EventService: For global event handling and session management
+ * - InternalEvidenceService: For internal evidence CRUD operations
+ * - FlateRateService: For month closure status management
+ * - TranslateService: For internationalization support
+ *
+ * @features
+ * - Internal evidence records management (income/expense documents)
+ * - Month closure status tracking and control
+ * - Generic data grid with responsive design
+ * - Keyboard shortcuts for efficient navigation
+ * - Date range filtering by month and year
+ * - Document type distinction (income vs. expense)
+ * - Mobile-responsive interface
+ * - Confirm dialogs for safe operations
+ *
+ * @author Angular Team
+ * @since 1.0.0
+ */
 @Component({
   selector: "app-internal-evidence",
   imports: [
@@ -56,7 +89,7 @@ import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data
   templateUrl: "./internal-evidence.component.html",
   styleUrls: ["./internal-evidence.component.scss"],
 })
-export class InternalEvidenceComponent implements OnInit, AfterViewInit {
+export class InternalEvidenceComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("genericDataGrid") genericDataGrid: any;
 
   event = inject(EventService);
@@ -87,6 +120,13 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     () =>
       ({
         height: "calc(100vh - 105px)",
+        columnHidingEnabled: true,
+        columnChooser: {
+          enabled: true,
+          mode: 'select',
+          searchEnabled: true,
+          sortOrder: 'asc',
+        },
       } as GenericGridOptions)
   );
 
@@ -127,7 +167,7 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
           dataType: "date",
           format: { type: this.event.dateFormat },
           alignment: "left",
-          hidingPriority: 4, // Średni priorytet
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
         },
         {
           caption: this.translate.instant("internalEvidence.value"),
@@ -157,11 +197,20 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
       ] as GenericGridColumn[]
   );
 
+  /**
+   * Initializes the component by loading internal evidence data.
+   * Called once after component initialization.
+   * @lifecycle OnInit
+   */
   ngOnInit() {
     this.getData();
-    1;
   }
 
+  /**
+   * Sets up keyboard shortcuts after view initialization.
+   * Defines shortcuts for adding (Alt+N), editing (F2), viewing (Shift+F2), and deleting (Del) records.
+   * @lifecycle AfterViewInit
+   */
   ngAfterViewInit() {
     this.shortcuts = [
       {
@@ -194,6 +243,12 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  /**
+   * Initializes and configures the data source for internal evidence records.
+   * Checks month closure status and sets up the AspNetData store with appropriate endpoints.
+   * Automatically focuses on the first row after data loading.
+   * @private
+   */
   getData() {
     this.checkIfMonthIsClosed();
     this.dataSource = new DataSource({
@@ -217,6 +272,12 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Constructs the load parameters for the internal evidence data source.
+   * Includes the selected month and year for filtering.
+   * @returns An object containing the load parameters
+   * @private
+   */
   getLoadParams() {
     let obj: any = {};
     obj.month = this.month();
@@ -224,11 +285,20 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     return obj;
   }
 
+  /**
+   * Closes the delete confirmation dialog and returns focus to the data grid.
+   * @public
+   */
   closeConfirm() {
     this.isDelete.set(false);
     this.genericDataGrid.focus();
   }
 
+  /**
+   * Checks if the current month is closed for editing.
+   * Updates the isClosed signal based on the server response.
+   * @private
+   */
   checkIfMonthIsClosed() {
     this.flateRateService
       .checkIfMonthIsClosed(this.month(), this.year())
@@ -242,16 +312,36 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /**
+   * Handles date range changes from the date range component.
+   * Updates the month and year signals and refreshes the data grid.
+   * @param event - The date range change event
+   * @param event.month - The selected month (1-12)
+   * @param event.year - The selected year
+   * @public
+   */
   onDateRangeChange(event: any) {
     this.month.set(event.month);
     this.year.set(event.year);
     this.getData();
   }
 
+  /**
+   * Handles data grid row focus changes.
+   * Updates the focused element signal with the selected row data.
+   * @param event - The row focus change event containing row data
+   * @public
+   */
   onFocusedRowChanged(event: any) {
     this.focusedElement.set(event.row.data);
   }
 
+  /**
+   * Handles key down events on the data grid.
+   * Prevents default behavior for specific keys to avoid conflicts.
+   * @param event - The key down event
+   * @public
+   */
   onKeyDown(event: any) {
     const BLOCKED_KEYS = ["F2", "Escape", "Delete", "Enter"];
 
@@ -260,10 +350,21 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Handles double-click events on data grid rows.
+   * Triggers the edit action for the double-clicked row.
+   * @param event - The double-click event
+   * @public
+   */
   onRowDblClick(event: any) {
     this.onEdit();
   }
 
+  /**
+   * Initiates the process of editing the currently focused internal evidence record.
+   * Validates session activity and month closure status before proceeding.
+   * @public
+   */
   onEdit() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
 
@@ -272,10 +373,21 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     this.isAdd.set(true);
   }
 
+  /**
+   * Retrieves the currently focused row data from the data grid.
+   * @returns The focused row data
+   * @private
+   */
   getFocusedElement() {
     return this.genericDataGrid.getFocusedRowData();
   }
 
+  /**
+   * Toggles the open/close status of the current month.
+   * If month is closed, opens it; if open, closes it.
+   * Refreshes data after successful operation.
+   * @public
+   */
   onOpenClose() {
     const object: OpenCloseRequest = {
       month: this.month(),
@@ -303,6 +415,11 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Initiates the process of adding a new internal evidence record.
+   * Validates session activity and month closure status before proceeding.
+   * @public
+   */
   addNewRecord() {
     this.mode = "add";
     if (!this.event.sessionData.isActive || this.isClosed()) return;
@@ -310,17 +427,33 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     this.isAdd.set(true);
   }
 
+  /**
+   * Shows the delete confirmation dialog for the currently focused internal evidence record.
+   * Validates session activity and month closure status before proceeding.
+   * @public
+   */
   onDeleteConfirm() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(true);
   }
 
+  /**
+   * Initiates the process of viewing the currently focused internal evidence record in read-only mode.
+   * @public
+   */
   onShow() {
     this.mode = "show";
     this.focusedElement.set(this.getFocusedElement());
     this.isAdd.set(true);
   }
 
+  /**
+   * Handles the saving event from the add/edit dialog.
+   * Reloads the data source, focuses on the saved record, and updates month closure status.
+   * @param event - The save event containing the record ID
+   * @param event.internalEvidenceId - The internal evidence ID object
+   * @public
+   */
   onSaving(event: any) {
     this.isAdd.set(false);
     this.dataSource.reload().then((data) => {
@@ -340,6 +473,12 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Deletes the currently focused internal evidence record.
+   * Validates session activity and month closure status before proceeding.
+   * Reloads the data source after successful deletion.
+   * @public
+   */
   delete() {
     if (!this.event.sessionData.isActive || this.isClosed()) return;
     this.isDelete.set(false);
@@ -358,23 +497,28 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // Mobile-specific methods
-  getMobileDataItems(): any[] {
-    if (this.dataSource && this.dataSource.items) {
-      return this.dataSource.items();
-    }
-    return [];
-  }
 
-  onMobileItemClick(item: any, index: number) {
-    this.focusedElement.set(item);
-    this.focusedRowIndex = index;
-    this.onFocusedRowChanged({row: {data: item}});
-  }
-
+  /**
+   * Returns the localized label for the evidence type based on the isCoast flag.
+   * @param isCoast - True for expense, false for income
+   * @returns The localized label for the evidence type
+   * @example
+   * ```typescript
+   * const label = this.getEvidenceTypeLabel(true); // returns "Expense"
+   * const label = this.getEvidenceTypeLabel(false); // returns "Income"
+   * ```
+   */
   getEvidenceTypeLabel(isCoast: boolean): string {
     return isCoast 
       ? this.translate.instant("internalEvidence.expense")
       : this.translate.instant("internalEvidence.income");
   }
+
+  /**
+   * Cleans up resources when the component is destroyed.
+   * Currently no cleanup is required but method is implemented for future use.
+   * @lifecycle OnDestroy
+   */
+  ngOnDestroy() {}
+
 }

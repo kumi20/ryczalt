@@ -16,6 +16,21 @@ import { AppServices } from '../../services/app-services.service';
 import { EventService } from '../../services/event-services.service';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+/**
+ * User registration component for creating new accounts.
+ * 
+ * This component provides user registration functionality with comprehensive form validation,
+ * including NIP validation, password strength requirements, and email validation.
+ * It handles the registration process and provides feedback to users.
+ * 
+ * @example
+ * ```html
+ * <app-register></app-register>
+ * ```
+ * 
+ * @author Generated documentation
+ * @since 1.0.0
+ */
 @Component({
   selector: 'app-register',
   imports: [
@@ -39,6 +54,17 @@ export class RegisterComponent implements OnInit {
 
   isRegister = signal(false);
 
+  /**
+   * Validates Polish NIP (Tax Identification Number).
+   * 
+   * Performs comprehensive NIP validation including:
+   * - Format validation (10 digits)
+   * - Checksum validation using official algorithm
+   * 
+   * @param {FormControl} control - The form control to validate
+   * @returns {ValidationErrors | null} Validation errors or null if valid
+   * @memberof RegisterComponent
+   */
   validateNip = (control: FormControl): ValidationErrors | null => {
     const nip = control.value;
 
@@ -72,6 +98,19 @@ export class RegisterComponent implements OnInit {
     return null;
   };
 
+  /**
+   * Validates password strength requirements.
+   * 
+   * Checks for multiple password strength criteria:
+   * - Minimum length (8 characters)
+   * - At least one uppercase letter
+   * - At least one digit
+   * - At least one special character
+   * 
+   * @param {FormControl} control - The form control to validate
+   * @returns {ValidationErrors | null} Validation errors or null if valid
+   * @memberof RegisterComponent
+   */
   validatePasswordStrength = (control: FormControl): ValidationErrors | null => {
     const password = control.value;
 
@@ -108,10 +147,27 @@ export class RegisterComponent implements OnInit {
     return hasError ? errors : null;
   };
 
+  /**
+   * Initializes the component.
+   * 
+   * Sets up the registration form with all validation rules.
+   * 
+   * @returns {void}
+   * @memberof RegisterComponent
+   */
   ngOnInit() {
     this.initForm();
   }
 
+  /**
+   * Handles the registration process.
+   * 
+   * Validates the form, hashes the password, and submits the registration request.
+   * Shows success message on successful registration or error notification on failure.
+   * 
+   * @returns {void}
+   * @memberof RegisterComponent
+   */
   onRegister() {
     this.form.markAllAsTouched();
 
@@ -130,10 +186,32 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  /**
+   * Navigates to the login page.
+   * 
+   * Redirects the user to the login component.
+   * 
+   * @returns {void}
+   * @memberof RegisterComponent
+   */
   onLogin() {
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Initializes the registration form with validation rules.
+   * 
+   * Creates a reactive form with all required fields and their validators:
+   * - NIP: Required with custom NIP validation
+   * - Email: Required with email format validation
+   * - Password: Required with strength validation
+   * - Password repeat: Required with matching validation
+   * - First/Last name: Required
+   * - Agreement: Required to be true
+   * 
+   * @returns {void}
+   * @memberof RegisterComponent
+   */
   initForm() {
     this.form = this.fb.group(
       {
@@ -149,7 +227,17 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  // Statyczna metoda walidacyjna
+  /**
+   * Static validator for password matching.
+   * 
+   * Validates that the password and password repeat fields match.
+   * Sets error on the password repeat field if they don't match.
+   * 
+   * @static
+   * @param {AbstractControl} control - The form control group
+   * @returns {ValidationErrors | null} Validation errors or null if valid
+   * @memberof RegisterComponent
+   */
   static passwordMatchValidator(
     control: AbstractControl
   ): ValidationErrors | null {

@@ -122,6 +122,20 @@ export const routes: Routes = [
             (m) => m.TaxVatComponent
           ),
       },
+      {
+        path: 'jpk-submissions',
+        loadComponent: () =>
+          import('./components/jpk-submissions/jpk-submissions.component').then(
+            (m) => m.JpkSubmissionsComponent
+          ),
+      },
+      {
+        path: 'jpk-details/:id',
+        loadComponent: () =>
+          import('./components/jpk-details/jpk-details.component').then(
+            (m) => m.JpkDetailsComponent
+          ),
+      },
     ],
   },
   {

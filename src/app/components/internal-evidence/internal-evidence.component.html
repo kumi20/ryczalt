@@ -82,22 +82,17 @@
 
 <ng-template #grid>
   <dx-scroll-view width="100%" height="100%" direction="vertical">
-    <div *ngIf="event.deviceType === 'mobile'; else desktopGrid" class="mobile-grid-container">
-      <ng-container *ngTemplateOutlet="mobileInternalEvidenceList"></ng-container>
-    </div>
-    <ng-template #desktopGrid>
-      <app-generic-data-grid
-        [dataSource]="dataSource"
-        [columns]="columns()"
-        [options]="options()"
-        [(focusedRowIndex)]="focusedRowIndex"
-        (onFocusedRowChanged)="onFocusedRowChanged($event)"
-        (onRowDblClick)="onEdit()"
-        [(selectedRowKeys)]="selectedRows"
-        storageKey="internalEvidenceGrid"
-        #genericDataGrid
-      ></app-generic-data-grid>  
-    </ng-template>
+    <app-generic-data-grid
+      [dataSource]="dataSource"
+      [columns]="columns()"
+      [options]="options()"
+      [(focusedRowIndex)]="focusedRowIndex"
+      (onFocusedRowChanged)="onFocusedRowChanged($event)"
+      (onRowDblClick)="onEdit()"
+      [(selectedRowKeys)]="selectedRows"
+      storageKey="internalEvidenceGrid"
+      #genericDataGrid
+    ></app-generic-data-grid>
   </dx-scroll-view>
 </ng-template>
 
@@ -122,62 +117,3 @@
   [disabled]="isAdd()"
 ></qumi-keyboard-shortcuts>
 
-<!-- Mobile Template for Internal Evidence -->
-<ng-template #mobileInternalEvidenceList>
-  <div class="mobile-internal-evidence-list">
-    <div 
-      *ngFor="let item of getMobileDataItems(); let i = index" 
-      class="mobile-internal-evidence-item"
-      [class.mobile-item-focused]="focusedElement() === item"
-      (click)="onMobileItemClick(item, i)"
-      (dblclick)="onEdit()"
-      [class.mobile-item-selected]="selectedRows.includes(item)"
-    >
-      <div class="mobile-item-header">
-        <div class="mobile-item-title">
-          <span class="mobile-document-number">{{ item.documentNumber }}</span>
-          <span class="mobile-amount" [class.expense]="item.isCoast" [class.income]="!item.isCoast">
-            {{ item.amount | currency:'PLN':'symbol':'1.2-2':'pl' }}
-          </span>
-        </div>
-        <div class="mobile-item-actions">
-          <button 
-            class="mobile-action-btn mobile-edit-btn"
-            (click)="onEdit(); $event.stopPropagation()"
-            [disabled]="!event.sessionData.isActive || isClosed()"
-          >
-            <i class="ryczalt-icon ri-edit"></i>
-          </button>
-          <button 
-            class="mobile-action-btn mobile-delete-btn"
-            (click)="onDeleteConfirm(); $event.stopPropagation()"
-            [disabled]="!event.sessionData.isActive || isClosed()"
-          >
-            <i class="ryczalt-icon ri-trash"></i>
-          </button>
-        </div>
-      </div>
-      
-      <div class="mobile-item-type">
-        <span class="mobile-type-badge" [class.expense]="item.isCoast" [class.income]="!item.isCoast">
-          {{ getEvidenceTypeLabel(item.isCoast) }}
-        </span>
-      </div>
-      
-      <div class="mobile-item-details">
-        <div class="mobile-detail-row" *ngIf="item.documentDate">
-          <span class="mobile-detail-label">{{ 'internalEvidence.dateOfIssue' | translate }}:</span>
-          <span class="mobile-detail-value">{{ item.documentDate | date:event.dateFormat }}</span>
-        </div>
-        <div class="mobile-detail-row" *ngIf="item.personIssuing">
-          <span class="mobile-detail-label">{{ 'internalEvidence.personIssuing' | translate }}:</span>
-          <span class="mobile-detail-value">{{ item.personIssuing }}</span>
-        </div>
-        <div class="mobile-detail-row" *ngIf="item.description">
-          <span class="mobile-detail-label">{{ 'internalEvidence.purposeOfExpenditure' | translate }}:</span>
-          <span class="mobile-detail-value mobile-description">{{ item.description }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>

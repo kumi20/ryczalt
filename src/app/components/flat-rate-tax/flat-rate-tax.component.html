@@ -70,11 +70,10 @@
       [options]="options()"
       [(focusedRowIndex)]="focusedRowIndex"
       (onFocusedRowChanged)="onFocusedRowChanged($event)"
-      (onRowDblClick)="onEdit()"
-      storageKey="flatRateTaxGrid"
+      (onRowDblClick)="onRowDblClick($event)"
+      storageKey="grid"
       #genericDataGrid
-    ></app-generic-data-grid>  
-  </dx-scroll-view>
+    ></app-generic-data-grid>  </dx-scroll-view>
 </ng-template>
 
 <qumi-keyboard-shortcuts
@@ -97,3 +96,4 @@
   [flatRateTax]="focusedElement()"
 ></app-new-flat-rate-tax>
 }
+

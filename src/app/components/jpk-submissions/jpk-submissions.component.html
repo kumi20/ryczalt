@@ -1,0 +1,58 @@
+<ng-container>
+  <div class="top-menu-panel">
+    <ng-container *ngTemplateOutlet="topButtons"></ng-container>
+  </div>
+
+  <div class="center-panel-scroll-verticall">
+    <div>
+      <ng-container *ngTemplateOutlet="grid"></ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #topButtons>
+  <dx-scroll-view width="95%" height="100%" direction="horizontal" style="height: 60px;">
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="ryczalt-icon ri-show"
+      stylingMode="text"
+      type="default"
+      [disabled]="!focusedElement()"
+      (onClick)="onShow()"
+      text="{{ 'jpk.preview' | translate }}"
+      [id]="'btn-show'"
+    >
+    </dx-button>
+
+    <dx-button
+      class="btn-dx-top-menu"
+      icon="ryczalt-icon ri-refresh"
+      stylingMode="text"
+      type="default"
+      (onClick)="onRefresh()"
+      text="{{ 'jpk.refresh' | translate }}"
+      [id]="'btn-refresh'"
+    >
+    </dx-button>
+  </dx-scroll-view>
+</ng-template>
+
+<ng-template #grid>
+  <app-generic-data-grid
+    [dataSource]="dataSource"
+    [columns]="columns()"
+    [options]="options()"
+    [(focusedRowIndex)]="focusedRowIndex"
+    (onFocusedRowChanged)="onFocusedRowChanged($event)"
+    (onRowDblClick)="onRowDblClick($event)"
+    [(selectedRowKeys)]="selectedRows"
+    storageKey="jpkSubmissionsGrid"
+    (onColumnHeaderClick)="onColumnHeaderClick($event)"
+    (onOrderClick)="onOrderClick($event)"
+    [orderBy]="orderBy()"
+    [order]="order()"
+    #genericDataGrid
+  ></app-generic-data-grid>
+</ng-template>
+
+<qumi-keyboard-shortcuts [shortcuts]="shortcuts"></qumi-keyboard-shortcuts>

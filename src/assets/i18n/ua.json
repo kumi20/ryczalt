@@ -33,6 +33,7 @@
     },
     "tax": "Податки",
     "flatRateTax": "Єдиний податок",
+    "jpk": "JPK",
     "zus": "ЗУС",
     "taxOffices": "Податкові офіси",
     "notes": "Примітки",
@@ -228,5 +229,18 @@
     "licenseEndDate": "Дата закінчення ліцензії",
     "taxOffice": "Податковий офіс",
     "voivodeship": "Воблість"
+  },
+  "jpk": {
+    "title": "JPK",
+    "submissionId": "ID",
+    "jpkType": "Тип JPK",
+    "dateFrom": "Період з",
+    "dateTo": "Період до",
+    "status": "Статус",
+    "submittedAt": "Відправлено",
+    "message": "Повідомлення",
+    "year": "Рік",
+    "preview": "Попередній перегляд",
+    "refresh": "Оновити"
   }
 }

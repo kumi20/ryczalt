@@ -32,11 +32,12 @@
       "company": "Unternehmen"
     },
     "tax": "Steuern",
-    "flatRateTax": "Єдиний податок",
-    "zus": "ЗУС",
-    "taxOffices": "Податкові офіси",
-    "notes": "Примітки",
-    "taxVat": "Податок на додану вартість"
+    "flatRateTax": "Pauschale Steuer",
+    "jpk": "JPK",
+    "zus": "ZUS",
+    "taxOffices": "Finanzämter",
+    "notes": "Anmerkungen",
+    "taxVat": "Mehrwertsteuer"
   },
   "customers": {
     "checkAccountNumber": "Kontonummer auf weiße Liste prüfen",
@@ -228,5 +229,18 @@
     "licenseEndDate": "Data końca licencji",
     "taxOffice": "Urząd skarbowy",
     "voivodeship": "Województwo"
+  },
+  "jpk": {
+    "title": "JPK",
+    "submissionId": "ID",
+    "jpkType": "JPK Typ",
+    "dateFrom": "Zeitraum von",
+    "dateTo": "Zeitraum bis",
+    "status": "Status",
+    "submittedAt": "Gesendet am",
+    "message": "Nachricht",
+    "year": "Jahr",
+    "preview": "Vorschau",
+    "refresh": "Aktualisieren"
   }
 }

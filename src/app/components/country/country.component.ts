@@ -22,6 +22,25 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GenericGridColumn, GenericGridOptions } from '../core/generic-data-grid/generic-data-grid.model';
 import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data-grid.component';
 
+/**
+ * Country management component for selecting and managing country data.
+ * 
+ * This component provides functionality for browsing and selecting countries.
+ * It supports both standalone grid view and dropdown selection modes.
+ * Includes special handling for Poland (Polska) as the default country.
+ * 
+ * @example
+ * ```html
+ * <!-- Standalone country grid -->
+ * <app-country></app-country>
+ * 
+ * <!-- Dropdown selector -->
+ * <app-country [dropDownBoxMode]="true" [controlNameForm]="selectedCountryName" (onChoosed)="onCountrySelected($event)"></app-country>
+ * ```
+ * 
+ * @author Generated documentation
+ * @since 1.0.0
+ */
 @Component({
   selector: 'app-country',
   standalone: true,
@@ -50,6 +69,7 @@ export class CountryComponent implements OnInit, OnChanges {
   event = inject(EventService);
 
   countryList = signal<Country[]>([]);
+  dataSource: Country[] = [];
   heightGrid: number | string = 'calc(100vh - 100px)';
   focusedRowIndex: number = 0;
   pageSize: number = 300;
@@ -64,6 +84,13 @@ export class CountryComponent implements OnInit, OnChanges {
     () =>
       ({
         height: "calc(100vh - 100px)",
+        columnHidingEnabled: true,
+        columnChooser: {
+          enabled: true,
+          mode: 'select',
+          searchEnabled: true,
+          sortOrder: 'asc',
+        },
       } as GenericGridOptions)
   );
 
@@ -101,12 +128,27 @@ export class CountryComponent implements OnInit, OnChanges {
       ] as GenericGridColumn[]
   );
 
+  /**
+   * Creates an instance of CountryComponent.
+   * 
+   * @memberof CountryComponent
+   */
   constructor() {}
 
+  /**
+   * Initializes the component by loading country data.
+   * 
+   * Fetches countries from the service, sets up the data source, and handles special logic for Poland.
+   * Also positions the focus on the previously selected country if applicable.
+   * 
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   ngOnInit() {
     this.countryServices.getCountries().subscribe({
       next: (data: Country[]) => {
         this.countryList.set(data);
+        this.dataSource = data;
 
         const inPl = data.find((x) => x.name === 'Polska');
         if (inPl) {
@@ -125,12 +167,30 @@ export class CountryComponent implements OnInit, OnChanges {
     });
   }
 
+  /**
+   * Handles input property changes, particularly for dropdown mode.
+   * 
+   * When controlNameForm changes in dropdown mode, updates the selected country record.
+   * 
+   * @param {SimpleChanges} changes - Object containing the changed properties
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['controlNameForm'] && this.dropDownBoxMode()) {
       this.chossingRecord = changes['controlNameForm'].currentValue;
     }
   }
 
+  /**
+   * Handles key down events to prevent default behavior for specific keys.
+   * 
+   * Blocks default behavior for keys that might interfere with grid navigation.
+   * 
+   * @param {any} event - The key down event object
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   onKeyDown(event: any) {
     const BLOCKED_KEYS = ['F2', 'Escape', 'Delete', 'Enter'];
 
@@ -139,18 +199,46 @@ export class CountryComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Handles value changes in the dropdown control.
+   * 
+   * Emits null when the dropdown value is cleared.
+   * 
+   * @param {any} e - The value change event
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   onValueChanged = (e: any) => {
     if (e.value == null) {
       this.onChoosed.emit(null);
     }
   };
 
+  /**
+   * Handles double-click events on grid rows.
+   * 
+   * In dropdown mode, selects the double-clicked country.
+   * 
+   * @param {any} e - The double-click event object containing row data
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   onRowDblClick(e: any) {
     if (this.dropDownBoxMode()) {
       this.onChoosingRecord(e.data);
     }
   }
 
+  /**
+   * Handles country selection in dropdown mode.
+   * 
+   * Emits the selected country to parent components and closes the dropdown.
+   * Only processes selection if session is active.
+   * 
+   * @param {Country} e - The selected country data
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   onChoosingRecord = (e: Country) => {
     if (this.event.sessionData.isActive) {
 
@@ -160,6 +248,15 @@ export class CountryComponent implements OnInit, OnChanges {
     }
   };
 
+  /**
+   * Handles dropdown opened/closed state changes.
+   * 
+   * Focuses the grid when dropdown opens and updates the opened state.
+   * 
+   * @param {any} e - The opened state (true/false)
+   * @returns {void}
+   * @memberof CountryComponent
+   */
   onOpenedChanged(e: any) {
     if (e) {
       try {
@@ -170,5 +267,32 @@ export class CountryComponent implements OnInit, OnChanges {
     } else {
       this.isGridBoxOpened = false;
     }
+  }
+
+  /**
+   * Handles focused row change events in the grid.
+   * 
+   * Placeholder for handling focused row changes.
+   * 
+   * @param {any} event - The focused row change event
+   * @returns {void}
+   * @memberof CountryComponent
+   */
+  onFocusedRowChanged(event: any) {
+    // Handle focused row change
+  }
+
+  /**
+   * Handles item click events in mobile view.
+   * 
+   * Updates the focused row index for mobile navigation.
+   * 
+   * @param {any} item - The clicked item data
+   * @param {number} index - The index of the clicked item
+   * @returns {void}
+   * @memberof CountryComponent
+   */
+  onMobileItemClick(item: any, index: number) {
+    this.focusedRowIndex = index;
   }
 }

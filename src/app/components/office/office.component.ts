@@ -7,12 +7,14 @@ import {
   input,
   OnChanges,
   OnInit,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild,
   computed,
   signal,
 } from "@angular/core";
+import { Subscription } from "rxjs";
 import { DxDataGridModule, DxDropDownBoxModule } from "devextreme-angular";
 import * as AspNetData from "devextreme-aspnet-data-nojquery";
 import { environment } from "../../../environments/environment";
@@ -31,6 +33,24 @@ import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data
 import { CustomDropdownBoxComponent } from "../core/custom-dropdown-box/custom-dropdown-box.component";
 import { FilterCriteria } from '../../interface/filterCriteria';
 
+/**
+ * Tax Office management component for selecting and managing tax office data.
+ * 
+ * This component provides functionality for browsing, filtering, and selecting tax offices.
+ * It supports both standalone grid view and dropdown selection modes with search capabilities.
+ * 
+ * @example
+ * ```html
+ * <!-- Standalone tax office grid -->
+ * <app-office></app-office>
+ * 
+ * <!-- Dropdown selector -->
+ * <app-office [dropDownBoxMode]="true" [controlNameForm]="selectedOfficeId" (onChoosed)="onOfficeSelected($event)"></app-office>
+ * ```
+ * 
+ * @author Generated documentation
+ * @since 1.0.0
+ */
 @Component({
   selector: "app-office",
   imports: [
@@ -44,7 +64,7 @@ import { FilterCriteria } from '../../interface/filterCriteria';
   templateUrl: "./office.component.html",
   styleUrl: "./office.component.scss",
 })
-export class OfficeComponent implements OnInit, OnChanges {
+export class OfficeComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild("genericDataGrid") genericDataGrid: any;
   @ViewChild("contractorsBox") contractorsBox: any;
   @Output() onChoosed = new EventEmitter();
@@ -60,12 +80,13 @@ export class OfficeComponent implements OnInit, OnChanges {
   dropDownBoxMode = input<boolean>(false);
 
   appServices = inject(AppServices);
+  cdr = inject(ChangeDetectorRef);
+  private deviceTypeSubscription?: Subscription;
 
   chossingRecord: null | number = null;
   isGridBoxOpened: boolean = false;
   searchTimer: any;
   SearchKey: string = "";
-  cdr = inject(ChangeDetectorRef);
   controlNameForm = input<any>(null);
   dataSourceDropDown: any[] = [];
   translate = inject(TranslateService);
@@ -97,6 +118,13 @@ export class OfficeComponent implements OnInit, OnChanges {
     () =>
       ({
         height: "calc(100vh - 180px)",
+        columnHidingEnabled: true,
+        columnChooser: {
+          enabled: true,
+          mode: 'select',
+          searchEnabled: true,
+          sortOrder: 'asc',
+        },
       } as GenericGridOptions)
   );
 
@@ -109,7 +137,7 @@ export class OfficeComponent implements OnInit, OnChanges {
           width: 200,
           minWidth: 120,
           allowSorting: false,
-          hidingPriority: 1,
+          hidingPriority: 2, // Wysoki priorytet
         },
         {
           caption: this.translate.instant("taxOffices.name"),
@@ -117,7 +145,7 @@ export class OfficeComponent implements OnInit, OnChanges {
           width: 200,
           minWidth: 150,
           allowSorting: false,
-          hidingPriority: 2,
+          hidingPriority: 1, // Najwyższy priorytet - zawsze widoczny
         },
         {
           caption: this.translate.instant("taxOffices.postalCode"),
@@ -162,12 +190,38 @@ export class OfficeComponent implements OnInit, OnChanges {
       ] as GenericGridColumn[]
   );
 
+  /**
+   * Creates an instance of OfficeComponent.
+   * 
+   * @memberof OfficeComponent
+   */
   constructor() {}
 
+  /**
+   * Initializes the component by loading tax office data and setting up device type subscription.
+   * 
+   * Sets up the initial data source and subscribes to device type changes for responsive behavior.
+   * 
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   ngOnInit(): void {
     this.getData();
+    this.deviceTypeSubscription = this.event.deviceTypeChange.subscribe(() => {
+      this.cdr.detectChanges();
+    });
   }
 
+  /**
+   * Handles input property changes, particularly for dropdown mode.
+   * 
+   * When controlNameForm changes in dropdown mode, loads the corresponding tax office data
+   * and updates the dropdown data source.
+   * 
+   * @param {SimpleChanges} changes - Object containing the changed properties
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["controlNameForm"] && this.dropDownBoxMode()) {
       this.chossingRecord = changes["controlNameForm"].currentValue;
@@ -182,6 +236,15 @@ export class OfficeComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Initializes and configures the data source for tax offices.
+   * 
+   * Creates a DevExtreme DataSource with AspNetData store configuration for server-side data operations.
+   * Sets up loading parameters, error handling, and focus management after data load.
+   * 
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   getData() {
     this.dataSource = new DataSource({
       store: AspNetData.createStore({
@@ -202,6 +265,14 @@ export class OfficeComponent implements OnInit, OnChanges {
     });
   }
 
+  /**
+   * Generates parameters for data loading based on current search and filter state.
+   * 
+   * Creates an object with search, filter, and sorting parameters that will be sent to the server.
+   * 
+   * @returns {any} Object containing load parameters for the data source
+   * @memberof OfficeComponent
+   */
   getLoadParams() {
     let obj: any = {};
     if (this.SearchKey !== "") {
@@ -214,6 +285,15 @@ export class OfficeComponent implements OnInit, OnChanges {
     return obj;
   }
 
+  /**
+   * Handles key down events to prevent default behavior for specific keys.
+   * 
+   * Blocks default behavior for keys that might interfere with grid navigation.
+   * 
+   * @param {any} event - The key down event object
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onKeyDown(event: any) {
     const BLOCKED_KEYS = ["F2", "Escape", "Delete", "Enter"];
 
@@ -222,12 +302,31 @@ export class OfficeComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Handles double-click events on grid rows.
+   * 
+   * In dropdown mode, selects the double-clicked tax office.
+   * 
+   * @param {any} event - The double-click event object containing row data
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onRowDblClick(event: any) {
     if (this.dropDownBoxMode()) {
       this.onChoosingRecord(event.data);
     }
   }
 
+  /**
+   * Handles tax office selection in dropdown mode.
+   * 
+   * Emits the selected tax office to parent components and closes the dropdown.
+   * Clears the search key and refreshes data.
+   * 
+   * @param {any} e - The selected tax office data
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onChoosingRecord = (e: any) => {
     if (this.event.sessionData.isActive) {
       this.chossingRecord = e.taxOfficeId;
@@ -238,16 +337,43 @@ export class OfficeComponent implements OnInit, OnChanges {
     }
   };
 
+  /**
+   * Handles focused row change events in the grid.
+   * 
+   * Currently logs the event for debugging purposes.
+   * 
+   * @param {any} event - The focused row change event
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onFocusedRowChanged(event: any) {
     console.log(event);
   }
 
+  /**
+   * Handles value changes in the dropdown control.
+   * 
+   * Emits null when the dropdown value is cleared.
+   * 
+   * @param {any} e - The value change event
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onValueChanged = (e: any) => {
     if (e.value == null) {
       this.onChoosed.emit(null);
     }
   };
 
+  /**
+   * Handles dropdown opened/closed state changes.
+   * 
+   * Focuses the grid when dropdown opens and updates the opened state.
+   * 
+   * @param {any} e - The opened state (true/false)
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onOpenedChanged(e: any) {
     if (e) {
       try {
@@ -260,6 +386,15 @@ export class OfficeComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Handles search input with debouncing.
+   * 
+   * Implements a 500ms delay to avoid excessive server requests while typing.
+   * Updates the search key and refreshes data when user stops typing.
+   * 
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   grid_onInput() {
     clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => {
@@ -274,11 +409,65 @@ export class OfficeComponent implements OnInit, OnChanges {
     }, 500);
   }
 
+  /**
+   * Handles filter criteria changes.
+   * 
+   * Updates the filter value and ordering criteria based on user selection,
+   * then refreshes the data with new filter parameters.
+   * 
+   * @param {any} event - The filter change event containing selected item and filter value
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
   onFilterDataChanged(event: any) {
     if (event.selectedItem) {
       this.filterValue = event.filterValue;
       this.orderBy.set(event.selectedItem.value);
       this.getData();
+    }
+  }
+
+  /**
+   * Retrieves data items for mobile view rendering.
+   * 
+   * Provides data items specifically formatted for mobile display.
+   * 
+   * @returns {any[]} Array of data items for mobile view
+   * @memberof OfficeComponent
+   */
+  getMobileDataItems(): any[] {
+    if (this.dataSource && this.dataSource.items) {
+      return this.dataSource.items() || [];
+    }
+    return [];
+  }
+
+  /**
+   * Handles item click events in mobile view.
+   * 
+   * Updates the focused row index and triggers focused row change handling.
+   * 
+   * @param {any} item - The clicked item data
+   * @param {number} index - The index of the clicked item
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
+  onMobileItemClick(item: any, index: number) {
+    this.focusedRowIndex = index;
+    this.onFocusedRowChanged({row: {data: item}});
+  }
+
+  /**
+   * Cleanup method called when component is destroyed.
+   * 
+   * Unsubscribes from device type changes to prevent memory leaks.
+   * 
+   * @returns {void}
+   * @memberof OfficeComponent
+   */
+  ngOnDestroy(): void {
+    if (this.deviceTypeSubscription) {
+      this.deviceTypeSubscription.unsubscribe();
     }
   }
 }
