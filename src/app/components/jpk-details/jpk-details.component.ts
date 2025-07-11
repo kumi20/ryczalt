@@ -73,19 +73,102 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   styleUrl: './jpk-details.component.scss',
 })
 export class JpkDetailsComponent implements OnInit, OnDestroy {
+  /**
+   * Injected activated route service for accessing route parameters
+   * @type {ActivatedRoute}
+   * @description Provides access to route parameters, particularly the JPK ID
+   * @private
+   * @since 1.0.0
+   */
   private route = inject(ActivatedRoute);
+  
+  /**
+   * Injected router service for navigation
+   * @type {Router}
+   * @description Provides navigation capabilities for routing between components
+   * @private
+   * @since 1.0.0
+   */
   private router = inject(Router);
+  
+  /**
+   * Injected JPK service for JPK-specific operations
+   * @type {JpkService}
+   * @description Manages JPK data operations including fetching details and downloads
+   * @private
+   * @since 1.0.0
+   */
   private jpkService = inject(JpkService);
+  
+  /**
+   * Injected translation service for internationalization
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @private
+   * @since 1.0.0
+   */
   private translate = inject(TranslateService);
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @private
+   * @since 1.0.0
+   */
   private cdr = inject(ChangeDetectorRef);
 
+  /**
+   * Input signal for the JPK ID to display details for
+   * @type {InputSignal<number | null>}
+   * @description JPK submission ID passed from parent component or route
+   * @default null
+   * @since 1.0.0
+   */
   jpkId = input<number | null>(null);
+  
+  /**
+   * Signal containing the detailed JPK submission data
+   * @type {Signal<JpkDetails | null>}
+   * @description Stores the complete JPK submission details including documents
+   * @default null
+   * @since 1.0.0
+   */
   jpkDetails = signal<JpkDetails | null>(null);
+  
+  /**
+   * Signal indicating whether data is currently being loaded
+   * @type {Signal<boolean>}
+   * @description Controls loading state indicators in the UI
+   * @default false
+   * @since 1.0.0
+   */
   isLoading = signal<boolean>(false);
+  
+  /**
+   * Signal containing the currently selected tab index
+   * @type {Signal<number>}
+   * @description Tracks which tab is currently active in the details view
+   * @default 0
+   * @since 1.0.0
+   */
   selectedTabIndex = signal<number>(0);
 
+  /**
+   * Subscription for managing component lifecycle and cleanup
+   * @type {Subscription | undefined}
+   * @description Manages observable subscriptions for proper cleanup
+   * @private
+   * @since 1.0.0
+   */
   private subscription?: Subscription;
 
+  /**
+   * Computed tabs configuration for the detail view
+   * @type {ComputedSignal<Array<{id: number, text: string, icon: string}>>}
+   * @description Provides tab configuration with localized labels and icons
+   * @since 1.0.0
+   */
   tabs = computed(() => [
     {
       id: 0,
@@ -109,7 +192,12 @@ export class JpkDetailsComponent implements OnInit, OnDestroy {
     },
   ]);
 
-  // Opcje siatki dla dokumentów sprzedaży
+  /**
+   * Computed options for the sales documents data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the sales documents grid
+   * @since 1.0.0
+   */
   salesGridOptions = computed(
     () =>
       ({
@@ -124,7 +212,12 @@ export class JpkDetailsComponent implements OnInit, OnDestroy {
       } as GenericGridOptions)
   );
 
-  // Kolumny dla dokumentów sprzedaży
+  /**
+   * Computed columns configuration for the sales documents grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the sales documents grid
+   * @since 1.0.0
+   */
   salesColumns = computed(
     () =>
       [

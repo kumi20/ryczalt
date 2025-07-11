@@ -65,33 +65,225 @@ import { FilterCriteria } from '../../interface/filterCriteria';
   styleUrl: "./office.component.scss",
 })
 export class OfficeComponent implements OnInit, OnChanges, OnDestroy {
+  /**
+   * Reference to the generic data grid component
+   * @type {any}
+   * @description ViewChild reference to the main data grid component for programmatic access
+   * @since 1.0.0
+   */
   @ViewChild("genericDataGrid") genericDataGrid: any;
+  
+  /**
+   * Reference to the contractors dropdown box component
+   * @type {any}
+   * @description ViewChild reference to the contractors dropdown box for search functionality
+   * @since 1.0.0
+   */
   @ViewChild("contractorsBox") contractorsBox: any;
+  
+  /**
+   * Event emitted when a tax office is selected
+   * @type {EventEmitter<Office>}
+   * @description Emits the selected tax office data to parent components
+   * @example
+   * ```html
+   * <app-office (onChoosed)="handleOfficeSelection($event)"></app-office>
+   * ```
+   * @since 1.0.0
+   */
   @Output() onChoosed = new EventEmitter();
+  
+  /**
+   * Reference to the dropdown grid component
+   * @type {any}
+   * @description ViewChild reference to the dropdown grid used in selection mode
+   * @since 1.0.0
+   */
   @ViewChild("gridDropDown") gridDropDown: any;
+  
+  /**
+   * CSS class name input signal
+   * @type {InputSignal<boolean>}
+   * @description Controls CSS class application for styling
+   * @default false
+   * @since 1.0.0
+   */
   className = input<boolean>(false);
+  
+  /**
+   * Read-only mode flag
+   * @type {boolean}
+   * @description Determines if the component is in read-only mode
+   * @default false
+   * @example
+   * ```html
+   * <app-office [readOnly]="true"></app-office>
+   * ```
+   * @since 1.0.0
+   */
   @Input() readOnly: boolean = false;
+  
+  /**
+   * DevExtreme data source for the grid
+   * @type {DataSource}
+   * @description Main data source configured with server-side processing for the tax offices grid
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
+  
+  /**
+   * Event service instance
+   * @type {EventService}
+   * @description Service for handling global events and notifications
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Grid height configuration
+   * @type {number | string}
+   * @description Height of the grid, can be a number or CSS string
+   * @default 'calc(100vh - 220px)'
+   * @since 1.0.0
+   */
   heightGrid: number | string = "calc(100vh - 220px)";
+  
+  /**
+   * Focused row index in the grid
+   * @type {number}
+   * @description Index of the currently focused row in the grid
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Page size for grid pagination
+   * @type {number}
+   * @description Number of rows to display per page
+   * @default 200
+   * @since 1.0.0
+   */
   pageSize: number = 200;
 
+  /**
+   * Dropdown box mode input signal
+   * @type {InputSignal<boolean>}
+   * @description Determines if the component should display as a dropdown selector
+   * @default false
+   * @example
+   * ```html
+   * <app-office [dropDownBoxMode]="true"></app-office>
+   * ```
+   * @since 1.0.0
+   */
   dropDownBoxMode = input<boolean>(false);
 
+  /**
+   * Application services instance
+   * @type {AppServices}
+   * @description Core application services for API communication
+   * @since 1.0.0
+   */
   appServices = inject(AppServices);
+  
+  /**
+   * Change detector reference
+   * @type {ChangeDetectorRef}
+   * @description Reference for manually triggering change detection
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Device type change subscription
+   * @type {Subscription | undefined}
+   * @description Subscription to device type changes for responsive behavior
+   * @since 1.0.0
+   */
   private deviceTypeSubscription?: Subscription;
 
+  /**
+   * Currently selected office ID
+   * @type {null | number}
+   * @description ID of the currently selected tax office in dropdown mode
+   * @default null
+   * @since 1.0.0
+   */
   chossingRecord: null | number = null;
+  
+  /**
+   * Grid dropdown open state
+   * @type {boolean}
+   * @description Indicates if the dropdown grid is currently open
+   * @default false
+   * @since 1.0.0
+   */
   isGridBoxOpened: boolean = false;
+  
+  /**
+   * Search timer for debouncing
+   * @type {any}
+   * @description Timer reference for debouncing search input
+   * @since 1.0.0
+   */
   searchTimer: any;
+  
+  /**
+   * Search key for filtering
+   * @type {string}
+   * @description Current search key for filtering tax offices
+   * @default ''
+   * @since 1.0.0
+   */
   SearchKey: string = "";
+  
+  /**
+   * Form control name input signal
+   * @type {InputSignal<any>}
+   * @description The value of the form control for dropdown mode
+   * @default null
+   * @example
+   * ```html
+   * <app-office [controlNameForm]="selectedOfficeId"></app-office>
+   * ```
+   * @since 1.0.0
+   */
   controlNameForm = input<any>(null);
+  
+  /**
+   * Dropdown data source
+   * @type {any[]}
+   * @description Array of tax office data for dropdown mode
+   * @default []
+   * @since 1.0.0
+   */
   dataSourceDropDown: any[] = [];
+  
+  /**
+   * Translation service instance
+   * @type {TranslateService}
+   * @description Service for handling internationalization and translations
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
 
+  /**
+   * Current filter value
+   * @type {string}
+   * @description Current filter value entered by the user
+   * @default ''
+   * @since 1.0.0
+   */
   filterValue: string = '';
+  
+  /**
+   * Filter criteria configuration
+   * @type {FilterCriteria[]}
+   * @description Array of available filter criteria for the search dropdown
+   * @default [name, city, address, voivodeship]
+   * @since 1.0.0
+   */
   filterCriteria: FilterCriteria[] = [
     {
       value: 'name',
@@ -110,7 +302,23 @@ export class OfficeComponent implements OnInit, OnChanges, OnDestroy {
       label: this.translate.instant('company.voivodeship'),
     },    
   ];
+  
+  /**
+   * Order by field signal
+   * @type {WritableSignal<string>}
+   * @description Reactive signal for the current sort column
+   * @default 'name'
+   * @since 1.0.0
+   */
   orderBy = signal<string>('name');
+  
+  /**
+   * Sort order signal
+   * @type {WritableSignal<string>}
+   * @description Reactive signal for the current sort order (ASC/DESC)
+   * @default 'ASC'
+   * @since 1.0.0
+   */
   order = signal<string>('ASC');
 
   /** Opcje siatki klientów */

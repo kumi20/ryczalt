@@ -97,27 +97,179 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   styleUrl: './vat-register-buy.component.scss',
 })
 export class VatRegisterBuyComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for programmatic control
+   * @type {any}
+   * @description Provides access to the generic data grid instance for focus management
+   * @since 1.0.0
+   */
   @ViewChild('genericDataGrid') genericDataGrid: any;
 
+  /**
+   * Injected event service for global application events and utilities
+   * @type {EventService}
+   * @description Handles global events, notifications, and common utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Injected VAT register service for purchase register operations
+   * @type {VatRegisterService}
+   * @description Manages VAT purchase register data operations including CRUD and summaries
+   * @since 1.0.0
+   */
   vatRegisterService = inject(VatRegisterService);
+  
+  /**
+   * Injected flat rate service for month closure operations
+   * @type {FlateRateService}
+   * @description Manages month closure status and related operations
+   * @since 1.0.0
+   */
   flateRateService = inject(FlateRateService);
+  
+  /**
+   * Signal indicating whether the current month is closed for editing
+   * @type {Signal<boolean>}
+   * @description Tracks month closure status to prevent editing when closed
+   * @default false
+   * @since 1.0.0
+   */
   isClosed = signal<boolean>(false);
+  
+  /**
+   * Current mode of the component operation
+   * @type {"add" | "edit" | "show"}
+   * @description Determines the current operation mode for the record dialog
+   * @default "add"
+   * @since 1.0.0
+   */
   mode: 'add' | 'edit' | 'show' = 'add';
+  
+  /**
+   * Data source for the DevExtreme data grid
+   * @type {DataSource}
+   * @description Manages VAT purchase register data for the grid component
+   * @default new DataSource({})
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
+  
+  /**
+   * Height configuration for the data grid
+   * @type {number | string}
+   * @description Defines the height of the data grid using CSS calc
+   * @default "calc(100vh - 290px)"
+   * @since 1.0.0
+   */
   heightGrid: number | string = 'calc(100vh - 290px)';
+  
+  /**
+   * URI endpoint for VAT purchase register operations
+   * @type {string}
+   * @description API endpoint for VAT purchase register operations
+   * @default "registeVat/buy"
+   * @since 1.0.0
+   */
   uri: string = 'registeVat/buy';
+  
+  /**
+   * Number of items per page in the data grid
+   * @type {number}
+   * @description Controls pagination size for the data grid
+   * @default 50
+   * @since 1.0.0
+   */
   pageSize: number = 50;
+  
+  /**
+   * Signal containing the currently focused VAT purchase register element
+   * @type {Signal<VatRegisterBuy | null>}
+   * @description Tracks the currently selected VAT purchase register record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<VatRegisterBuy | null>(null);
+  
+  /**
+   * Array of currently selected rows in the data grid
+   * @type {VatRegisterBuy[]}
+   * @description Contains the selected VAT purchase register records
+   * @default []
+   * @since 1.0.0
+   */
   selectedRows: VatRegisterBuy[] = [];
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Signal indicating whether the add/edit dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the add/edit dialog
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
+  
+  /**
+   * Signal indicating whether the delete confirmation dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
+  
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
+  
+  /**
+   * Signal containing the current month (1-12)
+   * @type {Signal<number>}
+   * @description Current month used for date range filtering
+   * @default current month from global date
+   * @since 1.0.0
+   */
   month = signal<number>(this.event.globalDate.month);
+  
+  /**
+   * Signal containing the current year
+   * @type {Signal<number>}
+   * @description Current year used for date range filtering
+   * @default current year from global date
+   * @since 1.0.0
+   */
   year = signal<number>(this.event.globalDate.year);
 
+  /**
+   * Monthly summary data for VAT purchase register totals
+   * @type {VatPurchaseSummary}
+   * @description Contains aggregated totals for different VAT rates and deductible amounts
+   * @default Object with all VAT summary values set to 0
+   * @since 1.0.0
+   */
   summaryMonthData: VatPurchaseSummary = {
     total_net_23: 0,
     total_vat_23: 0,
@@ -138,9 +290,22 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit, OnDestroy
     total_vat_deductible: 0,
   };
 
+  /**
+   * Injected translation service for internationalization support
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @private
+   * @readonly
+   * @since 1.0.0
+   */
   private readonly translate = inject(TranslateService);
 
-  /** Opcje siatki klientów */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the VAT purchase register data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -155,6 +320,12 @@ export class VatRegisterBuyComponent implements OnInit, AfterViewInit, OnDestroy
       } as GenericGridOptions)
   );  
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the VAT purchase register grid
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

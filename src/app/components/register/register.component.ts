@@ -45,13 +45,61 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
+  /**
+   * Injected form builder for reactive form creation
+   * @type {FormBuilder}
+   * @description Provides form building capabilities for creating reactive forms
+   * @since 1.0.0
+   */
   fb = inject(FormBuilder);
+  
+  /**
+   * Reactive form instance for user registration
+   * @type {FormGroup}
+   * @description Contains form controls for user registration with validation
+   * @since 1.0.0
+   */
   form!: FormGroup;
+  
+  /**
+   * Injected application service for API operations
+   * @type {AppServices}
+   * @description Provides application-level services and HTTP operations
+   * @since 1.0.0
+   */
   appService = inject(AppServices);
+  
+  /**
+   * Injected event service for global events and notifications
+   * @type {EventService}
+   * @description Handles global events, notifications, and error handling
+   * @since 1.0.0
+   */
   eventService = inject(EventService);
+  
+  /**
+   * Injected authentication service for user management
+   * @type {AuthService}
+   * @description Handles user authentication and registration operations
+   * @since 1.0.0
+   */
   authService = inject(AuthService);
+  
+  /**
+   * Injected router service for navigation
+   * @type {Router}
+   * @description Provides routing capabilities for navigation after registration
+   * @since 1.0.0
+   */
   router = inject(Router);
 
+  /**
+   * Signal indicating whether registration is in progress
+   * @type {Signal<boolean>}
+   * @description Tracks registration state to show loading indicators
+   * @default false
+   * @since 1.0.0
+   */
   isRegister = signal(false);
 
   /**

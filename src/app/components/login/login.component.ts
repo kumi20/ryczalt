@@ -43,13 +43,69 @@ import { License } from '../../interface/license';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  /**
+   * Injected form builder for reactive form creation
+   * @type {FormBuilder}
+   * @description Provides form building capabilities for creating reactive forms
+   * @since 1.0.0
+   */
   formBuilder = inject(FormBuilder);
+  
+  /**
+   * Reactive form instance for login form
+   * @type {any}
+   * @description Contains form controls for login and password validation
+   * @since 1.0.0
+   */
   form: any;
+  
+  /**
+   * Injected router service for navigation
+   * @type {Router}
+   * @description Provides routing capabilities for navigation after login
+   * @since 1.0.0
+   */
   router = inject(Router);
+  
+  /**
+   * Flag indicating if CAS (Central Authentication Service) is enabled
+   * @type {boolean}
+   * @description Determines if CAS authentication is being used
+   * @default false
+   * @since 1.0.0
+   */
   isCas: boolean = false;
+  
+  /**
+   * Configuration object for the loader component
+   * @type {any}
+   * @description Contains styling and positioning options for the loading indicator
+   * @since 1.0.0
+   */
   configLoader: any;
+  
+  /**
+   * Injected event service for global application events
+   * @type {EventService}
+   * @description Handles global events, notifications, and session management
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected license service for license validation
+   * @type {LicenseService}
+   * @description Manages license validation and verification
+   * @since 1.0.0
+   */
   licenseService = inject(LicenseService);
+  
+  /**
+   * Injected authentication service for user authentication
+   * @type {AuthService}
+   * @description Handles user authentication, login, and session management
+   * @since 1.0.0
+   */
   authService = inject(AuthService);
 
   /**

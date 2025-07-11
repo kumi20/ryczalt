@@ -86,38 +86,251 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
 })
 export class NotesComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for programmatic control
+   * @type {any}
+   * @description Provides access to the generic data grid instance for focus management
+   * @since 1.0.0
+   */
   @ViewChild('genericDataGrid') genericDataGrid: any;
+  
+  /**
+   * Reference to the DevExtreme data grid component for dropdown mode
+   * @type {any}
+   * @description Provides access to the DxDataGrid instance for dropdown functionality
+   * @since 1.0.0
+   */
   @ViewChild('dxGrid') dxGrid: any;
+  
+  /**
+   * Input property to enable dropdown mode for note selection
+   * @type {boolean}
+   * @description When true, component functions as a dropdown selector instead of full manager
+   * @default false
+   * @since 1.0.0
+   */
   @Input() dropDownMode: boolean = false;
+  
+  /**
+   * Input property to filter notes by income type
+   * @type {boolean}
+   * @description When true, filters notes to show only those applicable to income
+   * @default false
+   * @since 1.0.0
+   */
   @Input() isIncome: boolean = false;
+  
+  /**
+   * Output event emitter for note selection in dropdown mode
+   * @type {EventEmitter<Note>}
+   * @description Emits the selected note when user chooses one from dropdown
+   * @since 1.0.0
+   */
   @Output() onChoosed = new EventEmitter<Note>();
+  
+  /**
+   * Input property to enable read-only mode
+   * @type {boolean}
+   * @description When true, disables editing functionality
+   * @default false
+   * @since 1.0.0
+   */
   @Input() readOnly: boolean = false;
   
+  /**
+   * Injected event service for global application events and utilities
+   * @type {EventService}
+   * @description Handles global events, notifications, and common utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected translation service for internationalization support
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
+  
+  /**
+   * Injected note service for CRUD operations
+   * @type {NoteService}
+   * @description Manages note data operations including create, read, update, and delete
+   * @since 1.0.0
+   */
   noteService = inject(NoteService);
 
+  /**
+   * Current mode of the component operation
+   * @type {"add" | "edit" | "show"}
+   * @description Determines the current operation mode for the record dialog
+   * @default "add"
+   * @since 1.0.0
+   */
   mode: 'add' | 'edit' | 'show' = 'add';
+  
+  /**
+   * Signal indicating whether the add/edit dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the add/edit dialog
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
+  
+  /**
+   * Data source for the DevExtreme data grid
+   * @type {DataSource}
+   * @description Manages note data for the grid component
+   * @default new DataSource({})
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
+  
+  /**
+   * Signal containing the currently focused note element
+   * @type {Signal<Note | null>}
+   * @description Tracks the currently selected note record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<Note | null>(null);
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Number of items per page in the data grid
+   * @type {number}
+   * @description Controls pagination size for the data grid
+   * @default 30
+   * @since 1.0.0
+   */
   pageSize: number = 30;
+  
+  /**
+   * Height configuration for the data grid
+   * @type {number | string}
+   * @description Defines the height of the data grid using CSS calc
+   * @default "calc(100vh - 220px)"
+   * @since 1.0.0
+   */
   heightGrid: number | string = 'calc(100vh - 220px)';
+  
+  /**
+   * Array of currently selected rows in the data grid
+   * @type {Note[]}
+   * @description Contains the selected note records
+   * @default []
+   * @since 1.0.0
+   */
   selectedRows: Note[] = [];
+  
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
+  
+  /**
+   * Signal indicating whether the delete confirmation dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Signal indicating whether the dropdown grid box is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the dropdown grid in dropdown mode
+   * @default false
+   * @since 1.0.0
+   */
   isGridBoxOpened = signal<boolean>(false);
+  
+  /**
+   * Height of the dropdown area in pixels
+   * @type {number}
+   * @description Defines the height of the dropdown container
+   * @default 260
+   * @since 1.0.0
+   */
   dropDownHeight: number = 260;
+  
+  /**
+   * Unique identifier for the component instance
+   * @type {string}
+   * @description Randomly generated unique identifier for DOM elements
+   * @since 1.0.0
+   */
   unicalGuid = Math.random().toString(36).substring(2, 15);
+  
+  /**
+   * Flag to prevent accidental dropdown selections
+   * @type {boolean}
+   * @description Used to prevent double-click selection during edit button clicks
+   * @default false
+   * @since 1.0.0
+   */
   dropdownTimeout: boolean = false;
+  
+  /**
+   * Subscription to device type changes for responsive behavior
+   * @type {Subscription | undefined}
+   * @description Tracks device type changes to update UI accordingly
+   * @private
+   * @since 1.0.0
+   */
   private deviceTypeSubscription?: Subscription;
 
+  /**
+   * Internal value storage for ControlValueAccessor implementation
+   * @type {string}
+   * @description Stores the current value for form control integration
+   * @private
+   * @default ''
+   * @since 1.0.0
+   */
   private _value: string = '';
+  
+  /**
+   * Getter for the current value
+   * @type {string}
+   * @description Returns the current value of the component
+   * @returns {string} The current value
+   * @since 1.0.0
+   */
   public get myValue(): string {
     return this._value;
   }
+  
+  /**
+   * Setter for the current value with change detection
+   * @type {string}
+   * @description Sets the value and triggers change callbacks if value changed
+   * @param {string} v - The new value to set
+   * @since 1.0.0
+   */
   public set myValue(v: string) {
     if (v !== this._value) {
       this._value = v;
@@ -127,7 +340,12 @@ export class NotesComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /** Opcje siatki klientów */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the notes data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -142,6 +360,12 @@ export class NotesComponent implements OnInit, AfterViewInit, OnDestroy {
       } as GenericGridOptions)
   );
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the notes grid
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [
@@ -470,7 +694,21 @@ export class NotesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isGridBoxOpened.set(!this.isGridBoxOpened());
   }
 
+  /**
+   * Callback function for value changes (ControlValueAccessor)
+   * @type {Function}
+   * @description Called when the component value changes
+   * @param {string} value - The new value
+   * @since 1.0.0
+   */
   onChange = (value: string) => {};
+  
+  /**
+   * Callback function for touched events (ControlValueAccessor)
+   * @type {Function}
+   * @description Called when the component is touched/focused
+   * @since 1.0.0
+   */
   onTouched = () => {};
 
   /**

@@ -58,31 +58,188 @@ import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data
   styleUrl: "./document-type.component.scss",
 })
 export class DocumentTypeComponent implements OnInit, OnChanges {
+  /**
+   * Event emitted when a document type is selected
+   * @type {EventEmitter<DocumentType>}
+   * @description Emits the selected document type data to parent components
+   * @example
+   * ```html
+   * <app-document-type (onChoosed)="handleDocumentTypeSelection($event)"></app-document-type>
+   * ```
+   * @since 1.0.0
+   */
   @Output() onChoosed = new EventEmitter();
+  
+  /**
+   * Event emitted when Poland's ID is determined
+   * @type {EventEmitter<string>}
+   * @description Emits the ID of Poland document type when found in the dataset
+   * @example
+   * ```html
+   * <app-document-type (setPLId)="setPolandId($event)"></app-document-type>
+   * ```
+   * @since 1.0.0
+   */
   @Output() setPLId = new EventEmitter();
+  
+  /**
+   * Read-only mode flag
+   * @type {boolean}
+   * @description Determines if the component is in read-only mode
+   * @default false
+   * @example
+   * ```html
+   * <app-document-type [readOnly]="true"></app-document-type>
+   * ```
+   * @since 1.0.0
+   */
   @Input() readOnly: boolean = false;
+  
+  /**
+   * Reference to the dropdown grid component
+   * @type {any}
+   * @description ViewChild reference to the dropdown grid for programmatic access
+   * @since 1.0.0
+   */
   @ViewChild("gridDropDown") gridDropDown: any;
 
+  /**
+   * Dropdown box mode input signal
+   * @type {InputSignal<boolean>}
+   * @description Determines if the component should display as a dropdown selector
+   * @default false
+   * @example
+   * ```html
+   * <app-document-type [dropDownBoxMode]="true"></app-document-type>
+   * ```
+   * @since 1.0.0
+   */
   dropDownBoxMode = input<boolean>(false);
+  
+  /**
+   * CSS class name input signal
+   * @type {InputSignal<boolean>}
+   * @description Controls CSS class application for styling
+   * @default false
+   * @since 1.0.0
+   */
   className = input<boolean>(false);
+  
+  /**
+   * Form control name input signal
+   * @type {InputSignal<string>}
+   * @description The name of the form control for dropdown mode
+   * @default ''
+   * @example
+   * ```html
+   * <app-document-type [controlNameForm]="selectedDocumentTypeName"></app-document-type>
+   * ```
+   * @since 1.0.0
+   */
   controlNameForm = input<string>("");
 
+  /**
+   * Document type service instance
+   * @type {DocumentTypeService}
+   * @description Service for managing document type data operations
+   * @since 1.0.0
+   */
   documentTypeService = inject(DocumentTypeService);
+  
+  /**
+   * Event service instance
+   * @type {EventService}
+   * @description Service for handling global events and notifications
+   * @since 1.0.0
+   */
   event = inject(EventService);
 
+  /**
+   * Document type list signal
+   * @type {WritableSignal<DocumentType[]>}
+   * @description Reactive signal containing the list of document types
+   * @default []
+   * @since 1.0.0
+   */
   documentList = signal<DocumentType[]>([]);
+  
+  /**
+   * Data source for the grid
+   * @type {DocumentType[]}
+   * @description Array of document type data used by the grid component
+   * @default []
+   * @since 1.0.0
+   */
   dataSource: DocumentType[] = [];
+  
+  /**
+   * Grid height configuration
+   * @type {number | string}
+   * @description Height of the grid, can be a number or CSS string
+   * @default 'calc(100vh - 100px)'
+   * @since 1.0.0
+   */
   heightGrid: number | string = "calc(100vh - 100px)";
+  
+  /**
+   * Focused row index in the grid
+   * @type {number}
+   * @description Index of the currently focused row in the grid
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Page size for grid pagination
+   * @type {number}
+   * @description Number of rows to display per page
+   * @default 300
+   * @since 1.0.0
+   */
   pageSize: number = 300;
+  
+  /**
+   * Grid dropdown open state
+   * @type {boolean}
+   * @description Indicates if the dropdown grid is currently open
+   * @default false
+   * @since 1.0.0
+   */
   isGridBoxOpened: boolean = false;
+  
+  /**
+   * Change detector reference
+   * @type {ChangeDetectorRef}
+   * @description Reference for manually triggering change detection
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
 
+  /**
+   * Currently selected document type name
+   * @type {null | string}
+   * @description Name of the currently selected document type, null if none selected
+   * @default null
+   * @since 1.0.0
+   */
   chossingRecord: null | string = null;
 
+  /**
+   * Translation service instance
+   * @type {TranslateService}
+   * @description Service for handling internationalization and translations
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
 
-  /** Opcje siatki klientów */
+  /**
+   * Grid options configuration
+   * @type {Signal<GenericGridOptions>}
+   * @description Computed signal containing configuration options for the document type grid
+   * @description Includes height, column hiding, and column chooser settings
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -97,6 +254,13 @@ export class DocumentTypeComponent implements OnInit, OnChanges {
       } as GenericGridOptions)
   );
 
+  /**
+   * Grid columns configuration
+   * @type {Signal<GenericGridColumn[]>}
+   * @description Computed signal containing column definitions for the document type grid
+   * @description Includes document type name column
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

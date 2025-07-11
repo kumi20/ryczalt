@@ -88,31 +88,177 @@ import { AppServices } from "../../services/app-services.service";
   styleUrl: "./tax-vat.component.scss",
 })
 export class TaxVatComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for programmatic control
+   * @type {any}
+   * @description Provides access to the generic data grid instance for focus management
+   * @since 1.0.0
+   */
   @ViewChild("genericDataGrid") genericDataGrid: any;
 
+  /**
+   * Injected event service for global application events and utilities
+   * @type {EventService}
+   * @description Handles global events, notifications, and common utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected translation service for internationalization support
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
+  
+  /**
+   * Injected ZUS service for social insurance operations
+   * @type {ZusService}
+   * @description Manages social insurance related operations
+   * @since 1.0.0
+   */
   zusService = inject(ZusService);
 
+  /**
+   * Signal containing the current month (1-12)
+   * @type {Signal<number>}
+   * @description Current month used for date filtering
+   * @default current month
+   * @since 1.0.0
+   */
   month = signal<number>(new Date().getMonth() + 1);
+  
+  /**
+   * Signal containing the current year
+   * @type {Signal<number>}
+   * @description Current year used for date filtering
+   * @default current year
+   * @since 1.0.0
+   */
   year = signal<number>(new Date().getFullYear());
 
+  /**
+   * Signal indicating whether the delete confirmation dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
+  
+  /**
+   * Signal indicating whether the add/edit dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the add/edit dialog
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
+  
+  /**
+   * Current mode of the component operation
+   * @type {"add" | "edit" | "show"}
+   * @description Determines the current operation mode for the record dialog
+   * @default "add"
+   * @since 1.0.0
+   */
   mode: "add" | "edit" | "show" = "add";
+  
+  /**
+   * Signal containing the currently focused VAT tax element
+   * @type {Signal<any>}
+   * @description Tracks the currently selected VAT tax record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<any>(null);
+  
+  /**
+   * Data source for the DevExtreme data grid
+   * @type {any}
+   * @description Manages VAT tax data for the grid component
+   * @since 1.0.0
+   */
   dataSource: any;
+  
+  /**
+   * Height configuration for the data grid
+   * @type {string}
+   * @description Defines the height of the data grid using CSS calc
+   * @default "calc(100vh - 105px)"
+   * @since 1.0.0
+   */
   heightGrid = "calc(100vh - 105px)";
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Number of items per page in the data grid
+   * @type {number}
+   * @description Controls pagination size for the data grid
+   * @default 20
+   * @since 1.0.0
+   */
   pageSize = 20;
+  
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Injected tax VAT service for CRUD operations
+   * @type {TaxVatService}
+   * @description Manages VAT tax data operations including create, read, update, and delete
+   * @since 1.0.0
+   */
   taxVatService = inject(TaxVatService);
+  
+  /**
+   * Subscription to device type changes for responsive behavior
+   * @type {Subscription | undefined}
+   * @description Tracks device type changes to update UI accordingly
+   * @private
+   * @since 1.0.0
+   */
   private deviceTypeSubscription?: Subscription;
 
+  /**
+   * Injected application service for global HTTP operations
+   * @type {AppServices}
+   * @description Provides application-level services and HTTP operations
+   * @private
+   * @readonly
+   * @since 1.0.0
+   */
   private readonly appService = inject(AppServices);
 
-  /** Opcje siatki klientów */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the VAT tax data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -127,6 +273,12 @@ export class TaxVatComponent implements OnInit, AfterViewInit, OnDestroy {
       } as GenericGridOptions)
   );
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the VAT tax grid
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

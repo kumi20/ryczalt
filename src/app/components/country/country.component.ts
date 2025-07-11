@@ -56,31 +56,181 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CountryComponent implements OnInit, OnChanges {
+  /**
+   * Event emitted when a country is selected
+   * @type {EventEmitter<Country>}
+   * @description Emits the selected country data to parent components
+   * @example
+   * ```html
+   * <app-country (onChoosed)="handleCountrySelection($event)"></app-country>
+   * ```
+   * @since 1.0.0
+   */
   @Output() onChoosed = new EventEmitter();
+  
+  /**
+   * Event emitted when Poland's ID is determined
+   * @type {EventEmitter<string>}
+   * @description Emits the ID of Poland country when found in the dataset
+   * @example
+   * ```html
+   * <app-country (setPLId)="setPolandId($event)"></app-country>
+   * ```
+   * @since 1.0.0
+   */
   @Output() setPLId = new EventEmitter();
+  
+  /**
+   * Read-only mode flag
+   * @type {boolean}
+   * @description Determines if the component is in read-only mode
+   * @default false
+   * @example
+   * ```html
+   * <app-country [readOnly]="true"></app-country>
+   * ```
+   * @since 1.0.0
+   */
   @Input() readOnly: boolean = false;
+  
+  /**
+   * Reference to the dropdown grid component
+   * @type {any}
+   * @description ViewChild reference to the dropdown grid for programmatic access
+   * @since 1.0.0
+   */
   @ViewChild('gridDropDown') gridDropDown: any;
 
+  /**
+   * Dropdown box mode input signal
+   * @type {InputSignal<boolean>}
+   * @description Determines if the component should display as a dropdown selector
+   * @default false
+   * @example
+   * ```html
+   * <app-country [dropDownBoxMode]="true"></app-country>
+   * ```
+   * @since 1.0.0
+   */
   dropDownBoxMode = input<boolean>(false);
+  
+  /**
+   * CSS class name input signal
+   * @type {InputSignal<boolean>}
+   * @description Controls CSS class application for styling
+   * @default false
+   * @since 1.0.0
+   */
   className = input<boolean>(false);
+  
+  /**
+   * Form control name input signal
+   * @type {InputSignal<string>}
+   * @description The name of the form control for dropdown mode
+   * @default ''
+   * @example
+   * ```html
+   * <app-country [controlNameForm]="selectedCountryName"></app-country>
+   * ```
+   * @since 1.0.0
+   */
   controlNameForm = input<string>('');
 
+  /**
+   * Country service instance
+   * @type {CountryService}
+   * @description Service for managing country data operations
+   * @since 1.0.0
+   */
   countryServices = inject(CountryService);
+  
+  /**
+   * Event service instance
+   * @type {EventService}
+   * @description Service for handling global events and notifications
+   * @since 1.0.0
+   */
   event = inject(EventService);
 
+  /**
+   * Country list signal
+   * @type {WritableSignal<Country[]>}
+   * @description Reactive signal containing the list of countries
+   * @default []
+   * @since 1.0.0
+   */
   countryList = signal<Country[]>([]);
+  
+  /**
+   * Data source for the grid
+   * @type {Country[]}
+   * @description Array of country data used by the grid component
+   * @default []
+   * @since 1.0.0
+   */
   dataSource: Country[] = [];
+  
+  /**
+   * Grid height configuration
+   * @type {number | string}
+   * @description Height of the grid, can be a number or CSS string
+   * @default 'calc(100vh - 100px)'
+   * @since 1.0.0
+   */
   heightGrid: number | string = 'calc(100vh - 100px)';
+  
+  /**
+   * Focused row index in the grid
+   * @type {number}
+   * @description Index of the currently focused row in the grid
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Page size for grid pagination
+   * @type {number}
+   * @description Number of rows to display per page
+   * @default 300
+   * @since 1.0.0
+   */
   pageSize: number = 300;
+  
+  /**
+   * Grid dropdown open state
+   * @type {boolean}
+   * @description Indicates if the dropdown grid is currently open
+   * @default false
+   * @since 1.0.0
+   */
   isGridBoxOpened: boolean = false;
 
+  /**
+   * Currently selected country name
+   * @type {null | string}
+   * @description Name of the currently selected country, null if none selected
+   * @default null
+   * @since 1.0.0
+   */
   chossingRecord: null | string = null;
 
+  /**
+   * Translation service instance
+   * @type {TranslateService}
+   * @description Service for handling internationalization and translations
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
 
-   /** Opcje siatki klientów */
-   options = computed(
+  /**
+   * Grid options configuration
+   * @type {Signal<GenericGridOptions>}
+   * @description Computed signal containing configuration options for the country grid
+   * @description Includes height, column hiding, and column chooser settings
+   * @since 1.0.0
+   */
+  options = computed(
     () =>
       ({
         height: "calc(100vh - 100px)",
@@ -94,6 +244,13 @@ export class CountryComponent implements OnInit, OnChanges {
       } as GenericGridOptions)
   );
 
+  /**
+   * Grid columns configuration
+   * @type {Signal<GenericGridColumn[]>}
+   * @description Computed signal containing column definitions for the country grid
+   * @description Includes system status, country code, and country name columns
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [ 

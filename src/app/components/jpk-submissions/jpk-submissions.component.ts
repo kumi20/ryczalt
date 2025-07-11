@@ -78,30 +78,149 @@ import { JpkService } from '../../services/jpk.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JpkSubmissionsComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for JPK submissions
+   * @type {any}
+   * @description Provides access to the generic data grid instance for programmatic control
+   * @since 1.0.0
+   */
   @ViewChild('genericDataGrid', { static: false }) genericDataGrid: any;
 
+  /**
+   * Data source for the DevExtreme data grid containing JPK submissions
+   * @type {DataSource}
+   * @description Manages JPK submission data for the grid component
+   * @default new DataSource({})
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
 
+  /**
+   * Injected application services for core functionality
+   * @type {AppServices}
+   * @description Provides application-level services and HTTP operations
+   * @since 1.0.0
+   */
   appServices = inject(AppServices);
+  
+  /**
+   * Injected JPK service for JPK-specific operations
+   * @type {JpkService}
+   * @description Manages JPK submission data operations and API calls
+   * @since 1.0.0
+   */
   jpkService = inject(JpkService);
+  
+  /**
+   * Injected event service for global events and data source management
+   * @type {EventService}
+   * @description Handles global events, notifications, and data source utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected translation service for internationalization
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Injected router service for navigation
+   * @type {Router}
+   * @description Provides routing capabilities for navigation between components
+   * @since 1.0.0
+   */
   router = inject(Router);
 
+  /**
+   * Array of currently selected rows in the data grid
+   * @type {any[]}
+   * @description Contains the selected JPK submission records
+   * @default []
+   * @since 1.0.0
+   */
   selectedRows: any[] = [];
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
 
+  /**
+   * Signal containing the current sort field for data ordering
+   * @type {Signal<string>}
+   * @description Determines which field is used for sorting JPK submissions
+   * @default "submissionDate"
+   * @since 1.0.0
+   */
   orderBy = signal<string>('submissionDate');
+  
+  /**
+   * Signal containing the current sort order direction
+   * @type {Signal<string>}
+   * @description Determines the sort direction (ASC or DESC)
+   * @default "DESC"
+   * @since 1.0.0
+   */
   order = signal<string>('DESC');
   
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
+  
+  /**
+   * Signal containing the currently focused JPK submission element
+   * @type {Signal<any | null>}
+   * @description Tracks the currently selected JPK submission record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<any | null>(null);
   
+  /**
+   * Signal containing the current year for filtering
+   * @type {Signal<number>}
+   * @description Current year used for filtering JPK submissions
+   * @default current year
+   * @since 1.0.0
+   */
   currentYear = signal<number>(new Date().getFullYear());
+  
+  /**
+   * Array of available years for filtering
+   * @type {ICustomSearchItem[]}
+   * @description Contains year options for the dropdown filter
+   * @default []
+   * @since 1.0.0
+   */
   years: ICustomSearchItem[] = [];
 
-  /** Opcje siatki JPK */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the JPK submissions data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -116,6 +235,12 @@ export class JpkSubmissionsComponent implements OnInit, AfterViewInit, OnDestroy
       } as GenericGridOptions)
   );
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the JPK submissions grid
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

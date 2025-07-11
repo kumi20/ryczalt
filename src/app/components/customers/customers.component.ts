@@ -95,31 +95,199 @@ import { GenericDataGridComponent } from '../core/generic-data-grid/generic-data
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomersComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+  /**
+   * Reference to the generic data grid component
+   * @type {any}
+   * @description ViewChild reference to the main data grid component for programmatic access
+   * @since 1.0.0
+   */
   @ViewChild('genericDataGrid', { static: false }) genericDataGrid: any;
+  
+  /**
+   * Reference to the dropdown grid component
+   * @type {any}
+   * @description ViewChild reference to the dropdown grid used in selection mode
+   * @since 1.0.0
+   */
   @ViewChild('gridDropDown') gridDropDown: any;
+  
+  /**
+   * Reference to the contractors dropdown box component
+   * @type {any}
+   * @description ViewChild reference to the contractors dropdown box for search functionality
+   * @since 1.0.0
+   */
   @ViewChild('contractorsBox') contractorsBox: any;
+  
+  /**
+   * Event emitted when a customer is selected in dropdown mode
+   * @type {EventEmitter<Customer>}
+   * @description Emits the selected customer data to parent components
+   * @example
+   * ```html
+   * <app-customers (onChoosed)="handleCustomerSelection($event)"></app-customers>
+   * ```
+   * @since 1.0.0
+   */
   @Output() onChoosed = new EventEmitter();
+  
+  /**
+   * Read-only mode flag
+   * @type {boolean}
+   * @description Determines if the component is in read-only mode
+   * @default false
+   * @example
+   * ```html
+   * <app-customers [readOnly]="true"></app-customers>
+   * ```
+   * @since 1.0.0
+   */
   @Input() readOnly: boolean = false;
 
+  /**
+   * Dropdown box mode input signal
+   * @type {InputSignal<boolean>}
+   * @description Determines if the component should display as a dropdown selector
+   * @default false
+   * @example
+   * ```html
+   * <app-customers [dropDownBoxMode]="true"></app-customers>
+   * ```
+   * @since 1.0.0
+   */
   dropDownBoxMode = input<boolean>(false);
+  
+  /**
+   * CSS class name input signal
+   * @type {InputSignal<boolean | null | undefined>}
+   * @description Controls CSS class application for styling
+   * @default false
+   * @since 1.0.0
+   */
   className = input<boolean | null | undefined>(false);
+  
+  /**
+   * DevExtreme data source for the grid
+   * @type {DataSource}
+   * @description Main data source configured with server-side processing for the customers grid
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
+  
+  /**
+   * Form control name input signal
+   * @type {InputSignal<number | null>}
+   * @description The ID of the selected customer for dropdown mode
+   * @default null
+   * @example
+   * ```html
+   * <app-customers [controlNameForm]="selectedCustomerId"></app-customers>
+   * ```
+   * @since 1.0.0
+   */
   controlNameForm = input<number | null>(null);
 
+  /**
+   * Application services instance
+   * @type {AppServices}
+   * @description Core application services for API communication
+   * @since 1.0.0
+   */
   appServices = inject(AppServices);
+  
+  /**
+   * Customer services instance
+   * @type {CustomerService}
+   * @description Service for customer-specific business logic and API calls
+   * @since 1.0.0
+   */
   customerServices = inject(CustomerService);
+  
+  /**
+   * Event service instance
+   * @type {EventService}
+   * @description Service for handling global events and notifications
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Translation service instance
+   * @type {TranslateService}
+   * @description Service for handling internationalization and translations
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
+  
+  /**
+   * Change detector reference
+   * @type {ChangeDetectorRef}
+   * @description Reference for manually triggering change detection
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
 
+  /**
+   * Grid height configuration
+   * @type {number | string}
+   * @description Height of the grid, can be a number or CSS string
+   * @default 'calc(100vh - 150px)'
+   * @since 1.0.0
+   */
   heightGrid: number | string = 'calc(100vh - 150px)';
+  
+  /**
+   * Selected rows array
+   * @type {Customer[]}
+   * @description Array of currently selected customer records
+   * @default []
+   * @since 1.0.0
+   */
   selectedRows: Customer[] = [];
+  
+  /**
+   * Focused row index in the grid
+   * @type {number}
+   * @description Index of the currently focused row in the grid
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
 
+  /**
+   * Page size for grid pagination
+   * @type {number}
+   * @description Number of rows to display per page
+   * @default 50
+   * @since 1.0.0
+   */
   pageSize: number = 50;
+  
+  /**
+   * Current form mode
+   * @type {'add' | 'edit' | 'show'}
+   * @description Current mode of the customer form (add new, edit existing, or view)
+   * @default 'add'
+   * @since 1.0.0
+   */
   mode: 'add' | 'edit' | 'show' = 'add';
 
+  /**
+   * Current filter value
+   * @type {string}
+   * @description Current filter value entered by the user
+   * @default ''
+   * @since 1.0.0
+   */
   filterValue: string = '';
+  
+  /**
+   * Filter criteria configuration
+   * @type {FilterCriteria[]}
+   * @description Array of available filter criteria for the search dropdown
+   * @default [customerName, city, customerVat]
+   * @since 1.0.0
+   */
   filterCriteria: FilterCriteria[] = [
     {
       value: 'customerName',
@@ -134,29 +302,142 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges, OnD
       label: 'NIP',
     },
   ];
+  
+  /**
+   * Order by field signal
+   * @type {WritableSignal<string>}
+   * @description Reactive signal for the current sort column
+   * @default 'customerName'
+   * @since 1.0.0
+   */
   orderBy = signal<string>('customerName');
+  
+  /**
+   * Sort order signal
+   * @type {WritableSignal<string>}
+   * @description Reactive signal for the current sort order (ASC/DESC)
+   * @default 'ASC'
+   * @since 1.0.0
+   */
   order = signal<string>('ASC');
 
+  /**
+   * Customer type filter options
+   * @type {FilterCriteria[]}
+   * @description Array of customer type filter options (Supplier, Recipient, Office)
+   * @since 1.0.0
+   */
   filterOptions: FilterCriteria[] = [
     { label: this.translate.instant('customers.isSupplier'), value: 0 },
     { label: this.translate.instant('customers.isRecipient'), value: 1 },
     { label: this.translate.instant('customers.isOffice'), value: 2 },
   ];
+  
+  /**
+   * Delete filter signal
+   * @type {WritableSignal<boolean>}
+   * @description Reactive signal for showing/hiding deleted records
+   * @default true
+   * @since 1.0.0
+   */
   deleteFilter = signal<boolean>(true);
+  
+  /**
+   * Customer type filter value
+   * @type {null | 0 | 1 | 2}
+   * @description Current customer type filter (null=all, 0=Supplier, 1=Recipient, 2=Office)
+   * @default null
+   * @since 1.0.0
+   */
   typeFilter: null | 0 | 1 | 2 = null;
+  
+  /**
+   * Add/Edit form visibility signal
+   * @type {WritableSignal<boolean>}
+   * @description Reactive signal controlling the visibility of the add/edit form
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
 
+  /**
+   * Keyboard shortcuts configuration
+   * @type {ShortcutInput[]}
+   * @description Array of keyboard shortcuts for quick actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
+  
+  /**
+   * Delete confirmation dialog visibility signal
+   * @type {WritableSignal<boolean>}
+   * @description Reactive signal controlling the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
+  
+  /**
+   * Focused element signal
+   * @type {WritableSignal<Customer | null>}
+   * @description Reactive signal containing the currently focused customer record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<Customer | null>(null);
+  
+  /**
+   * Grid dropdown open state
+   * @type {boolean}
+   * @description Indicates if the dropdown grid is currently open
+   * @default false
+   * @since 1.0.0
+   */
   isGridBoxOpened: boolean = false;
 
+  /**
+   * Currently selected customer ID
+   * @type {null | number}
+   * @description ID of the currently selected customer in dropdown mode
+   * @default null
+   * @since 1.0.0
+   */
   chossingRecord: null | number = null;
+  
+  /**
+   * Dropdown data source
+   * @type {Customer[]}
+   * @description Array of customer data for dropdown mode
+   * @default []
+   * @since 1.0.0
+   */
   dataSourceDropDown: Customer[] = [];
+  
+  /**
+   * Search timer for debouncing
+   * @type {any}
+   * @description Timer reference for debouncing search input
+   * @since 1.0.0
+   */
   searchTimer: any;
+  
+  /**
+   * Search key for filtering
+   * @type {string}
+   * @description Current search key for filtering customers
+   * @default ''
+   * @since 1.0.0
+   */
   SearchKey: string = '';
 
-  /** Opcje siatki klientów */
+  /**
+   * Grid options configuration
+   * @type {Signal<GenericGridOptions>}
+   * @description Computed signal containing configuration options for the customers grid
+   * @description Includes height, column hiding, and column chooser settings
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -171,6 +452,13 @@ export class CustomersComponent implements OnInit, AfterViewInit, OnChanges, OnD
       } as GenericGridOptions)
   );
 
+  /**
+   * Grid columns configuration
+   * @type {Signal<GenericGridColumn[]>}
+   * @description Computed signal containing column definitions for the customers grid
+   * @description Includes customer name, VAT number, address, contact info, and type flags
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

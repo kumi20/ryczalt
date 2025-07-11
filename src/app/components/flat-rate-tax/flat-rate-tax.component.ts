@@ -87,28 +87,152 @@ import { PriceFormatPipe } from "../../pipes/price-format.pipe";
   styleUrl: "./flat-rate-tax.component.scss",
 })
 export class FlatRateTaxComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for focus management and data operations
+   * @type {any}
+   * @description Provides access to the generic data grid instance for programmatic control
+   * @since 1.0.0
+   */
   @ViewChild("genericDataGrid") genericDataGrid: any;
+  
+  /**
+   * Injected translation service for internationalization support
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
+  
+  /**
+   * Injected event service for global application events and utilities
+   * @type {EventService}
+   * @description Handles global events, notifications, and common utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected flat rate tax service for CRUD operations
+   * @type {FlatRateTaxService}
+   * @description Manages flat rate tax data operations including create, read, update, and delete
+   * @since 1.0.0
+   */
   flatRateTaxService = inject(FlatRateTaxService);
 
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
+  
+  /**
+   * Subscription to device type changes for responsive behavior
+   * @type {Subscription | undefined}
+   * @description Tracks device type changes to update UI accordingly
+   * @private
+   * @since 1.0.0
+   */
   private deviceTypeSubscription?: Subscription;
 
+  /**
+   * Data source for the DevExtreme data grid
+   * @type {DataSource}
+   * @description Manages flat rate tax data for the grid component
+   * @default new DataSource({})
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
+  
+  /**
+   * Height configuration for the data grid
+   * @type {number | string}
+   * @description Defines the height of the data grid using CSS calc
+   * @default "calc(100vh - 105px)"
+   * @since 1.0.0
+   */
   heightGrid: number | string = "calc(100vh - 105px)";
+  
+  /**
+   * Signal containing the currently focused flat rate tax element
+   * @type {Signal<FlatRateTax | null>}
+   * @description Tracks the currently selected flat rate tax record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<FlatRateTax | null>(null);
+  
+  /**
+   * Signal containing the current year for filtering records
+   * @type {Signal<number>}
+   * @description Current year used for date range filtering
+   * @default current year from global date
+   * @since 1.0.0
+   */
   year = signal<number>(this.event.globalDate.year);
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Number of items per page in the data grid
+   * @type {number}
+   * @description Controls pagination size for the data grid
+   * @default 30
+   * @since 1.0.0
+   */
   pageSize: number = 30;
 
+  /**
+   * Current mode of the component operation
+   * @type {"add" | "edit" | "show"}
+   * @description Determines the current operation mode for the record dialog
+   * @default "add"
+   * @since 1.0.0
+   */
   mode: "add" | "edit" | "show" = "add";
+  
+  /**
+   * Signal indicating whether the add/edit dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the add/edit dialog
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
+  
+  /**
+   * Signal indicating whether the delete confirmation dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
   
 
-  /** Opcje siatki klientów */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the flat rate tax data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -123,6 +247,12 @@ export class FlatRateTaxComponent implements OnInit, AfterViewInit, OnDestroy {
       } as GenericGridOptions)
   );
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the flat rate tax grid
+   * @since 1.0.0
+   */
   columns = computed(() => [
     {
       caption: this.translate.instant("zus.periodFrom"),

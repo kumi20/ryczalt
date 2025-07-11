@@ -90,32 +90,179 @@ import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data
   styleUrls: ["./internal-evidence.component.scss"],
 })
 export class InternalEvidenceComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for focus management and data operations
+   * @type {any}
+   * @description Provides access to the generic data grid instance for programmatic control
+   * @since 1.0.0
+   */
   @ViewChild("genericDataGrid") genericDataGrid: any;
 
+  /**
+   * Injected event service for global application events and utilities
+   * @type {EventService}
+   * @description Handles global events, notifications, and common utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
 
+  /**
+   * Data source for the DevExtreme data grid
+   * @type {DataSource}
+   * @description Manages internal evidence data for the grid component
+   * @default new DataSource({})
+   * @since 1.0.0
+   */
   dataSource: DataSource = new DataSource({});
+  
+  /**
+   * Height configuration for the data grid
+   * @type {number | string}
+   * @description Defines the height of the data grid using CSS calc
+   * @default "calc(100vh - 105px)"
+   * @since 1.0.0
+   */
   heightGrid: number | string = "calc(100vh - 105px)";
+  
+  /**
+   * Array of currently selected rows in the data grid
+   * @type {InternalEvidence[]}
+   * @description Contains the selected internal evidence records
+   * @default []
+   * @since 1.0.0
+   */
   selectedRows: InternalEvidence[] = [];
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex: number = 0;
+  
+  /**
+   * Number of items per page in the data grid
+   * @type {number}
+   * @description Controls pagination size for the data grid
+   * @default 200
+   * @since 1.0.0
+   */
   pageSize: number = 200;
+  
+  /**
+   * Signal containing the currently focused internal evidence element
+   * @type {Signal<InternalEvidence | null>}
+   * @description Tracks the currently selected internal evidence record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<InternalEvidence | null>(null);
+  
+  /**
+   * Current mode of the component operation
+   * @type {"add" | "edit" | "show"}
+   * @description Determines the current operation mode for the record dialog
+   * @default "add"
+   * @since 1.0.0
+   */
   mode: "add" | "edit" | "show" = "add";
+  
+  /**
+   * Signal indicating whether the current month is closed for editing
+   * @type {Signal<boolean>}
+   * @description Tracks month closure status to prevent editing when closed
+   * @default false
+   * @since 1.0.0
+   */
   isClosed = signal<boolean>(false);
+  
+  /**
+   * Signal indicating whether the add/edit dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the add/edit dialog
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
 
+  /**
+   * Signal containing the current month (1-12)
+   * @type {Signal<number>}
+   * @description Current month used for date range filtering
+   * @default current month from global date
+   * @since 1.0.0
+   */
   month = signal<number>(this.event.globalDate.month);
+  
+  /**
+   * Signal containing the current year
+   * @type {Signal<number>}
+   * @description Current year used for date range filtering
+   * @default current year from global date
+   * @since 1.0.0
+   */
   year = signal<number>(this.event.globalDate.year);
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Signal indicating whether the delete confirmation dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
+  
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
 
+  /**
+   * Injected flat rate service for month closure operations
+   * @type {FlateRateService}
+   * @description Manages month closure status and operations
+   * @since 1.0.0
+   */
   flateRateService = inject(FlateRateService);
+  
+  /**
+   * Injected internal evidence service for CRUD operations
+   * @type {InternalEvidenceService}
+   * @description Manages internal evidence data operations including create, read, update, and delete
+   * @since 1.0.0
+   */
   internalEvidenceService = inject(InternalEvidenceService);
 
+  /**
+   * Injected translation service for internationalization support
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @private
+   * @readonly
+   * @since 1.0.0
+   */
   private readonly translate = inject(TranslateService);
 
-  /** Opcje siatki klientów */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the internal evidence data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -130,6 +277,12 @@ export class InternalEvidenceComponent implements OnInit, AfterViewInit, OnDestr
       } as GenericGridOptions)
   );
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the internal evidence grid
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

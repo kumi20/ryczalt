@@ -87,30 +87,176 @@ import { GenericDataGridComponent } from "../core/generic-data-grid/generic-data
   styleUrls: ["./zus.component.scss"],
 })
 export class ZusComponent implements OnInit, OnDestroy {
+  /**
+   * Reference to the generic data grid component for programmatic control
+   * @type {any}
+   * @description Provides access to the generic data grid instance for focus management
+   * @since 1.0.0
+   */
   @ViewChild("genericDataGrid") genericDataGrid: any;
 
+  /**
+   * Injected event service for global application events and utilities
+   * @type {EventService}
+   * @description Handles global events, notifications, and common utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected translation service for internationalization support
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels and messages
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
+  
+  /**
+   * Injected ZUS service for social insurance contribution operations
+   * @type {ZusService}
+   * @description Manages ZUS contribution data operations including CRUD and calculations
+   * @since 1.0.0
+   */
   zusService = inject(ZusService);
+  
+  /**
+   * Injected change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Reference to the JavaScript Number constructor for template usage
+   * @type {NumberConstructor}
+   * @description Provides access to Number constructor in templates
+   * @since 1.0.0
+   */
   Number = Number;
+  
+  /**
+   * Subscription to device type changes for responsive behavior
+   * @type {Subscription | undefined}
+   * @description Tracks device type changes to update UI accordingly
+   * @private
+   * @since 1.0.0
+   */
   private deviceTypeSubscription?: Subscription;
 
+  /**
+   * Data source for the DevExtreme data grid
+   * @type {any}
+   * @description Manages ZUS contribution data for the grid component
+   * @since 1.0.0
+   */
   dataSource: any;
+  
+  /**
+   * Index of the currently focused row in the data grid
+   * @type {number}
+   * @description Zero-based index of the focused row for navigation
+   * @default 0
+   * @since 1.0.0
+   */
   focusedRowIndex = 0;
+  
+  /**
+   * Number of items per page in the data grid
+   * @type {number}
+   * @description Controls pagination size for the data grid
+   * @default 20
+   * @since 1.0.0
+   */
   pageSize = 20;
+  
+  /**
+   * Height configuration for the data grid
+   * @type {string}
+   * @description Defines the height of the data grid using CSS calc
+   * @default "calc(100vh - 105px)"
+   * @since 1.0.0
+   */
   heightGrid = "calc(100vh - 105px)";
+  
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
 
+  /**
+   * Signal indicating whether the delete confirmation dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the delete confirmation dialog
+   * @default false
+   * @since 1.0.0
+   */
   isDelete = signal<boolean>(false);
+  
+  /**
+   * Signal indicating whether the add/edit dialog is open
+   * @type {Signal<boolean>}
+   * @description Controls the visibility of the add/edit dialog
+   * @default false
+   * @since 1.0.0
+   */
   isAdd = signal<boolean>(false);
+  
+  /**
+   * Current mode of the component operation
+   * @type {"add" | "edit" | "show"}
+   * @description Determines the current operation mode for the record dialog
+   * @default "add"
+   * @since 1.0.0
+   */
   mode: "add" | "edit" | "show" = "add";
+  
+  /**
+   * Signal containing the currently focused ZUS contribution element
+   * @type {Signal<any>}
+   * @description Tracks the currently selected ZUS contribution record
+   * @default null
+   * @since 1.0.0
+   */
   focusedElement = signal<any>(null);
+  
+  /**
+   * Signal containing the current month (1-12)
+   * @type {Signal<number>}
+   * @description Current month used for date filtering
+   * @default current month
+   * @since 1.0.0
+   */
   month = signal<number>(new Date().getMonth() + 1);
+  
+  /**
+   * Signal containing the current year
+   * @type {Signal<number>}
+   * @description Current year used for date filtering
+   * @default current year
+   * @since 1.0.0
+   */
   year = signal<number>(new Date().getFullYear());
+  
+  /**
+   * Signal indicating whether the current period is closed for editing
+   * @type {Signal<boolean>}
+   * @description Tracks closure status to prevent editing when period is closed
+   * @default false
+   * @since 1.0.0
+   */
   isClosed = signal<boolean>(false);
 
-  /** Opcje siatki klientów */
+  /**
+   * Computed options for the generic data grid configuration
+   * @type {ComputedSignal<GenericGridOptions>}
+   * @description Provides configuration options for the ZUS contributions data grid
+   * @since 1.0.0
+   */
   options = computed(
     () =>
       ({
@@ -125,6 +271,12 @@ export class ZusComponent implements OnInit, OnDestroy {
       } as GenericGridOptions)
   );
 
+  /**
+   * Computed columns configuration for the data grid
+   * @type {ComputedSignal<GenericGridColumn[]>}
+   * @description Defines column structure and formatting for the ZUS contributions grid
+   * @since 1.0.0
+   */
   columns = computed(
     () =>
       [

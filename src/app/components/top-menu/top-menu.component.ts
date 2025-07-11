@@ -33,8 +33,29 @@ import { DxMenuModule, DxScrollViewModule } from 'devextreme-angular';
   ],
 })
 export class TopMenuComponent implements OnInit {
+  /**
+   * Menu items configuration passed from parent component
+   * @type {any}
+   * @description Contains the menu structure and configuration data
+   * @since 1.0.0
+   */
   items: any;
+  
+  /**
+   * Menu code identifier passed from parent component
+   * @type {any}
+   * @description Unique identifier for the menu configuration
+   * @since 1.0.0
+   */
   code: any;
+  
+  /**
+   * Array of menu products/items to display
+   * @type {any[]}
+   * @description Contains the processed menu items with default fallback items
+   * @default Default menu items (Start and Companies)
+   * @since 1.0.0
+   */
   products: any[] = [
     {
       id: '1',
@@ -54,10 +75,24 @@ export class TopMenuComponent implements OnInit {
     },
   ];
 
+  /**
+   * Configuration for submenu display behavior
+   * @type {object}
+   * @description Defines when and how submenus are shown (on hover with delay)
+   * @since 1.0.0
+   */
   showFirstSubmenuModes = {
     name: 'onHover',
     delay: { show: 0, hide: 500 },
   };
+  
+  /**
+   * Flag controlling menu visibility
+   * @type {boolean}
+   * @description Determines whether the menu should be displayed
+   * @default true
+   * @since 1.0.0
+   */
   showMenu: boolean = true;
   /**
    * Creates an instance of TopMenuComponent.

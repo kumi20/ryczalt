@@ -111,45 +111,300 @@ export class ContentComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isGuideButtonHighlighted) this.isGuideButtonHighlighted = false;
   }
 
+  /**
+   * Event service instance for global event handling and notifications
+   * @type {EventService}
+   * @description Provides centralized event management, notifications, device type detection, and internationalization
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Application service instance for API calls and authentication
+   * @type {AppServices}
+   * @description Handles all backend API communication and user authentication operations
+   * @since 1.0.0
+   */
   appService = inject(AppServices);
 
+  /**
+   * Toolbar content configuration array
+   * @type {any[]}
+   * @description Contains configuration objects for toolbar items including menu toggle button
+   * @default []
+   * @since 1.0.0
+   */
   toolbarContent: any[] = [];
+  
+  /**
+   * Data portal mode flag
+   * @type {boolean}
+   * @description Indicates if the application is running in data portal mode with restricted navigation
+   * @default false
+   * @since 1.0.0
+   */
   isdataPortal: boolean = false;
+  
+  /**
+   * Drawer open state flag
+   * @type {boolean}
+   * @description Controls the visibility and state of the main navigation drawer
+   * @default true
+   * @since 1.0.0
+   */
   isDrawerOpen: boolean = true;
+  
+  /**
+   * User guide active state flag
+   * @type {boolean}
+   * @description Indicates if the interactive user guide is currently active
+   * @default false
+   * @since 1.0.0
+   */
   isGuideActive: boolean = false;
+  
+  /**
+   * User panel visibility flag
+   * @type {boolean}
+   * @description Controls the visibility of the user dropdown panel
+   * @default false
+   * @since 1.0.0
+   */
   isHideUserPanel: boolean = false;
+  
+  /**
+   * Queue visibility flag
+   * @type {boolean}
+   * @description Controls the visibility of the processing queue indicator
+   * @default false
+   * @since 1.0.0
+   */
   isShowQueue: boolean = false;
 
+  /**
+   * Selected drawer open mode
+   * @type {OpenedStateMode}
+   * @description Defines how the drawer opens (shrink, push, overlap)
+   * @default 'shrink'
+   * @since 1.0.0
+   */
   selectedOpenMode: OpenedStateMode = 'shrink';
+  
+  /**
+   * Selected drawer position
+   * @type {PanelLocation}
+   * @description Defines the position of the drawer panel (left, right, top, bottom)
+   * @default 'left'
+   * @since 1.0.0
+   */
   selectedPosition: PanelLocation = 'left';
+  
+  /**
+   * Selected drawer reveal mode
+   * @type {RevealMode}
+   * @description Defines how the drawer reveals its content (slide, expand)
+   * @default 'slide'
+   * @since 1.0.0
+   */
   selectedRevealMode: RevealMode = 'slide';
 
+  /**
+   * Submenu display modes configuration
+   * @type {any[]}
+   * @description Contains configuration for submenu behavior (hover, click with timing delays)
+   * @default []
+   * @since 1.0.0
+   */
   showSubmenuModes: any[] = [];
+  
+  /**
+   * First submenu mode configuration
+   * @type {any}
+   * @description Selected submenu mode configuration (typically the first one)
+   * @since 1.0.0
+   */
   showFirstSubmenuModes: any;
+  
+  /**
+   * Version information dialog visibility flag
+   * @type {boolean}
+   * @description Controls the visibility of the version information modal
+   * @default false
+   * @since 1.0.0
+   */
   isShowInfoAboutVersion = false;
+  
+  /**
+   * Angular Router service instance
+   * @type {Router}
+   * @description Provides navigation and routing functionality
+   * @since 1.0.0
+   */
   route = inject(Router);
+  
+  /**
+   * Change detector reference for manual change detection
+   * @type {ChangeDetectorRef}
+   * @description Enables manual triggering of change detection cycles
+   * @since 1.0.0
+   */
   cdr = inject(ChangeDetectorRef);
+  
+  /**
+   * Translation service instance for internationalization
+   * @type {TranslateService}
+   * @description Provides translation functionality for multi-language support
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
 
+  /**
+   * Current application location/path
+   * @type {string}
+   * @description Stores the current URL path for navigation tracking
+   * @since 1.0.0
+   */
   location: string;
+  
+  /**
+   * Main navigation menu structure
+   * @type {MainMenu[]}
+   * @description Contains the complete main navigation menu configuration
+   * @default []
+   * @since 1.0.0
+   */
   navigation: MainMenu[] = [];
+  
+  /**
+   * User panel navigation menu structure
+   * @type {MainMenu[]}
+   * @description Contains the user dropdown panel menu configuration
+   * @default []
+   * @since 1.0.0
+   */
   navigationPanelUser: MainMenu[] = [];
 
+  /**
+   * Current logged-in user's name
+   * @type {string}
+   * @description Stores the current user's name extracted from JWT token
+   * @default ''
+   * @since 1.0.0
+   */
   currentUserName: string = '';
+  
+  /**
+   * Active submenu data
+   * @type {any}
+   * @description Contains the currently active submenu configuration
+   * @since 1.0.0
+   */
   submenu: any;
+  
+  /**
+   * Current menu code
+   * @type {any}
+   * @description Stores the code of the currently active menu item
+   * @since 1.0.0
+   */
   code: any;
+  
+  /**
+   * User guide key for current page
+   * @type {string}
+   * @description Identifies which guide content to show for the current page
+   * @default 'dashboard'
+   * @since 1.0.0
+   */
   userGuideKey: string = 'dashboard';
+  
+  /**
+   * Guide button highlight state
+   * @type {boolean}
+   * @description Controls the visual highlighting of the guide button
+   * @default false
+   * @since 1.0.0
+   */
   private isGuideButtonHighlighted = false;
 
+  /**
+   * Application version information string
+   * @type {string}
+   * @description Formatted version information including build ID and date
+   * @default ''
+   * @since 1.0.0
+   */
   infoAboutVersion: string = '';
+  
+  /**
+   * Application build date
+   * @type {string}
+   * @description Build date extracted from environment variables
+   * @default ''
+   * @since 1.0.0
+   */
   ABS_BUILD_DATE: string = '';
+  
+  /**
+   * Mobile menu visibility flag
+   * @type {boolean}
+   * @description Controls the visibility of the mobile navigation menu
+   * @default false
+   * @since 1.0.0
+   */
   isMenuMobile: boolean = false;
+  
+  /**
+   * Submenu item click state flag
+   * @type {boolean}
+   * @description Indicates if a submenu item has been clicked in mobile view
+   * @default false
+   * @since 1.0.0
+   */
   isSubmenuItemClick: boolean = false;
+  
+  /**
+   * Currently selected menu item
+   * @type {MainMenu | null}
+   * @description Stores the currently selected menu item for mobile navigation
+   * @default null
+   * @since 1.0.0
+   */
   itemChosed: MainMenu | null = null;
+  
+  /**
+   * Mobile settings visibility flag
+   * @type {boolean}
+   * @description Controls the visibility of mobile-specific settings
+   * @default false
+   * @since 1.0.0
+   */
   isMobileSettings: boolean = false;
+  
+  /**
+   * Mobile touch interaction state
+   * @type {any}
+   * @description Stores the current touch interaction state for mobile devices
+   * @default null
+   * @since 1.0.0
+   */
   isTap: any = null;
+  
+  /**
+   * Company information modal visibility signal
+   * @type {WritableSignal<boolean>}
+   * @description Reactive signal controlling the visibility of the company information modal
+   * @default false
+   * @since 1.0.0
+   */
   isCompanyVisible = signal<boolean>(false);
+  
+  /**
+   * Device type change subscription
+   * @type {Subscription | undefined}
+   * @description Subscription to device type changes for responsive behavior
+   * @since 1.0.0
+   */
   private deviceTypeSubscription?: Subscription;
 
   /**

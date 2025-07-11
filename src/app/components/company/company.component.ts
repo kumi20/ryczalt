@@ -63,18 +63,85 @@ import { OfficeComponent } from '../office/office.component';
   styleUrl: './company.component.scss',
 })
 export class CompanyComponent implements AfterViewInit, OnDestroy{
+  /**
+   * Output event emitter for dialog closing events
+   * @type {EventEmitter}
+   * @description Emits when the company dialog is closed
+   * @since 1.0.0
+   */
   @Output() onClosing = new EventEmitter();
+  
+  /**
+   * Output event emitter for saving events
+   * @type {EventEmitter}
+   * @description Emits when company data is successfully saved
+   * @since 1.0.0
+   */
   @Output() onSaving = new EventEmitter();
+  
+  /**
+   * Reference to the date input field
+   * @type {any}
+   * @description Provides access to the date input element for focus management
+   * @since 1.0.0
+   */
   @ViewChild('inputDate') inputDate: any;
 
+  /**
+   * Injected event service for global application events
+   * @type {EventService}
+   * @description Handles global events, notifications, and utilities
+   * @since 1.0.0
+   */
   event = inject(EventService);
+  
+  /**
+   * Injected company service for company operations
+   * @type {CompanyService}
+   * @description Manages company data operations including CRUD operations
+   * @since 1.0.0
+   */
   companyService = inject(CompanyService);
+  
+  /**
+   * Injected translation service for internationalization
+   * @type {TranslateService}
+   * @description Provides translation capabilities for component labels
+   * @since 1.0.0
+   */
   translate = inject(TranslateService);
 
+  /**
+   * Translated title for the dialog
+   * @type {string}
+   * @description Localized title text for the company dialog
+   * @since 1.0.0
+   */
   title = this.translate.instant('menu.navigationPanelUser.company');
+  
+  /**
+   * Input signal for dialog visibility
+   * @type {InputSignal<boolean>}
+   * @description Controls the visibility of the company dialog
+   * @required
+   * @since 1.0.0
+   */
   isVisible = input.required<boolean>();
 
+  /**
+   * Injected form builder for reactive forms
+   * @type {FormBuilder}
+   * @description Provides form building capabilities
+   * @since 1.0.0
+   */
   fb = inject(FormBuilder);
+  
+  /**
+   * Reactive form group for company data
+   * @type {FormGroup}
+   * @description Contains form controls for company information with validation
+   * @since 1.0.0
+   */
   form = this.fb.group({
     id: [null, Validators.required],
     name: [null, Validators.required],
@@ -95,6 +162,13 @@ export class CompanyComponent implements AfterViewInit, OnDestroy{
     dataEnd: [null],
   })
 
+  /**
+   * Array of keyboard shortcuts for the component
+   * @type {ShortcutInput[]}
+   * @description Contains keyboard shortcut configurations for various actions
+   * @default []
+   * @since 1.0.0
+   */
   shortcuts: ShortcutInput[] = [];
 
   /**
